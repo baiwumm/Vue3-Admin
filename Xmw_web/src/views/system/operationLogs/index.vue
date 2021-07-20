@@ -1,10 +1,10 @@
 <template>
-  <div>用户管理</div>
+  <div>操作日志</div>
 </template>
 
 <script>
 export default {
-  name: 'userManagement',
+  name: 'operationLogs',
 };
 </script>
 

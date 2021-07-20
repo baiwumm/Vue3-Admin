@@ -5,5 +5,11 @@ export default {
     },
     postManagement: {
         title: '岗位管理'
+    },
+    dictionaryManagement: {
+        title: '字典管理'
+    },
+    operationLogs: {
+        title: '操作日志'
     }
 }

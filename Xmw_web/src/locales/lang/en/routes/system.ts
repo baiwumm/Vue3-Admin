@@ -5,5 +5,11 @@ export default {
     },
     postManagement: {
         title: 'Post Management'
+    },
+    dictionaryManagement: {
+        title: 'Dictionary Management'
+    },
+    operationLogs: {
+        title: 'Operation Logs'
     }
 }
