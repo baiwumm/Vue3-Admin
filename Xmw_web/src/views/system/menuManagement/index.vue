@@ -1,16 +1,16 @@
+
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
-    <PostTable />
+    <MenuTable />
   </PageWrapper>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent } from 'vue';
 import { PageWrapper } from '/@/components/Page';
-import PostTable from './postTable/index.vue';
+import MenuTable from './menuTable/index.vue';
 export default defineComponent({
-  name: 'postManagement',
-  components: { PageWrapper, PostTable },
-  setup() {},
+  name: 'menuManagement',
+  components: { PageWrapper, MenuTable },
 });
 </script>

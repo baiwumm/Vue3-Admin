@@ -109,6 +109,9 @@ export default defineComponent({
     async function handleDelete(record: Recordable) {
       await postDel({ ids: record.postId });
       createMessage.success('删除成功！');
+      openModal(false, {
+        isDel: true,
+      });
       await reload();
     }
     // 新增编辑成功后的回调

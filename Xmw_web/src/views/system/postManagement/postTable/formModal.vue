@@ -48,6 +48,16 @@ export default defineComponent({
           ...data.record,
         });
       }
+      //   判断父级是否删除操作
+      if (data.isDel) {
+        // 操作成功后重新请求下拉树列表
+        updateSchema({
+          field: 'parentId',
+          componentProps: {
+            params: { key: Math.random() },
+          },
+        });
+      }
       //   请求状态和组织类型
       const statusOptions = await dictionaryModel({ dictCoding: 'system_status' });
       updateSchema([

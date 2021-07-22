@@ -13,7 +13,7 @@
           <img
             style="height: 216px"
             class="h-20 mx-auto"
-            src="../../../assets/svg/illustration.svg"
+            src="../../assets/svg/illustration.svg"
           />
         </Card>
 

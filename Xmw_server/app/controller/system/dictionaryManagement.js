@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-20 15:52:08
+ * @LastEditTime: 2021-07-22 11:39:06
  */
 'use strict';
 
@@ -28,11 +28,10 @@ class DictionaryManagementController extends Controller {
             // 有parentId查字典子项,没有则查字典列表
             else conditions += ` and parentId is null or parentId = ''`
             const result = await Raw.QueryPageData(`select * from xmw_dictionary ${conditions} order by sort desc,createTime asc `, current, pageSize);
-            ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
-
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('getDictionaryList方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 
@@ -51,8 +50,7 @@ class DictionaryManagementController extends Controller {
             if (dictionaryId) conditions += ` and dictionaryId != '${dictionaryId}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_dictionary ${conditions}`);
             if (exist.total) {
-                ctx.body = { resCode: -1, resMsg: '字典编码已存在!', response: {} }
-                return
+                return ctx.body = { resCode: -1, resMsg: '字典编码已存在!', response: {} }
             }
             // 参数dictionaryId判断是新增还是编辑
             if (!dictionaryId) {
@@ -66,10 +64,10 @@ class DictionaryManagementController extends Controller {
                 };
                 await Raw.Update('xmw_dictionary', params, options);
             }
-            ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('dictionarySave方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 
@@ -86,10 +84,10 @@ class DictionaryManagementController extends Controller {
             await Raw.Delete("xmw_dictionary", {
                 wherestr: `where dictionaryId in (${ids})`
             });
-            ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('dictionaryDel方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 
@@ -108,14 +106,13 @@ class DictionaryManagementController extends Controller {
             if (parentDict) {
                 let conditions = `where status = 1 and parentId = '${parentDict.dictionaryId}'`
                 const result = await Raw.QueryList(`select dictionaryLabel as label,dictionaryValue as value from xmw_dictionary ${conditions} order by sort desc `);
-                ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
+                return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
             } else {
-                ctx.body = { resCode: 200, resMsg: '字典编码不存在!', response: [] }
+                return ctx.body = { resCode: 200, resMsg: '字典编码不存在!', response: [] }
             }
-
         } catch (error) {
             ctx.logger.info('dictionaryModel方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 }

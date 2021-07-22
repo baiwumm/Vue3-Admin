@@ -3,6 +3,9 @@ export default {
     userManagement: {
         title: '用户管理'
     },
+    menuManagement: {
+        title: '菜单管理'
+    },
     organizationManagement: {
         title: '组织管理'
     },

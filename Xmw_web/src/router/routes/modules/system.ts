@@ -24,6 +24,16 @@ const system: AppRouteModule = {
             },
         },
         {
+            path: 'menuManagement',
+            name: 'menuManagement',
+            component: () => import('/@/views/system/menuManagement/index.vue'),
+            meta: {
+                title: t('routes.system.menuManagement.title'),
+                icon: 'simple-icons:about-dot-me',
+                transitionName:'fade-bottom'
+            },
+        },
+        {
             path: 'organizationManagement',
             name: 'OrganizationManagement',
             component: () => import('/@/views/system/organizationManagement/index.vue'),

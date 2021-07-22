@@ -54,6 +54,17 @@ export default defineComponent({
           parentId: data.parentId,
         });
       }
+      //   判断父级是否删除操作
+      if (data.isDel) {
+        // 操作成功后重新请求下拉树列表
+        updateSchema({
+          field: 'parentId',
+          componentProps: {
+            params: { key: Math.random() },
+          },
+        });
+      }
+
       updateSchema([
         {
           field: 'parentId',

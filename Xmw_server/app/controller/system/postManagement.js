@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-21 18:11:22
+ * @LastEditTime: 2021-07-22 11:38:02
  */
 'use strict';
 
@@ -27,11 +27,10 @@ class PostManagementController extends Controller {
             if (orgId) conditions += ` and t.orgId = '${orgId}'`
             let data = await Raw.QueryList(`select n.*,orgName from xmw_post n left join xmw_organization t on n.orgId = t.orgId ${conditions} order by n.createTime desc`);
             const result = ctx.helper.initializeTree(data, 'postId', 'parentId', 'children')
-            ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
-
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('getPostTree方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 
@@ -47,16 +46,14 @@ class PostManagementController extends Controller {
             let { postId, ...params } = ctx.params
             // 判断父级不能是自己
             if (params.parentId == postId && postId) {
-                ctx.body = { resCode: -1, resMsg: '父级不能是自己!', response: {} }
-                return
+                return ctx.body = { resCode: -1, resMsg: '父级不能是自己!', response: {} }
             }
             // 判断部门名称和部门编码是否已存在
             let conditions = `where (postName = '${params.postName}' and (orgId = '${params.orgId}' or parentId = '${params.parentId}'))`
             if (postId) conditions += ` and postId != '${postId}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
             if (exist.total) {
-                ctx.body = { resCode: -1, resMsg: '相同组织和同级岗位不能重名!', response: {} }
-                return
+                return ctx.body = { resCode: -1, resMsg: '相同组织和同级岗位不能重名!', response: {} }
             }
             // 参数orgId判断是新增还是编辑
             if (!postId) {
@@ -70,10 +67,10 @@ class PostManagementController extends Controller {
                 };
                 await Raw.Update('xmw_post', params, options);
             }
-            ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('postSave方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 
@@ -91,16 +88,15 @@ class PostManagementController extends Controller {
             let conditions = `where parentId = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
             if (exist.total) {
-                ctx.body = { resCode: -1, resMsg: '当前岗位存在子级,不能删除!', response: {} }
-                return
+                return ctx.body = { resCode: -1, resMsg: '当前岗位存在子级,不能删除!', response: {} }
             }
             await Raw.Delete("xmw_post", {
                 wherestr: `where postId in (${ids})`
             });
-            ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('postDel方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
 }

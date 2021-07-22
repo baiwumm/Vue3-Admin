@@ -135,6 +135,9 @@ export default defineComponent({
     async function handleDelete(record: Recordable) {
       await organizationDel({ ids: record.orgId });
       createMessage.success('删除成功！');
+      openModal(false, {
+        isDel: true,
+      });
       await reload();
     }
     // 添加子级
