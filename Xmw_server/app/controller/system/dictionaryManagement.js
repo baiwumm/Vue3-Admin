@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-19 18:15:53
+ * @LastEditTime: 2021-07-20 15:52:08
  */
 'use strict';
 
@@ -20,14 +20,14 @@ class DictionaryManagementController extends Controller {
         const { Raw } = app.Db.xmw;
         try {
             let { dictName, dictCoding, parentId, current, pageSize } = ctx.params;
-            // 只返回正常状态的数据
+            // 根据条件拼接筛选
             let conditions = 'where 1 = 1'
             if (dictName) conditions += ` and dictName like '%${dictName}%'`
             if (dictCoding) conditions += ` and dictCoding like '%${dictCoding}%'`
             if (parentId) conditions += ` and parentId = ${parentId}`
             // 有parentId查字典子项,没有则查字典列表
             else conditions += ` and parentId is null or parentId = ''`
-            const result = await Raw.QueryPageData(`select * from xmw_dictionary ${conditions} order by sort desc `, current, pageSize);
+            const result = await Raw.QueryPageData(`select * from xmw_dictionary ${conditions} order by sort desc,createTime asc `, current, pageSize);
             ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
 
         } catch (error) {

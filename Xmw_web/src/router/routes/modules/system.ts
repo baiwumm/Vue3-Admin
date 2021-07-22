@@ -24,6 +24,15 @@ const system: AppRouteModule = {
             },
         },
         {
+            path: 'organizationManagement',
+            name: 'OrganizationManagement',
+            component: () => import('/@/views/system/organizationManagement/index.vue'),
+            meta: {
+                title: t('routes.system.organizationManagement.title'),
+                icon: 'simple-icons:about-dot-me',
+            },
+        },
+        {
             path: 'postManagement',
             name: 'PostManagement',
             component: () => import('/@/views/system/postManagement/index.vue'),

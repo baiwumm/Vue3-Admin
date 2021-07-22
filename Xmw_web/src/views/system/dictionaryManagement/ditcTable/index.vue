@@ -6,10 +6,17 @@
       @row-click="handleRowClick"
       @row-dbClick="handleRowDbClick"
     >
-      <template #status="{ record }">
-        <Tag :color="record.status === '1' ? 'success' : 'error'">
-          {{ formatDictValue(statusOptions['status'], record.status) }}
+      <template #dictCoding="{ record }">
+        <Tag color="blue">
+          {{ record.dictCoding }}
         </Tag>
+      </template>
+      <template #status="{ record }">
+        <Badge
+          :status="record.status === '1' ? 'success' : 'error'"
+          :text="formatDictValue(statusOptions['status'], record.status)"
+        >
+        </Badge>
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
@@ -54,10 +61,10 @@ import {
 } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
 import FormModal from './formModal.vue';
 import { useModal } from '/@/components/Modal';
-import { Tag } from 'ant-design-vue';
+import { Tag, Badge } from 'ant-design-vue';
 export default defineComponent({
   name: 'ditcTable',
-  components: { BasicTable, TableAction, FormModal, Tag },
+  components: { BasicTable, TableAction, FormModal, Tag, Badge },
   emits: ['dict-change'],
   setup(_, { emit }) {
     const { createMessage } = useMessage();
@@ -65,6 +72,7 @@ export default defineComponent({
     const [registerTable, { reload, getDataSource, getSelectRowKeys, setSelectedRowKeys }] =
       useTable({
         title: '字典列表',
+        titleHelpMessage: '对系统中经常使用的一些较为固定的数据进行维护',
         api: getDictionaryList,
         rowKey: 'dictionaryId',
         columns,
@@ -94,7 +102,7 @@ export default defineComponent({
         afterFetch: handleAfterFetch,
       });
     //   请求状态
-    let statusOptions = ref({});
+    let statusOptions = ref([]);
     async function initOptions() {
       statusOptions.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
     }

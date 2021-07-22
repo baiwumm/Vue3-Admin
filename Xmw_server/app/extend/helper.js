@@ -1,5 +1,8 @@
 module.exports = {
-    // 格式化时间
+    /**
+     * 格式化时间
+     * @param
+     */
     dataFormat(value, fmt) {
         if (!value || value == "") return value;
         if (typeof value == "string" && value.indexOf(".") > -1)
@@ -32,7 +35,11 @@ module.exports = {
         }
         return fmt;
     },
-    // 雪花算法生成随机Id
+
+    /**
+     * 雪花算法生成随机id
+     * @param
+     */
     snowflakeId() {
         const Snowflake = /** @class */ (function () {
             function Snowflake(_workerId, _dataCenterId, _sequence) {
@@ -96,5 +103,27 @@ module.exports = {
             return Snowflake;
         })();
         return new Snowflake(1n, 1n, 0n).nextId().toString()
+    },
+
+    /**
+     * 数组转树形结构
+     * @param source 源数组
+     * @param tree 树
+     * @param parentId 父ID
+     */
+    initializeTree(source, id, parentId, children) {
+        let temp = JSON.parse(JSON.stringify(source))
+        // 以id为键，当前对象为值，存入一个新的对象中
+        let tempObj = {}
+        for (let i in temp) {
+            tempObj[temp[i][id]] = temp[i]
+        }
+        return temp.filter((father) => {
+            // 把当前节点的所有子节点找到
+            let childArr = temp.filter((child) => father[id] == child[parentId])
+            childArr.length > 0 ? (father[children] = childArr) : ''
+            // 只返回第一级数据；如果当前节点的fatherId不为空，但是在父节点不存在，也为一级数据
+            return father[parentId] === null || !tempObj[father[parentId]]
+        })
     }
 };

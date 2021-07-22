@@ -25,9 +25,10 @@ class RawClass {
         for (const key in data) {
             var val = data[key];
             if (val === undefined || val === '') data[key] = null;
-            else if (Date.prototype.isPrototypeOf(val) || (isNaN(val) && !isNaN(Date.parse(val)) && !val.includes('&#'))) {
-                data[key] = moment(val).format("YYYY-MM-DD HH:mm:ss");
-            }
+            // else if (Date.prototype.isPrototypeOf(val) || (isNaN(val) && !isNaN(Date.parse(val)) && !val.includes('&#'))) {
+            //     console.log(data[key])
+            //     data[key] = moment(val).format("YYYY-MM-DD HH:mm:ss");
+            // }
             // else{
             //   if(data[key] && data[key] !="" && typeof(data[key])=='string') data[key] =data[key].replace(/T/g," ").replace(/Z/g,"")
             // }

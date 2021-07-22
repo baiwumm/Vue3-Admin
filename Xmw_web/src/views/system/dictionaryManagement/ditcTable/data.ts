@@ -8,6 +8,7 @@ export const columns: BasicColumn[] = [
     {
         title: '字典编码',
         dataIndex: 'dictCoding',
+        slots: { customRender: 'dictCoding' },
     },
     {
         title: '状态',
@@ -59,6 +60,8 @@ export const dataFormSchema: FormSchema[] = [
         required: true,
         componentProps: {
             placeholder: '请输入字典名称',
+            maxLength: 32,
+            showCount: true
         },
     },
     {
@@ -69,6 +72,7 @@ export const dataFormSchema: FormSchema[] = [
         required: true,
         componentProps: {
             placeholder: '请输入字典编码',
+            maxLength: 32
         },
     },
     {

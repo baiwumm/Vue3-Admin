@@ -1,6 +1,6 @@
 <template>
-  <div class="ditcItemTable" style="padding: 16px 16px 16px 0">
-    <BasicTable @register="registerTable">
+  <div class="postTable">
+    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <template #status="{ record }">
         <Badge
           :status="record.status === '1' ? 'success' : 'error'"
@@ -10,11 +10,7 @@
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button
-          v-show="!!parentId"
-          type="primary"
-          @click="handleCreate"
-          preIcon="ant-design:plus-outlined"
+        <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
           >新增</a-button
         >
       </template>
@@ -38,42 +34,39 @@
         />
       </template>
     </BasicTable>
+    <!-- 表单模态框 -->
     <FormModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, nextTick, watch, ref } from 'vue';
-import { columns } from './data';
+import { defineComponent, ref, nextTick } from 'vue';
+import { columns, searchFormSchema } from './data';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
-import FormModal from './formModal.vue';
-import { useModal } from '/@/components/Modal';
-import {
-  getDictionaryList,
-  dictionaryDel,
-  dictionaryModel,
-} from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
-import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
-const props = {
-  parentId: { type: String },
-};
+import { useModal } from '/@/components/Modal';
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
+import { getPostTree, postDel } from '/@/api/system/postManagement'; // 引入岗位树接口
+import { Badge } from 'ant-design-vue';
+import FormModal from './formModal.vue'; // 表单模态框
 export default defineComponent({
-  name: 'ditcItemTable',
-  components: { BasicTable, FormModal, TableAction, Tag, Badge },
-  props,
-  setup(props) {
+  name: 'postTable',
+  components: { BasicTable, TableAction, FormModal, Badge },
+  setup(_, { emit }) {
     const { createMessage } = useMessage();
     const [registerModal, { openModal }] = useModal();
-    const [registerTable, { reload }] = useTable({
-      title: '字典子项列表',
-      titleHelpMessage: '请先选中字典，再操作字典子项',
-      api: getDictionaryList,
-      rowKey: 'dictionaryId',
+    const [registerTable, { reload, expandAll, collapseAll }] = useTable({
+      title: '岗位列表',
+      titleHelpMessage:
+        '岗位管理是以组织中的岗位为对象，科学地进行岗位设置、岗位分析、岗位描述、岗位监控和岗位评估等一系列活动的管理过程',
+      isTreeTable: true,
+      api: getPostTree,
+      rowKey: 'postId',
       columns,
       formConfig: {
         labelWidth: 120,
+        schemas: searchFormSchema,
         autoSubmitOnEnter: true,
         resetButtonOptions: {
           preIcon: 'ant-design:delete-outlined',
@@ -82,9 +75,8 @@ export default defineComponent({
           preIcon: 'ant-design:search-outlined',
         },
       },
-      immediate: false,
       showIndexColumn: false,
-      useSearchForm: false,
+      useSearchForm: true,
       showTableSetting: true,
       bordered: true,
       actionColumn: {
@@ -93,52 +85,40 @@ export default defineComponent({
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
-      //   请求之前对参数进行处理
-      beforeFetch: handleBeforeFetch,
     });
     //   请求状态
-    let statusOptions = ref({});
+    let statusOptions = ref([]);
     async function initOptions() {
       statusOptions.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
     }
     initOptions();
-    //   新增
+    // 新增
     function handleCreate() {
       openModal(true, {
         isUpdate: false,
-        parentId: props.parentId,
       });
     }
-    //   编辑
+    // 编辑
     function handleEdit(record: Recordable) {
       openModal(true, {
         record,
         isUpdate: true,
-        parentId: props.parentId,
       });
     }
     //   删除
     async function handleDelete(record: Recordable) {
-      await dictionaryDel({ ids: record.dictionaryId });
+      await postDel({ ids: record.postId });
       createMessage.success('删除成功！');
       await reload();
     }
-    function handleSuccess() {
-      reload();
+    // 新增编辑成功后的回调
+    async function handleSuccess() {
+      await reload();
     }
-    //   请求之前对参数进行处理
-    function handleBeforeFetch(params) {
-      return Object.assign(params, { parentId: props.parentId });
+    // 表格接口请求成功后触发,默认展开所有
+    function onFetchSuccess() {
+      nextTick(expandAll);
     }
-    // 监听字典列表的parentId
-    watch(
-      () => props.parentId,
-      () => {
-        nextTick(() => {
-          reload();
-        });
-      }
-    );
     return {
       registerTable,
       registerModal,
@@ -148,6 +128,7 @@ export default defineComponent({
       handleSuccess,
       statusOptions,
       formatDictValue,
+      onFetchSuccess,
     };
   },
 });

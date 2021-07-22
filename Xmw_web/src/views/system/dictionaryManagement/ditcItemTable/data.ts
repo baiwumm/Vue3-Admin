@@ -23,7 +23,8 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '备注',
-        dataIndex: 'remark'
+        dataIndex: 'remark',
+        defaultHidden: true
     },
 ];
 
@@ -36,6 +37,7 @@ export const dataFormSchema: FormSchema[] = [
         required: true,
         componentProps: {
             placeholder: '请输入字典标签',
+            maxLength: 32
         },
     },
     {
@@ -46,6 +48,7 @@ export const dataFormSchema: FormSchema[] = [
         required: true,
         componentProps: {
             placeholder: '请输入字典键值',
+            maxLength: 32
         },
     },
     {

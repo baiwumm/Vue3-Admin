@@ -3,6 +3,9 @@ export default {
     userManagement: {
         title: '用户管理'
     },
+    organizationManagement: {
+        title: '组织管理'
+    },
     postManagement: {
         title: '岗位管理'
     },
