@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 10:48:35
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-22 11:44:06
+ * @LastEditTime: 2021-07-23 16:17:10
  */
 'use strict';
 
@@ -14,11 +14,15 @@
 module.exports = app => {
     const { router, controller } = app;
     //   系统设置模块接口
-    router.get('/system/getUserList', controller.system.userManagement.getUserList); // 获取用户列表
+    router.post('/login', controller.system.userManagement.login);
+    router.get('/logout', controller.system.userManagement.logout);
+    router.get('/getPermCode', controller.system.userManagement.getPermCode);
+    router.get('/getUserInfo', controller.system.userManagement.getUserInfo);
     // 系统设置-菜单管理
     router.get('/system/getMenuTree', controller.system.menuManagement.getMenuTree); // 获取菜单树结构
     router.post('/system/menuSave', controller.system.menuManagement.menuSave); // 新增和更新菜单
     router.post('/system/menuDel', controller.system.menuManagement.menuDel); // 删除菜单
+    router.get('/system/getMenuList', controller.system.menuManagement.getMenuList); // 获取路由菜单
     // 系统设置-组织管理
     router.get('/system/getOrganizationTree', controller.system.organizationManagement.getOrganizationTree); // 获取组织树结构
     router.post('/system/organizationSave', controller.system.organizationManagement.organizationSave); // 新增和更新组织

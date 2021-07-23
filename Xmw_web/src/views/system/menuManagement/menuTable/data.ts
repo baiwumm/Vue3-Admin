@@ -10,6 +10,7 @@ export const columns: BasicColumn[] = [
     {
         title: '菜单名称',
         dataIndex: 'title',
+        width: 200
     },
     {
         title: '菜单类型',
@@ -34,7 +35,7 @@ export const columns: BasicColumn[] = [
         slots: { customRender: 'hideMenu' },
     },
     {
-        title: '是否缓存',
+        title: '忽略缓存',
         dataIndex: 'ignoreKeepAlive',
         slots: { customRender: 'ignoreKeepAlive' },
     },
@@ -49,11 +50,13 @@ export const columns: BasicColumn[] = [
     {
         title: '权限标识',
         dataIndex: 'permission',
+        width: 200,
         slots: { customRender: 'permission' }
     },
     {
         title: '内嵌地址',
         dataIndex: 'frameSrc',
+        defaultHidden: true
     },
     {
         title: '重定向',
@@ -127,17 +130,6 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'title',
-        label: '路由标题',
-        component: 'Input',
-        required: true,
-        colProps: { lg: 24, md: 24 },
-        componentProps: {
-            placeholder: '请输入路由标题',
-        },
-        ifShow: ({ values }) => !isButton(values.menuType),
-    },
-    {
         field: 'path',
         label: '路由地址',
         component: 'Input',
@@ -194,10 +186,28 @@ export const dataFormSchema: FormSchema[] = [
         field: 'transitionName',
         label: '路由动画',
         component: 'Select',
+        colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请选择路由动画',
         },
         ifShow: ({ values }) => isMenu(values.menuType),
+    },
+    {
+        field: 'icon',
+        label: '图标',
+        component: 'IconPicker',
+        ifShow: ({ values }) => !isButton(values.menuType),
+    },
+    {
+        field: 'sort',
+        label: '排序',
+        component: 'InputNumber',
+        required: true,
+        defaultValue: '1',
+        componentProps: {
+            placeholder: '请输入排序',
+            min: 1,
+        },
     },
     {
         field: 'hideChildrenInMenu',
@@ -224,21 +234,12 @@ export const dataFormSchema: FormSchema[] = [
         ifShow: ({ values }) => isMenu(values.menuType),
     },
     {
-        field: 'icon',
-        label: '图标',
-        component: 'IconPicker',
-        ifShow: ({ values }) => !isButton(values.menuType),
-    },
-    {
-        field: 'sort',
-        label: '排序',
-        component: 'InputNumber',
+        field: 'hideTab',
+        label: '不在标签显示',
+        component: 'RadioGroup',
+        defaultValue: '0',
         required: true,
-        defaultValue: '1',
-        componentProps: {
-            placeholder: '请输入排序',
-            min: 1,
-        },
+        ifShow: ({ values }) => isMenu(values.menuType),
     },
     {
         field: 'hideMenu',

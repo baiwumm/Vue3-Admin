@@ -1,6 +1,6 @@
 <template>
   <div>
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <!-- 菜单类型-插槽 -->
       <template #menuType="{ record }">
         <Tag :color="tagOptions[record.menuType]">
@@ -56,7 +56,11 @@
         <a-button type="primary" @click="handleCreate" preIcon="ant-design:plus-outlined"
           >新增</a-button
         >
-        <a-button type="primary" @click="expandAll" preIcon="ant-design:down-outlined"
+        <a-button
+          type="primary"
+          @click="expandAll"
+          preIcon="ant-design:down-outlined"
+          v-auth="['3000']"
           >展开</a-button
         >
         <a-button type="primary" @click="collapseAll" preIcon="ant-design:up-outlined"
@@ -91,7 +95,7 @@
 import { formatDictValue } from '/@/utils';
 import { getMenuTree, menuDel } from '/@/api/system/menuManagement'; // 引入菜单管理接口
 import { Tag, Badge } from 'ant-design-vue';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, nextTick } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useDrawer } from '/@/components/Drawer';
@@ -123,9 +127,11 @@ export default defineComponent({
           preIcon: 'ant-design:search-outlined',
         },
       },
+      showIndexColumn: false,
       useSearchForm: true,
       showTableSetting: true,
       bordered: true,
+      pagination: false,
       actionColumn: {
         width: 80,
         title: '操作',
@@ -180,7 +186,10 @@ export default defineComponent({
     function refresh() {
       reload();
     }
-
+    // 表格接口请求成功后触发,默认展开所有
+    function onFetchSuccess() {
+      nextTick(expandAll);
+    }
     return {
       refresh,
       registerTable,
@@ -194,6 +203,7 @@ export default defineComponent({
       options,
       formatDictValue,
       tagOptions,
+      onFetchSuccess,
     };
   },
 });

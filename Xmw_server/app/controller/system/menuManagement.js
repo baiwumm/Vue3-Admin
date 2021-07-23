@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-22 18:18:23
+ * @LastEditTime: 2021-07-23 17:07:26
  */
 'use strict';
 
@@ -29,6 +29,48 @@ class MenuManagementController extends Controller {
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('getMenuTree方法报错：' + error)
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+        }
+    }
+
+    /**
+     * @description: 获取路由菜单
+     * @param {*} 
+     * @return {*}
+     */
+    async getMenuList() {
+        const { app, ctx } = this;
+        const { Raw } = app.Db.xmw;
+        try {
+            // 只查询目录或者菜单类型的数据
+            let sqlData = await Raw.QueryList(`select * from xmw_menu where menuType != 'button' order by sort desc,createTime asc `);
+            // 组装路由数据格式
+            let menuData = sqlData.map(v => {
+                let menuItem = {
+                    menuId: v.menuId, //路由id
+                    path: v.path, // 路由地址
+                    name: v.path.replace(/\//g, ''), // 路由name不能重复
+                    component: v.component, // 模板路径
+                    redirect: v.redirect, // 重定向地址
+                    parentId: v.parentId, // 父级id
+                    meta: {
+                        title: v.title, // 路由标题
+                        ignoreKeepAlive: v.ignoreKeepAlive == '1', // 是否忽略KeepAlive缓存
+                        affix: v.affix == '1', // 是否固定标签
+                        icon: v.icon, // 图标，也是菜单图标,
+                        frameSrc: v.frameSrc || '', // 内嵌iframe的地址
+                        transitionName: v.transitionName, // 指定该路由切换的动画名
+                        hideChildrenInMenu: v.hideChildrenInMenu == '1', // 隐藏所有子菜单
+                        hideTab: v.hideTab == '1', // 当前路由不再标签页显示
+                        hideMenu: v.hideMenu == '1', // 当前路由不再菜单显示
+                    }
+                }
+                return menuItem
+            })
+            const result = ctx.helper.initializeTree(menuData, 'menuId', 'parentId', 'children')
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
+        } catch (error) {
+            ctx.logger.info('getMenuList方法报错：' + error)
             return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }

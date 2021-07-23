@@ -1,3 +1,4 @@
+
 <template>
   <BasicTable @register="registerTable">
     <template #sex="{ record }">
@@ -32,7 +33,7 @@
 <script lang="ts">
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 引入table组件
 import { columns, searchFormSchema } from './data';
-import { getUserList } from '/@/api/system/userManagement'; // 引入用户接口
+// import { getUserList } from '/@/api/system/userManagement'; // 引入用户接口
 import { Tag } from 'ant-design-vue';
 import { defineComponent, nextTick, ref, watch } from 'vue';
 import { useModal } from '/@/components/Modal';
@@ -42,7 +43,7 @@ export default defineComponent({
   setup() {
     const [registerTable] = useTable({
       title: '用户列表 ',
-      api: getUserList,
+      //   api: getUserList,
       rowKey: 'userId',
       columns,
       formConfig: {

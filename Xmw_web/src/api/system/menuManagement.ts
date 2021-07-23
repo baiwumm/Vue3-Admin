@@ -4,26 +4,32 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:46:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-22 11:45:20
+ * @LastEditTime: 2021-07-23 15:27:04
  */
 import { defHttp } from '/@/utils/http/axios';
+import { getMenuTreeResultModel, menuTreeParams, menuSaveParams, menuDelParams, getMenuListResultModel } from './model/menuModel';
 
 enum Api {
     getMenuTree = '/system/getMenuTree', // 获取菜单树结构
     menuSave = '/system/menuSave', // 新增和更新菜单
     menuDel = '/system/menuDel', // 删除菜单
+    getMenuList = '/system/getMenuList', // 获取路由菜单
 }
 
-export function getMenuTree(params?: object) {
-    return defHttp.get({ url: Api.getMenuTree, params: params });
+export function getMenuTree(params?: menuTreeParams) {
+    return defHttp.get<getMenuTreeResultModel>({ url: Api.getMenuTree, params });
 }
 
-export function menuSave(params?: object) {
-    return defHttp.post({ url: Api.menuSave, params: params });
+export function menuSave(params: menuSaveParams) {
+    return defHttp.post({ url: Api.menuSave, params });
 }
 
-export function menuDel(params?: object) {
-    return defHttp.post({ url: Api.menuDel, params: params });
+export function menuDel(params: menuDelParams) {
+    return defHttp.post({ url: Api.menuDel, params });
+}
+
+export function getMenuList() {
+    return defHttp.get<getMenuListResultModel>({ url: Api.getMenuList });
 }
 
 

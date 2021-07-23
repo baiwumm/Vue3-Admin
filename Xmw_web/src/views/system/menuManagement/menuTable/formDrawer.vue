@@ -68,6 +68,7 @@ export default defineComponent({
       const hideChildOptions = await dictionaryModel({ dictCoding: 'system_menu_hideChild' });
       const keepaliveOptions = await dictionaryModel({ dictCoding: 'system_menu_keepAlive' });
       const affixOptions = await dictionaryModel({ dictCoding: 'system_menu_affix' });
+      const hideTabOptions = await dictionaryModel({ dictCoding: 'system_menu_hideTab' });
       const visibleOptions = await dictionaryModel({ dictCoding: 'system_isHide' });
       const statusOptions = await dictionaryModel({ dictCoding: 'system_status' });
       updateSchema([
@@ -99,6 +100,12 @@ export default defineComponent({
           field: 'affix',
           componentProps: {
             options: affixOptions,
+          },
+        },
+        {
+          field: 'hideTab',
+          componentProps: {
+            options: hideTabOptions,
           },
         },
         {
