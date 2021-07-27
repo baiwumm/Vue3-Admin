@@ -43,22 +43,22 @@ export default defineComponent({
       isUpdate.value = !!data?.isUpdate;
 
       if (unref(isUpdate)) {
-        rowId.value = data.record.orgId;
+        rowId.value = data.record.org_id;
         setFieldsValue({
           ...data.record,
         });
       }
       //  添加子级
-      if (data.parentId) {
+      if (data.parent_id) {
         setFieldsValue({
-          parentId: data.parentId,
+          parent_id: data.parent_id,
         });
       }
       //   判断父级是否删除操作
       if (data.isDel) {
         // 操作成功后重新请求下拉树列表
         updateSchema({
-          field: 'parentId',
+          field: 'parent_id',
           componentProps: {
             params: { key: Math.random() },
           },
@@ -67,13 +67,13 @@ export default defineComponent({
 
       updateSchema([
         {
-          field: 'parentId',
-          componentProps: { disabled: !!data?.parentId },
+          field: 'parent_id',
+          componentProps: { disabled: !!data?.parent_id },
         },
       ]);
       //   请求状态和组织类型
-      const statusOptions = await dictionaryModel({ dictCoding: 'system_status' });
-      const orgTypeOptions = await dictionaryModel({ dictCoding: 'system_organization_type' });
+      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+      const orgTypeOptions = await dictionaryModel({ dict_coding: 'system_organization_type' });
       updateSchema([
         {
           field: 'status',
@@ -82,7 +82,7 @@ export default defineComponent({
           },
         },
         {
-          field: 'orgType',
+          field: 'org_type',
           componentProps: {
             options: orgTypeOptions,
           },
@@ -96,23 +96,16 @@ export default defineComponent({
       try {
         const values = await validate();
         setModalProps({ confirmLoading: true });
-        !unref(isUpdate)
-          ? await organizationSave({ ...values })
-          : await organizationSave({
-              ...values,
-              orgId: rowId.value,
-            });
-        !unref(isUpdate)
-          ? createMessage.success('新增成功！')
-          : createMessage.success('编辑成功！');
+        // 根据操作拼接表单参数
+        let params = { ...values };
+        if (unref(isUpdate)) Object.assign(params, { org_id: rowId.value });
+        await organizationSave(params);
+        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
         closeModal();
-        emit('success', {
-          isUpdate: unref(isUpdate),
-          values: { ...values, orgId: rowId.value },
-        });
+        emit('success');
         // 操作成功后重新请求下拉树列表
         updateSchema({
-          field: 'parentId',
+          field: 'parent_id',
           componentProps: {
             params: { key: Math.random() },
           },

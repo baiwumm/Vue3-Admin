@@ -1,13 +1,21 @@
+/*
+ * @Description: 
+ * @Version: 3.30
+ * @Autor: Xie Mingwei
+ * @Date: 2021-07-19 16:02:46
+ * @LastEditors: Xie Mingwei
+ * @LastEditTime: 2021-07-27 16:36:27
+ */
 import { BasicColumn, FormSchema } from '/@/components/Table';
 
 export const columns: BasicColumn[] = [
     {
         title: '字典标签',
-        dataIndex: 'dictionaryLabel',
+        dataIndex: 'dictionary_label',
     },
     {
         title: '字典键值',
-        dataIndex: 'dictionaryValue',
+        dataIndex: 'dictionary_value',
     },
     {
         title: '状态',
@@ -30,7 +38,7 @@ export const columns: BasicColumn[] = [
 
 export const dataFormSchema: FormSchema[] = [
     {
-        field: 'dictionaryLabel',
+        field: 'dictionary_label',
         label: '字典标签',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
@@ -41,7 +49,7 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'dictionaryValue',
+        field: 'dictionary_value',
         label: '字典键值',
         component: 'Input',
         colProps: { lg: 24, md: 24 },

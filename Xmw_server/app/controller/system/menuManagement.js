@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-23 17:07:26
+ * @LastEditTime: 2021-07-27 10:32:08
  */
 'use strict';
 
@@ -24,8 +24,8 @@ class MenuManagementController extends Controller {
             let conditions = 'where 1 = 1'
             if (title) conditions += ` and title like '%${title}%'`
             if (status) conditions += ` and status = ${status}`
-            let data = await Raw.QueryList(`select * from xmw_menu ${conditions} order by sort desc,createTime asc `);
-            const result = ctx.helper.initializeTree(data, 'menuId', 'parentId', 'children')
+            let menu_data = await Raw.QueryList(`select * from xmw_menu ${conditions} order by sort desc,create_time asc `);
+            const result = ctx.helper.initializeTree(menu_data, 'menu_id', 'parent_id', 'children')
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('getMenuTree方法报错：' + error)
@@ -43,31 +43,31 @@ class MenuManagementController extends Controller {
         const { Raw } = app.Db.xmw;
         try {
             // 只查询目录或者菜单类型的数据
-            let sqlData = await Raw.QueryList(`select * from xmw_menu where menuType != 'button' order by sort desc,createTime asc `);
+            let sqlData = await Raw.QueryList(`select * from xmw_menu where menu_type != 'button' order by sort desc,create_time asc `);
             // 组装路由数据格式
             let menuData = sqlData.map(v => {
                 let menuItem = {
-                    menuId: v.menuId, //路由id
+                    menu_id: v.menu_id, //路由id
                     path: v.path, // 路由地址
                     name: v.path.replace(/\//g, ''), // 路由name不能重复
                     component: v.component, // 模板路径
                     redirect: v.redirect, // 重定向地址
-                    parentId: v.parentId, // 父级id
+                    parent_id: v.parent_id, // 父级id
                     meta: {
                         title: v.title, // 路由标题
-                        ignoreKeepAlive: v.ignoreKeepAlive == '1', // 是否忽略KeepAlive缓存
+                        ignoreKeepAlive: v.ignore_keep_alive == '1', // 是否忽略KeepAlive缓存
                         affix: v.affix == '1', // 是否固定标签
                         icon: v.icon, // 图标，也是菜单图标,
-                        frameSrc: v.frameSrc || '', // 内嵌iframe的地址
-                        transitionName: v.transitionName, // 指定该路由切换的动画名
-                        hideChildrenInMenu: v.hideChildrenInMenu == '1', // 隐藏所有子菜单
-                        hideTab: v.hideTab == '1', // 当前路由不再标签页显示
-                        hideMenu: v.hideMenu == '1', // 当前路由不再菜单显示
+                        frameSrc: v.frame_src || '', // 内嵌iframe的地址
+                        transitionName: v.transition_name, // 指定该路由切换的动画名
+                        hideChildrenInMenu: v.hide_childrenIn_menu == '1', // 隐藏所有子菜单
+                        hideTab: v.hide_tab == '1', // 当前路由不再标签页显示
+                        hideMenu: v.hide_menu == '1', // 当前路由不再菜单显示
                     }
                 }
                 return menuItem
             })
-            const result = ctx.helper.initializeTree(menuData, 'menuId', 'parentId', 'children')
+            const result = ctx.helper.initializeTree(menuData, 'menu_id', 'parent_id', 'children')
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('getMenuList方法报错：' + error)
@@ -84,27 +84,27 @@ class MenuManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { menuId, ...params } = ctx.params
+            let { menu_id, ...params } = ctx.params
             // 判断父级不能是自己
-            if (params.parentId == menuId && menuId) {
+            if (params.parent_id == menu_id && menu_id) {
                 return ctx.body = { resCode: -1, resMsg: '父级不能是自己!', response: {} }
             }
             // 判断菜单名称是否已存在
-            let conditions = `where title = '${params.title}' and menuType != 'button'`
-            if (menuId) conditions += ` and menuId != '${menuId}'`
+            let conditions = `where title = '${params.title}' and menu_type != 'button'`
+            if (menu_id) conditions += ` and menu_id != '${menu_id}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_menu ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '菜单名称已存在!', response: {} }
             }
-            // 参数menuId判断是新增还是编辑
-            if (!menuId) {
-                params.menuId = ctx.helper.snowflakeId()
-                params.createTime = new Date()
+            // 参数menu_id判断是新增还是编辑
+            if (!menu_id) {
+                params.menu_id = ctx.helper.snowflakeId()
+                params.create_time = new Date()
                 await Raw.Insert('xmw_menu', params);
-            } else { // 编辑字典
-                params.updateLastTime = new Date()
+            } else { // 编辑菜单
+                params.update_last_time = new Date()
                 const options = {
-                    wherestr: `where menuId = ${menuId}`
+                    wherestr: `where menu_id = ${menu_id}`
                 };
                 await Raw.Update('xmw_menu', params, options);
             }
@@ -126,13 +126,13 @@ class MenuManagementController extends Controller {
         try {
             let { ids } = ctx.params
             // 判断当前菜单是否存在子级
-            let conditions = `where parentId = '${ids}'`
+            let conditions = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_menu ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '当前菜单是否存在子级,不能删除!', response: {} }
             }
             await Raw.Delete("xmw_menu", {
-                wherestr: `where menuId in (${ids})`
+                wherestr: `where menu_id in (${ids})`
             });
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {

@@ -3,9 +3,9 @@ import { h } from 'vue';
 import { Icon } from '/@/components/Icon';
 import { getMenuTree } from '/@/api/system/menuManagement';
 
-const isDir = (menuType: string) => menuType === 'dir';
-const isMenu = (menuType: string) => menuType === 'menu';
-const isButton = (menuType: string) => menuType === 'button';
+const isDir = (menu_type: string) => menu_type === 'dir';
+const isMenu = (menu_type: string) => menu_type === 'menu';
+const isButton = (menu_type: string) => menu_type === 'button';
 export const columns: BasicColumn[] = [
     {
         title: '菜单名称',
@@ -14,8 +14,8 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '菜单类型',
-        dataIndex: 'menuType',
-        slots: { customRender: 'menuType' },
+        dataIndex: 'menu_type',
+        slots: { customRender: 'menu_type' },
     },
     {
         title: '图标',
@@ -31,13 +31,13 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '是否隐藏',
-        dataIndex: 'hideMenu',
-        slots: { customRender: 'hideMenu' },
+        dataIndex: 'hide_menu',
+        slots: { customRender: 'hide_menu' },
     },
     {
         title: '忽略缓存',
-        dataIndex: 'ignoreKeepAlive',
-        slots: { customRender: 'ignoreKeepAlive' },
+        dataIndex: 'ignore_keep_alive',
+        slots: { customRender: 'ignore_keep_alive' },
     },
     {
         title: '路由地址',
@@ -55,7 +55,7 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '内嵌地址',
-        dataIndex: 'frameSrc',
+        dataIndex: 'frame_src',
         defaultHidden: true
     },
     {
@@ -64,8 +64,8 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '隐藏子菜单',
-        dataIndex: 'hideChildrenInMenu',
-        slots: { customRender: 'hideChildrenInMenu' }
+        dataIndex: 'hide_childrenIn_menu',
+        slots: { customRender: 'hide_childrenIn_menu' }
     },
     {
         title: '排序',
@@ -78,7 +78,7 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '创建时间',
-        dataIndex: 'createTime',
+        dataIndex: 'create_time',
         defaultHidden: true
     }
 ];
@@ -96,7 +96,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dataFormSchema: FormSchema[] = [
     {
-        field: 'menuType',
+        field: 'menu_type',
         label: '菜单类型',
         component: 'RadioButtonGroup',
         defaultValue: 'dir',
@@ -104,7 +104,7 @@ export const dataFormSchema: FormSchema[] = [
         required: true,
     },
     {
-        field: 'parentId',
+        field: 'parent_id',
         label: '上级菜单',
         component: 'ApiTreeSelect',
         colProps: { lg: 24, md: 24 },
@@ -113,8 +113,8 @@ export const dataFormSchema: FormSchema[] = [
             params: {},
             replaceFields: {
                 title: 'title',
-                key: 'menuId',
-                value: 'menuId',
+                key: 'menu_d',
+                value: 'menu_id',
             },
             api: getMenuTree,
         },
@@ -138,7 +138,7 @@ export const dataFormSchema: FormSchema[] = [
         componentProps: {
             placeholder: '请输入路由地址',
         },
-        ifShow: ({ values }) => !isButton(values.menuType),
+        ifShow: ({ values }) => !isButton(values.menu_type),
     },
     {
         field: 'redirect',
@@ -149,7 +149,7 @@ export const dataFormSchema: FormSchema[] = [
         componentProps: {
             placeholder: '请输入重定向地址',
         },
-        ifShow: ({ values }) => isDir(values.menuType),
+        ifShow: ({ values }) => isDir(values.menu_type),
     },
     {
         field: 'component',
@@ -160,7 +160,7 @@ export const dataFormSchema: FormSchema[] = [
         componentProps: {
             placeholder: '请输入组件路径',
         },
-        ifShow: ({ values }) => !isButton(values.menuType),
+        ifShow: ({ values }) => !isButton(values.menu_type),
     },
     {
         field: 'permission',
@@ -170,33 +170,33 @@ export const dataFormSchema: FormSchema[] = [
         componentProps: {
             placeholder: '请输入权限标识',
         },
-        ifShow: ({ values }) => !isDir(values.menuType),
+        ifShow: ({ values }) => !isDir(values.menu_type),
     },
     {
-        field: 'frameSrc',
+        field: 'frame_src',
         label: '内嵌地址',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入内嵌地址',
         },
-        ifShow: ({ values }) => isMenu(values.menuType),
+        ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
-        field: 'transitionName',
+        field: 'transition_name',
         label: '路由动画',
         component: 'Select',
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请选择路由动画',
         },
-        ifShow: ({ values }) => isMenu(values.menuType),
+        ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
         field: 'icon',
         label: '图标',
         component: 'IconPicker',
-        ifShow: ({ values }) => !isButton(values.menuType),
+        ifShow: ({ values }) => !isButton(values.menu_type),
     },
     {
         field: 'sort',
@@ -210,20 +210,20 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'hideChildrenInMenu',
+        field: 'hide_childrenIn_menu',
         label: '隐藏子菜单',
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
-        ifShow: ({ values }) => isMenu(values.menuType),
+        ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
-        field: 'ignoreKeepAlive',
+        field: 'ignore_keep_alive',
         label: '是否忽略缓存',
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
-        ifShow: ({ values }) => isMenu(values.menuType),
+        ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
         field: 'affix',
@@ -231,23 +231,23 @@ export const dataFormSchema: FormSchema[] = [
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
-        ifShow: ({ values }) => isMenu(values.menuType),
+        ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
-        field: 'hideTab',
+        field: 'hide_tab',
         label: '不在标签显示',
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
-        ifShow: ({ values }) => isMenu(values.menuType),
+        ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
-        field: 'hideMenu',
+        field: 'hide_menu',
         label: '是否隐藏',
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
-        ifShow: ({ values }) => isDir(values.menuType) || isMenu(values.menuType),
+        ifShow: ({ values }) => isDir(values.menu_type) || isMenu(values.menu_type),
     },
     {
         field: 'status',

@@ -5,11 +5,11 @@ import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树�
 export const columns: BasicColumn[] = [
     {
         title: '岗位名称',
-        dataIndex: 'postName',
+        dataIndex: 'post_name',
     },
     {
         title: '所属组织',
-        dataIndex: 'orgName'
+        dataIndex: 'org_name'
     },
     {
         title: '状态',
@@ -29,32 +29,33 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '创建时间',
-        dataIndex: 'createTime'
+        dataIndex: 'create_time'
     },
 ];
 
 export const searchFormSchema: FormSchema[] = [
     {
-        field: 'postName',
+        field: 'post_name',
         label: '岗位名称',
         component: 'Input',
         colProps: { span: 8 },
         labelWidth: 80,
         componentProps: {
             placeholder: '请输入岗位名称',
+            maxLength: 32
         },
     },
     {
-        field: 'orgId',
+        field: 'org_id',
         component: 'ApiTreeSelect',
         label: '所属组织',
         componentProps: {
             api: getOrganizationTree,
             placeholder: '请选择所属组织',
             replaceFields: {
-                title: 'orgName',
-                key: 'orgId',
-                value: 'orgId',
+                title: 'org_name',
+                key: 'org_id',
+                value: 'org_id',
             },
         },
         colProps: { span: 8 },
@@ -63,19 +64,18 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dataFormSchema: FormSchema[] = [
     {
-        field: 'postName',
+        field: 'post_name',
         label: '岗位名称',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
             placeholder: '请输入岗位名称',
-            maxLength: 32,
-            showCount: true
+            maxLength: 32
         },
     },
     {
-        field: 'parentId',
+        field: 'parent_id',
         component: 'ApiTreeSelect',
         label: '上级岗位',
         componentProps: {
@@ -83,15 +83,15 @@ export const dataFormSchema: FormSchema[] = [
             placeholder: '请选择上级岗位',
             params: {},
             replaceFields: {
-                title: 'postName',
-                key: 'postId',
-                value: 'postId',
+                title: 'post_name',
+                key: 'post_id',
+                value: 'post_id',
             },
         },
         colProps: { lg: 24, md: 24 },
     },
     {
-        field: 'orgId',
+        field: 'org_id',
         component: 'ApiTreeSelect',
         label: '所属组织',
         required: true,
@@ -99,9 +99,9 @@ export const dataFormSchema: FormSchema[] = [
             api: getOrganizationTree,
             placeholder: '请选择所属组织',
             replaceFields: {
-                title: 'orgName',
-                key: 'orgId',
-                value: 'orgId',
+                title: 'org_name',
+                key: 'org_id',
+                value: 'org_id',
             },
         },
         colProps: { lg: 24, md: 24 },

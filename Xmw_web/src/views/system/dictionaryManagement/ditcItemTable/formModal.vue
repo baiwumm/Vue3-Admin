@@ -1,3 +1,11 @@
+<!--
+ * @Description: 
+ * @Version: 3.30
+ * @Autor: Xie Mingwei
+ * @Date: 2021-07-19 16:42:33
+ * @LastEditors: Xie Mingwei
+ * @LastEditTime: 2021-07-27 16:09:35
+-->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -25,7 +33,7 @@ export default defineComponent({
 
     const isUpdate = ref(true);
     const rowId = ref('');
-    const parentId = ref('');
+    const parent_id = ref('');
 
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
       labelWidth: 100,
@@ -41,16 +49,16 @@ export default defineComponent({
       resetFields();
       setModalProps({ confirmLoading: false });
       isUpdate.value = !!data?.isUpdate;
-      parentId.value = data?.parentId;
+      parent_id.value = data?.parent_id;
 
       if (unref(isUpdate)) {
-        rowId.value = data.record.dictionaryId;
+        rowId.value = data.record.dictionary_id;
         setFieldsValue({
           ...data.record,
         });
       }
-
-      const statusOptions = await dictionaryModel({ dictCoding: 'system_status' });
+      // 请求字典状态
+      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
       updateSchema([
         {
           field: 'status',
@@ -67,21 +75,13 @@ export default defineComponent({
       try {
         const values = await validate();
         setModalProps({ confirmLoading: true });
-        !unref(isUpdate)
-          ? await dictionarySave({ ...values, parentId: parentId.value })
-          : await dictionarySave({
-              ...values,
-              dictionaryId: rowId.value,
-              parentId: parentId.value,
-            });
-        !unref(isUpdate)
-          ? createMessage.success('新增成功！')
-          : createMessage.success('编辑成功！');
+        // 根据操作拼接表单参数
+        let params = { ...values, parent_id: parent_id.value };
+        if (unref(isUpdate)) Object.assign(params, { dictionary_id: rowId.value });
+        await dictionarySave(params);
+        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
         closeModal();
-        emit('success', {
-          isUpdate: unref(isUpdate),
-          values: { ...values, dictionaryId: rowId.value, parentId: parentId.value },
-        });
+        emit('success');
       } finally {
         setModalProps({ confirmLoading: false });
       }

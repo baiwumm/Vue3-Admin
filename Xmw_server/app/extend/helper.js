@@ -40,7 +40,8 @@ module.exports = {
      * 雪花算法生成随机id
      * @param
      */
-    snowflakeId() {
+    snowflakeId(flag) {
+        // flag判断是单个id生成还是多个id
         const Snowflake = /** @class */ (function () {
             function Snowflake(_workerId, _dataCenterId, _sequence) {
                 this.twepoch = 1288834974657n;
@@ -102,7 +103,7 @@ module.exports = {
             };
             return Snowflake;
         })();
-        return new Snowflake(1n, 1n, 0n).nextId().toString()
+        return flag ? new Snowflake(1n, 1n, 0n) : new Snowflake(1n, 1n, 0n).nextId().toString()
     },
 
     /**

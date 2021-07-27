@@ -2,24 +2,24 @@
   <div>
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <!-- 菜单类型-插槽 -->
-      <template #menuType="{ record }">
-        <Tag :color="tagOptions[record.menuType]">
-          {{ formatDictValue(options['menuType'], record.menuType) }}
+      <template #menu_type="{ record }">
+        <Tag :color="tagOptions[record.menu_type]">
+          {{ formatDictValue(options['menu_type'], record.menu_type) }}
         </Tag>
       </template>
       <!-- 是否隐藏-插槽 -->
-      <template #hideMenu="{ record }">
-        <Tag :color="record.hideMenu === '0' ? 'success' : 'error'" v-if="record.hideMenu">
-          {{ formatDictValue(options['hideMenu'], record.hideMenu) }}
+      <template #hide_menu="{ record }">
+        <Tag :color="record.hide_menu === '0' ? 'success' : 'error'" v-if="record.hide_menu">
+          {{ formatDictValue(options['hide_menu'], record.hide_menu) }}
         </Tag>
       </template>
       <!-- 是否忽略缓存-插槽 -->
-      <template #ignoreKeepAlive="{ record }">
+      <template #ignore_keep_alive="{ record }">
         <Tag
-          :color="record.ignoreKeepAlive === '0' ? 'success' : 'error'"
-          v-if="record.ignoreKeepAlive"
+          :color="record.ignore_keep_alive === '0' ? 'success' : 'error'"
+          v-if="record.ignore_keep_alive"
         >
-          {{ formatDictValue(options['ignoreKeepAlive'], record.ignoreKeepAlive) }}
+          {{ formatDictValue(options['ignore_keep_alive'], record.ignore_keep_alive) }}
         </Tag>
       </template>
       <!-- 是否固定标签-插槽 -->
@@ -37,12 +37,12 @@
         </Badge>
       </template>
       <!-- 隐藏子菜单-插槽 -->
-      <template #hideChildrenInMenu="{ record }">
+      <template #hide_childrenIn_menu="{ record }">
         <Tag
-          :color="record.hideChildrenInMenu === '0' ? 'success' : 'error'"
-          v-if="record.hideChildrenInMenu"
+          :color="record.hide_childrenIn_menu === '0' ? 'success' : 'error'"
+          v-if="record.hide_childrenIn_menu"
         >
-          {{ formatDictValue(options['hideChildrenInMenu'], record.hideChildrenInMenu) }}
+          {{ formatDictValue(options['hide_childrenIn_menu'], record.hide_childrenIn_menu) }}
         </Tag>
       </template>
       <!-- 权限标识-插槽 -->
@@ -96,14 +96,14 @@ import { formatDictValue } from '/@/utils';
 import { getMenuTree, menuDel } from '/@/api/system/menuManagement'; // 引入菜单管理接口
 import { Tag, Badge } from 'ant-design-vue';
 import { defineComponent, ref, nextTick } from 'vue';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; //表格组件
 import { useMessage } from '/@/hooks/web/useMessage';
-import { useDrawer } from '/@/components/Drawer';
-import FormDrawer from './formDrawer.vue';
-import { columns, searchFormSchema } from './data';
+import { useDrawer } from '/@/components/Drawer'; // 抽屉组件
+import FormDrawer from './formDrawer.vue'; //表单组件
+import { columns, searchFormSchema } from './data'; // 表格配置项
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
 export default defineComponent({
-  name: 'SysMenuTable',
+  name: 'menuTable',
   components: { BasicTable, FormDrawer, TableAction, Tag, Badge },
   setup() {
     const [registerDrawer, { openDrawer }] = useDrawer();
@@ -111,7 +111,7 @@ export default defineComponent({
       title: '菜单列表',
       isTreeTable: true,
       api: getMenuTree,
-      rowKey: 'menuId',
+      rowKey: 'menu_id',
       columns,
       formConfig: {
         labelWidth: 120,
@@ -119,11 +119,9 @@ export default defineComponent({
         autoSubmitOnEnter: true,
         baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
         resetButtonOptions: {
-          // @ts-ignore
           preIcon: 'ant-design:delete-outlined',
         },
         submitButtonOptions: {
-          // @ts-ignore
           preIcon: 'ant-design:search-outlined',
         },
       },
@@ -140,58 +138,54 @@ export default defineComponent({
       },
     });
     const { createMessage } = useMessage();
-
+    // 请求字典数据
     let options = ref({}),
       tagOptions = ref({ dir: 'green', menu: 'cyan', button: 'blue' });
     async function initOptions() {
-      options.value['menuType'] = await dictionaryModel({ dictCoding: 'system_menu_type' });
-      options.value['hideMenu'] = await dictionaryModel({ dictCoding: 'system_isHide' });
-      options.value['ignoreKeepAlive'] = await dictionaryModel({
-        dictCoding: 'system_menu_keepAlive',
+      options.value['menu_type'] = await dictionaryModel({ dict_coding: 'system_menu_type' });
+      options.value['hide_menu'] = await dictionaryModel({ dict_coding: 'system_isHide' });
+      options.value['ignore_keep_alive'] = await dictionaryModel({
+        dict_coding: 'system_menu_keepAlive',
       });
-      options.value['affix'] = await dictionaryModel({ dictCoding: 'system_menu_affix' });
-      options.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
-      options.value['hideChildrenInMenu'] = await dictionaryModel({
-        dictCoding: 'system_menu_hideChild',
+      options.value['affix'] = await dictionaryModel({ dict_coding: 'system_menu_affix' });
+      options.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+      options.value['hide_childrenIn_menu'] = await dictionaryModel({
+        dict_coding: 'system_menu_hideChild',
       });
     }
     initOptions();
-
+    //新增操作
     function handleCreate() {
       openDrawer(true, {
         isUpdate: false,
       });
     }
-
+    // 编辑操作
     function handleEdit(record: Recordable) {
       openDrawer(true, {
         record,
         isUpdate: true,
       });
     }
-
+    //删除操作
     async function handleDelete(record: Recordable) {
-      await menuDel({ ids: record.menuId });
+      await menuDel({ ids: record.menu_id });
       createMessage.success('删除成功！');
       openDrawer(false, {
         isDel: true,
       });
       await reload();
     }
-
+    // 操作成功重新请求列表
     async function handleSuccess() {
       await reload();
     }
 
-    function refresh() {
-      reload();
-    }
     // 表格接口请求成功后触发,默认展开所有
     function onFetchSuccess() {
       nextTick(expandAll);
     }
     return {
-      refresh,
       registerTable,
       registerDrawer,
       handleCreate,

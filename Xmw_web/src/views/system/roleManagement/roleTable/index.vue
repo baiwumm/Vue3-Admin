@@ -1,16 +1,11 @@
 <template>
-  <div class="userTable">
-    <BasicTable @register="registerTable">
-      <template #sex="{ record }">
-        <Tag color="processing">{{ { 0: '女', 1: '男' }[record.sex] }}</Tag>
-      </template>
+  <div class="roleTable">
+    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
-          >新增用户</a-button
-        >
+        <a-button type="primary" @click="handleCreate"> 新增角色 </a-button>
       </template>
-      <!-- 操作栏 -->
+      <!-- 列操作 -->
       <template #action="{ record }">
         <TableAction
           :actions="[
@@ -36,29 +31,31 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue';
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 引入表格组件
 import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 引入table组件
-import { columns, searchFormSchema } from './data';
-import { getUserList } from '/@/api/system/userManagement'; // 引入用户接口
 import { useDrawer } from '/@/components/Drawer'; //引入抽屉组件
 import FormDrawer from './formDrawer.vue'; // 表单组件
-import { Tag } from 'ant-design-vue';
-import { defineComponent, nextTick, ref, watch } from 'vue';
+import { columns, searchFormSchema } from './data'; // 表格配置项
+import { getRoleList, roleDel } from '/@/api/system/roleManagement'; // 引入角色管理接口
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
 export default defineComponent({
-  name: 'UserTable',
-  components: { BasicTable, TableAction, Tag, FormDrawer },
+  name: 'menuTable',
+  components: { BasicTable, FormDrawer, TableAction },
   setup() {
     const { createMessage } = useMessage();
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
-    const [registerTable, { reload }] = useTable({
-      title: '用户列表 ',
-      api: getUserList,
-      rowKey: 'user_id',
+    const [registerTable, { reload, getForm }] = useTable({
+      // 注册表格
+      title: '角色列表',
+      api: getRoleList,
+      rowKey: 'role_id',
       columns,
       formConfig: {
         labelWidth: 120,
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
+        baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
         resetButtonOptions: {
           preIcon: 'ant-design:delete-outlined',
         },
@@ -71,7 +68,7 @@ export default defineComponent({
       showTableSetting: true,
       bordered: true,
       actionColumn: {
-        width: 120,
+        width: 80,
         title: '操作',
         dataIndex: 'action',
         slots: { customRender: 'action' },
@@ -84,12 +81,35 @@ export default defineComponent({
       });
     }
     // 编辑操作
-    function handleEdit(record: Recordable) {}
+    function handleEdit(record: Recordable) {
+      openDrawer(true, {
+        record,
+        isUpdate: true,
+      });
+    }
     // 删除操作
-    function handleDelete(record: Recordable) {}
+    async function handleDelete(record: Recordable) {
+      await roleDel({ ids: record.role_id });
+      createMessage.success('删除成功！');
+      await reload();
+    }
     // 执行成功刷新列表
     async function handleSuccess() {
       await reload();
+    }
+
+    // 表格接口请求成功后触发
+    async function onFetchSuccess() {
+      //   请求状态
+      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+      getForm().updateSchema([
+        {
+          field: 'status',
+          componentProps: {
+            options: statusOptions,
+          },
+        },
+      ]);
     }
     return {
       registerTable,
@@ -98,10 +118,8 @@ export default defineComponent({
       handleEdit,
       handleDelete,
       handleSuccess,
+      onFetchSuccess,
     };
   },
 });
 </script>
-
-<style>
-</style>

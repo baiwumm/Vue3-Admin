@@ -2,9 +2,9 @@
   <div class="orgTable">
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <!-- 列插槽 -->
-      <template #orgType="{ record }">
-        <Tag :color="tagOptions[record.orgType]">
-          {{ formatDictValue(orgTypeOptions['orgType'], record.orgType) }}
+      <template #org_type="{ record }">
+        <Tag :color="tagOptions[record.org_type]">
+          {{ formatDictValue(orgTypeOptions['org_type'], record.org_type) }}
         </Tag>
       </template>
       <template #status="{ record }">
@@ -81,7 +81,7 @@ export default defineComponent({
       titleHelpMessage: '组织架构是企业的流程运转、部门设置及职能规划等最基本的结构依据',
       isTreeTable: true,
       api: getOrganizationTree,
-      rowKey: 'orgId',
+      rowKey: 'org_id',
       columns,
       formConfig: {
         labelWidth: 120,
@@ -112,28 +112,28 @@ export default defineComponent({
       orgTypeOptions = ref([]),
       tagOptions = ref({ '1': 'green', '2': 'cyan', '3': 'blue', '4': 'purple' });
     async function initOptions() {
-      statusOptions.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
-      orgTypeOptions.value['orgType'] = await dictionaryModel({
-        dictCoding: 'system_organization_type',
+      statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+      orgTypeOptions.value['org_type'] = await dictionaryModel({
+        dict_coding: 'system_organization_type',
       });
     }
     initOptions();
-    // 新增
+    // 新增操作
     function handleCreate() {
       openModal(true, {
         isUpdate: false,
       });
     }
-    // 编辑
+    // 编辑操作
     function handleEdit(record: Recordable) {
       openModal(true, {
         record,
         isUpdate: true,
       });
     }
-    //   删除
+    //   删除操作
     async function handleDelete(record: Recordable) {
-      await organizationDel({ ids: record.orgId });
+      await organizationDel({ ids: record.org_id });
       createMessage.success('删除成功！');
       openModal(false, {
         isDel: true,
@@ -143,7 +143,7 @@ export default defineComponent({
     // 添加子级
     function addChildOrg(record: Recordable) {
       openModal(true, {
-        parentId: record.orgId,
+        parent_id: record.org_id,
         isUpdate: false,
       });
     }

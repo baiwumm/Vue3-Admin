@@ -53,7 +53,7 @@ import FormModal from './formModal.vue'; // 表单模态框
 export default defineComponent({
   name: 'postTable',
   components: { BasicTable, TableAction, FormModal, Badge },
-  setup(_, { emit }) {
+  setup() {
     const { createMessage } = useMessage();
     const [registerModal, { openModal }] = useModal();
     const [registerTable, { reload, expandAll, collapseAll }] = useTable({
@@ -62,7 +62,7 @@ export default defineComponent({
         '岗位管理是以组织中的岗位为对象，科学地进行岗位设置、岗位分析、岗位描述、岗位监控和岗位评估等一系列活动的管理过程',
       isTreeTable: true,
       api: getPostTree,
-      rowKey: 'postId',
+      rowKey: 'post_id',
       columns,
       formConfig: {
         labelWidth: 120,
@@ -89,7 +89,7 @@ export default defineComponent({
     //   请求状态
     let statusOptions = ref([]);
     async function initOptions() {
-      statusOptions.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
+      statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
     }
     initOptions();
     // 新增
@@ -107,7 +107,7 @@ export default defineComponent({
     }
     //   删除
     async function handleDelete(record: Recordable) {
-      await postDel({ ids: record.postId });
+      await postDel({ ids: record.post_id });
       createMessage.success('删除成功！');
       openModal(false, {
         isDel: true,

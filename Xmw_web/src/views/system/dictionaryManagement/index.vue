@@ -1,7 +1,7 @@
 <template>
   <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
     <DitcTable class="w-2/4 xl:w-3/6" @dict-change="handleDictChange" />
-    <DitcItemTable class="w-1/2" :parentId="parentId" />
+    <DitcItemTable class="w-1/2" :parent_id="parent_id" />
   </PageWrapper>
 </template>
 
@@ -15,12 +15,12 @@ export default defineComponent({
   components: { PageWrapper, DitcTable, DitcItemTable },
   emits: ['dict-change'], // 接收子组件事件
   setup() {
-    const parentId = ref(null);
+    const parent_id = ref(null);
     function handleDictChange(value) {
-      parentId.value = value;
+      parent_id.value = value;
     }
     return {
-      parentId,
+      parent_id,
       handleDictChange,
     };
   },

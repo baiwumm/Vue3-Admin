@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-22 11:38:02
+ * @LastEditTime: 2021-07-26 17:07:18
  */
 'use strict';
 
@@ -20,13 +20,13 @@ class PostManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { postName, orgId } = ctx.params;
+            let { post_name, org_id } = ctx.params;
             // 根据条件拼接筛选
             let conditions = 'where 1 = 1'
-            if (postName) conditions += ` and n.postName like '%${postName}%'`
-            if (orgId) conditions += ` and t.orgId = '${orgId}'`
-            let data = await Raw.QueryList(`select n.*,orgName from xmw_post n left join xmw_organization t on n.orgId = t.orgId ${conditions} order by n.createTime desc`);
-            const result = ctx.helper.initializeTree(data, 'postId', 'parentId', 'children')
+            if (post_name) conditions += ` and n.post_name like '%${post_name}%'`
+            if (org_id) conditions += ` and t.org_id = '${org_id}'`
+            let data = await Raw.QueryList(`select n.*,org_name from xmw_post n left join xmw_organization t on n.org_id = t.org_id ${conditions} order by n.create_time desc`);
+            const result = ctx.helper.initializeTree(data, 'post_id', 'parent_id', 'children')
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('getPostTree方法报错：' + error)
@@ -43,27 +43,27 @@ class PostManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { postId, ...params } = ctx.params
+            let { post_id, ...params } = ctx.params
             // 判断父级不能是自己
-            if (params.parentId == postId && postId) {
+            if (params.parent_id == post_id && post_id) {
                 return ctx.body = { resCode: -1, resMsg: '父级不能是自己!', response: {} }
             }
             // 判断部门名称和部门编码是否已存在
-            let conditions = `where (postName = '${params.postName}' and (orgId = '${params.orgId}' or parentId = '${params.parentId}'))`
-            if (postId) conditions += ` and postId != '${postId}'`
+            let conditions = `where (post_name = '${params.post_name}' and (org_id = '${params.org_id}' or parent_id = '${params.parent_id}'))`
+            if (post_id) conditions += ` and post_id != '${post_id}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '相同组织和同级岗位不能重名!', response: {} }
             }
-            // 参数orgId判断是新增还是编辑
-            if (!postId) {
-                params.postId = ctx.helper.snowflakeId()
-                params.createTime = new Date()
+            // 参数org_id判断是新增还是编辑
+            if (!post_id) {
+                params.post_id = ctx.helper.snowflakeId()
+                params.create_time = new Date()
                 await Raw.Insert('xmw_post', params);
             } else { // 编辑字典
-                params.updateLastTime = new Date()
+                params.update_last_time = new Date()
                 const options = {
-                    wherestr: `where postId = ${postId}`
+                    wherestr: `where post_id = ${post_id}`
                 };
                 await Raw.Update('xmw_post', params, options);
             }
@@ -85,13 +85,13 @@ class PostManagementController extends Controller {
         try {
             let { ids } = ctx.params
             // 判断当前岗位是否存在子级
-            let conditions = `where parentId = '${ids}'`
+            let conditions = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '当前岗位存在子级,不能删除!', response: {} }
             }
             await Raw.Delete("xmw_post", {
-                wherestr: `where postId in (${ids})`
+                wherestr: `where post_id in (${ids})`
             });
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {

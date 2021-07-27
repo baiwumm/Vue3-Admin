@@ -1,4 +1,5 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
+import { getRoleList } from '/@/api/system/roleManagement'; // 引入角色管理接口
 // 表格列配置项
 export const columns: BasicColumn[] = [
     {
@@ -43,3 +44,49 @@ export const searchFormSchema: FormSchema[] = [
         },
     },
 ]
+
+export const dataFormSchema: FormSchema[] = [
+    {
+        field: 'role_id',
+        label: '角色名称',
+        required: true,
+        component: 'ApiSelect',
+        componentProps: {
+            api: getRoleList,
+            params: { current: 1, pageSize: 9999 },
+            placeholder: '请选择角色名称',
+            resultField: 'records',
+            labelField: 'role_name',
+            valueField: 'role_id',
+        },
+    },
+    {
+        field: 'user_name',
+        label: '用户名',
+        required: true,
+        component: 'Input',
+        componentProps: {
+            placeholder: '请输入用户名',
+            maxLength: 32
+        },
+    },
+    {
+        field: 'cn_name',
+        label: '中文名',
+        required: true,
+        component: 'Input',
+        componentProps: {
+            placeholder: '请输入中文名',
+            maxLength: 32
+        },
+    },
+    {
+        field: 'en_name',
+        label: '英文名',
+        component: 'Input',
+        componentProps: {
+            placeholder: '请输入英文名',
+            maxLength: 32
+        },
+    },
+];

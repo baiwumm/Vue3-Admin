@@ -43,7 +43,7 @@ export default defineComponent({
       isUpdate.value = !!data?.isUpdate;
 
       if (unref(isUpdate)) {
-        rowId.value = data.record.postId;
+        rowId.value = data.record.post_id;
         setFieldsValue({
           ...data.record,
         });
@@ -52,14 +52,14 @@ export default defineComponent({
       if (data.isDel) {
         // 操作成功后重新请求下拉树列表
         updateSchema({
-          field: 'parentId',
+          field: 'parent_id',
           componentProps: {
             params: { key: Math.random() },
           },
         });
       }
       //   请求状态和组织类型
-      const statusOptions = await dictionaryModel({ dictCoding: 'system_status' });
+      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
       updateSchema([
         {
           field: 'status',
@@ -76,23 +76,16 @@ export default defineComponent({
       try {
         const values = await validate();
         setModalProps({ confirmLoading: true });
-        !unref(isUpdate)
-          ? await postSave({ ...values })
-          : await postSave({
-              ...values,
-              postId: rowId.value,
-            });
-        !unref(isUpdate)
-          ? createMessage.success('新增成功！')
-          : createMessage.success('编辑成功！');
+        // 根据操作拼接表单参数
+        let params = { ...values };
+        if (unref(isUpdate)) Object.assign(params, { post_id: rowId.value });
+        await postSave(params);
+        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
         closeModal();
-        emit('success', {
-          isUpdate: unref(isUpdate),
-          values: { ...values, postId: rowId.value },
-        });
+        emit('success');
         // 操作成功后重新请求下拉树列表
         updateSchema({
-          field: 'parentId',
+          field: 'parent_id',
           componentProps: {
             params: { key: Math.random() },
           },

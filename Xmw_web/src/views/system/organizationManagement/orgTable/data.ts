@@ -4,16 +4,16 @@ import { getOrganizationTree } from '/@/api/system/organizationManagement'; // �
 export const columns: BasicColumn[] = [
     {
         title: '组织名称',
-        dataIndex: 'orgName',
+        dataIndex: 'org_name',
     },
     {
         title: '组织编码',
-        dataIndex: 'orgCode',
+        dataIndex: 'org_code',
     },
     {
         title: '组织类型',
-        dataIndex: 'orgType',
-        slots: { customRender: 'orgType' },
+        dataIndex: 'org_type',
+        slots: { customRender: 'org_type' },
     },
     {
         title: '状态',
@@ -26,7 +26,7 @@ export const columns: BasicColumn[] = [
     },
     {
         title: '创建时间',
-        dataIndex: 'createTime',
+        dataIndex: 'create_time',
         sorter: true,
     }
 
@@ -34,7 +34,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
     {
-        field: 'orgName',
+        field: 'org_name',
         label: '组织名称',
         component: 'Input',
         colProps: { span: 12 },
@@ -44,7 +44,7 @@ export const searchFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'orgCode',
+        field: 'org_code',
         label: '组织编码',
         component: 'Input',
         colProps: { span: 12 },
@@ -57,7 +57,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dataFormSchema: FormSchema[] = [
     {
-        field: 'parentId',
+        field: 'parent_id',
         component: 'ApiTreeSelect',
         label: '上级组织',
         componentProps: {
@@ -65,15 +65,15 @@ export const dataFormSchema: FormSchema[] = [
             params: {},
             placeholder: '请选择上级组织',
             replaceFields: {
-                title: 'orgName',
-                key: 'orgId',
-                value: 'orgId',
+                title: 'org_name',
+                key: 'org_id',
+                value: 'org_id',
             },
         },
         colProps: { lg: 24, md: 24 },
     },
     {
-        field: 'orgName',
+        field: 'org_name',
         label: '组织名称',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
@@ -85,7 +85,7 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'orgCode',
+        field: 'org_code',
         label: '组织编码',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
@@ -96,7 +96,7 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'orgType',
+        field: 'org_type',
         label: '组织类型',
         component: 'RadioButtonGroup',
         defaultValue: '1',

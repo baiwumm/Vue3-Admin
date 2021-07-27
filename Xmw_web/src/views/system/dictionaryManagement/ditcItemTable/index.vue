@@ -11,7 +11,7 @@
       <!-- 工具栏 -->
       <template #toolbar>
         <a-button
-          v-show="!!parentId"
+          v-show="!!parent_id && parent_id != '0'"
           type="primary"
           @click="handleCreate"
           preIcon="ant-design:plus-outlined"
@@ -44,10 +44,10 @@
 
 <script lang="ts">
 import { defineComponent, nextTick, watch, ref } from 'vue';
-import { columns } from './data';
+import { columns } from './data'; //表格列配置项
 import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
-import FormModal from './formModal.vue';
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; //表格组件
+import FormModal from './formModal.vue'; // 表单组件
 import { useModal } from '/@/components/Modal';
 import {
   getDictionaryList,
@@ -57,7 +57,7 @@ import {
 import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
 const props = {
-  parentId: { type: String },
+  parent_id: { type: String },
 };
 export default defineComponent({
   name: 'ditcItemTable',
@@ -70,7 +70,7 @@ export default defineComponent({
       title: '字典子项列表',
       titleHelpMessage: '请先选中字典，再操作字典子项',
       api: getDictionaryList,
-      rowKey: 'dictionaryId',
+      rowKey: 'dictionary_id',
       columns,
       formConfig: {
         labelWidth: 120,
@@ -99,40 +99,41 @@ export default defineComponent({
     //   请求状态
     let statusOptions = ref({});
     async function initOptions() {
-      statusOptions.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
+      statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
     }
     initOptions();
-    //   新增
+    //   新增操作
     function handleCreate() {
       openModal(true, {
         isUpdate: false,
-        parentId: props.parentId,
+        parent_id: props.parent_id,
       });
     }
-    //   编辑
+    //   编辑操作
     function handleEdit(record: Recordable) {
       openModal(true, {
         record,
         isUpdate: true,
-        parentId: props.parentId,
+        parent_id: props.parent_id,
       });
     }
-    //   删除
+    //   删除操作
     async function handleDelete(record: Recordable) {
-      await dictionaryDel({ ids: record.dictionaryId });
+      await dictionaryDel({ ids: record.dictionary_id });
       createMessage.success('删除成功！');
       await reload();
     }
+    // 重新请求列表
     function handleSuccess() {
       reload();
     }
     //   请求之前对参数进行处理
     function handleBeforeFetch(params) {
-      return Object.assign(params, { parentId: props.parentId });
+      return Object.assign(params, { parent_id: props.parent_id });
     }
-    // 监听字典列表的parentId
+    // 监听字典列表的parent_id
     watch(
-      () => props.parentId,
+      () => props.parent_id,
       () => {
         nextTick(() => {
           reload();

@@ -6,9 +6,9 @@
       @row-click="handleRowClick"
       @row-dbClick="handleRowDbClick"
     >
-      <template #dictCoding="{ record }">
+      <template #dict_coding="{ record }">
         <Tag color="blue">
-          {{ record.dictCoding }}
+          {{ record.dict_coding }}
         </Tag>
       </template>
       <template #status="{ record }">
@@ -50,16 +50,16 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { columns, searchFormSchema } from './data';
+import { columns, searchFormSchema } from './data'; // 表格配置项
 import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
 import { formatDictValue } from '/@/utils';
 import {
   getDictionaryList,
   dictionaryDel,
   dictionaryModel,
 } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
-import FormModal from './formModal.vue';
+import FormModal from './formModal.vue'; //表单组件
 import { useModal } from '/@/components/Modal';
 import { Tag, Badge } from 'ant-design-vue';
 export default defineComponent({
@@ -74,7 +74,7 @@ export default defineComponent({
         title: '字典列表',
         titleHelpMessage: '对系统中经常使用的一些较为固定的数据进行维护',
         api: getDictionaryList,
-        rowKey: 'dictionaryId',
+        rowKey: 'dictionary_id',
         columns,
         rowSelection: { type: 'radio' },
         formConfig: {
@@ -101,33 +101,33 @@ export default defineComponent({
         // 请求之后对返回值进行处理
         afterFetch: handleAfterFetch,
       });
-    //   请求状态
+    //   请求字典状态
     let statusOptions = ref([]);
     async function initOptions() {
-      statusOptions.value['status'] = await dictionaryModel({ dictCoding: 'system_status' });
+      statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
     }
     initOptions();
-    // 新增
+    // 新增操作
     function handleCreate() {
       openModal(true, {
         isUpdate: false,
       });
     }
-    // 编辑
+    // 编辑操作
     function handleEdit(record: Recordable) {
       openModal(true, {
         record,
         isUpdate: true,
       });
     }
-    //   删除
+    //   删除操作
     async function handleDelete(record: Recordable) {
-      await dictionaryDel({ ids: record.dictionaryId });
+      await dictionaryDel({ ids: record.dictionary_id });
       createMessage.success('删除成功！');
       await reload();
       const list = getDataSource();
       if (list.length > 0) {
-        setSelectedRowKeys([list[0].dictionaryId]);
+        setSelectedRowKeys([list[0].dictionary_id]);
       } else {
         setSelectedRowKeys([]);
       }
@@ -137,11 +137,11 @@ export default defineComponent({
     async function handleSuccess({ isUpdate, values }) {
       await reload();
       if (isUpdate) {
-        setSelectedRowKeys([values.dictionaryId]);
+        setSelectedRowKeys([values.dictionary_id]);
       } else {
         const list = getDataSource();
         if (list.length > 0) {
-          setSelectedRowKeys([list[0].dictionaryId]);
+          setSelectedRowKeys([list[0].dictionary_id]);
         } else {
           setSelectedRowKeys([]);
         }
@@ -150,7 +150,7 @@ export default defineComponent({
     }
     function emitDictChange() {
       const selectedKeys = getSelectRowKeys();
-      emit('dict-change', selectedKeys.length > 0 ? selectedKeys[0] : '');
+      emit('dict-change', selectedKeys.length > 0 ? selectedKeys[0] : '0');
     }
     // 勾选事件触发
     function handleSelectionChange() {
@@ -158,18 +158,18 @@ export default defineComponent({
     }
     //   单击行回调
     function handleRowClick(record: Recordable) {
-      setSelectedRowKeys([record.dictionaryId]);
+      setSelectedRowKeys([record.dictionary_id]);
       emitDictChange();
     }
     //   双击行回调
     function handleRowDbClick(record: Recordable) {
-      setSelectedRowKeys([record.dictionaryId]);
+      setSelectedRowKeys([record.dictionary_id]);
       emitDictChange();
     }
     function handleAfterFetch(data) {
       // 请求之后对返回值进行处理
       if (data.length > 0) {
-        setSelectedRowKeys([data[0].dictionaryId]);
+        setSelectedRowKeys([data[0].dictionary_id]);
       } else {
         setSelectedRowKeys([]);
       }

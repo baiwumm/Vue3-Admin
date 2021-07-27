@@ -3,12 +3,12 @@ import { BasicColumn, FormSchema } from '/@/components/Table';
 export const columns: BasicColumn[] = [
     {
         title: '字典名称',
-        dataIndex: 'dictName',
+        dataIndex: 'dict_name',
     },
     {
         title: '字典编码',
-        dataIndex: 'dictCoding',
-        slots: { customRender: 'dictCoding' },
+        dataIndex: 'dict_coding',
+        slots: { customRender: 'dict_coding' },
     },
     {
         title: '状态',
@@ -30,7 +30,7 @@ export const columns: BasicColumn[] = [
 
 export const searchFormSchema: FormSchema[] = [
     {
-        field: 'dictName',
+        field: 'dict_name',
         label: '字典名称',
         component: 'Input',
         colProps: { span: 12 },
@@ -40,7 +40,7 @@ export const searchFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'dictCoding',
+        field: 'dict_coding',
         label: '字典编码',
         component: 'Input',
         colProps: { span: 12 },
@@ -53,7 +53,7 @@ export const searchFormSchema: FormSchema[] = [
 
 export const dataFormSchema: FormSchema[] = [
     {
-        field: 'dictName',
+        field: 'dict_name',
         label: '字典名称',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
@@ -65,7 +65,7 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'dictCoding',
+        field: 'dict_coding',
         label: '字典编码',
         component: 'Input',
         colProps: { lg: 24, md: 24 },
