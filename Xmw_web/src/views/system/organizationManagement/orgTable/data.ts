@@ -37,20 +37,18 @@ export const searchFormSchema: FormSchema[] = [
         field: 'org_name',
         label: '组织名称',
         component: 'Input',
-        colProps: { span: 12 },
-        labelWidth: 100,
         componentProps: {
             placeholder: '请输入组织名称',
+            maxLength: 32
         },
     },
     {
         field: 'org_code',
         label: '组织编码',
         component: 'Input',
-        colProps: { span: 12 },
-        labelWidth: 100,
         componentProps: {
             placeholder: '请输入组织编码',
+            maxLength: 32
         },
     },
 ];

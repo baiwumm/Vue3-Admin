@@ -88,33 +88,34 @@
       </template>
     </BasicTable>
     <!-- 引入抽屉模态框 -->
-    <FormDrawer @register="registerDrawer" @success="handleSuccess" />
+    <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 <script lang="ts">
 import { formatDictValue } from '/@/utils';
-import { getMenuTree, menuDel } from '/@/api/system/menuManagement'; // 引入菜单管理接口
+import { getMenuTree, menuDel } from '/@/api/system/menuManagement'; // 菜单管理接口
 import { Tag, Badge } from 'ant-design-vue';
 import { defineComponent, ref, nextTick } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; //表格组件
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useDrawer } from '/@/components/Drawer'; // 抽屉组件
-import FormDrawer from './formDrawer.vue'; //表单组件
+import MenuDrawer from './menuDrawer.vue'; //表单组件
 import { columns, searchFormSchema } from './data'; // 表格配置项
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 export default defineComponent({
   name: 'menuTable',
-  components: { BasicTable, FormDrawer, TableAction, Tag, Badge },
+  components: { BasicTable, MenuDrawer, TableAction, Tag, Badge },
   setup() {
-    const [registerDrawer, { openDrawer }] = useDrawer();
-    const [registerTable, { reload, expandAll, collapseAll }] = useTable({
+    const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
+    const [registerTable, { reload, getForm, expandAll, collapseAll }] = useTable({
+      //注册表格
       title: '菜单列表',
       isTreeTable: true,
       api: getMenuTree,
       rowKey: 'menu_id',
       columns,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 80,
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
         baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
@@ -182,7 +183,17 @@ export default defineComponent({
     }
 
     // 表格接口请求成功后触发,默认展开所有
-    function onFetchSuccess() {
+    async function onFetchSuccess() {
+      //   请求状态
+      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+      getForm().updateSchema([
+        {
+          field: 'status',
+          componentProps: {
+            options: statusOptions,
+          },
+        },
+      ]);
       nextTick(expandAll);
     }
     return {

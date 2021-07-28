@@ -1,6 +1,6 @@
 import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import type { App, Plugin } from 'vue';
-
+import CryptoJS from 'crypto-js' // AES/DES加密解密
 import { unref } from 'vue';
 import { isObject } from '/@/utils/is';
 
@@ -97,3 +97,6 @@ export function formatDictValue(options: Array<any>, value: string) {
     const matchItem = options.find((item) => item['value'] === value);
     return matchItem && matchItem['label'] ? matchItem['label'] : '';
 }
+
+export const crypto_key = CryptoJS.enc.Utf8.parse('ABCDEF0123456789') //十六位十六进制数作为密钥
+export const crypto_iv = CryptoJS.enc.Utf8.parse('ABCDEF0123456789') //十六位十六进制数作为密钥偏移量

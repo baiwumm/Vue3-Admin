@@ -90,7 +90,13 @@ export const searchFormSchema: FormSchema[] = [
         component: 'Input',
         componentProps: {
             placeholder: '请输入菜单名称',
+            maxLength: 32
         },
+    },
+    {
+        field: 'status',
+        label: '状态',
+        component: 'Select',
     },
 ];
 
@@ -127,6 +133,7 @@ export const dataFormSchema: FormSchema[] = [
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入菜单名称',
+            maxLength: 32
         },
     },
     {
@@ -137,6 +144,7 @@ export const dataFormSchema: FormSchema[] = [
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入路由地址',
+            maxLength: 100
         },
         ifShow: ({ values }) => !isButton(values.menu_type),
     },
@@ -148,6 +156,7 @@ export const dataFormSchema: FormSchema[] = [
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入重定向地址',
+            maxLength: 100
         },
         ifShow: ({ values }) => isDir(values.menu_type),
     },
@@ -159,6 +168,7 @@ export const dataFormSchema: FormSchema[] = [
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入组件路径',
+            maxLength: 200
         },
         ifShow: ({ values }) => !isButton(values.menu_type),
     },
@@ -169,6 +179,7 @@ export const dataFormSchema: FormSchema[] = [
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入权限标识',
+            maxLength: 50
         },
         ifShow: ({ values }) => !isDir(values.menu_type),
     },
@@ -179,6 +190,7 @@ export const dataFormSchema: FormSchema[] = [
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入内嵌地址',
+            maxLength: 200
         },
         ifShow: ({ values }) => isMenu(values.menu_type),
     },

@@ -38,8 +38,6 @@ export const searchFormSchema: FormSchema[] = [
         field: 'post_name',
         label: '岗位名称',
         component: 'Input',
-        colProps: { span: 8 },
-        labelWidth: 80,
         componentProps: {
             placeholder: '请输入岗位名称',
             maxLength: 32
@@ -58,7 +56,6 @@ export const searchFormSchema: FormSchema[] = [
                 value: 'org_id',
             },
         },
-        colProps: { span: 8 },
     },
 ];
 

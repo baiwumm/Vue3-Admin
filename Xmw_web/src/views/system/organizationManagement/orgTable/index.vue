@@ -53,24 +53,24 @@
       </template>
     </BasicTable>
     <!-- 表单模态框 -->
-    <FormModal @register="registerModal" @success="handleSuccess" />
+    <OrgModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, nextTick } from 'vue';
-import { columns, searchFormSchema } from './data'; // 引入列配置和搜索表单
-import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
+import { columns, searchFormSchema } from './data'; // 列配置和搜索表单
+import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
 import { useModal } from '/@/components/Modal';
-import { getOrganizationTree, organizationDel } from '/@/api/system/organizationManagement'; // 引入组织树接口
-import FormModal from './formModal.vue'; // 表单模态框
+import { getOrganizationTree, organizationDel } from '/@/api/system/organizationManagement'; // 组织树接口
+import OrgModal from './orgModal.vue'; // 表单模态框
 import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 export default defineComponent({
   name: 'orgTable',
-  components: { BasicTable, TableAction, FormModal, Tag, Badge },
+  components: { BasicTable, TableAction, OrgModal, Tag, Badge },
   setup() {
     const { createMessage } = useMessage();
     // 注册useModal
@@ -84,7 +84,8 @@ export default defineComponent({
       rowKey: 'org_id',
       columns,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 80,
+        baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
         resetButtonOptions: {
@@ -107,7 +108,7 @@ export default defineComponent({
       },
     });
 
-    //   请求状态和组织类型
+    //   请求字典数据
     let statusOptions = ref([]),
       orgTypeOptions = ref([]),
       tagOptions = ref({ '1': 'green', '2': 'cyan', '3': 'blue', '4': 'purple' });

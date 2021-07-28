@@ -6,11 +6,13 @@
       @row-click="handleRowClick"
       @row-dbClick="handleRowDbClick"
     >
+      <!-- 字典编码-插槽 -->
       <template #dict_coding="{ record }">
         <Tag color="blue">
           {{ record.dict_coding }}
         </Tag>
       </template>
+      <!-- 状态-插槽 -->
       <template #status="{ record }">
         <Badge
           :status="record.status === '1' ? 'success' : 'error'"
@@ -44,14 +46,14 @@
         />
       </template>
     </BasicTable>
-    <FormModal @register="registerModal" @success="handleSuccess" />
+    <DictModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { columns, searchFormSchema } from './data'; // 表格配置项
-import { useMessage } from '/@/hooks/web/useMessage';
+import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
 import { formatDictValue } from '/@/utils';
 import {
@@ -59,18 +61,19 @@ import {
   dictionaryDel,
   dictionaryModel,
 } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
-import FormModal from './formModal.vue'; //表单组件
-import { useModal } from '/@/components/Modal';
+import DictModal from './dictModal.vue'; //表单组件
+import { useModal } from '/@/components/Modal'; // 模态框组件
 import { Tag, Badge } from 'ant-design-vue';
 export default defineComponent({
   name: 'ditcTable',
-  components: { BasicTable, TableAction, FormModal, Tag, Badge },
+  components: { BasicTable, TableAction, DictModal, Tag, Badge },
   emits: ['dict-change'],
   setup(_, { emit }) {
     const { createMessage } = useMessage();
-    const [registerModal, { openModal }] = useModal();
+    const [registerModal, { openModal }] = useModal(); // 注册模态框
     const [registerTable, { reload, getDataSource, getSelectRowKeys, setSelectedRowKeys }] =
       useTable({
+        // 注册表格
         title: '字典列表',
         titleHelpMessage: '对系统中经常使用的一些较为固定的数据进行维护',
         api: getDictionaryList,
@@ -78,7 +81,8 @@ export default defineComponent({
         columns,
         rowSelection: { type: 'radio' },
         formConfig: {
-          labelWidth: 120,
+          labelWidth: 80,
+          baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
           resetButtonOptions: {
@@ -101,7 +105,7 @@ export default defineComponent({
         // 请求之后对返回值进行处理
         afterFetch: handleAfterFetch,
       });
-    //   请求字典状态
+    //   请求字典数据
     let statusOptions = ref([]);
     async function initOptions() {
       statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });

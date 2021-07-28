@@ -41,7 +41,7 @@
     "@zxcvbn-ts/core": "^1.0.0-beta.0",
     "ant-design-vue": "2.2.2",
     "axios": "^0.21.1",
-    "crypto-js": "^4.0.0",
+    "crypto-js": "^4.1.1",
     "echarts": "^5.1.2",
     "lodash-es": "^4.17.21",
     "mockjs": "^1.1.0",

@@ -5,6 +5,8 @@ import { ErrorMessageMode } from '/#/axios';
 
 enum Api {
     getUserList = '/system/getUserList', // 获取用户列表
+    userSave = '/system/userSave', // 新增和更新角色
+    userDel = '/system/userDel', // 删除用户
     Login = '/login',
     Logout = '/logout',
     GetUserInfo = '/getUserInfo',
@@ -13,6 +15,14 @@ enum Api {
 
 export function getUserList(params?: object) {
     return defHttp.get({ url: Api.getUserList, params: params });
+}
+
+export function userSave(params?: object) {
+    return defHttp.post({ url: Api.userSave, params: params });
+}
+
+export function userDel(params?: object) {
+    return defHttp.post({ url: Api.userDel, params: params });
 }
 /**
  * @description: user login api

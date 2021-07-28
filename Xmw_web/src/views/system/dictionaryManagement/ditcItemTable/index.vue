@@ -38,7 +38,7 @@
         />
       </template>
     </BasicTable>
-    <FormModal @register="registerModal" @success="handleSuccess" />
+    <DitcItemModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 
@@ -47,8 +47,8 @@ import { defineComponent, nextTick, watch, ref } from 'vue';
 import { columns } from './data'; //表格列配置项
 import { useMessage } from '/@/hooks/web/useMessage';
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; //表格组件
-import FormModal from './formModal.vue'; // 表单组件
-import { useModal } from '/@/components/Modal';
+import DitcItemModal from './ditcItemModal.vue'; // 表单组件
+import { useModal } from '/@/components/Modal'; // 模态框组件
 import {
   getDictionaryList,
   dictionaryDel,
@@ -61,27 +61,18 @@ const props = {
 };
 export default defineComponent({
   name: 'ditcItemTable',
-  components: { BasicTable, FormModal, TableAction, Tag, Badge },
+  components: { BasicTable, DitcItemModal, TableAction, Tag, Badge },
   props,
   setup(props) {
     const { createMessage } = useMessage();
-    const [registerModal, { openModal }] = useModal();
+    const [registerModal, { openModal }] = useModal(); // 注册模态框
     const [registerTable, { reload }] = useTable({
+      // 注册表格
       title: '字典子项列表',
       titleHelpMessage: '请先选中字典，再操作字典子项',
       api: getDictionaryList,
       rowKey: 'dictionary_id',
       columns,
-      formConfig: {
-        labelWidth: 120,
-        autoSubmitOnEnter: true,
-        resetButtonOptions: {
-          preIcon: 'ant-design:delete-outlined',
-        },
-        submitButtonOptions: {
-          preIcon: 'ant-design:search-outlined',
-        },
-      },
       immediate: false,
       showIndexColumn: false,
       useSearchForm: false,
@@ -96,7 +87,7 @@ export default defineComponent({
       //   请求之前对参数进行处理
       beforeFetch: handleBeforeFetch,
     });
-    //   请求状态
+    //   请求字典数据
     let statusOptions = ref({});
     async function initOptions() {
       statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });

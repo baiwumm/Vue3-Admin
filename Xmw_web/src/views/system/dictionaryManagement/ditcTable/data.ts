@@ -33,20 +33,18 @@ export const searchFormSchema: FormSchema[] = [
         field: 'dict_name',
         label: '字典名称',
         component: 'Input',
-        colProps: { span: 12 },
-        labelWidth: 80,
         componentProps: {
             placeholder: '请输入字典名称',
+            maxLength: 32
         },
     },
     {
         field: 'dict_coding',
         label: '字典编码',
         component: 'Input',
-        colProps: { span: 12 },
-        labelWidth: 80,
         componentProps: {
             placeholder: '请输入字典编码',
+            maxLength: 32
         },
     },
 ];

@@ -25,17 +25,17 @@
   </BasicDrawer>
 </template>
 <script lang="ts">
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 import { defineComponent, ref, computed, unref } from 'vue';
-import { BasicDrawer, useDrawerInner } from '/@/components/Drawer';
-import { BasicForm, useForm } from '/@/components/Form/index'; // 引入表单组件
+import { BasicDrawer, useDrawerInner } from '/@/components/Drawer'; // 抽屉组件
+import { BasicForm, useForm } from '/@/components/Form/index'; // 表单组件
 import { dataFormSchema } from './data'; // 表单配置项
-import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTree, TreeItem } from '/@/components/Tree'; // 引入tree组件
-import { getMenuTree } from '/@/api/system/menuManagement'; // 引入菜单tree结构
-import { roleSave } from '/@/api/system/roleManagement'; // 引入角色保存接口
+import { useMessage } from '/@/hooks/web/useMessage'; //信息模态框
+import { BasicTree, TreeItem } from '/@/components/Tree'; // tree组件
+import { getMenuTree } from '/@/api/system/menuManagement'; // 菜单tree结构
+import { roleSave } from '/@/api/system/roleManagement'; // 角色保存接口
 export default defineComponent({
-  name: 'FormModal',
+  name: 'RoleDrawer',
   components: { BasicDrawer, BasicForm, BasicTree },
   emits: ['success', 'register'],
   setup(_, { emit }) {
@@ -46,6 +46,7 @@ export default defineComponent({
     const halfCheckedKeys = ref([]); // 半勾选节点
     const checkedKeys = ref([]); // tree回显数据
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+      // 注册表单
       labelWidth: 100,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
@@ -56,6 +57,7 @@ export default defineComponent({
     });
 
     const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+      // 注册抽屉
       resetFields();
       setDrawerProps({ confirmLoading: false });
       // 需要在setFieldsValue之前先填充treeData，否则Tree组件可能会报key not exist警告
@@ -87,7 +89,7 @@ export default defineComponent({
         halfCheckedKeys.value = childKeys;
       }
 
-      //   请求状态和组织类型
+      //   请求字典数据
       const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
       updateSchema([
         {

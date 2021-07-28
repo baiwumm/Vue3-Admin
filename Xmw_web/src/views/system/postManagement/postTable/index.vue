@@ -35,28 +35,29 @@
       </template>
     </BasicTable>
     <!-- 表单模态框 -->
-    <FormModal @register="registerModal" @success="handleSuccess" />
+    <PostModal @register="registerModal" @success="handleSuccess" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref, nextTick } from 'vue';
-import { columns, searchFormSchema } from './data';
-import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTable, useTable, TableAction } from '/@/components/Table';
+import { columns, searchFormSchema } from './data'; //表格配置项
+import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
 import { formatDictValue } from '/@/utils';
-import { useModal } from '/@/components/Modal';
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
-import { getPostTree, postDel } from '/@/api/system/postManagement'; // 引入岗位树接口
+import { useModal } from '/@/components/Modal'; // 模态框组件
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { getPostTree, postDel } from '/@/api/system/postManagement'; // 岗位树接口
 import { Badge } from 'ant-design-vue';
-import FormModal from './formModal.vue'; // 表单模态框
+import PostModal from './postModal.vue'; // 表单模态框
 export default defineComponent({
   name: 'postTable',
-  components: { BasicTable, TableAction, FormModal, Badge },
+  components: { BasicTable, TableAction, PostModal, Badge },
   setup() {
     const { createMessage } = useMessage();
-    const [registerModal, { openModal }] = useModal();
-    const [registerTable, { reload, expandAll, collapseAll }] = useTable({
+    const [registerModal, { openModal }] = useModal(); // 注册模态框
+    const [registerTable, { reload, expandAll }] = useTable({
+      // 注册表格
       title: '岗位列表',
       titleHelpMessage:
         '岗位管理是以组织中的岗位为对象，科学地进行岗位设置、岗位分析、岗位描述、岗位监控和岗位评估等一系列活动的管理过程',
@@ -65,7 +66,8 @@ export default defineComponent({
       rowKey: 'post_id',
       columns,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 80,
+        baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
         resetButtonOptions: {
@@ -86,26 +88,26 @@ export default defineComponent({
         slots: { customRender: 'action' },
       },
     });
-    //   请求状态
+    //   请求字典数据
     let statusOptions = ref([]);
     async function initOptions() {
       statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
     }
     initOptions();
-    // 新增
+    // 新增操作
     function handleCreate() {
       openModal(true, {
         isUpdate: false,
       });
     }
-    // 编辑
+    // 编辑操作
     function handleEdit(record: Recordable) {
       openModal(true, {
         record,
         isUpdate: true,
       });
     }
-    //   删除
+    //   删除操作
     async function handleDelete(record: Recordable) {
       await postDel({ ids: record.post_id });
       createMessage.success('删除成功！');

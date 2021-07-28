@@ -26,22 +26,22 @@
       </template>
     </BasicTable>
     <!-- 引入抽屉模态框 -->
-    <FormDrawer @register="registerDrawer" @success="handleSuccess" />
+    <RoleDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 引入表格组件
-import { useMessage } from '/@/hooks/web/useMessage';
-import { useDrawer } from '/@/components/Drawer'; //引入抽屉组件
-import FormDrawer from './formDrawer.vue'; // 表单组件
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
+import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
+import { useDrawer } from '/@/components/Drawer'; //抽屉组件
+import RoleDrawer from './roleDrawer.vue'; // 表单组件
 import { columns, searchFormSchema } from './data'; // 表格配置项
-import { getRoleList, roleDel } from '/@/api/system/roleManagement'; // 引入角色管理接口
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
+import { getRoleList, roleDel } from '/@/api/system/roleManagement'; // 角色管理接口
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 export default defineComponent({
   name: 'menuTable',
-  components: { BasicTable, FormDrawer, TableAction },
+  components: { BasicTable, RoleDrawer, TableAction },
   setup() {
     const { createMessage } = useMessage();
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
@@ -52,7 +52,7 @@ export default defineComponent({
       rowKey: 'role_id',
       columns,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 80,
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
         baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },

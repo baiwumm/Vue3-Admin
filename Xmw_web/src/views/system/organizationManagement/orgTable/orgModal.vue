@@ -11,14 +11,14 @@
 </template>
 <script lang="ts">
 import { defineComponent, ref, computed, unref } from 'vue';
-import { BasicModal, useModalInner } from '/@/components/Modal'; //引入模态框
-import { BasicForm, useForm } from '/@/components/Form'; //引入表单组件
+import { BasicModal, useModalInner } from '/@/components/Modal'; //模态框组件
+import { BasicForm, useForm } from '/@/components/Form'; //表单组件
 import { dataFormSchema } from './data'; // 引入表单
-import { useMessage } from '/@/hooks/web/useMessage';
-import { postSave } from '/@/api/system/postManagement'; // 新增和更新组织
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典列表接口
+import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
+import { organizationSave } from '/@/api/system/organizationManagement'; // 新增和更新组织
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 export default defineComponent({
-  name: 'FormModal',
+  name: 'OrgModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
@@ -28,7 +28,8 @@ export default defineComponent({
     const rowId = ref('');
     // 注册表单
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
-      labelWidth: 100,
+      // 注册表单
+      labelWidth: 80,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
       actionColOptions: {
@@ -43,9 +44,15 @@ export default defineComponent({
       isUpdate.value = !!data?.isUpdate;
 
       if (unref(isUpdate)) {
-        rowId.value = data.record.post_id;
+        rowId.value = data.record.org_id;
         setFieldsValue({
           ...data.record,
+        });
+      }
+      //  添加子级
+      if (data.parent_id) {
+        setFieldsValue({
+          parent_id: data.parent_id,
         });
       }
       //   判断父级是否删除操作
@@ -58,8 +65,15 @@ export default defineComponent({
           },
         });
       }
-      //   请求状态和组织类型
+      updateSchema([
+        {
+          field: 'parent_id',
+          componentProps: { disabled: !!data?.parent_id },
+        },
+      ]);
+      //   请求字典数据
       const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+      const orgTypeOptions = await dictionaryModel({ dict_coding: 'system_organization_type' });
       updateSchema([
         {
           field: 'status',
@@ -67,10 +81,16 @@ export default defineComponent({
             options: statusOptions,
           },
         },
+        {
+          field: 'org_type',
+          componentProps: {
+            options: orgTypeOptions,
+          },
+        },
       ]);
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增岗位' : '编辑岗位'));
+    const getTitle = computed(() => (!unref(isUpdate) ? '新增组织' : '编辑组织'));
     // 新增编辑操作
     async function handleSubmit() {
       try {
@@ -78,8 +98,8 @@ export default defineComponent({
         setModalProps({ confirmLoading: true });
         // 根据操作拼接表单参数
         let params = { ...values };
-        if (unref(isUpdate)) Object.assign(params, { post_id: rowId.value });
-        await postSave(params);
+        if (unref(isUpdate)) Object.assign(params, { org_id: rowId.value });
+        await organizationSave(params);
         createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
         closeModal();
         emit('success');

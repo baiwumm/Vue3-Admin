@@ -55,7 +55,7 @@ class PostManagementController extends Controller {
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '相同组织和同级岗位不能重名!', response: {} }
             }
-            // 参数org_id判断是新增还是编辑
+            // 参数post_id判断是新增还是编辑
             if (!post_id) {
                 params.post_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()

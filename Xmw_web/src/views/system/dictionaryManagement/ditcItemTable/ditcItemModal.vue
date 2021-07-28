@@ -1,10 +1,10 @@
 <!--
- * @Description: 
- * @Version: 3.30
- * @Autor: Xie Mingwei
+ * @Author: your name
  * @Date: 2021-07-19 16:42:33
- * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-27 16:09:35
+ * @LastEditTime: 2021-07-28 14:47:15
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \elearning-foregrounde:\personal\vue3-ts-egg\Xmw_web\src\views\system\dictionaryManagement\ditcItemTable\ditcItemModal.vue
 -->
 <template>
   <BasicModal
@@ -25,7 +25,7 @@ import { dataFormSchema } from './data';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { dictionarySave, dictionaryModel } from '/@/api/system/dictionaryManagement'; // 新增和更新字典
 export default defineComponent({
-  name: 'FormModal',
+  name: 'DitcItemModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {

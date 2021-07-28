@@ -11,15 +11,15 @@
   </BasicDrawer>
 </template>
 <script lang="ts">
-import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 import { menuSave } from '/@/api/system/menuManagement'; // 菜单保存接口
 import { defineComponent, ref, computed, unref } from 'vue';
 import { BasicDrawer, useDrawerInner } from '/@/components/Drawer'; // 抽屉组件
 import { BasicForm, useForm } from '/@/components/Form/index'; // 表单组件
 import { dataFormSchema } from './data'; //表单配置项
-import { useMessage } from '/@/hooks/web/useMessage';
+import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 export default defineComponent({
-  name: 'FormModal',
+  name: 'MenuDrawer',
   components: { BasicDrawer, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
@@ -29,6 +29,7 @@ export default defineComponent({
     const rowId = ref('');
 
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+      //注册表单
       labelWidth: 100,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
@@ -39,6 +40,7 @@ export default defineComponent({
     });
 
     const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+      // 注册抽屉
       resetFields();
       setDrawerProps({ confirmLoading: false });
       isUpdate.value = !!data?.isUpdate;

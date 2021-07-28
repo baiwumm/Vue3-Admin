@@ -1,8 +1,25 @@
 <template>
   <div class="userTable">
-    <BasicTable @register="registerTable">
+    <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
+      <!-- 性别-插槽 -->
       <template #sex="{ record }">
-        <Tag color="processing">{{ { 0: '女', 1: '男' }[record.sex] }}</Tag>
+        <Tag color="processing">{{ formatDictValue(options['sex'], record.sex) }}</Tag>
+      </template>
+      <!-- 状态-插槽 -->
+      <template #status="{ record }">
+        <Badge
+          :status="record.status === '1' ? 'success' : 'error'"
+          :text="formatDictValue(options['status'], record.status)"
+        >
+        </Badge>
+      </template>
+      <!-- 角色名称-插槽 -->
+      <template #role_name="{ record }">
+        <Space>
+          <Tag color="purple" v-for="(item, index) in record.role_name.split(',')" :key="index">{{
+            item
+          }}</Tag>
+        </Space>
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
@@ -31,32 +48,36 @@
       </template>
     </BasicTable>
     <!-- 引入抽屉模态框 -->
-    <FormDrawer @register="registerDrawer" @success="handleSuccess" />
+    <UserDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
 
 <script lang="ts">
-import { useMessage } from '/@/hooks/web/useMessage';
-import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 引入table组件
-import { columns, searchFormSchema } from './data';
-import { getUserList } from '/@/api/system/userManagement'; // 引入用户接口
-import { useDrawer } from '/@/components/Drawer'; //引入抽屉组件
-import FormDrawer from './formDrawer.vue'; // 表单组件
-import { Tag } from 'ant-design-vue';
-import { defineComponent, nextTick, ref, watch } from 'vue';
+import { useMessage } from '/@/hooks/web/useMessage'; // 提示模态框
+import { BasicTable, useTable, TableAction } from '/@/components/Table'; // table组件
+import { columns, searchFormSchema } from './data'; // 表格配置项
+import { getUserList, userDel } from '/@/api/system/userManagement'; // 用户接口
+import { useDrawer } from '/@/components/Drawer'; //抽屉组件
+import UserDrawer from './userDrawer.vue'; // 表单组件
+import { Tag, Badge, Space } from 'ant-design-vue';
+import { defineComponent, ref } from 'vue';
+import { formatDictValue } from '/@/utils';
+import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 export default defineComponent({
   name: 'UserTable',
-  components: { BasicTable, TableAction, Tag, FormDrawer },
+  components: { BasicTable, TableAction, Tag, UserDrawer, Badge, Space },
   setup() {
     const { createMessage } = useMessage();
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
-    const [registerTable, { reload }] = useTable({
+    const [registerTable, { reload, getForm }] = useTable({
+      // 注册表格
       title: '用户列表 ',
       api: getUserList,
       rowKey: 'user_id',
       columns,
       formConfig: {
-        labelWidth: 120,
+        labelWidth: 80,
+        baseColProps: { xs: 24, sm: 12, md: 8, lg: 8, xl: 6 },
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
         resetButtonOptions: {
@@ -77,6 +98,14 @@ export default defineComponent({
         slots: { customRender: 'action' },
       },
     });
+
+    //  请求字典数据
+    let options = ref([]);
+    async function initOptions() {
+      options.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+      options.value['sex'] = await dictionaryModel({ dict_coding: 'system_sex' });
+    }
+    initOptions();
     // 新增操作
     function handleCreate() {
       openDrawer(true, {
@@ -84,12 +113,38 @@ export default defineComponent({
       });
     }
     // 编辑操作
-    function handleEdit(record: Recordable) {}
+    function handleEdit(record: Recordable) {
+      openDrawer(true, {
+        record,
+        isUpdate: true,
+      });
+    }
     // 删除操作
-    function handleDelete(record: Recordable) {}
+    async function handleDelete(record: Recordable) {
+      if (record.user_name == 'admin') {
+        createMessage.error('当前用户为超级用户,不能删除！');
+        return;
+      }
+      await userDel({ ids: record.user_id });
+      createMessage.success('删除成功！');
+      await reload();
+    }
     // 执行成功刷新列表
     async function handleSuccess() {
       await reload();
+    }
+
+    // 表格接口请求成功后触发
+    async function onFetchSuccess() {
+      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+      getForm().updateSchema([
+        {
+          field: 'status',
+          componentProps: {
+            options: statusOptions,
+          },
+        },
+      ]);
     }
     return {
       registerTable,
@@ -98,10 +153,10 @@ export default defineComponent({
       handleEdit,
       handleDelete,
       handleSuccess,
+      options,
+      formatDictValue,
+      onFetchSuccess,
     };
   },
 });
 </script>
-
-<style>
-</style>

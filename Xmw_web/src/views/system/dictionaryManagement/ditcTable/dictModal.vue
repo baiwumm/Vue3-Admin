@@ -17,7 +17,7 @@ import { dataFormSchema } from './data'; // 表单配置项
 import { useMessage } from '/@/hooks/web/useMessage';
 import { dictionarySave, dictionaryModel } from '/@/api/system/dictionaryManagement'; // 新增和更新字典
 export default defineComponent({
-  name: 'FormModal',
+  name: 'DictModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {

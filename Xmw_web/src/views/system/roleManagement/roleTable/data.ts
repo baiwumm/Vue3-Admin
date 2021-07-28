@@ -63,7 +63,6 @@ export const searchFormSchema: FormSchema[] = [
         field: 'roleNme',
         label: '角色名称',
         component: 'Input',
-        colProps: { span: 8 },
         componentProps: {
             placeholder: '请输入角色名称',
             maxLength: 32
@@ -73,7 +72,6 @@ export const searchFormSchema: FormSchema[] = [
         field: 'status',
         label: '状态',
         component: 'Select',
-        colProps: { span: 8 },
     },
 ];
 

@@ -3,8 +3,8 @@
  * @Version: 3.30
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 10:48:35
- * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-27 17:22:13
+ * @LastEditors: Please set LastEditors
+ * @LastEditTime: 2021-07-28 17:03:12
  */
 'use strict';
 
@@ -20,6 +20,8 @@ module.exports = app => {
     router.get('/getUserInfo', controller.system.userManagement.getUserInfo);
     // 系统设置-用户管理
     router.get('/system/getUserList', controller.system.userManagement.getUserList); // 获取用户列表
+    router.post('/system/userSave', controller.system.userManagement.userSave); // 新增和更新用户
+    router.post('/system/userDel', controller.system.userManagement.userDel); // 删除用户
     // 系统设置-菜单管理
     router.get('/system/getMenuTree', controller.system.menuManagement.getMenuTree); // 获取菜单树结构
     router.post('/system/menuSave', controller.system.menuManagement.menuSave); // 新增和更新菜单
