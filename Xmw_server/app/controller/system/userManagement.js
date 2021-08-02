@@ -3,10 +3,12 @@
  * @Version: 3.30
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-07-28 17:27:01
+ * @LastEditors: Xie Mingwei
+ * @LastEditTime: 2021-08-02 17:55:22
  */
 'use strict';
+
+const jwt = require('jsonwebtoken');
 
 const Controller = require('egg').Controller;
 class UserManagementController extends Controller {
@@ -59,7 +61,7 @@ class UserManagementController extends Controller {
                 params.user_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()
                 await Raw.Insert('xmw_user', params);
-            } else { // 编辑字典
+            } else { // 编辑用户
                 params.update_last_time = new Date()
                 const options = {
                     wherestr: `where user_id = ${user_id}`
@@ -98,26 +100,45 @@ class UserManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            const result = {
-                userId: '1',
-                username: 'vben',
-                realName: 'Vben Admin',
-                avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
-                desc: 'manager',
-                password: '123456',
-                token: 'fakeToken1',
-                homePath: '/workbench',
-                roles: [
-                    {
-                        roleName: 'Super Admin',
-                        value: 'super',
-                    },
-                ],
+            let { user_name, password } = ctx.params
+            let payload = ctx.params
+            let token = jwt.sign(payload, this.config.privateKey, { expiresIn: this.config.expiresIn });  //生成token
+            // 判断用户名密码是否正确
+            const userInfo = await Raw.Query(`select t.*,a.org_name,b.post_name,group_concat(c.role_name) as role_name from xmw_user t 
+            left join xmw_organization a on t.org_id = a.org_id
+            left join xmw_post b on t.post_id = b.post_id
+            left join xmw_role c on find_in_set(c.role_id,t.role_id) where user_name = '${user_name}' and password = '${password}' group by t.role_id`);
+            if (userInfo) { // 用户名密码正确
+                // 判断用户是否被禁用
+                if (userInfo.status == 1) {
+                    // 更新token和IP、登录时间、登录次数
+                    const updateParams = {
+                        token: token,
+                        login_last_ip: ctx.request.ip,
+                        login_last_time: new Date(),
+                        login_num: (userInfo.login_num || 0) + 1
+                    };
+                    Object.assign(userInfo, updateParams, { expiresIn: this.config.expiresIn })
+                    const options = {
+                        wherestr: `where user_id=${userInfo.user_id}`
+                    };
+                    // 将当前用户保存到session
+                    ctx.session.userInfo = userInfo
+                    // 更新用户信息
+                    await Raw.Update('xmw_user', updateParams, options);
+                    // 删除密码
+                    delete userInfo.password
+                    return ctx.body = { resCode: 200, resMsg: '登录成功!', response: userInfo }
+                } else {
+                    return ctx.body = { resCode: -1, resMsg: '此用户已被禁用,请联系管理员!', response: {} }
+                }
+            } else { // 用户名密码错误
+                return ctx.body = { resCode: -1, resMsg: '用户名或密码错误!', response: {} }
             }
-            ctx.body = { resCode: 200, resMsg: '请求成功!', response: result }
+
         } catch (error) {
             ctx.logger.info('login方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
         }
     }
 
@@ -126,10 +147,14 @@ class UserManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            ctx.body = { resCode: 200, resMsg: '请求成功!', response: 'ok' }
+            let { user_id } = ctx.session.userInfo
+            await Raw.Update('xmw_user', { token: '' }, {
+                wherestr: `where user_id=${user_id}`
+            });
+            return ctx.body = { resCode: 200, resMsg: '注销成功!', response: {} }
         } catch (error) {
-            ctx.logger.info('login方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
+            ctx.logger.info('logout方法报错：' + error)
+            return ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
         }
     }
 
@@ -138,10 +163,20 @@ class UserManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            ctx.body = { resCode: 200, resMsg: '请求成功!', response: ['1000', '3000', '5000'] }
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
+            // 获取用户角色id
+            let { role_id } = await Raw.Query(`select role_id from xmw_user where user_id=${user_id}`)
+            // 根据角色id获取对应的按钮权限
+            let permission_list = await Raw.QueryList(`select permission from xmw_menu t
+            left join xmw_permission p on t.menu_id = p.menu_id
+            where p.role_id in (${role_id}) and t.menu_type = 'button'`)
+            // 拿到按钮权限集合
+            let menu_id = permission_list.map(v => v.permission)
+            return ctx.body = { resCode: 200, resMsg: '请求成功!', response: Array.from(new Set(menu_id)) } //最后一步要去重
         } catch (error) {
-            ctx.logger.info('login方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
+            ctx.logger.info('getPermCode方法报错：' + error)
+            return ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
         }
     }
 
@@ -149,26 +184,16 @@ class UserManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            const result = {
-                userId: '1',
-                username: 'vben',
-                realName: 'Vben Admin',
-                avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
-                desc: 'manager',
-                password: '123456',
-                token: 'fakeToken1',
-                homePath: '/workbench',
-                roles: [
-                    {
-                        roleName: 'Super Admin',
-                        value: 'super',
-                    },
-                ],
-            }
-            ctx.body = { resCode: 200, resMsg: '请求成功!', response: result }
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
+            // 获取用户信息
+            let userInfo = await Raw.Query(`select * from xmw_user where user_id=${user_id}`)
+            // 删除密码
+            delete userInfo.password
+            return ctx.body = { resCode: 200, resMsg: '请求成功!', response: userInfo }
         } catch (error) {
             ctx.logger.info('getUserInfo方法报错：' + error)
-            ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
+            return ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
         }
     }
 }

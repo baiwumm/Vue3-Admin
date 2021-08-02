@@ -4,10 +4,10 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:46:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-23 15:27:04
+ * @LastEditTime: 2021-07-30 10:11:05
  */
 import { defHttp } from '/@/utils/http/axios';
-import { getMenuTreeResultModel, menuTreeParams, menuSaveParams, menuDelParams, getMenuListResultModel } from './model/menuModel';
+import { getMenuTreeResultModel, menuSearchParams, menuSaveParams, menuDelParams, getMenuListResultModel } from './model/menuModel';
 
 enum Api {
     getMenuTree = '/system/getMenuTree', // 获取菜单树结构
@@ -16,7 +16,7 @@ enum Api {
     getMenuList = '/system/getMenuList', // 获取路由菜单
 }
 
-export function getMenuTree(params?: menuTreeParams) {
+export function getMenuTree(params?: menuSearchParams) {
     return defHttp.get<getMenuTreeResultModel>({ url: Api.getMenuTree, params });
 }
 

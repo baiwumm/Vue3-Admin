@@ -4,9 +4,10 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:46:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-19 17:50:27
+ * @LastEditTime: 2021-07-30 11:28:57
  */
 import { defHttp } from '/@/utils/http/axios';
+import { dictSearchParams, getDictResultModel, dictSaveParams, dictDelParams, dictModelParams, dictModelResult } from './model/dictModel';
 
 enum Api {
     getDictionaryList = '/system/getDictionaryList', // 获取字典列表
@@ -15,18 +16,18 @@ enum Api {
     dictionaryModel = '/system/dictionaryModel', // 查询字典键值集合
 }
 
-export function getDictionaryList(params?: object) {
-    return defHttp.get({ url: Api.getDictionaryList, params: params });
+export function getDictionaryList(params?: dictSearchParams) {
+    return defHttp.get<getDictResultModel>({ url: Api.getDictionaryList, params: params });
 }
 
-export function dictionarySave(params?: object) {
+export function dictionarySave(params: dictSaveParams) {
     return defHttp.post({ url: Api.dictionarySave, params: params });
 }
 
-export function dictionaryDel(params?: object) {
+export function dictionaryDel(params: dictDelParams) {
     return defHttp.post({ url: Api.dictionaryDel, params: params });
 }
 
-export function dictionaryModel(params?: object) {
-    return defHttp.get({ url: Api.dictionaryModel, params: params });
+export function dictionaryModel(params: dictModelParams) {
+    return defHttp.get<dictModelResult>({ url: Api.dictionaryModel, params: params });
 }

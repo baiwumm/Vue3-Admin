@@ -4,9 +4,10 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:46:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-21 10:08:20
+ * @LastEditTime: 2021-07-30 11:20:57
  */
 import { defHttp } from '/@/utils/http/axios';
+import { orgSearchParams, getOrgListResultModel, orgSaveParams, orgDelParams } from './model/orgModel';
 
 enum Api {
     getOrganizationTree = '/system/getOrganizationTree', // 获取组织树结构
@@ -14,15 +15,15 @@ enum Api {
     organizationDel = '/system/organizationDel', // 删除组织
 }
 
-export function getOrganizationTree(params?: object) {
-    return defHttp.get({ url: Api.getOrganizationTree, params: params });
+export function getOrganizationTree(params?: orgSearchParams) {
+    return defHttp.get<getOrgListResultModel>({ url: Api.getOrganizationTree, params: params });
 }
 
-export function organizationSave(params?: object) {
+export function organizationSave(params: orgSaveParams) {
     return defHttp.post({ url: Api.organizationSave, params: params });
 }
 
-export function organizationDel(params?: object) {
+export function organizationDel(params: orgDelParams) {
     return defHttp.post({ url: Api.organizationDel, params: params });
 }
 

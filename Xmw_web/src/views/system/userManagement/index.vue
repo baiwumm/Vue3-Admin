@@ -6,8 +6,9 @@
 <script>
 import { PageWrapper } from '/@/components/Page';
 import UserTable from './userTable/index.vue';
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
   name: 'userManagement',
   components: { PageWrapper, UserTable },
-};
+});
 </script>

@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-27 10:32:08
+ * @LastEditTime: 2021-08-02 18:36:25
  */
 'use strict';
 
@@ -42,6 +42,8 @@ class MenuManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
             // 只查询目录或者菜单类型的数据
             let sqlData = await Raw.QueryList(`select * from xmw_menu where menu_type != 'button' order by sort desc,create_time asc `);
             // 组装路由数据格式

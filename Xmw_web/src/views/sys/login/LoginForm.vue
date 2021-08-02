@@ -1,188 +1,168 @@
 <template>
-  <LoginFormTitle v-show="getShow" class="enter-x" />
   <Form
-    class="p-4 enter-x"
-    :model="formData"
-    :rules="getFormRules"
-    ref="formRef"
-    v-show="getShow"
-    @keypress.enter="handleLogin"
+    ref="formLogin"
+    @keypress.enter="onSubmit"
+    :label-col="{ span: 5 }"
+    :wrapper-col="{ span: 19 }"
   >
-    <FormItem name="account" class="enter-x">
-      <Input size="large" v-model:value="formData.account" :placeholder="t('sys.login.userName')" />
+    <FormItem label="用户名" class="enter-x" v-bind="validateInfos.user_name">
+      <Input size="large" v-model:value="modelRef.user_name" :placeholder="t('sys.login.userName')">
+        <template #prefix>
+          <UserOutlined type="user" />
+        </template>
+      </Input>
     </FormItem>
-    <FormItem name="password" class="enter-x">
+    <FormItem label="密码" class="enter-x" v-bind="validateInfos.password">
       <InputPassword
         size="large"
         visibilityToggle
-        v-model:value="formData.password"
+        v-model:value="modelRef.password"
         :placeholder="t('sys.login.password')"
-      />
+      >
+        <template #prefix>
+          <LockOutlined />
+        </template>
+      </InputPassword>
     </FormItem>
-
-    <ARow class="enter-x">
-      <ACol :span="12">
-        <FormItem>
-          <!-- No logic, you need to deal with it yourself -->
-          <Checkbox v-model:checked="rememberMe" size="small">
-            {{ t('sys.login.rememberMe') }}
-          </Checkbox>
-        </FormItem>
-      </ACol>
-      <ACol :span="12">
-        <FormItem :style="{ 'text-align': 'right' }">
-          <!-- No logic, you need to deal with it yourself -->
-          <Button type="link" size="small" @click="setLoginState(LoginStateEnum.RESET_PASSWORD)">
-            {{ t('sys.login.forgetPassword') }}
-          </Button>
-        </FormItem>
-      </ACol>
-    </ARow>
-
-    <FormItem class="enter-x">
-      <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
-        {{ t('sys.login.loginButton') }}
-      </Button>
-      <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
-        {{ t('sys.login.registerButton') }}
-      </Button> -->
+    <FormItem :wrapper-col="{ span: 19, offset: 5 }" class="enter-x" v-bind="validateInfos.verify">
+      <BasicDragVerify @success="handleSuccess" width="318">
+        <template #text="isPassing">
+          <div v-if="isPassing"> 验证成功 </div>
+          <div v-else> 请安住滑块,拖动到最右边 </div>
+        </template>
+      </BasicDragVerify>
     </FormItem>
-    <ARow class="enter-x">
-      <ACol :xs="24" :md="8">
-        <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
-          {{ t('sys.login.mobileSignInFormTitle') }}
-        </Button>
-      </ACol>
-      <ACol :md="8" :xs="24" class="!my-2 md:!my-0 xs:mx-0 md:mx-2">
-        <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
-          {{ t('sys.login.qrSignInFormTitle') }}
-        </Button>
-      </ACol>
-      <ACol :md="7" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
-          {{ t('sys.login.registerButton') }}
-        </Button>
-      </ACol>
-    </ARow>
-
-    <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
-
-    <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <GithubFilled />
-      <WechatFilled />
-      <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
-    </div>
+    <FormItem :wrapper-col="{ span: 19, offset: 5 }" class="enter-x">
+      <Button
+        size="large"
+        block
+        type="primary"
+        @click.prevent="onSubmit"
+        :loading="loginLoading"
+        :disabled="loginLoading"
+        >{{ t('sys.login.loginButton') }}</Button
+      >
+    </FormItem>
   </Form>
 </template>
+
 <script lang="ts">
-  import { defineComponent, reactive, ref, toRaw, unref, computed } from 'vue';
-
-  import { Checkbox, Form, Input, Row, Col, Button, Divider } from 'ant-design-vue';
-  import {
-    GithubFilled,
-    WechatFilled,
-    AlipayCircleFilled,
-    GoogleCircleFilled,
-    TwitterCircleFilled,
-  } from '@ant-design/icons-vue';
-  import LoginFormTitle from './LoginFormTitle.vue';
-
-  import { useI18n } from '/@/hooks/web/useI18n';
-  import { useMessage } from '/@/hooks/web/useMessage';
-
-  import { useUserStore } from '/@/store/modules/user';
-  import { LoginStateEnum, useLoginState, useFormRules, useFormValid } from './useLogin';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  //import { onKeyStroke } from '@vueuse/core';
-
-  export default defineComponent({
-    name: 'LoginForm',
-    components: {
-      [Col.name]: Col,
-      [Row.name]: Row,
-      Checkbox,
-      Button,
-      Form,
-      FormItem: Form.Item,
-      Input,
-      Divider,
-      LoginFormTitle,
-      InputPassword: Input.Password,
-      GithubFilled,
-      WechatFilled,
-      AlipayCircleFilled,
-      GoogleCircleFilled,
-      TwitterCircleFilled,
-    },
-    setup() {
-      const { t } = useI18n();
-      const { notification, createErrorModal } = useMessage();
-      const { prefixCls } = useDesign('login');
-      const userStore = useUserStore();
-
-      const { setLoginState, getLoginState } = useLoginState();
-      const { getFormRules } = useFormRules();
-
-      const formRef = ref();
-      const loading = ref(false);
-      const rememberMe = ref(false);
-
-      const formData = reactive({
-        account: 'vben',
-        password: '123456',
-      });
-
-      const { validForm } = useFormValid(formRef);
-
-      //onKeyStroke('Enter', handleLogin);
-
-      const getShow = computed(() => unref(getLoginState) === LoginStateEnum.LOGIN);
-
-      async function handleLogin() {
-        const data = await validForm();
-        if (!data) return;
-        try {
-          loading.value = true;
+import CryptoJS from 'crypto-js'; // AES/DES加密
+import { crypto_key, crypto_iv } from '/@/utils'; // AES/DES加密秘钥
+import { defineComponent, reactive, ref, toRaw, UnwrapRef } from 'vue';
+import { Form, Input, Row, Col, Button, Alert } from 'ant-design-vue';
+import { useMessage } from '/@/hooks/web/useMessage';
+import { BasicDragVerify, PassingData } from '/@/components/Verify/index'; // 验证组件
+const useForm = Form.useForm;
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化
+import { useUserStore } from '/@/store/modules/user';
+// 登录表单数据类型注解
+interface FormState {
+  user_name: string;
+  password: string;
+  verify: boolean;
+}
+export default defineComponent({
+  name: 'LoginForm',
+  components: {
+    [Col.name]: Col,
+    [Row.name]: Row,
+    Button,
+    Form,
+    FormItem: Form.Item,
+    Input,
+    InputPassword: Input.Password,
+    Alert,
+    UserOutlined,
+    LockOutlined,
+    BasicDragVerify,
+  },
+  setup() {
+    const { t } = useI18n();
+    const { createMessage, notification } = useMessage();
+    const userStore = useUserStore();
+    //   表单数据
+    const modelRef: UnwrapRef<FormState> = reactive({
+      user_name: '',
+      password: '',
+      verify: false,
+    });
+    // userForm注册表单
+    const { validate, validateInfos } = useForm(
+      modelRef,
+      reactive({
+        user_name: [
+          {
+            required: true,
+            message: '请输入用户名',
+          },
+        ],
+        password: [
+          {
+            required: true,
+            message: '请输入密码',
+          },
+        ],
+      })
+    );
+    // 按钮请求状态
+    const loginLoading = ref<boolean>(false);
+    //   表单提交
+    const onSubmit = () => {
+      loginLoading.value = true;
+      validate()
+        .then(async (res) => {
+          let data = toRaw(modelRef);
+          let encryptionPas = CryptoJS.AES.encrypt(data.password, crypto_key, {
+            iv: crypto_iv,
+            mode: CryptoJS.mode.CBC,
+            padding: CryptoJS.pad.Pkcs7,
+          }).toString();
+          if (!data.verify) {
+            createMessage.warn(`请完成滑块验证!`);
+            return;
+          }
+          //   返回登录用户信息
           const userInfo = await userStore.login(
             toRaw({
-              password: data.password,
-              username: data.account,
+              password: encryptionPas,
+              user_name: data.user_name,
               mode: 'none', //不要默认的错误提示
             })
           );
           if (userInfo) {
             notification.success({
               message: t('sys.login.loginSuccessTitle'),
-              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.realName}`,
+              description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.cn_name}`,
               duration: 3,
             });
           }
-        } catch (error) {
-          createErrorModal({
-            title: t('sys.api.errorTip'),
-            content: error.message || t('sys.api.networkExceptionMsg'),
-            getContainer: () => document.body.querySelector(`.${prefixCls}`) || document.body,
-          });
-        } finally {
-          loading.value = false;
-        }
-      }
-
-      return {
-        t,
-        prefixCls,
-        formRef,
-        formData,
-        getFormRules,
-        rememberMe,
-        handleLogin,
-        loading,
-        setLoginState,
-        LoginStateEnum,
-        getShow,
-      };
-    },
-  });
+        })
+        .finally(() => {
+          setTimeout(() => {
+            loginLoading.value = false;
+          }, 600);
+        });
+    };
+    // 滑块验证成功回调
+    function handleSuccess(data: PassingData) {
+      console.log(data);
+      const { isPassing, time } = data;
+      modelRef.verify = isPassing;
+      createMessage.success(`校验成功,耗时${time}秒`);
+    }
+    return {
+      t,
+      modelRef,
+      validateInfos,
+      onSubmit,
+      loginLoading,
+      handleSuccess,
+    };
+  },
+});
 </script>
+
+<style lang="less" scoped>
+</style>
