@@ -48,6 +48,12 @@ export default defineComponent({
           ...data.record,
         });
       }
+      //  添加子级
+      if (data.parent_id) {
+        setFieldsValue({
+          parent_id: data.parent_id,
+        });
+      }
       //   判断父级是否删除操作
       if (data.isDel) {
         // 操作成功后重新请求下拉树列表
@@ -58,6 +64,12 @@ export default defineComponent({
           },
         });
       }
+      updateSchema([
+        {
+          field: 'parent_id',
+          componentProps: { disabled: !!data?.parent_id },
+        },
+      ]);
       //   请求状态和组织类型
       const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
       updateSchema([

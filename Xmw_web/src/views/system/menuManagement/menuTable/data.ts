@@ -175,13 +175,13 @@ export const dataFormSchema: FormSchema[] = [
     {
         field: 'permission',
         label: '权限标识',
+        required: true,
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         componentProps: {
             placeholder: '请输入权限标识',
             maxLength: 50
-        },
-        ifShow: ({ values }) => !isDir(values.menu_type),
+        }
     },
     {
         field: 'frame_src',

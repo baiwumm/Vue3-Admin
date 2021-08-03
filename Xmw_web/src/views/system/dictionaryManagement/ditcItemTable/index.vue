@@ -15,6 +15,7 @@
           type="primary"
           @click="handleCreate"
           preIcon="ant-design:plus-outlined"
+          v-auth="['system:dictionary:ditcItem:add']"
           >新增</a-button
         >
       </template>
@@ -23,10 +24,12 @@
         <TableAction
           :actions="[
             {
+              auth: ['system:dictionary:ditcItem:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:dictionary:ditcItem:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -110,7 +113,7 @@ export default defineComponent({
     }
     //   删除操作
     async function handleDelete(record: Recordable) {
-      await dictionaryDel({ ids: record.dictionary_id });
+      await dictionaryDel({ ids: record.dictionary_id, dictionary_label: record.dictionary_label });
       createMessage.success('删除成功！');
       await reload();
     }

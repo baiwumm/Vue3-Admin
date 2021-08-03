@@ -10,7 +10,11 @@
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
+        <a-button
+          type="primary"
+          preIcon="ant-design:plus-outlined"
+          @click="handleCreate"
+          v-auth="['system:post:add']"
           >新增</a-button
         >
       </template>
@@ -19,16 +23,25 @@
         <TableAction
           :actions="[
             {
+              auth: ['system:post:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:post:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
                 title: '是否确认删除',
                 confirm: handleDelete.bind(null, record),
               },
+            },
+          ]"
+          :dropDownActions="[
+            {
+              auth: ['system:post:addChild'],
+              label: '添加子级',
+              onClick: addChildPost.bind(null, record),
             },
           ]"
         />
@@ -82,7 +95,7 @@ export default defineComponent({
       showTableSetting: true,
       bordered: true,
       actionColumn: {
-        width: 80,
+        width: 120,
         title: '操作',
         dataIndex: 'action',
         slots: { customRender: 'action' },
@@ -109,12 +122,19 @@ export default defineComponent({
     }
     //   删除操作
     async function handleDelete(record: Recordable) {
-      await postDel({ ids: record.post_id });
+      await postDel({ ids: record.post_id, post_name: record.post_name });
       createMessage.success('删除成功！');
       openModal(false, {
         isDel: true,
       });
       await reload();
+    }
+    // 添加子级
+    function addChildPost(record: Recordable) {
+      openModal(true, {
+        parent_id: record.post_id,
+        isUpdate: false,
+      });
     }
     // 新增编辑成功后的回调
     async function handleSuccess() {
@@ -134,6 +154,7 @@ export default defineComponent({
       statusOptions,
       formatDictValue,
       onFetchSuccess,
+      addChildPost,
     };
   },
 });

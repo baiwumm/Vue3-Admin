@@ -15,10 +15,12 @@ import { setObjToUrlParams, deepMerge } from '/@/utils';
 import { useErrorLogStoreWithOut } from '/@/store/modules/errorLog';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { joinTimestamp, formatRequestDate } from './helper';
+import { useUserStore } from '/@/store/modules/user';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
 const { createMessage, createErrorModal } = useMessage();
+// const userStore = useUserStore();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -58,9 +60,13 @@ const transform: AxiosTransform = {
         // 在此处根据自己项目的实际情况对不同的code执行不同的操作
         // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
         let timeoutMsg = '';
+        const userStore = useUserStore();
         switch (resCode) {
             case ResultEnum.TIMEOUT:
                 timeoutMsg = t('sys.api.timeoutMessage');
+                // 登录超时跳到登录页
+                userStore.setToken(undefined);
+                userStore.setSessionTimeout(true);
                 break;
             default:
                 if (resMsg) {

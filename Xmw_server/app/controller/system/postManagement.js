@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-26 17:07:18
+ * @LastEditTime: 2021-08-03 14:42:39
  */
 'use strict';
 
@@ -43,6 +43,8 @@ class PostManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
             let { post_id, ...params } = ctx.params
             // 判断父级不能是自己
             if (params.parent_id == post_id && post_id) {
@@ -59,6 +61,7 @@ class PostManagementController extends Controller {
             if (!post_id) {
                 params.post_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()
+                params.founder = user_id
                 await Raw.Insert('xmw_post', params);
             } else { // 编辑字典
                 params.update_last_time = new Date()
@@ -67,6 +70,7 @@ class PostManagementController extends Controller {
                 };
                 await Raw.Update('xmw_post', params, options);
             }
+            await ctx.service.logs.saveLogs(`${post_id ? '编辑' : '新增'}岗位:${params.post_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('postSave方法报错：' + error)
@@ -83,7 +87,7 @@ class PostManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { ids } = ctx.params
+            let { ids, post_name } = ctx.params
             // 判断当前岗位是否存在子级
             let conditions = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
@@ -93,6 +97,7 @@ class PostManagementController extends Controller {
             await Raw.Delete("xmw_post", {
                 wherestr: `where post_id in (${ids})`
             });
+            await ctx.service.logs.saveLogs(`删除岗位:${post_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('postDel方法报错：' + error)

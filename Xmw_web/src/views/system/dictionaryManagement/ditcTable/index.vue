@@ -22,7 +22,11 @@
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
+        <a-button
+          type="primary"
+          preIcon="ant-design:plus-outlined"
+          @click="handleCreate"
+          v-auth="['system:dictionary:ditc:add']"
           >新增</a-button
         >
       </template>
@@ -31,10 +35,12 @@
         <TableAction
           :actions="[
             {
+              auth: ['system:dictionary:ditc:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:dictionary:ditc:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -86,6 +92,7 @@ export default defineComponent({
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
           resetButtonOptions: {
+            auth: ['system:dictionary:ditc:edi'],
             preIcon: 'ant-design:delete-outlined',
           },
           submitButtonOptions: {
@@ -126,7 +133,7 @@ export default defineComponent({
     }
     //   删除操作
     async function handleDelete(record: Recordable) {
-      await dictionaryDel({ ids: record.dictionary_id });
+      await dictionaryDel({ ids: record.dictionary_id, dict_name: record.dict_name });
       createMessage.success('删除成功！');
       await reload();
       const list = getDataSource();

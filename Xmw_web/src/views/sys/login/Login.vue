@@ -1,11 +1,11 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
-    <AppDarkModeToggle class="enter-x" />
     <AppLocalePicker
       class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
       :showText="false"
       v-if="showLocale"
     />
+    <AppDarkModeToggle class="absolute top-3 right-7 enter-x" />
     <div class="login-container">
       <Card :bordered="false">
         <div class="top">

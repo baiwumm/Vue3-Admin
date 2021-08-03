@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-26 16:59:36
+ * @LastEditTime: 2021-08-03 15:01:06
  */
 'use strict';
 
@@ -43,6 +43,8 @@ class OrganizationManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
             let { org_id, ...params } = ctx.params
             // 判断父级不能是自己
             if (params.parent_id == org_id && org_id) {
@@ -59,6 +61,7 @@ class OrganizationManagementController extends Controller {
             if (!org_id) {
                 params.org_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()
+                params.founder = user_id
                 await Raw.Insert('xmw_organization', params);
             } else { // 编辑字典
                 params.update_last_time = new Date()
@@ -67,6 +70,7 @@ class OrganizationManagementController extends Controller {
                 };
                 await Raw.Update('xmw_organization', params, options);
             }
+            await ctx.service.logs.saveLogs(`${org_id ? '编辑' : '新增'}组织:${params.org_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('organizationSave方法报错：' + error)
@@ -83,7 +87,7 @@ class OrganizationManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { ids } = ctx.params
+            let { ids, org_name } = ctx.params
             // 判断当前组织是否存在子级
             let conditions = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_organization ${conditions}`);
@@ -93,6 +97,7 @@ class OrganizationManagementController extends Controller {
             await Raw.Delete("xmw_organization", {
                 wherestr: `where org_id in (${ids})`
             });
+            await ctx.service.logs.saveLogs(`删除组织:${org_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('organizationDel方法报错：' + error)

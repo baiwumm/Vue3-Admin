@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-02 17:55:22
+ * @LastEditTime: 2021-08-03 18:15:46
  */
 'use strict';
 
@@ -60,6 +60,7 @@ class UserManagementController extends Controller {
             if (!user_id) {
                 params.user_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()
+                params.founder = ctx.session.userInfo.user_id
                 await Raw.Insert('xmw_user', params);
             } else { // 编辑用户
                 params.update_last_time = new Date()
@@ -68,6 +69,7 @@ class UserManagementController extends Controller {
                 };
                 await Raw.Update('xmw_user', params, options);
             }
+            await ctx.service.logs.saveLogs(`${user_id ? '编辑' : '新增'}用户:${params.cn_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('userSave方法报错：' + error)
@@ -84,10 +86,11 @@ class UserManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { ids } = ctx.params
+            let { ids, cn_name } = ctx.params
             await Raw.Delete("xmw_user", {
                 wherestr: `where user_id in (${ids})`
             });
+            await ctx.service.logs.saveLogs(`删除用户:${cn_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('userDel方法报错：' + error)
@@ -95,7 +98,11 @@ class UserManagementController extends Controller {
         }
     }
 
-    // 获取用户列表
+    /**
+    * @description: 用户登录
+    * @param {*} params:表单数据
+    * @return {*}
+    */
     async login() {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
@@ -104,10 +111,10 @@ class UserManagementController extends Controller {
             let payload = ctx.params
             let token = jwt.sign(payload, this.config.privateKey, { expiresIn: this.config.expiresIn });  //生成token
             // 判断用户名密码是否正确
-            const userInfo = await Raw.Query(`select t.*,a.org_name,b.post_name,group_concat(c.role_name) as role_name from xmw_user t 
+            const userInfo = await Raw.Query(`select t.*,a.org_name,b.post_name from xmw_user t 
             left join xmw_organization a on t.org_id = a.org_id
             left join xmw_post b on t.post_id = b.post_id
-            left join xmw_role c on find_in_set(c.role_id,t.role_id) where user_name = '${user_name}' and password = '${password}' group by t.role_id`);
+            where user_name = '${user_name}' and password = '${password}' group by t.role_id`);
             if (userInfo) { // 用户名密码正确
                 // 判断用户是否被禁用
                 if (userInfo.status == 1) {
@@ -118,7 +125,7 @@ class UserManagementController extends Controller {
                         login_last_time: new Date(),
                         login_num: (userInfo.login_num || 0) + 1
                     };
-                    Object.assign(userInfo, updateParams, { expiresIn: this.config.expiresIn })
+                    Object.assign(userInfo, updateParams)
                     const options = {
                         wherestr: `where user_id=${userInfo.user_id}`
                     };
@@ -126,8 +133,12 @@ class UserManagementController extends Controller {
                     ctx.session.userInfo = userInfo
                     // 更新用户信息
                     await Raw.Update('xmw_user', updateParams, options);
+                    // 获取角色信息
+                    let roleInfo = await Raw.QueryList(`select role_id,role_name,role_code from xmw_role where role_id in (${userInfo.role_id.split(',')})`)
+                    userInfo.roles = roleInfo
                     // 删除密码
                     delete userInfo.password
+                    await ctx.service.logs.saveLogs(`登录 次数:${updateParams.login_num}`)
                     return ctx.body = { resCode: 200, resMsg: '登录成功!', response: userInfo }
                 } else {
                     return ctx.body = { resCode: -1, resMsg: '此用户已被禁用,请联系管理员!', response: {} }
@@ -142,7 +153,11 @@ class UserManagementController extends Controller {
         }
     }
 
-    // 获取用户列表
+    /**
+    * @description: 用户注销
+    * @param {*} 
+    * @return {*}
+    */
     async logout() {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
@@ -151,6 +166,7 @@ class UserManagementController extends Controller {
             await Raw.Update('xmw_user', { token: '' }, {
                 wherestr: `where user_id=${user_id}`
             });
+            await ctx.service.logs.saveLogs(`注销登录`)
             return ctx.body = { resCode: 200, resMsg: '注销成功!', response: {} }
         } catch (error) {
             ctx.logger.info('logout方法报错：' + error)
@@ -158,7 +174,11 @@ class UserManagementController extends Controller {
         }
     }
 
-    // 获取用户列表
+    /**
+    * @description: 获取按钮权限key
+    * @param {*} 
+    * @return {*}
+    */
     async getPermCode() {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
@@ -180,6 +200,11 @@ class UserManagementController extends Controller {
         }
     }
 
+    /**
+     * @description: 获取用户信息
+     * @param {*} 
+     * @return {*}
+     */
     async getUserInfo() {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
@@ -187,7 +212,13 @@ class UserManagementController extends Controller {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
             // 获取用户信息
-            let userInfo = await Raw.Query(`select * from xmw_user where user_id=${user_id}`)
+            let userInfo = await Raw.Query(`select t.*,a.org_name,b.post_name from xmw_user t 
+            left join xmw_organization a on t.org_id = a.org_id
+            left join xmw_post b on t.post_id = b.post_id
+            where user_id=${user_id} group by t.role_id`)
+            // 获取角色信息
+            let roleInfo = await Raw.QueryList(`select role_id,role_name,role_code from xmw_role where role_id in (${userInfo.role_id.split(',')})`)
+            userInfo.roles = roleInfo
             // 删除密码
             delete userInfo.password
             return ctx.body = { resCode: 200, resMsg: '请求成功!', response: userInfo }

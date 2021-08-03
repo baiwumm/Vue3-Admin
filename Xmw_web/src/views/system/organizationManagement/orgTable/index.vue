@@ -16,13 +16,25 @@
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
+        <a-button
+          type="primary"
+          preIcon="ant-design:plus-outlined"
+          @click="handleCreate"
+          v-auth="['system:organization:add']"
           >新增</a-button
         >
-        <a-button type="primary" @click="expandAll" preIcon="ant-design:down-outlined"
+        <a-button
+          type="primary"
+          @click="expandAll"
+          preIcon="ant-design:down-outlined"
+          v-auth="['system:organization:expand']"
           >展开</a-button
         >
-        <a-button type="primary" @click="collapseAll" preIcon="ant-design:up-outlined"
+        <a-button
+          type="primary"
+          @click="collapseAll"
+          preIcon="ant-design:up-outlined"
+          v-auth="['system:organization:collapse']"
           >折叠</a-button
         >
       </template>
@@ -31,10 +43,12 @@
         <TableAction
           :actions="[
             {
+              auth: ['system:organization:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:organization:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -45,6 +59,7 @@
           ]"
           :dropDownActions="[
             {
+              auth: ['system:organization:addChild'],
               label: '添加子级',
               onClick: addChildOrg.bind(null, record),
             },
@@ -134,7 +149,7 @@ export default defineComponent({
     }
     //   删除操作
     async function handleDelete(record: Recordable) {
-      await organizationDel({ ids: record.org_id });
+      await organizationDel({ ids: record.org_id, org_name: record.org_name });
       createMessage.success('删除成功！');
       openModal(false, {
         isDel: true,

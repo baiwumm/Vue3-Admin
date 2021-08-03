@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <PageWrapper contentClass="flex">
     <DitcTable class="w-2/4 xl:w-3/6" @dict-change="handleDictChange" />
     <DitcItemTable class="w-1/2" :parent_id="parent_id" />
   </PageWrapper>

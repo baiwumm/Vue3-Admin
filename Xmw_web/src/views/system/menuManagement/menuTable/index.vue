@@ -53,17 +53,25 @@
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate" preIcon="ant-design:plus-outlined"
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          preIcon="ant-design:plus-outlined"
+          v-auth="['system:menu:add']"
           >新增</a-button
         >
         <a-button
           type="primary"
           @click="expandAll"
           preIcon="ant-design:down-outlined"
-          v-auth="['3000']"
+          v-auth="['system:menu:expand']"
           >展开</a-button
         >
-        <a-button type="primary" @click="collapseAll" preIcon="ant-design:up-outlined"
+        <a-button
+          type="primary"
+          @click="collapseAll"
+          preIcon="ant-design:up-outlined"
+          v-auth="['system:menu:collapse']"
           >折叠</a-button
         >
       </template>
@@ -72,10 +80,12 @@
         <TableAction
           :actions="[
             {
+              auth: ['system:menu:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:menu:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -170,7 +180,7 @@ export default defineComponent({
     }
     //删除操作
     async function handleDelete(record: Recordable) {
-      await menuDel({ ids: record.menu_id });
+      await menuDel({ ids: record.menu_id, permission: record.permission });
       createMessage.success('删除成功！');
       openDrawer(false, {
         isDel: true,

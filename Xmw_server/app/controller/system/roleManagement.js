@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-27 14:21:48
+ * @LastEditTime: 2021-08-03 15:33:34
  */
 'use strict';
 
@@ -60,11 +60,12 @@ class RoleManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { role_id, status } = ctx.params;
+            let { role_id, status, role_name } = ctx.params;
             const options = {
                 wherestr: `where role_id=${role_id}`
             };
             await Raw.Update('xmw_role', { status: status }, options);
+            await ctx.service.logs.saveLogs(`更改角色状态:${role_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('setRoleStatus方法报错：' + error)
@@ -81,6 +82,8 @@ class RoleManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
             let { role_id, menu_role, ...params } = ctx.params
             // 判断角色名称是否已存在
             let conditions = `where role_name = '${params.role_name}'`
@@ -94,6 +97,7 @@ class RoleManagementController extends Controller {
                 const snowflake_role_id = ctx.helper.snowflakeId()
                 params.role_id = snowflake_role_id
                 params.create_time = new Date()
+                params.founder = user_id
                 await Raw.Insert('xmw_role', params);
                 // 如果是新增，直接把权限数据塞到xmw_permission
                 let permission_arr = menu_role.split(',')
@@ -130,6 +134,7 @@ class RoleManagementController extends Controller {
                 })
                 await Raw.InsertList('xmw_permission', permission_data)
             }
+            await ctx.service.logs.saveLogs(`${role_id ? '编辑' : '新增'}角色:${params.role_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('roleSave方法报错：' + error)
@@ -146,7 +151,7 @@ class RoleManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { ids } = ctx.params
+            let { ids, role_name } = ctx.params
             // 先删除角色列表的数据
             await Raw.Delete("xmw_role", {
                 wherestr: `where role_id in (${ids})`
@@ -155,6 +160,7 @@ class RoleManagementController extends Controller {
             await Raw.Delete("xmw_permission", {
                 wherestr: `where role_id in (${ids})`
             });
+            await ctx.service.logs.saveLogs(`删除角色:${role_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('roleDel方法报错：' + error)

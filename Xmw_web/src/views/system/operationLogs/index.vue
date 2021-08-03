@@ -1,12 +1,14 @@
 <template>
-  <div>操作日志</div>
+  <PageWrapper dense contentClass="flex">
+    <LogTable />
+  </PageWrapper>
 </template>
-
 <script>
-export default {
+import { PageWrapper } from '/@/components/Page';
+import LogTable from './logTable/index.vue';
+import { defineComponent } from 'vue';
+export default defineComponent({
   name: 'operationLogs',
-};
+  components: { PageWrapper, LogTable },
+});
 </script>
-
-<style lang="less">
-</style>

@@ -23,8 +23,12 @@
       </template>
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" preIcon="ant-design:plus-outlined" @click="handleCreate"
-          >新增用户</a-button
+        <a-button
+          type="primary"
+          preIcon="ant-design:plus-outlined"
+          @click="handleCreate"
+          v-auth="['system:user:add']"
+          >新增</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -32,10 +36,12 @@
         <TableAction
           :actions="[
             {
+              auth: ['system:user:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:user:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -125,7 +131,7 @@ export default defineComponent({
         createMessage.error('当前用户为超级用户,不能删除！');
         return;
       }
-      await userDel({ ids: record.user_id });
+      await userDel({ ids: record.user_id, cn_name: record.cn_name });
       createMessage.success('删除成功！');
       await reload();
     }

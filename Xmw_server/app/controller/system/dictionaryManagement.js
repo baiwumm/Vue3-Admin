@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-27 16:45:00
+ * @LastEditTime: 2021-08-03 14:36:10
  */
 'use strict';
 
@@ -44,6 +44,8 @@ class DictionaryManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
             let { dictionary_id, ...params } = ctx.params
             // 判断字典编码和字典名称是否已存在
             let conditions = `where (dict_coding = '${params.dict_coding}' or dict_name = '${params.dict_name}')`
@@ -54,7 +56,7 @@ class DictionaryManagementController extends Controller {
             }
             // 判断字典子项的标签和键值不能重复
             if (params.parent_id) {
-                let conditions_item = `where (dictionary_label = '${params.dictionary_label}' or dictionary_value = '${params.dictionary_value}') and parent_id = '${params.parent_id}'`
+                let conditions_item = `where (dictionary_label = '${params.dictionary_label}' or dictionary_value = '${params.dictionary_value}') and parent_id = '${params.parent_id}' and dictionary_id != '${dictionary_id}'`
                 const exist_item = await Raw.Query(`select count(1) as total from xmw_dictionary ${conditions_item}`);
                 if (exist_item.total) {
                     return ctx.body = { resCode: -1, resMsg: '相同字典下,标签和键值不能重复!', response: {} }
@@ -64,13 +66,16 @@ class DictionaryManagementController extends Controller {
             if (!dictionary_id) {
                 params.dictionary_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()
+                params.founder = user_id
                 await Raw.Insert('xmw_dictionary', params);
+                await ctx.service.logs.saveLogs(`新增${params.dict_name ? '字典' : '字典子项'}:${params.dict_name || params.dictionary_label}`)
             } else { // 编辑字典
                 params.update_last_time = new Date()
                 const options = {
                     wherestr: `where dictionary_id = ${dictionary_id}`
                 };
                 await Raw.Update('xmw_dictionary', params, options);
+                await ctx.service.logs.saveLogs(`编辑字典:${params.dict_name || params.dictionary_label}`)
             }
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
@@ -88,10 +93,16 @@ class DictionaryManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { ids } = ctx.params
+            let { ids, dict_name, dictionary_label } = ctx.params
+            // 判断字典是否有子项
+            const exist = await Raw.Query(`select count(1) as total from xmw_dictionary where parent_id = '${ids}'`);
+            if (exist.total) {
+                return ctx.body = { resCode: -1, resMsg: '字典存在子项，不能删除，请先删除子项!', response: {} }
+            }
             await Raw.Delete("xmw_dictionary", {
                 wherestr: `where dictionary_id in (${ids})`
             });
+            await ctx.service.logs.saveLogs(`删除${dict_name ? '字典' : '字典子项'}:${dict_name || dictionary_label}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('dictionaryDel方法报错：' + error)

@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex">
+  <PageWrapper dense contentClass="flex">
     <OrgTable />
   </PageWrapper>
 </template>

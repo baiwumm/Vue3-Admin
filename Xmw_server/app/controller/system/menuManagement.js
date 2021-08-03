@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-02 18:36:25
+ * @LastEditTime: 2021-08-03 15:45:18
  */
 'use strict';
 
@@ -45,7 +45,11 @@ class MenuManagementController extends Controller {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
             // 只查询目录或者菜单类型的数据
-            let sqlData = await Raw.QueryList(`select * from xmw_menu where menu_type != 'button' order by sort desc,create_time asc `);
+            let sqlData = await Raw.QueryList(`select * from xmw_menu 
+            where menu_type != 'button' and 
+            menu_id in (select menu_id from xmw_permission
+            where  FIND_IN_SET(role_id,(select role_id from xmw_user where user_id=${user_id})))
+            order by sort desc,create_time asc`);
             // 组装路由数据格式
             let menuData = sqlData.map(v => {
                 let menuItem = {
@@ -86,6 +90,8 @@ class MenuManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
+            // 从session获取用户id
+            let { user_id } = ctx.session.userInfo
             let { menu_id, ...params } = ctx.params
             // 判断父级不能是自己
             if (params.parent_id == menu_id && menu_id) {
@@ -102,6 +108,7 @@ class MenuManagementController extends Controller {
             if (!menu_id) {
                 params.menu_id = ctx.helper.snowflakeId()
                 params.create_time = new Date()
+                params.founder = user_id
                 await Raw.Insert('xmw_menu', params);
             } else { // 编辑菜单
                 params.update_last_time = new Date()
@@ -110,6 +117,7 @@ class MenuManagementController extends Controller {
                 };
                 await Raw.Update('xmw_menu', params, options);
             }
+            await ctx.service.logs.saveLogs(`${menu_id ? '编辑' : '新增'}菜单 权限标识:${params.permission}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('menuSave方法报错：' + error)
@@ -126,7 +134,7 @@ class MenuManagementController extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { ids } = ctx.params
+            let { ids, permission } = ctx.params
             // 判断当前菜单是否存在子级
             let conditions = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_menu ${conditions}`);
@@ -136,6 +144,7 @@ class MenuManagementController extends Controller {
             await Raw.Delete("xmw_menu", {
                 wherestr: `where menu_id in (${ids})`
             });
+            await ctx.service.logs.saveLogs(`删除菜单 权限标识:${permission}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('menuDel方法报错：' + error)

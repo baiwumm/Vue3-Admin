@@ -1,6 +1,6 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 引入组织树接口
-
+import { getUserList } from '/@/api/system/userManagement'; // 用户接口
 export const columns: BasicColumn[] = [
     {
         title: '组织名称',
@@ -70,6 +70,20 @@ export const dataFormSchema: FormSchema[] = [
         },
         colProps: { lg: 24, md: 24 },
     },
+    // {
+    //     field: 'leader',
+    //     label: '组织负责人',
+    //     component: 'ApiSelect',
+    //     colProps: { lg: 24, md: 24 },
+    //     componentProps: {
+    //         api: getUserList,
+    //         params: { current: 1, pageSize: 9999 },
+    //         placeholder: '请选择组织负责人',
+    //         resultField: 'records',
+    //         labelField: 'cn_name',
+    //         valueField: 'user_id',
+    //     }
+    // },
     {
         field: 'org_name',
         label: '组织名称',

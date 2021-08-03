@@ -3,8 +3,8 @@
  * @Version: 3.30
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 10:48:35
- * @LastEditors: Please set LastEditors
- * @LastEditTime: 2021-07-28 17:03:12
+ * @LastEditors: Xie Mingwei
+ * @LastEditTime: 2021-08-03 17:01:01
  */
 'use strict';
 
@@ -14,10 +14,10 @@
 module.exports = app => {
     const { router, controller } = app;
     //   系统设置模块接口
-    router.post('/login', controller.system.userManagement.login);
-    router.get('/logout', controller.system.userManagement.logout);
-    router.get('/getPermCode', controller.system.userManagement.getPermCode);
-    router.get('/getUserInfo', controller.system.userManagement.getUserInfo);
+    router.post('/login', controller.system.userManagement.login); // 用户登录
+    router.get('/logout', controller.system.userManagement.logout); // 用户注销
+    router.get('/getPermCode', controller.system.userManagement.getPermCode); // 获取按钮权限key
+    router.get('/getUserInfo', controller.system.userManagement.getUserInfo); // 获取用户信息
     // 系统设置-用户管理
     router.get('/system/getUserList', controller.system.userManagement.getUserList); // 获取用户列表
     router.post('/system/userSave', controller.system.userManagement.userSave); // 新增和更新用户
@@ -45,4 +45,6 @@ module.exports = app => {
     router.post('/system/dictionarySave', controller.system.dictionaryManagement.dictionarySave); // 新增和更新字典
     router.post('/system/dictionaryDel', controller.system.dictionaryManagement.dictionaryDel); // 删除字典
     router.get('/system/dictionaryModel', controller.system.dictionaryManagement.dictionaryModel); // 查询字典键值集合
+    // 系统设置-操作日志
+    router.get('/system/getLogList', controller.system.operationLogs.getLogList); // 获取日志列表
 };

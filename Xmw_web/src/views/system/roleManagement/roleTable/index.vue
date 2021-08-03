@@ -3,17 +3,26 @@
     <BasicTable @register="registerTable" @fetch-success="onFetchSuccess">
       <!-- 工具栏 -->
       <template #toolbar>
-        <a-button type="primary" @click="handleCreate"> 新增角色 </a-button>
+        <a-button
+          type="primary"
+          @click="handleCreate"
+          preIcon="ant-design:plus-outlined"
+          v-auth="['system:role:add']"
+        >
+          新增
+        </a-button>
       </template>
       <!-- 列操作 -->
       <template #action="{ record }">
         <TableAction
           :actions="[
             {
+              auth: ['system:role:edit'],
               icon: 'clarity:note-edit-line',
               onClick: handleEdit.bind(null, record),
             },
             {
+              auth: ['system:role:delete'],
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
@@ -89,7 +98,7 @@ export default defineComponent({
     }
     // 删除操作
     async function handleDelete(record: Recordable) {
-      await roleDel({ ids: record.role_id });
+      await roleDel({ ids: record.role_id, role_name: record.role_name });
       createMessage.success('删除成功！');
       await reload();
     }

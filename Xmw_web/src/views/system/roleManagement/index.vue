@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentFullHeight fixedHeight contentClass="flex"><RoleTable /></PageWrapper>
+  <PageWrapper dense contentClass="flex"><RoleTable /></PageWrapper>
 </template>
 
 <script lang="ts">

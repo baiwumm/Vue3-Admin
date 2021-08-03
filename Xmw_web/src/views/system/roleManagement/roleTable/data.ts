@@ -31,7 +31,7 @@ export const columns: BasicColumn[] = [
                     const newStatus = checked ? '1' : '0';
                     const { createMessage } = useMessage();
                     let params = {
-                        role_id: record.role_id, status: newStatus
+                        role_id: record.role_id, status: newStatus, role_name: record.role_name
                     }
                     setRoleStatus(params)
                         .then(() => {
