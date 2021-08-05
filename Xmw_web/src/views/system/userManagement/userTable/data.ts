@@ -49,7 +49,6 @@ export const searchFormSchema: FormSchema[] = [
         label: '用户名',
         component: 'Input',
         componentProps: {
-            placeholder: '请输入用户名',
             maxLength: 12
         },
     },
@@ -65,7 +64,6 @@ export const searchFormSchema: FormSchema[] = [
         componentProps: {
             api: getRoleList,
             params: { current: 1, pageSize: 9999 },
-            placeholder: '请选择角色名称',
             resultField: 'records',
             labelField: 'role_name',
             valueField: 'role_id',

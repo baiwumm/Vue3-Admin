@@ -58,21 +58,21 @@
           @click="handleCreate"
           preIcon="ant-design:plus-outlined"
           v-auth="['system:menu:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
         <a-button
           type="primary"
           @click="expandAll"
           preIcon="ant-design:down-outlined"
           v-auth="['system:menu:expand']"
-          >展开</a-button
+          >{{ t('router.common.expand') }}</a-button
         >
         <a-button
           type="primary"
           @click="collapseAll"
           preIcon="ant-design:up-outlined"
           v-auth="['system:menu:collapse']"
-          >折叠</a-button
+          >{{ t('router.common.collapse') }}</a-button
         >
       </template>
       <!-- 列操作栏 -->
@@ -112,10 +112,12 @@ import { useDrawer } from '/@/components/Drawer'; // 抽屉组件
 import MenuDrawer from './menuDrawer.vue'; //表单组件
 import { columns, searchFormSchema } from './data'; // 表格配置项
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { useI18n } from '/@/hooks/web/useI18n';
 export default defineComponent({
   name: 'menuTable',
   components: { BasicTable, MenuDrawer, TableAction, Tag, Badge },
   setup() {
+    const { t } = useI18n();
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
     const [registerTable, { reload, getForm, expandAll, collapseAll }] = useTable({
       //注册表格
@@ -219,6 +221,7 @@ export default defineComponent({
       formatDictValue,
       tagOptions,
       onFetchSuccess,
+      t,
     };
   },
 });

@@ -13,7 +13,7 @@
         <BasicTree
           v-if="treeData.length"
           :treeData="treeData"
-          :replaceFields="{ title: 'title', key: 'menu_id' }"
+          :replaceFields="{ title: 'lang', key: 'menu_id' }"
           checkable
           title="菜单分配"
           :defaultExpandLevel="1"

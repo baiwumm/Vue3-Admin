@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-16 17:42:58
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-04 09:48:05
+ * @LastEditTime: 2021-08-05 17:02:46
  */
 'use strict';
 
@@ -24,7 +24,7 @@ class MenuManagementController extends Controller {
             let conditions = 'where 1 = 1'
             if (title) conditions += ` and title like '%${title}%'`
             if (status) conditions += ` and status = ${status}`
-            let menu_data = await Raw.QueryList(`select * from xmw_menu ${conditions} order by sort desc,create_time asc `);
+            let menu_data = await Raw.QueryList(`select u.*,i.zh_CN as lang from xmw_menu u left join xmw_international i on u.title = i.internation_name ${conditions} order by sort desc,create_time asc `);
             const result = ctx.helper.initializeTree(menu_data, 'menu_id', 'parent_id', 'children')
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {

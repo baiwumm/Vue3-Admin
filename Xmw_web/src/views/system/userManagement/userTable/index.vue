@@ -28,7 +28,7 @@
           preIcon="ant-design:plus-outlined"
           @click="handleCreate"
           v-auth="['system:user:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -45,7 +45,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -69,15 +69,17 @@ import { Tag, Badge, Space } from 'ant-design-vue';
 import { defineComponent, ref } from 'vue';
 import { formatDictValue } from '/@/utils';
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { useI18n } from '/@/hooks/web/useI18n';
 export default defineComponent({
   name: 'UserTable',
   components: { BasicTable, TableAction, Tag, UserDrawer, Badge, Space },
   setup() {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
     const [registerTable, { reload, getForm }] = useTable({
       // 注册表格
-      title: '用户列表 ',
+      title: t('router.system.userManagement.title'),
       api: getUserList,
       rowKey: 'user_id',
       columns,
@@ -132,7 +134,7 @@ export default defineComponent({
         return;
       }
       await userDel({ ids: record.user_id, cn_name: record.cn_name });
-      createMessage.success('删除成功！');
+      createMessage.success(t('common.deleteSuccess'));
       await reload();
     }
     // 执行成功刷新列表
@@ -162,6 +164,7 @@ export default defineComponent({
       options,
       formatDictValue,
       onFetchSuccess,
+      t,
     };
   },
 });

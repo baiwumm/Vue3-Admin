@@ -9,7 +9,7 @@ const isButton = (menu_type: string) => menu_type === 'button';
 export const columns: BasicColumn[] = [
     {
         title: '菜单名称',
-        dataIndex: 'title',
+        dataIndex: 'lang',
         width: 200
     },
     {
@@ -89,7 +89,6 @@ export const searchFormSchema: FormSchema[] = [
         label: '菜单名称',
         component: 'Input',
         componentProps: {
-            placeholder: '请输入菜单名称',
             maxLength: 32
         },
     },
@@ -118,7 +117,7 @@ export const dataFormSchema: FormSchema[] = [
             placeholder: '请选择上级菜单',
             params: {},
             replaceFields: {
-                title: 'title',
+                title: 'lang',
                 key: 'menu_d',
                 value: 'menu_id',
             },
@@ -131,9 +130,10 @@ export const dataFormSchema: FormSchema[] = [
         component: 'Input',
         required: true,
         colProps: { lg: 24, md: 24 },
+        helpMessage: ['填写国际化绑定的字段', '如果还没有,请先在国际化模块添加相应字段'],
         componentProps: {
             placeholder: '请输入菜单名称',
-            maxLength: 32
+            maxLength: 100
         },
     },
     {

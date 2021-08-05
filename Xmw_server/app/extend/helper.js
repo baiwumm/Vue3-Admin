@@ -126,5 +126,28 @@ module.exports = {
             // 只返回第一级数据；如果当前节点的fatherId不为空，但是在父节点不存在，也为一级数据
             return father[parentId] === null || !tempObj[father[parentId]]
         })
+    },
+
+    /**
+     * 国际化语言处理，转成多层级对象
+     * @param
+     */
+    transformLang(list, lang) {
+        const result = {};
+        list.forEach((item) => {
+            let current = result;
+            item.internation_name.split('.').forEach((key, index, arr) => {
+                if (index == arr.length - 1) {
+                    current[key] = item[lang];
+                } else {
+                    let value = current[key];
+                    if (!value) {
+                        value = current[key] = {};
+                    }
+                    current = value;
+                }
+            });
+        });
+        return result;
     }
 };

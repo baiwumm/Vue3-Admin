@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2020-10-28 09:42:50
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-04 18:13:14
+ * @LastEditTime: 2021-08-05 14:40:32
  */
 'use strict';
 
@@ -25,9 +25,9 @@ module.exports = (options, app) => {
                 }
             }
 
-            if (ctx.request.method == 'POST') {
-                return ctx.body = { resCode: -1, resMsg: '演示系统,禁止操作!', response: {} }
-            }
+            // if (ctx.request.method == 'POST') {
+            //     return ctx.body = { resCode: -1, resMsg: '演示系统,禁止操作!', response: {} }
+            // }
             const token = ctx.request.header['authorization']; //获取头部token信息
             if (token) {
                 let overdue = true;

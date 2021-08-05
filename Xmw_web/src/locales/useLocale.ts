@@ -1,11 +1,3 @@
-/*
- * @Description: 
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-13 15:36:20
- * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-23 17:12:02
- */
 /**
  * Multi-language related operations
  */
@@ -17,7 +9,7 @@ import { i18n } from './setupI18n';
 import { useLocaleStoreWithOut } from '/@/store/modules/locale';
 import { unref, computed } from 'vue';
 import { loadLocalePool, setHtmlPageLang } from './helper';
-
+import { getInternationalLang } from '/@/api/system/internationalManagement'; // 国际化接口
 interface LangModule {
     message: Recordable;
     momentLocale: Recordable;
@@ -59,9 +51,10 @@ export function useLocale() {
             return locale;
         }
         const langModule = ((await import(`./lang/${locale}.ts`)) as any).default as LangModule;
+        const message = await getInternationalLang({ lang: locale });
         if (!langModule) return;
 
-        const { message, momentLocale, momentLocaleName } = langModule;
+        const { momentLocale, momentLocaleName } = langModule;
 
         globalI18n.setLocaleMessage(locale, message);
         moment.updateLocale(momentLocaleName, momentLocale);

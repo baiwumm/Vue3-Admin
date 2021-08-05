@@ -21,11 +21,13 @@ import { dataFormSchema } from './data'; // 表单配置项
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { userSave } from '/@/api/system/userManagement'; // 用户保存接口
 import { cloneDeep } from 'lodash-es'; // 深克隆
+import { useI18n } from '/@/hooks/web/useI18n';
 export default defineComponent({
   name: 'UserDrawer',
   components: { BasicDrawer, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const isUpdate = ref(true); // 是否编辑
     const rowId = ref(''); // 编辑的user_id
@@ -113,7 +115,7 @@ export default defineComponent({
         delete params.confirmPassword;
         if (unref(isUpdate)) Object.assign(params, { user_id: rowId.value });
         await userSave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(!unref(isUpdate) ? t('common.addSuccess') : t('common.editSuccess'));
         closeDrawer();
         // 执行成功刷新列表
         emit('success');
