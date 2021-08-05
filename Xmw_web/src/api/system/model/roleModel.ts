@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-30 10:08:30
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-30 11:19:28
+ * @LastEditTime: 2021-08-04 17:58:54
  * @Description:角色管理模块参数类型注解
  */
 
@@ -14,6 +14,8 @@
 export interface roleSearchParams {
     role_name?: string; // 角色名称
     status?: string; // 状态
+    current: number; // 页码
+    pageSize: number; // 条数
 }
 
 /**
@@ -63,4 +65,5 @@ export interface roleStatusParams {
  */
 export interface roleDelParams {
     ids: string; // id集合,用,分割
+    role_name: string; //角色名称
 }

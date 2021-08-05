@@ -84,8 +84,8 @@ export default defineComponent({
     const userStore = useUserStore();
     //   表单数据
     const modelRef: UnwrapRef<FormState> = reactive({
-      user_name: '',
-      password: '',
+      user_name: 'admin',
+      password: '123456',
       verify: false,
     });
     // userForm注册表单
@@ -147,7 +147,6 @@ export default defineComponent({
     };
     // 滑块验证成功回调
     function handleSuccess(data: PassingData) {
-      console.log(data);
       const { isPassing, time } = data;
       modelRef.verify = isPassing;
       createMessage.success(`校验成功,耗时${time}秒`);

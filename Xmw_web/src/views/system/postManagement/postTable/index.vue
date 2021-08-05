@@ -94,6 +94,7 @@ export default defineComponent({
       useSearchForm: true,
       showTableSetting: true,
       bordered: true,
+      pagination: false,
       actionColumn: {
         width: 120,
         title: '操作',

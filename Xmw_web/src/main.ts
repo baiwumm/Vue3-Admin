@@ -12,7 +12,7 @@ import { setupStore } from '/@/store';
 import { setupGlobDirectives } from '/@/directives';
 import { setupI18n } from '/@/locales/setupI18n';
 import { registerGlobComp } from '/@/components/registerGlobComp';
-
+import Particles from "particles.vue3";
 // Do not introduce on-demand in local development?
 // In the local development for introduce on-demand, the number of browser requests will increase by about 20%.
 // Which may slow down the browser refresh.
@@ -47,6 +47,8 @@ async function bootstrap() {
 
   // Configure global error handling
   setupErrorHandle(app);
+
+  Particles(app)
 
   // Mount when the route is ready
   // https://next.router.vuejs.org/api/#isready

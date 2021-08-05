@@ -1,5 +1,7 @@
 <template>
   <div :class="prefixCls" class="relative w-full h-full px-4">
+    <!-- 粒子背景 -->
+    <Particles id="tsparticles" :options="ParticlesConfig" />
     <AppLocalePicker
       class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
       :showText="false"
@@ -24,7 +26,7 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { Card } from 'ant-design-vue';
 import LoginForm from './LoginForm.vue';
 import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
@@ -41,7 +43,39 @@ export default defineComponent({
   setup() {
     const { prefixCls } = useDesign('login');
     const localeStore = useLocaleStore();
-    return { prefixCls, showLocale: localeStore.getShowPicker };
+    const ParticlesConfig = ref({
+      background: {
+        position: '50% 50%',
+        repeat: 'no-repeat',
+        size: 'cover',
+      },
+      fullScreen: { enable: true, zIndex: -1 },
+      particles: {
+        color: { value: ['#5bc0eb', '#fde74c', '#9bc53d', '#e55934', '#fa7921'] },
+        move: {
+          direction: 'top',
+          enable: true,
+          outModes: { bottom: 'out', left: 'out', right: 'out', top: 'out' },
+          speed: 5,
+        },
+        number: { value: 30 },
+        opacity: {
+          random: { enable: true, minimumValue: 0.4 },
+          value: { min: 0.4, max: 0.8 },
+          animation: {
+            speed: 1,
+            minimumValue: 0.1,
+          },
+        },
+        size: {
+          random: { enable: true, minimumValue: 30 },
+          value: { min: 30, max: 100 },
+          animation: { enable: true, speed: 80, minimumValue: 100 },
+        },
+      },
+      preset: 'bigCircles',
+    });
+    return { prefixCls, showLocale: localeStore.getShowPicker, ParticlesConfig };
   },
 });
 </script>

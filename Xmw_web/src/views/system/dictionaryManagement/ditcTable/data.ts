@@ -59,7 +59,7 @@ export const dataFormSchema: FormSchema[] = [
         componentProps: {
             placeholder: '请输入字典名称',
             maxLength: 32,
-            showCount: true
+
         },
     },
     {

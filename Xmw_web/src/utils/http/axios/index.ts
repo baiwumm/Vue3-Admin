@@ -19,8 +19,7 @@ import { useUserStore } from '/@/store/modules/user';
 
 const globSetting = useGlobSetting();
 const urlPrefix = globSetting.urlPrefix;
-const { createMessage, createErrorModal } = useMessage();
-// const userStore = useUserStore();
+const { createMessage, createErrorModal, createInfoModal } = useMessage();
 
 /**
  * @description: 数据处理，方便区分多种处理方式
@@ -65,8 +64,14 @@ const transform: AxiosTransform = {
             case ResultEnum.TIMEOUT:
                 timeoutMsg = t('sys.api.timeoutMessage');
                 // 登录超时跳到登录页
-                userStore.setToken(undefined);
-                userStore.setSessionTimeout(true);
+                createInfoModal({
+                    title: '温馨提示',
+                    content: t('sys.api.timeoutMessage'),
+                    onOk() {
+                        userStore.setToken(undefined);
+                        userStore.setSessionTimeout(true);
+                    }
+                })
                 break;
             default:
                 if (resMsg) {

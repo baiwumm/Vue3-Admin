@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-23 14:25:12
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-30 10:38:42
+ * @LastEditTime: 2021-08-04 09:36:35
  * @Description: 菜单管理模块参数类型注解
  */
 
@@ -81,6 +81,7 @@ export interface menuSaveParams {
  */
 export interface menuDelParams {
     ids: string; // id集合,用,分割
+    permission: string; //权限标识
 }
 
 /**

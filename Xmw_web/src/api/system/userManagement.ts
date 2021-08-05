@@ -2,11 +2,11 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-15 15:07:52
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-03 18:06:57
+ * @LastEditTime: 2021-08-04 09:35:53
  * @Description: 用户管理模块接口
  */
 import { defHttp } from '/@/utils/http/axios';
-import { LoginParams, GetUserInfoModel } from './model/userModel';
+import { LoginParams, GetUserInfoModel, getUserResultModel, userDelParams } from './model/userModel';
 
 import { ErrorMessageMode } from '/#/axios';
 
@@ -20,15 +20,15 @@ enum Api {
     GetPermCode = '/getPermCode', // 获取按钮权限key
 }
 
-export function getUserList(params?: object) {
-    return defHttp.get({ url: Api.getUserList, params: params });
+export function getUserList(params: getUserResultModel) {
+    return defHttp.get<GetUserInfoModel>({ url: Api.getUserList, params: params });
 }
 
-export function userSave(params?: object) {
+export function userSave(params: GetUserInfoModel) {
     return defHttp.post({ url: Api.userSave, params: params });
 }
 
-export function userDel(params?: object) {
+export function userDel(params: userDelParams) {
     return defHttp.post({ url: Api.userDel, params: params });
 }
 

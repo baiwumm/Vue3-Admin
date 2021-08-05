@@ -3795,6 +3795,11 @@ core-js@^3.12.1:
   resolved "https://registry.npmjs.org/core-js/-/core-js-3.14.0.tgz#62322b98c71cc2018b027971a69419e2425c2a6c"
   integrity sha512-3s+ed8er9ahK+zJpp9ZtuVcDoFzHNiZsPbNAAE4KXgrRHbjSqqNN6xGSXq6bq7TZIbKj4NLrLb6bJ5i+vSVjHA==
 
+core-js@^3.15.1:
+  version "3.16.0"
+  resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.16.0.tgz#1d46fb33720bc1fa7f90d20431f36a5540858986"
+  integrity sha512-5+5VxRFmSf97nM8Jr2wzOwLqRo6zphH2aX+7KsAUONObyzakDNq2G/bgbhinxB4PoV9L3aXQYhiDKyIKWd2c8g==
+
 core-js@^3.15.2:
   version "3.15.2"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-3.15.2.tgz#740660d2ff55ef34ce664d7e2455119c5bdd3d61"
@@ -8628,6 +8633,15 @@ particles-bg-vue@^1.3.5:
     raf-manager "^0.3.0"
     vue "^2.2.6"
 
+particles.vue3@^1.16.2:
+  version "1.16.2"
+  resolved "https://registry.yarnpkg.com/particles.vue3/-/particles.vue3-1.16.2.tgz#3125408066e480cbdc62a7fda45f4019e12346a5"
+  integrity sha512-WMdmFc1NaVSVr9F3UoubENbIBS0oB5DUcjgWk3i/smsjN1mQtzkXJ00G7rrW6JpT4q10wFsWE7Rw2mjBni+G2Q==
+  dependencies:
+    core-js "^3.15.1"
+    tsparticles "^1.33.2"
+    vue-class-component "^8.0.0-rc.1"
+
 pascal-case@^3.1.2:
   version "3.1.2"
   resolved "https://registry.npmjs.org/pascal-case/-/pascal-case-3.1.2.tgz#b48e0ef2b98e205e7c1dae747d0b1508237660eb"
@@ -8711,6 +8725,11 @@ path-type@^4.0.0:
   version "4.0.0"
   resolved "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
+
+pathseg@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/pathseg/-/pathseg-1.2.0.tgz#22af051e28037671e7799e296fe96c5dcbe53acd"
+  integrity sha512-+pQS7lTaoVIXhaCW7R3Wd/165APzZHWzYVqe7dxzdupxQwebgpBaCmf0/XZwmoA/rkDq3qvzO0qv4d5oFVrBRw==
 
 pend@~1.2.0:
   version "1.2.0"
@@ -10925,6 +10944,13 @@ tslib@~2.1.0:
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
   integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
+tsparticles@^1.33.2:
+  version "1.33.2"
+  resolved "https://registry.yarnpkg.com/tsparticles/-/tsparticles-1.33.2.tgz#956d7a08c026585a9d5cfe86b9834bbbdb82bf0c"
+  integrity sha512-/oLQWdwyaz9GXTl9j/xckdcIerVlbSlGVd6jT8h8QKPkkkMaqcLlVtVBMLF3542FaH2RUevceTIS7O2JncVdUA==
+  optionalDependencies:
+    pathseg "^1.2.0"
+
 tsutils@^3.21.0:
   version "3.21.0"
   resolved "https://registry.npmjs.org/tsutils/-/tsutils-3.21.0.tgz#b48717d394cea6c1e096983eed58e9d61715b623"
@@ -11547,6 +11573,11 @@ vscode-vue-languageservice@^0.26.0:
     vscode-pug-languageservice "^0.26.4"
     vscode-typescript-languageservice "^0.26.4"
 
+vue-class-component@^8.0.0-rc.1:
+  version "8.0.0-rc.1"
+  resolved "https://registry.yarnpkg.com/vue-class-component/-/vue-class-component-8.0.0-rc.1.tgz#db692cd97656eb9a08206c03d0b7398cdb1d9420"
+  integrity sha512-w1nMzsT/UdbDAXKqhwTmSoyuJzUXKrxLE77PCFVuC6syr8acdFDAq116xgvZh9UCuV0h+rlCtxXolr3Hi3HyPQ==
+
 vue-demi@*:
   version "0.9.1"
   resolved "https://registry.npmjs.org/vue-demi/-/vue-demi-0.9.1.tgz#25d6e1ebd4d4010757ff3571e2bf6a1d7bf3de82"
@@ -11603,7 +11634,7 @@ vue-types@^4.0.0:
   dependencies:
     is-plain-object "5.0.0"
 
-vue@3.1.5:
+vue@3:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/vue/-/vue-3.1.5.tgz#12879b11d0685ee4478c8869551799630a52f9fe"
   integrity sha512-Ho7HNb1nfDoO+HVb6qYZgeaobt1XbY6KXFe4HGs1b9X6RhkWG/113n4/SrtM1LUclM6OrP/Se5aPHHvAPG1iVQ==

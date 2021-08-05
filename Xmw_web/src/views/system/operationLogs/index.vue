@@ -1,5 +1,5 @@
 <template>
-  <PageWrapper dense contentClass="flex">
+  <PageWrapper contentClass="flex">
     <LogTable />
   </PageWrapper>
 </template>

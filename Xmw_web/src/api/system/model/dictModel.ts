@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-30 11:08:06
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-30 11:28:45
+ * @LastEditTime: 2021-08-04 09:31:22
  * @Description:字典管理模块参数类型注解
  */
 
@@ -15,6 +15,8 @@ export interface dictSearchParams {
     dict_name?: string; // 字典名称
     dict_coding?: string; // 字典编码
     parent_id?: string; // 父级id
+    current: number; // 页码
+    pageSize: number; // 条数
 }
 
 /**

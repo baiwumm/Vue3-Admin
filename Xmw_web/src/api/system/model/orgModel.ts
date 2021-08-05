@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-30 10:27:13
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-30 11:19:17
+ * @LastEditTime: 2021-08-04 09:36:58
  * @Description:组织管理模块参数类型注解
  */
 
@@ -61,4 +61,5 @@ export interface orgSaveParams {
  */
 export interface orgDelParams {
     ids: string; // id集合,用,分割
+    org_name: string; //组织名称
 }

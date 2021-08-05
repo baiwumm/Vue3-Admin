@@ -2,10 +2,18 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-03 16:56:38
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-03 16:59:13
+ * @LastEditTime: 2021-08-04 17:59:20
  * @Description:操作日志模块参数类型注解
  */
-
+/**
+ * @description: 查询参数
+ * @param {*}
+ * @return {*}
+ */
+export interface logSearchParams {
+    current: number; // 页码
+    pageSize: number; // 条数
+}
 export interface getLogResultModel {
     log_id: string; //日志id
     user_id: string; // 用户id

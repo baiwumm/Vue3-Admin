@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 10:48:35
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-30 14:22:17
+ * @LastEditTime: 2021-08-04 10:37:04
  */
 'use strict';
 
@@ -45,7 +45,7 @@ module.exports = appInfo => {
     // use for cookie sign key, should change to your own and keep security
     config.keys = appInfo.name + '_1626317297628_4474';
     // 配置需要的中间件，数组顺序即为中间件的加载顺序
-    config.middleware = ['params']
+    config.middleware = ['tokenAuthentication', 'params']
     config.expiresIn = 3 * 24 * 60 * 60;// token过期时间 单位秒，默认3天
     config.privateKey = 'Xmingwei'; // token密钥，生成解析token
     config.session = {

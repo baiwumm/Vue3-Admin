@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-30 10:45:36
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-30 11:19:22
+ * @LastEditTime: 2021-08-04 09:37:18
  * @Description:岗位管理参数类型注解
  */
 
@@ -58,4 +58,5 @@ export interface postSaveParams {
  */
 export interface postDelParams {
     ids: string; // id集合,用,分割
+    post_name: string; // 岗位名称
 }
