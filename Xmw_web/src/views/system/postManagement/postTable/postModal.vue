@@ -17,11 +17,13 @@ import { dataFormSchema } from './data'; // 表单配置项
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { postSave } from '/@/api/system/postManagement'; // 新增和更新组织
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'PostModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
 
     const isUpdate = ref(true);
@@ -82,7 +84,11 @@ export default defineComponent({
       ]);
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增岗位' : '编辑岗位'));
+    const getTitle = computed(() =>
+      !unref(isUpdate)
+        ? t('router.system.postManagement.add')
+        : t('router.system.postManagement.edit')
+    );
     // 新增编辑操作
     async function handleSubmit() {
       try {
@@ -92,7 +98,9 @@ export default defineComponent({
         let params = { ...values };
         if (unref(isUpdate)) Object.assign(params, { post_id: rowId.value });
         await postSave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeModal();
         emit('success');
         // 操作成功后重新请求下拉树列表

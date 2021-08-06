@@ -1,11 +1,3 @@
-<!--
- * @Author: your name
- * @Date: 2021-07-19 16:42:33
- * @LastEditTime: 2021-07-28 14:47:15
- * @LastEditors: your name
- * @Description: In User Settings Edit
- * @FilePath: \elearning-foregrounde:\personal\vue3-ts-egg\Xmw_web\src\views\system\dictionaryManagement\ditcItemTable\ditcItemModal.vue
--->
 <template>
   <BasicModal
     v-bind="$attrs"
@@ -24,11 +16,13 @@ import { BasicForm, useForm } from '/@/components/Form';
 import { dataFormSchema } from './data';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { dictionarySave, dictionaryModel } from '/@/api/system/dictionaryManagement'; // 新增和更新字典
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'DitcItemModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
 
     const isUpdate = ref(true);
@@ -69,7 +63,9 @@ export default defineComponent({
       ]);
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增字典' : '编辑字典'));
+    const getTitle = computed(() =>
+      !unref(isUpdate) ? t('router.common.ditcItemAdd') : t('router.common.ditcItemEdit')
+    );
 
     async function handleSubmit() {
       try {
@@ -79,7 +75,9 @@ export default defineComponent({
         let params = { ...values, parent_id: parent_id.value };
         if (unref(isUpdate)) Object.assign(params, { dictionary_id: rowId.value });
         await dictionarySave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeModal();
         emit('success');
       } finally {

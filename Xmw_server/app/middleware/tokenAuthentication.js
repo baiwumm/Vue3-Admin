@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2020-10-28 09:42:50
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-05 14:40:32
+ * @LastEditTime: 2021-08-06 14:52:08
  */
 'use strict';
 
@@ -15,8 +15,8 @@ module.exports = (options, app) => {
         try {
             const { Raw } = app.Db.xmw;
             const requestUrl = ctx.request.url;
-            // 白名单:登录、颗粒度权限、用户信息、菜单权限不用携带token
-            const whiteUrl = ['/login', '/getPermCode', '/getUserInfo', '/system/getMenuList']
+            // 白名单:登录、国际化语言接口不用携带token
+            const whiteUrl = ['/login', '/system/getInternationalLang']
             // 判断请求url是否在白名单,会有t参数,确保数据不会被浏览器长时间缓存
             for (let i = 0; i < whiteUrl.length; i++) {
                 if (requestUrl.includes(whiteUrl[i])) {

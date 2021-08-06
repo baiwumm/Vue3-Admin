@@ -17,7 +17,6 @@ async function createI18nOptions(): Promise<I18nOptions> {
     // const message = defaultLocal.default?.message ?? {};
     const defaultLocal = await getInternationalLang({ lang: locale });
     const message = defaultLocal || {};
-    console.log(message)
     setHtmlPageLang(locale);
     setLoadLocalePool((loadLocalePool) => {
         loadLocalePool.push(locale);

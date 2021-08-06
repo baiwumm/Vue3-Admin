@@ -1,90 +1,78 @@
-/*
- * @Description: 
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-19 16:02:46
- * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-07-27 16:36:27
- */
 import { BasicColumn, FormSchema } from '/@/components/Table';
-
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
+const { t } = useI18n();
 export const columns: BasicColumn[] = [
     {
-        title: '字典标签',
+        title: t('router.system.dictionaryManagement.dictionaryLabel'),
         dataIndex: 'dictionary_label',
     },
     {
-        title: '字典键值',
+        title: t('router.system.dictionaryManagement.dictionaryValue'),
         dataIndex: 'dictionary_value',
     },
     {
-        title: '状态',
+        title: t('router.common.status'),
         dataIndex: 'status',
         width: 80,
         slots: { customRender: 'status' },
     },
     {
-        title: '排序',
+        title: t('router.common.sort'),
         dataIndex: 'sort',
         width: 80,
         defaultHidden: true
     },
     {
-        title: '备注',
-        dataIndex: 'remark',
-        defaultHidden: true
+        title: t('router.common.remark'),
+        dataIndex: 'remark'
     },
 ];
 
 export const dataFormSchema: FormSchema[] = [
     {
         field: 'dictionary_label',
-        label: '字典标签',
+        label: t('router.system.dictionaryManagement.dictionaryLabel'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
-            placeholder: '请输入字典标签',
             maxLength: 32
         },
     },
     {
         field: 'dictionary_value',
-        label: '字典键值',
+        label: t('router.system.dictionaryManagement.dictionaryValue'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
-            placeholder: '请输入字典键值',
             maxLength: 32
         },
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'RadioGroup',
         required: true,
         defaultValue: '1'
     },
     {
         field: 'sort',
-        label: '排序',
+        label: t('router.common.sort'),
         component: 'InputNumber',
         required: true,
         defaultValue: '1',
         componentProps: {
-            placeholder: '请输入排序',
             min: 1,
             style: { width: '100%' }
         },
     },
     {
-        label: '备注',
+        label: t('router.common.remark'),
         field: 'remark',
         component: 'InputTextArea',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入备注',
             rows: 4,
             maxLength: 200
         },

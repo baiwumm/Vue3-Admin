@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-03 16:50:34
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-05 16:37:00
+ * @LastEditTime: 2021-08-06 11:36:21
  * @Description:国际化模块API接口
  */
 'use strict';
@@ -15,8 +15,12 @@ class InternationalManagement extends Controller {
         const { app, ctx } = this;
         const { Raw } = app.Db.xmw;
         try {
-            let { current, pageSize } = ctx.params;
-            const result = await Raw.QueryPageData(`select i.*,u.cn_name from xmw_international i left join xmw_user u on i.founder = u.user_id order by create_time desc`, current, pageSize)
+            let { internation_name, zh_CN, current, pageSize } = ctx.params;
+            // 根据条件拼接筛选
+            let conditions = 'where 1 = 1'
+            if (internation_name) conditions += ` and internation_name like '%${internation_name}%'`
+            if (zh_CN) conditions += ` and zh_CN like '%${zh_CN}%'`
+            const result = await Raw.QueryPageData(`select i.*,u.cn_name from xmw_international i left join xmw_user u on i.founder = u.user_id ${conditions} order by create_time desc`, current, pageSize)
             return ctx.body = { resCode: 200, resMsg: '请求成功!', response: result }
         } catch (error) {
             ctx.logger.info('getInternationalList方法报错：' + error)

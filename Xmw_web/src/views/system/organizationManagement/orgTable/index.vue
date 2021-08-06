@@ -21,21 +21,21 @@
           preIcon="ant-design:plus-outlined"
           @click="handleCreate"
           v-auth="['system:organization:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
         <a-button
           type="primary"
           @click="expandAll"
           preIcon="ant-design:down-outlined"
           v-auth="['system:organization:expand']"
-          >展开</a-button
+          >{{ t('router.common.expand') }}</a-button
         >
         <a-button
           type="primary"
           @click="collapseAll"
           preIcon="ant-design:up-outlined"
           v-auth="['system:organization:collapse']"
-          >折叠</a-button
+          >{{ t('router.common.collapse') }}</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -52,7 +52,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -60,7 +60,7 @@
           :dropDownActions="[
             {
               auth: ['system:organization:addChild'],
-              label: '添加子级',
+              label: t('router.common.addChild'),
               onClick: addChildOrg.bind(null, record),
             },
           ]"
@@ -83,23 +83,24 @@ import OrgModal from './orgModal.vue'; // 表单模态框
 import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'orgTable',
   components: { BasicTable, TableAction, OrgModal, Tag, Badge },
   setup() {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     // 注册useModal
     const [registerModal, { openModal }] = useModal();
     // 注册useTable
     const [registerTable, { reload, expandAll, collapseAll }] = useTable({
-      title: '组织列表',
-      titleHelpMessage: '组织架构是企业的流程运转、部门设置及职能规划等最基本的结构依据',
+      title: t('router.system.organizationManagement.title'),
       isTreeTable: true,
       api: getOrganizationTree,
       rowKey: 'org_id',
       columns,
       formConfig: {
-        labelWidth: 80,
+        labelWidth: 160,
         baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
@@ -117,7 +118,7 @@ export default defineComponent({
       pagination: false,
       actionColumn: {
         width: 120,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -150,7 +151,7 @@ export default defineComponent({
     //   删除操作
     async function handleDelete(record: Recordable) {
       await organizationDel({ ids: record.org_id, org_name: record.org_name });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       openModal(false, {
         isDel: true,
       });
@@ -186,6 +187,7 @@ export default defineComponent({
       collapseAll,
       onFetchSuccess,
       addChildOrg,
+      t,
     };
   },
 });

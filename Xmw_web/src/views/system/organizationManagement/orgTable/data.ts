@@ -1,31 +1,33 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
 import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 引入组织树接口
 import { getUserList } from '/@/api/system/userManagement'; // 用户接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
+const { t } = useI18n();
 export const columns: BasicColumn[] = [
     {
-        title: '组织名称',
+        title: t('router.system.organizationManagement.orgName'),
         dataIndex: 'org_name',
     },
     {
-        title: '组织编码',
+        title: t('router.system.organizationManagement.orgCode'),
         dataIndex: 'org_code',
     },
     {
-        title: '组织类型',
+        title: t('router.system.organizationManagement.orgType'),
         dataIndex: 'org_type',
         slots: { customRender: 'org_type' },
     },
     {
-        title: '状态',
+        title: t('router.common.status'),
         dataIndex: 'status',
         slots: { customRender: 'status' },
     },
     {
-        title: '描述',
+        title: t('router.common.remark'),
         dataIndex: 'remark',
     },
     {
-        title: '创建时间',
+        title: t('router.common.createTime'),
         dataIndex: 'create_time',
         sorter: true,
     }
@@ -35,19 +37,17 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
     {
         field: 'org_name',
-        label: '组织名称',
+        label: t('router.system.organizationManagement.orgName'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入组织名称',
             maxLength: 32
         },
     },
     {
         field: 'org_code',
-        label: '组织编码',
+        label: t('router.system.organizationManagement.orgCode'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入组织编码',
             maxLength: 32
         },
     },
@@ -57,11 +57,10 @@ export const dataFormSchema: FormSchema[] = [
     {
         field: 'parent_id',
         component: 'ApiTreeSelect',
-        label: '上级组织',
+        label: t('router.system.organizationManagement.orgSuperior'),
         componentProps: {
             api: getOrganizationTree,
             params: {},
-            placeholder: '请选择上级组织',
             replaceFields: {
                 title: 'org_name',
                 key: 'org_id',
@@ -86,60 +85,58 @@ export const dataFormSchema: FormSchema[] = [
     // },
     {
         field: 'org_name',
-        label: '组织名称',
+        label: t('router.system.organizationManagement.orgName'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
-            placeholder: '请输入组织名称',
             maxLength: 32,
             showCount: true
         },
     },
     {
         field: 'org_code',
-        label: '组织编码',
+        label: t('router.system.organizationManagement.orgCode'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
-            placeholder: '请输入组织编码',
             maxLength: 32
         },
     },
     {
         field: 'org_type',
-        label: '组织类型',
+        label: t('router.system.organizationManagement.orgType'),
         component: 'RadioButtonGroup',
+        colProps: { lg: 14, md: 14 },
         defaultValue: '1',
         required: true,
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'RadioGroup',
+        colProps: { lg: 10, md: 10 },
         required: true,
         defaultValue: '1'
     },
     {
         field: 'sort',
-        label: '排序',
+        label: t('router.common.sort'),
         component: 'InputNumber',
         required: true,
         defaultValue: '1',
         componentProps: {
-            placeholder: '请输入排序',
             min: 1,
             style: { width: '100%' }
         },
     },
     {
-        label: '描述',
+        label: t('router.common.remark'),
         field: 'remark',
         component: 'InputTextArea',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入描述',
             rows: 4,
             maxLength: 200
         },

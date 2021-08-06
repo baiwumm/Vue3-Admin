@@ -8,7 +8,7 @@
           preIcon="ant-design:plus-outlined"
           @click="handleCreate"
           v-auth="['system:inter:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -25,7 +25,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -41,29 +41,44 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
-import { columns } from './data'; // 表格配置项
+import { columns, searchFormSchema } from './data'; // 表格配置项
 import { useModal } from '/@/components/Modal'; // 模态框组件
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { getInternationalList, internationalDel } from '/@/api/system/internationalManagement'; // 国际化接口
 import InterModal from './interModal.vue'; // 表单模态框
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'interTable',
   components: { BasicTable, InterModal, TableAction },
   setup() {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const [registerModal, { openModal }] = useModal(); // 注册模态框
     const [registerTable, { reload }] = useTable({
       // 注册表格
-      title: '国际化',
+      title: t('router.system.internationalManagement.title'),
       api: getInternationalList,
       rowKey: 'internation_id',
       columns,
+      formConfig: {
+        labelWidth: 120,
+        baseColProps: { xs: 24, sm: 12, md: 8, lg: 8, xl: 6 },
+        schemas: searchFormSchema,
+        autoSubmitOnEnter: true,
+        resetButtonOptions: {
+          preIcon: 'ant-design:delete-outlined',
+        },
+        submitButtonOptions: {
+          preIcon: 'ant-design:search-outlined',
+        },
+      },
       showIndexColumn: false,
+      useSearchForm: true,
       showTableSetting: true,
       bordered: true,
       actionColumn: {
         width: 80,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -88,7 +103,7 @@ export default defineComponent({
         ids: record.internation_id,
         internation_name: record.internation_name,
       });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       await reload();
     }
     // 新增编辑成功后的回调
@@ -102,6 +117,7 @@ export default defineComponent({
       handleEdit,
       handleDelete,
       handleSuccess,
+      t,
     };
   },
 });

@@ -16,7 +16,7 @@
           @click="handleCreate"
           preIcon="ant-design:plus-outlined"
           v-auth="['system:dictionary:ditcItem:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -33,7 +33,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -59,6 +59,7 @@ import {
 } from '/@/api/system/dictionaryManagement'; // 引入字典列表接口
 import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 const props = {
   parent_id: { type: String },
 };
@@ -67,12 +68,12 @@ export default defineComponent({
   components: { BasicTable, DitcItemModal, TableAction, Tag, Badge },
   props,
   setup(props) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const [registerModal, { openModal }] = useModal(); // 注册模态框
     const [registerTable, { reload }] = useTable({
       // 注册表格
-      title: '字典子项列表',
-      titleHelpMessage: '请先选中字典，再操作字典子项',
+      title: t('router.system.dictionaryManagement.dictItemtitle'),
       api: getDictionaryList,
       rowKey: 'dictionary_id',
       columns,
@@ -83,7 +84,7 @@ export default defineComponent({
       bordered: true,
       actionColumn: {
         width: 80,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -114,7 +115,7 @@ export default defineComponent({
     //   删除操作
     async function handleDelete(record: Recordable) {
       await dictionaryDel({ ids: record.dictionary_id, dictionary_label: record.dictionary_label });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       await reload();
     }
     // 重新请求列表
@@ -143,6 +144,7 @@ export default defineComponent({
       handleSuccess,
       statusOptions,
       formatDictValue,
+      t,
     };
   },
 });

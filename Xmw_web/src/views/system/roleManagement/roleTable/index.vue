@@ -9,7 +9,7 @@
           preIcon="ant-design:plus-outlined"
           v-auth="['system:role:add']"
         >
-          新增
+          {{ t('router.common.add') }}
         </a-button>
       </template>
       <!-- 列操作 -->
@@ -26,7 +26,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -48,15 +48,17 @@ import RoleDrawer from './roleDrawer.vue'; // 表单组件
 import { columns, searchFormSchema } from './data'; // 表格配置项
 import { getRoleList, roleDel } from '/@/api/system/roleManagement'; // 角色管理接口
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'menuTable',
   components: { BasicTable, RoleDrawer, TableAction },
   setup() {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
     const [registerTable, { reload, getForm }] = useTable({
       // 注册表格
-      title: '角色列表',
+      title: t('router.system.roleManagement.title'),
       api: getRoleList,
       rowKey: 'role_id',
       columns,
@@ -78,7 +80,7 @@ export default defineComponent({
       bordered: true,
       actionColumn: {
         width: 80,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -99,7 +101,7 @@ export default defineComponent({
     // 删除操作
     async function handleDelete(record: Recordable) {
       await roleDel({ ids: record.role_id, role_name: record.role_name });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       await reload();
     }
     // 执行成功刷新列表
@@ -128,6 +130,7 @@ export default defineComponent({
       handleDelete,
       handleSuccess,
       onFetchSuccess,
+      t,
     };
   },
 });

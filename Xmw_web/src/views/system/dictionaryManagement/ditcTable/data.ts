@@ -1,29 +1,30 @@
 import { BasicColumn, FormSchema } from '/@/components/Table';
-
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
+const { t } = useI18n();
 export const columns: BasicColumn[] = [
     {
-        title: '字典名称',
+        title: t('router.system.dictionaryManagement.dictName'),
         dataIndex: 'dict_name',
     },
     {
-        title: '字典编码',
+        title: t('router.system.dictionaryManagement.dictCoding'),
         dataIndex: 'dict_coding',
         slots: { customRender: 'dict_coding' },
     },
     {
-        title: '状态',
+        title: t('router.common.status'),
         dataIndex: 'status',
         width: 80,
         slots: { customRender: 'status' },
     },
     {
-        title: '排序',
+        title: t('router.common.sort'),
         dataIndex: 'sort',
         width: 80,
         defaultHidden: true
     },
     {
-        title: '备注',
+        title: t('router.common.remark'),
         dataIndex: 'remark'
     },
 ];
@@ -31,19 +32,17 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
     {
         field: 'dict_name',
-        label: '字典名称',
+        label: t('router.system.dictionaryManagement.dictName'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入字典名称',
             maxLength: 32
         },
     },
     {
         field: 'dict_coding',
-        label: '字典编码',
+        label: t('router.system.dictionaryManagement.dictCoding'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入字典编码',
             maxLength: 32
         },
     },
@@ -52,53 +51,49 @@ export const searchFormSchema: FormSchema[] = [
 export const dataFormSchema: FormSchema[] = [
     {
         field: 'dict_name',
-        label: '字典名称',
+        label: t('router.system.dictionaryManagement.dictName'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
-            placeholder: '请输入字典名称',
             maxLength: 32,
 
         },
     },
     {
         field: 'dict_coding',
-        label: '字典编码',
+        label: t('router.system.dictionaryManagement.dictCoding'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         required: true,
         componentProps: {
-            placeholder: '请输入字典编码',
             maxLength: 32
         },
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'RadioGroup',
         required: true,
         defaultValue: '1'
     },
     {
         field: 'sort',
-        label: '排序',
+        label: t('router.common.sort'),
         component: 'InputNumber',
         required: true,
         defaultValue: '1',
         componentProps: {
-            placeholder: '请输入排序',
             min: 1,
             style: { width: '100%' }
         },
     },
     {
-        label: '备注',
+        label: t('router.common.remark'),
         field: 'remark',
         component: 'InputTextArea',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入备注',
             rows: 4,
             maxLength: 200
         },

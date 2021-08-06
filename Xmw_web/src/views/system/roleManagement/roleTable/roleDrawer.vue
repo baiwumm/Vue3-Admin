@@ -15,7 +15,7 @@
           :treeData="treeData"
           :replaceFields="{ title: 'lang', key: 'menu_id' }"
           checkable
-          title="菜单分配"
+          :title="t('router.system.roleManagement.distributionMenu')"
           :defaultExpandLevel="1"
           @check="handlerCheck"
           :checkedKeys="checkedKeys"
@@ -34,11 +34,13 @@ import { useMessage } from '/@/hooks/web/useMessage'; //信息模态框
 import { BasicTree, TreeItem } from '/@/components/Tree'; // tree组件
 import { getMenuTree } from '/@/api/system/menuManagement'; // 菜单tree结构
 import { roleSave } from '/@/api/system/roleManagement'; // 角色保存接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'RoleDrawer',
   components: { BasicDrawer, BasicForm, BasicTree },
   emits: ['success', 'register'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const isUpdate = ref(true); // 是否编辑
     const rowId = ref(''); // 编辑的role_id
@@ -47,7 +49,7 @@ export default defineComponent({
     const checkedKeys = ref([]); // tree回显数据
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
       // 注册表单
-      labelWidth: 100,
+      labelWidth: 140,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
       actionColOptions: {
@@ -101,7 +103,11 @@ export default defineComponent({
       ]);
     });
     // 判断标题显示
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));
+    const getTitle = computed(() =>
+      !unref(isUpdate)
+        ? t('router.system.roleManagement.add')
+        : t('router.system.roleManagement.edit')
+    );
     // 菜单tree节点点击，拿到勾选节点和半选父节点
     function handlerCheck(checkedKeys, e) {
       halfCheckedKeys.value = [...checkedKeys, ...e.halfCheckedKeys];
@@ -113,7 +119,7 @@ export default defineComponent({
         const values = await validate();
         // 判断是否勾选菜单权限
         if (!halfCheckedKeys.value.length) {
-          createMessage.warning('请选择菜单权限！');
+          createMessage.warning(t('router.system.roleManagement.seleteMenu'));
           return;
         }
         setDrawerProps({ confirmLoading: true });
@@ -121,7 +127,9 @@ export default defineComponent({
         let params = { ...values, menu_role: halfCheckedKeys.value.join(',') };
         if (unref(isUpdate)) Object.assign(params, { role_id: rowId.value });
         await roleSave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeDrawer();
         // 执行成功刷新列表
         emit('success');
@@ -147,6 +155,7 @@ export default defineComponent({
       treeData,
       handlerCheck,
       checkedKeys,
+      t,
     };
   },
 });

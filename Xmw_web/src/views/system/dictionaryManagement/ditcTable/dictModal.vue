@@ -16,13 +16,14 @@ import { BasicForm, useForm } from '/@/components/Form'; // 表单组件
 import { dataFormSchema } from './data'; // 表单配置项
 import { useMessage } from '/@/hooks/web/useMessage';
 import { dictionarySave, dictionaryModel } from '/@/api/system/dictionaryManagement'; // 新增和更新字典
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'DictModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
     const { createMessage } = useMessage();
-
+    const { t } = useI18n();
     const isUpdate = ref(true);
     const rowId = ref('');
 
@@ -59,7 +60,9 @@ export default defineComponent({
       ]);
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增字典' : '编辑字典'));
+    const getTitle = computed(() =>
+      !unref(isUpdate) ? t('router.common.ditcAdd') : t('router.common.ditcEdit')
+    );
 
     async function handleSubmit() {
       try {
@@ -69,7 +72,9 @@ export default defineComponent({
         let params = { ...values };
         if (unref(isUpdate)) Object.assign(params, { dictionary_id: rowId.value });
         await dictionarySave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeModal();
         emit('success', {
           isUpdate: unref(isUpdate),
@@ -80,7 +85,7 @@ export default defineComponent({
       }
     }
 
-    return { registerModal, registerForm, getTitle, handleSubmit };
+    return { registerModal, registerForm, getTitle, handleSubmit, t };
   },
 });
 </script>

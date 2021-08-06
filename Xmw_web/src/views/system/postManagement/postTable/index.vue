@@ -15,7 +15,7 @@
           preIcon="ant-design:plus-outlined"
           @click="handleCreate"
           v-auth="['system:post:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -32,7 +32,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -40,7 +40,7 @@
           :dropDownActions="[
             {
               auth: ['system:post:addChild'],
-              label: '添加子级',
+              label: t('router.common.addChild'),
               onClick: addChildPost.bind(null, record),
             },
           ]"
@@ -63,23 +63,23 @@ import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典�
 import { getPostTree, postDel } from '/@/api/system/postManagement'; // 岗位树接口
 import { Badge } from 'ant-design-vue';
 import PostModal from './postModal.vue'; // 表单模态框
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'postTable',
   components: { BasicTable, TableAction, PostModal, Badge },
   setup() {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const [registerModal, { openModal }] = useModal(); // 注册模态框
     const [registerTable, { reload, expandAll }] = useTable({
       // 注册表格
-      title: '岗位列表',
-      titleHelpMessage:
-        '岗位管理是以组织中的岗位为对象，科学地进行岗位设置、岗位分析、岗位描述、岗位监控和岗位评估等一系列活动的管理过程',
+      title: t('router.system.postManagement.title'),
       isTreeTable: true,
       api: getPostTree,
       rowKey: 'post_id',
       columns,
       formConfig: {
-        labelWidth: 80,
+        labelWidth: 100,
         baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
@@ -97,7 +97,7 @@ export default defineComponent({
       pagination: false,
       actionColumn: {
         width: 120,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -124,7 +124,7 @@ export default defineComponent({
     //   删除操作
     async function handleDelete(record: Recordable) {
       await postDel({ ids: record.post_id, post_name: record.post_name });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       openModal(false, {
         isDel: true,
       });
@@ -156,6 +156,7 @@ export default defineComponent({
       formatDictValue,
       onFetchSuccess,
       addChildPost,
+      t,
     };
   },
 });

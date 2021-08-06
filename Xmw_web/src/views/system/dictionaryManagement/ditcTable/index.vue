@@ -27,7 +27,7 @@
           preIcon="ant-design:plus-outlined"
           @click="handleCreate"
           v-auth="['system:dictionary:ditc:add']"
-          >新增</a-button
+          >{{ t('router.common.add') }}</a-button
         >
       </template>
       <!-- 操作栏 -->
@@ -44,7 +44,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -70,29 +70,29 @@ import {
 import DictModal from './dictModal.vue'; //表单组件
 import { useModal } from '/@/components/Modal'; // 模态框组件
 import { Tag, Badge } from 'ant-design-vue';
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'ditcTable',
   components: { BasicTable, TableAction, DictModal, Tag, Badge },
   emits: ['dict-change'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
     const [registerModal, { openModal }] = useModal(); // 注册模态框
     const [registerTable, { reload, getDataSource, getSelectRowKeys, setSelectedRowKeys }] =
       useTable({
         // 注册表格
-        title: '字典列表',
-        titleHelpMessage: '对系统中经常使用的一些较为固定的数据进行维护',
+        title: t('router.system.dictionaryManagement.title'),
         api: getDictionaryList,
         rowKey: 'dictionary_id',
         columns,
         rowSelection: { type: 'radio' },
         formConfig: {
-          labelWidth: 80,
+          labelWidth: 100,
           baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
           schemas: searchFormSchema,
           autoSubmitOnEnter: true,
           resetButtonOptions: {
-            auth: ['system:dictionary:ditc:edi'],
             preIcon: 'ant-design:delete-outlined',
           },
           submitButtonOptions: {
@@ -105,7 +105,7 @@ export default defineComponent({
         bordered: true,
         actionColumn: {
           width: 80,
-          title: '操作',
+          title: t('router.common.action'),
           dataIndex: 'action',
           slots: { customRender: 'action' },
         },
@@ -134,7 +134,7 @@ export default defineComponent({
     //   删除操作
     async function handleDelete(record: Recordable) {
       await dictionaryDel({ ids: record.dictionary_id, dict_name: record.dict_name });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       await reload();
       const list = getDataSource();
       if (list.length > 0) {
@@ -199,6 +199,7 @@ export default defineComponent({
       handleAfterFetch,
       statusOptions,
       formatDictValue,
+      t,
     };
   },
 });

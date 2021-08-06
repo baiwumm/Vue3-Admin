@@ -5,14 +5,14 @@
     :label-col="{ span: 5 }"
     :wrapper-col="{ span: 19 }"
   >
-    <FormItem label="用户名" class="enter-x" v-bind="validateInfos.user_name">
+    <FormItem :label="t('router.common.userName')" class="enter-x" v-bind="validateInfos.user_name">
       <Input size="large" v-model:value="modelRef.user_name" :placeholder="t('sys.login.userName')">
         <template #prefix>
           <UserOutlined type="user" />
         </template>
       </Input>
     </FormItem>
-    <FormItem label="密码" class="enter-x" v-bind="validateInfos.password">
+    <FormItem :label="t('router.common.passWord')" class="enter-x" v-bind="validateInfos.password">
       <InputPassword
         size="large"
         visibilityToggle
@@ -27,8 +27,8 @@
     <FormItem :wrapper-col="{ span: 19, offset: 5 }" class="enter-x" v-bind="validateInfos.verify">
       <BasicDragVerify @success="handleSuccess" width="318">
         <template #text="isPassing">
-          <div v-if="isPassing"> 验证成功 </div>
-          <div v-else> 请安住滑块,拖动到最右边 </div>
+          <div v-if="isPassing"> {{ t('component.verify.successText') }} </div>
+          <div v-else> {{ t('sys.login.sliderRight') }} </div>
         </template>
       </BasicDragVerify>
     </FormItem>
@@ -95,13 +95,13 @@ export default defineComponent({
         user_name: [
           {
             required: true,
-            message: '请输入用户名',
+            message: t('sys.login.userName'),
           },
         ],
         password: [
           {
             required: true,
-            message: '请输入密码',
+            message: t('sys.login.password'),
           },
         ],
       })
@@ -120,7 +120,7 @@ export default defineComponent({
             padding: CryptoJS.pad.Pkcs7,
           }).toString();
           if (!data.verify) {
-            createMessage.warn(`请完成滑块验证!`);
+            createMessage.warn(t('sys.login.sliderVerification'));
             return;
           }
           //   返回登录用户信息
@@ -149,7 +149,7 @@ export default defineComponent({
     function handleSuccess(data: PassingData) {
       const { isPassing, time } = data;
       modelRef.verify = isPassing;
-      createMessage.success(`校验成功,耗时${time}秒`);
+      createMessage.success(t('component.verify.time', { time: time.toFixed(1) }));
     }
     return {
       t,

@@ -4,18 +4,19 @@ import { h } from 'vue';
 import { Switch } from 'ant-design-vue';
 import { setRoleStatus } from '/@/api/system/roleManagement';
 import { useMessage } from '/@/hooks/web/useMessage';
-
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
+const { t } = useI18n();
 export const columns: BasicColumn[] = [
     {
-        title: '角色名称',
+        title: t('router.system.roleManagement.roleName'),
         dataIndex: 'role_name'
     },
     {
-        title: '角色编码',
+        title: t('router.system.roleManagement.roleCode'),
         dataIndex: 'role_code'
     },
     {
-        title: '状态',
+        title: t('router.common.status'),
         dataIndex: 'status',
         customRender: ({ record }) => {
             if (!Reflect.has(record, 'pendingStatus')) {
@@ -23,8 +24,8 @@ export const columns: BasicColumn[] = [
             }
             return h(Switch, {
                 checked: record.status === '1',
-                checkedChildren: '已启用',
-                unCheckedChildren: '已禁用',
+                checkedChildren: t('router.system.roleManagement.enabled'),
+                unCheckedChildren: t('router.system.roleManagement.disabled'),
                 loading: record.pendingStatus,
                 onChange(checked: boolean) {
                     record.pendingStatus = true;
@@ -36,10 +37,10 @@ export const columns: BasicColumn[] = [
                     setRoleStatus(params)
                         .then(() => {
                             record.status = newStatus;
-                            createMessage.success(`已成功修改角色状态`);
+                            createMessage.success(t('router.system.roleManagement.statusSuccess'));
                         })
                         .catch(() => {
-                            createMessage.error('修改角色状态失败');
+                            createMessage.error(t('router.system.roleManagement.statusFailed'));
                         })
                         .finally(() => {
                             record.pendingStatus = false;
@@ -49,11 +50,11 @@ export const columns: BasicColumn[] = [
         },
     },
     {
-        title: '创建时间',
+        title: t('router.common.createTime'),
         dataIndex: 'create_time'
     },
     {
-        title: '备注',
+        title: t('router.common.remark'),
         dataIndex: 'remark',
     },
 ];
@@ -61,16 +62,15 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
     {
         field: 'roleNme',
-        label: '角色名称',
+        label: t('router.system.roleManagement.roleName'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入角色名称',
             maxLength: 32
         },
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'Select',
     },
 ];
@@ -78,45 +78,42 @@ export const searchFormSchema: FormSchema[] = [
 export const dataFormSchema: FormSchema[] = [
     {
         field: 'role_name',
-        label: '角色名称',
+        label: t('router.system.roleManagement.roleName'),
         required: true,
         colProps: { lg: 24, md: 24 },
         component: 'Input',
         componentProps: {
-            placeholder: '请输入角色名称',
             maxLength: 32
         },
     },
     {
         field: 'role_code',
-        label: '角色编码',
+        label: t('router.system.roleManagement.roleCode'),
         required: true,
         colProps: { lg: 24, md: 24 },
         component: 'Input',
         componentProps: {
-            placeholder: '请输入角色编码',
             maxLength: 32
         },
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'RadioGroup',
         defaultValue: '1',
     },
     {
-        label: '备注',
+        label: t('router.common.remark'),
         field: 'remark',
         component: 'InputTextArea',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入备注',
             rows: 4,
             maxLength: 200
         },
     },
     {
-        label: '菜单权限',
+        label: t('router.system.roleManagement.menuPermission'),
         field: 'menu_role',
         slot: 'menu_role',
         colProps: { lg: 24, md: 24 },

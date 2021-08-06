@@ -15,9 +15,12 @@
             <img src="../../../assets/images/logo.svg" class="logo" alt="logo" />
             <span class="title">vue-admin-xmw-pro</span>
           </div>
-          <div class="desc enter-x">真正的大师永远怀着一颗学徒的心。</div>
+          <div class="desc enter-x">{{ t('sys.login.motto') }}</div>
         </div>
-        <p class="welcome_login enter-x">欢迎登陆<em>后台管理系统</em></p>
+        <p class="welcome_login enter-x"
+          >{{ t('sys.login.welcome')
+          }}<em style="margin-left: 10px">{{ t('sys.login.managementSystem') }}</em></p
+        >
         <!-- 登录表单 -->
         <LoginForm />
       </Card>
@@ -32,6 +35,7 @@ import LoginForm from './LoginForm.vue';
 import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
 import { useDesign } from '/@/hooks/web/useDesign';
 import { useLocaleStore } from '/@/store/modules/locale';
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化
 export default defineComponent({
   name: 'login',
   components: {
@@ -41,6 +45,7 @@ export default defineComponent({
     AppDarkModeToggle,
   },
   setup() {
+    const { t } = useI18n();
     const { prefixCls } = useDesign('login');
     const localeStore = useLocaleStore();
     const ParticlesConfig = ref({
@@ -75,7 +80,7 @@ export default defineComponent({
       },
       preset: 'bigCircles',
     });
-    return { prefixCls, showLocale: localeStore.getShowPicker, ParticlesConfig };
+    return { prefixCls, showLocale: localeStore.getShowPicker, ParticlesConfig, t };
   },
 });
 </script>

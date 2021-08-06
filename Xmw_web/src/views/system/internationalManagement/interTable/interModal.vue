@@ -16,18 +16,19 @@ import { BasicForm, useForm } from '/@/components/Form'; //表单组件
 import { dataFormSchema } from './data'; // 表单配置项
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { internationaSave } from '/@/api/system/internationalManagement'; // 国际化接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'interTable',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
     const { createMessage } = useMessage();
-
+    const { t } = useI18n();
     const isUpdate = ref(true);
     const rowId = ref('');
     // 注册表单
     const [registerForm, { setFieldsValue, resetFields, validate }] = useForm({
-      labelWidth: 100,
+      labelWidth: 140,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
       actionColOptions: {
@@ -49,7 +50,12 @@ export default defineComponent({
       }
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增国际化字段' : '编辑国际化字段'));
+    const getTitle = computed(
+      () =>
+        (!unref(isUpdate) ? t('router.common.add') : t('router.common.edit')) +
+        ' ' +
+        t('router.system.internationalManagement.internation_name')
+    );
     // 新增编辑操作
     async function handleSubmit() {
       try {
@@ -59,7 +65,9 @@ export default defineComponent({
         let params = { ...values };
         if (unref(isUpdate)) Object.assign(params, { internation_id: rowId.value });
         await internationaSave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeModal();
         emit('success');
       } finally {

@@ -17,11 +17,13 @@ import { dataFormSchema } from './data'; // 引入表单
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { organizationSave } from '/@/api/system/organizationManagement'; // 新增和更新组织
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'OrgModal',
   components: { BasicModal, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
 
     const isUpdate = ref(true);
@@ -29,7 +31,7 @@ export default defineComponent({
     // 注册表单
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
       // 注册表单
-      labelWidth: 80,
+      labelWidth: 140,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
       actionColOptions: {
@@ -90,7 +92,11 @@ export default defineComponent({
       ]);
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增组织' : '编辑组织'));
+    const getTitle = computed(() =>
+      !unref(isUpdate)
+        ? t('router.system.organizationManagement.add')
+        : t('router.system.organizationManagement.edit')
+    );
     // 新增编辑操作
     async function handleSubmit() {
       try {
@@ -100,7 +106,9 @@ export default defineComponent({
         let params = { ...values };
         if (unref(isUpdate)) Object.assign(params, { org_id: rowId.value });
         await organizationSave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeModal();
         emit('success');
         // 操作成功后重新请求下拉树列表
