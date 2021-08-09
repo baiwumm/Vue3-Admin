@@ -6,19 +6,22 @@ import { getMenuTree } from '/@/api/system/menuManagement';
 const isDir = (menu_type: string) => menu_type === 'dir';
 const isMenu = (menu_type: string) => menu_type === 'menu';
 const isButton = (menu_type: string) => menu_type === 'button';
+
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
+const { t } = useI18n();
 export const columns: BasicColumn[] = [
     {
-        title: '菜单名称',
+        title: t('router.system.menuManagement.lang'),
         dataIndex: 'lang',
         width: 200
     },
     {
-        title: '菜单类型',
+        title: t('router.system.menuManagement.menu_type'),
         dataIndex: 'menu_type',
         slots: { customRender: 'menu_type' },
     },
     {
-        title: '图标',
+        title: t('router.system.menuManagement.icon'),
         dataIndex: 'icon',
         customRender: ({ record }) => {
             return h(Icon, {
@@ -30,54 +33,54 @@ export const columns: BasicColumn[] = [
         },
     },
     {
-        title: '是否隐藏',
+        title: t('router.system.menuManagement.hide'),
         dataIndex: 'hide_menu',
         slots: { customRender: 'hide_menu' },
     },
     {
-        title: '忽略缓存',
+        title: t('router.system.menuManagement.cache'),
         dataIndex: 'ignore_keep_alive',
         slots: { customRender: 'ignore_keep_alive' },
     },
     {
-        title: '路由地址',
+        title: t('router.system.menuManagement.path'),
         dataIndex: 'path',
     },
     {
-        title: '组件路径',
+        title: t('router.system.menuManagement.component'),
         dataIndex: 'component',
     },
     {
-        title: '权限标识',
+        title: t('router.system.menuManagement.permission'),
         dataIndex: 'permission',
         width: 200,
         slots: { customRender: 'permission' }
     },
     {
-        title: '内嵌地址',
+        title: t('router.system.menuManagement.frame'),
         dataIndex: 'frame_src',
         defaultHidden: true
     },
     {
-        title: '重定向',
+        title: t('router.system.menuManagement.redirect'),
         dataIndex: 'redirect',
     },
     {
-        title: '隐藏子菜单',
+        title: t('router.system.menuManagement.hideChildMenu'),
         dataIndex: 'hide_childrenIn_menu',
         slots: { customRender: 'hide_childrenIn_menu' }
     },
     {
-        title: '排序',
+        title: t('router.common.sort'),
         dataIndex: 'sort',
     },
     {
-        title: '状态',
+        title: t('router.common.status'),
         dataIndex: 'status',
         slots: { customRender: 'status' },
     },
     {
-        title: '创建时间',
+        title: t('router.common.createTime'),
         dataIndex: 'create_time',
         defaultHidden: true
     }
@@ -86,7 +89,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
     {
         field: 'title',
-        label: '菜单名称',
+        label: t('router.system.menuManagement.lang'),
         component: 'Input',
         componentProps: {
             maxLength: 32
@@ -94,7 +97,7 @@ export const searchFormSchema: FormSchema[] = [
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'Select',
     },
 ];
@@ -102,7 +105,7 @@ export const searchFormSchema: FormSchema[] = [
 export const dataFormSchema: FormSchema[] = [
     {
         field: 'menu_type',
-        label: '菜单类型',
+        label: t('router.system.menuManagement.menu_type'),
         component: 'RadioButtonGroup',
         defaultValue: 'dir',
         colProps: { lg: 24, md: 24 },
@@ -110,11 +113,10 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'parent_id',
-        label: '上级菜单',
+        label: t('router.system.menuManagement.higherMenu'),
         component: 'ApiTreeSelect',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请选择上级菜单',
             params: {},
             replaceFields: {
                 title: 'lang',
@@ -126,104 +128,94 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'title',
-        label: '菜单名称',
+        label: t('router.system.menuManagement.lang'),
         component: 'Input',
         required: true,
         colProps: { lg: 24, md: 24 },
-        helpMessage: ['填写国际化绑定的字段', '如果还没有,请先在国际化模块添加相应字段'],
+        helpMessage: [t('router.system.menuManagement.field'), t('router.system.menuManagement.correspondingField')],
         componentProps: {
-            placeholder: '请输入菜单名称',
             maxLength: 100
         },
     },
     {
         field: 'path',
-        label: '路由地址',
+        label: t('router.system.menuManagement.path'),
         component: 'Input',
         required: true,
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入路由地址',
             maxLength: 100
         },
         ifShow: ({ values }) => !isButton(values.menu_type),
     },
     {
         field: 'redirect',
-        label: '重定向地址',
+        label: t('router.system.menuManagement.redirect'),
         component: 'Input',
         required: true,
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入重定向地址',
             maxLength: 100
         },
         ifShow: ({ values }) => isDir(values.menu_type),
     },
     {
         field: 'component',
-        label: '组件路径',
+        label: t('router.system.menuManagement.component'),
         component: 'Input',
         required: true,
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入组件路径',
             maxLength: 200
         },
         ifShow: ({ values }) => !isButton(values.menu_type),
     },
     {
         field: 'permission',
-        label: '权限标识',
+        label: t('router.system.menuManagement.permission'),
         required: true,
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入权限标识',
             maxLength: 50
         }
     },
     {
         field: 'frame_src',
-        label: '内嵌地址',
+        label: t('router.system.menuManagement.frame'),
         component: 'Input',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入内嵌地址',
             maxLength: 200
         },
         ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
         field: 'transition_name',
-        label: '路由动画',
+        label: t('router.system.menuManagement.transition'),
         component: 'Select',
         colProps: { lg: 24, md: 24 },
-        componentProps: {
-            placeholder: '请选择路由动画',
-        },
         ifShow: ({ values }) => isMenu(values.menu_type),
     },
     {
         field: 'icon',
-        label: '图标',
+        label: t('router.system.menuManagement.icon'),
         component: 'IconPicker',
         ifShow: ({ values }) => !isButton(values.menu_type),
     },
     {
         field: 'sort',
-        label: '排序',
+        label: t('router.common.sort'),
         component: 'InputNumber',
         required: true,
         defaultValue: '1',
         componentProps: {
-            placeholder: '请输入排序',
             min: 1,
         },
     },
     {
         field: 'hide_childrenIn_menu',
-        label: '隐藏子菜单',
+        label: t('router.system.menuManagement.hideChildMenu'),
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
@@ -231,7 +223,7 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'ignore_keep_alive',
-        label: '是否忽略缓存',
+        label: t('router.system.menuManagement.cache'),
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
@@ -239,7 +231,7 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'affix',
-        label: '是否固定标签',
+        label: t('router.system.menuManagement.affix'),
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
@@ -247,7 +239,7 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'hide_tab',
-        label: '不在标签显示',
+        label: t('router.system.menuManagement.hideTab'),
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
@@ -255,7 +247,7 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'hide_menu',
-        label: '是否隐藏',
+        label: t('router.system.menuManagement.hide'),
         component: 'RadioGroup',
         defaultValue: '0',
         required: true,
@@ -263,7 +255,7 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'RadioGroup',
         required: true,
         defaultValue: '1',

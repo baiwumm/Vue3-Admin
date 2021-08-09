@@ -89,7 +89,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: '是否确认删除',
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
@@ -121,7 +121,7 @@ export default defineComponent({
     const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
     const [registerTable, { reload, getForm, expandAll, collapseAll }] = useTable({
       //注册表格
-      title: '菜单列表',
+      title: t('router.system.menuManagement.title'),
       isTreeTable: true,
       api: getMenuTree,
       rowKey: 'menu_id',
@@ -145,7 +145,7 @@ export default defineComponent({
       pagination: false,
       actionColumn: {
         width: 80,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -183,7 +183,7 @@ export default defineComponent({
     //删除操作
     async function handleDelete(record: Recordable) {
       await menuDel({ ids: record.menu_id, permission: record.permission });
-      createMessage.success('删除成功！');
+      createMessage.success(t('router.common.deleteSuccess'));
       openDrawer(false, {
         isDel: true,
       });

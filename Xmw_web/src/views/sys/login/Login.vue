@@ -25,6 +25,10 @@
         <LoginForm />
       </Card>
     </div>
+    <LayoutFooter
+      style="background: none; left: 50%; transform: translateX(-50%)"
+      class="absolute bottom-0"
+    />
   </div>
 </template>
 
@@ -36,6 +40,7 @@ import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
 import { useDesign } from '/@/hooks/web/useDesign';
 import { useLocaleStore } from '/@/store/modules/locale';
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化
+import { createAsyncComponent } from '/@/utils/factory/createAsyncComponent';
 export default defineComponent({
   name: 'login',
   components: {
@@ -43,6 +48,7 @@ export default defineComponent({
     LoginForm,
     AppLocalePicker,
     AppDarkModeToggle,
+    LayoutFooter: createAsyncComponent(() => import('/@/layouts/default/footer/index.vue')),
   },
   setup() {
     const { t } = useI18n();

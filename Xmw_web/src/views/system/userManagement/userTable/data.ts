@@ -3,40 +3,42 @@ import { getRoleList } from '/@/api/system/roleManagement'; // 引入角色管�
 import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 引入组织树接口
 import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树接口
 import cities from './cities.json' // 地址
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
+const { t } = useI18n();
 // 表格列配置项
 export const columns: BasicColumn[] = [
     {
-        title: '用户名',
+        title: t('router.common.userName'),
         dataIndex: 'user_name'
     },
     {
-        title: '中文名',
+        title: t('router.common.cnName'),
         dataIndex: 'cn_name'
     },
     {
-        title: '性别',
+        title: t('router.common.sex'),
         dataIndex: 'sex',
         slots: { customRender: 'sex' }
     },
     {
-        title: '所属组织',
+        title: t('router.system.userManagement.org'),
         dataIndex: 'org_name'
     },
     {
-        title: '岗位',
+        title: t('router.system.userManagement.post'),
         dataIndex: 'post_name'
     },
     {
-        title: '手机号码',
+        title: t('router.system.userManagement.phone'),
         dataIndex: 'phone'
     },
     {
-        title: '角色名称',
+        title: t('router.system.roleManagement.roleName'),
         dataIndex: 'role_name',
         slots: { customRender: 'role_name' }
     },
     {
-        title: '状态',
+        title: t('router.common.status'),
         dataIndex: 'status',
         width: 80,
         slots: { customRender: 'status' },
@@ -46,7 +48,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
     {
         field: 'user_name',
-        label: '用户名',
+        label: t('router.common.userName'),
         component: 'Input',
         componentProps: {
             maxLength: 12
@@ -54,12 +56,12 @@ export const searchFormSchema: FormSchema[] = [
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'Select',
     },
     {
         field: 'role_id',
-        label: '角色名称',
+        label: t('router.system.roleManagement.roleName'),
         component: 'ApiSelect',
         componentProps: {
             api: getRoleList,
@@ -74,7 +76,7 @@ export const searchFormSchema: FormSchema[] = [
 export const dataFormSchema: FormSchema[] = [
     {
         field: 'role_id',
-        label: '角色名称',
+        label: t('router.system.roleManagement.roleName'),
         component: 'ApiSelect',
         colProps: { lg: 24, md: 24 },
         componentProps: {
@@ -82,7 +84,6 @@ export const dataFormSchema: FormSchema[] = [
             mode: 'multiple',
             maxTagCount: 2,
             params: { current: 1, pageSize: 9999 },
-            placeholder: '请选择角色名称',
             resultField: 'records',
             labelField: 'role_name',
             valueField: 'role_id',
@@ -90,66 +91,62 @@ export const dataFormSchema: FormSchema[] = [
         rules: [
             {
                 required: true,
-                message: '请选择角色名称',
                 type: 'array',
             },
         ],
     },
     {
         field: 'user_name',
-        label: '用户名',
+        label: t('router.common.userName'),
         required: true,
         component: 'Input',
         componentProps: {
-            placeholder: '请输入用户名',
             maxLength: 12
         },
     },
     {
         field: 'cn_name',
-        label: '中文名',
+        label: t('router.common.cnName'),
         required: true,
         component: 'Input',
         componentProps: {
-            placeholder: '请输入中文名',
             maxLength: 20
         },
     },
     {
         field: 'en_name',
-        label: '英文名',
+        label: t('router.common.enName'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入英文名',
             maxLength: 20
         },
     },
     {
         field: 'work_no',
-        label: '工号',
+        label: t('router.system.userManagement.workNo'),
         component: 'Input',
         componentProps: {
-            placeholder: '请输入工号',
             maxLength: 10
         },
     },
     {
         field: 'password',
-        label: '密码',
+        label: t('router.common.passWord'),
         component: 'StrengthMeter',
+        colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请输入密码',
-            maxLength: 12
+            maxLength: 12,
+            placeholder: t('common.inputText')
         },
         rules: [
             {
                 required: true,
                 validator: async (rule, value) => {
                     if (!value) {
-                        return Promise.reject('请输入密码!');
+                        return Promise.reject(t('sys.login.password'));
                     } else {
                         if (value.length < 6 || value.length > 12) {
-                            return Promise.reject('密码的长度在6-12个字符!');
+                            return Promise.reject('router.system.userManagement.pwdLen');
                         }
                     }
                     return Promise.resolve();
@@ -160,10 +157,10 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'confirmPassword',
-        label: '确认密码',
+        label: t('router.system.userManagement.confirmPsd'),
         component: 'InputPassword',
+        colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请确认密码',
             maxLength: 12
         },
         dynamicRules: ({ values }) => {
@@ -172,10 +169,10 @@ export const dataFormSchema: FormSchema[] = [
                     required: true,
                     validator: (_, value) => {
                         if (!value) {
-                            return Promise.reject('请确认密码');
+                            return Promise.reject(t('router.system.userManagement.PleaseConfirmPsd'));
                         }
                         if (value !== values.password) {
-                            return Promise.reject('两次输入的密码不一致!');
+                            return Promise.reject(t('router.system.userManagement.regConfirmPsd'));
                         }
                         return Promise.resolve();
                     },
@@ -186,23 +183,21 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'address',
-        label: '工作地址',
+        label: t('router.system.userManagement.address'),
         component: 'Cascader',
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请选择工作地址',
             options: cities.options
         },
     },
     {
         field: 'org_id',
         component: 'ApiTreeSelect',
-        label: '所属组织',
+        label: t('router.system.userManagement.org'),
         colProps: { lg: 24, md: 24 },
         componentProps: ({ formModel, formActionType }) => {
             return {
                 api: getOrganizationTree,
-                placeholder: '请选择所属组织',
                 replaceFields: {
                     title: 'org_name',
                     key: 'org_id',
@@ -228,10 +223,9 @@ export const dataFormSchema: FormSchema[] = [
     {
         field: 'post_id',
         component: 'TreeSelect',
-        label: '所属岗位',
+        label: t('router.system.userManagement.post'),
         colProps: { lg: 24, md: 24 },
         componentProps: {
-            placeholder: '请选择所属岗位',
             replaceFields: {
                 title: 'post_name',
                 key: 'post_id',
@@ -241,11 +235,10 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'phone',
-        label: '手机号码',
+        label: t('router.system.userManagement.phone'),
         required: true,
         component: 'Input',
         componentProps: {
-            placeholder: '请输入手机号码',
             maxLength: 11
         },
         rules: [
@@ -255,7 +248,7 @@ export const dataFormSchema: FormSchema[] = [
                     if (value) {
                         const reg = /^[1][0-9]{10}$/
                         if (!reg.test(value)) {
-                            return Promise.reject('手机号码格式不正确!');
+                            return Promise.reject(t('router.system.userManagement.regPhone'));
                         }
                     }
                     return Promise.resolve();
@@ -266,35 +259,33 @@ export const dataFormSchema: FormSchema[] = [
     },
     {
         field: 'email',
-        label: '电子邮箱',
+        label: t('router.system.userManagement.email'),
         required: true,
         component: 'Input',
         componentProps: {
-            placeholder: '请输入电子邮箱',
             maxLength: 50
         },
-        rules: [{ type: 'email', message: '电子邮箱格式不对!', trigger: 'change', }],
+        rules: [{ type: 'email', message: t('router.system.userManagement.regEmail'), trigger: 'change', }],
     },
     {
         field: 'sex',
-        label: '性别',
+        label: t('router.common.sex'),
         component: 'RadioGroup',
         defaultValue: '1',
     },
     {
         field: 'status',
-        label: '状态',
+        label: t('router.common.status'),
         component: 'RadioGroup',
         defaultValue: '1',
     },
     {
         field: 'sort',
-        label: '排序',
+        label: t('router.common.sort'),
         component: 'InputNumber',
         required: true,
         defaultValue: '1',
         componentProps: {
-            placeholder: '请输入排序',
             min: 1,
             style: { width: '100%' }
         },

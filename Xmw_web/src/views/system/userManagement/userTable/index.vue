@@ -84,7 +84,7 @@ export default defineComponent({
       rowKey: 'user_id',
       columns,
       formConfig: {
-        labelWidth: 80,
+        labelWidth: 100,
         baseColProps: { xs: 24, sm: 12, md: 8, lg: 8, xl: 6 },
         schemas: searchFormSchema,
         autoSubmitOnEnter: true,
@@ -101,7 +101,7 @@ export default defineComponent({
       bordered: true,
       actionColumn: {
         width: 120,
-        title: '操作',
+        title: t('router.common.action'),
         dataIndex: 'action',
         slots: { customRender: 'action' },
       },
@@ -130,11 +130,11 @@ export default defineComponent({
     // 删除操作
     async function handleDelete(record: Recordable) {
       if (record.user_name == 'admin') {
-        createMessage.error('当前用户为超级用户,不能删除！');
+        createMessage.error(t('router.system.userManagement.admin'));
         return;
       }
       await userDel({ ids: record.user_id, cn_name: record.cn_name });
-      createMessage.success(t('common.deleteSuccess'));
+      createMessage.success(t('router.common.deleteSuccess'));
       await reload();
     }
     // 执行成功刷新列表

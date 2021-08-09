@@ -18,11 +18,13 @@ import { BasicDrawer, useDrawerInner } from '/@/components/Drawer'; // 抽屉组
 import { BasicForm, useForm } from '/@/components/Form/index'; // 表单组件
 import { dataFormSchema } from './data'; //表单配置项
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
+import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 export default defineComponent({
   name: 'MenuDrawer',
   components: { BasicDrawer, BasicForm },
   emits: ['success', 'register'],
   setup(_, { emit }) {
+    const { t } = useI18n();
     const { createMessage } = useMessage();
 
     const isUpdate = ref(true);
@@ -30,7 +32,7 @@ export default defineComponent({
 
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
       //注册表单
-      labelWidth: 100,
+      labelWidth: 120,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
       actionColOptions: {
@@ -124,7 +126,11 @@ export default defineComponent({
       ]);
     });
 
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));
+    const getTitle = computed(() =>
+      !unref(isUpdate)
+        ? t('router.system.menuManagement.add')
+        : t('router.system.menuManagement.edit')
+    );
 
     async function handleSubmit() {
       try {
@@ -134,7 +140,9 @@ export default defineComponent({
         let params = { ...values };
         if (unref(isUpdate)) Object.assign(params, { menu_id: rowId.value });
         await menuSave(params);
-        createMessage.success(!unref(isUpdate) ? '新增成功！' : '编辑成功！');
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeDrawer();
         emit('success');
         // 操作成功后重新请求下拉树列表

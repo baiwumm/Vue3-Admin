@@ -98,7 +98,11 @@ export default defineComponent({
       return encrypted.toString(); //返回的是base64格式的密文
     }
     // 判断标题显示
-    const getTitle = computed(() => (!unref(isUpdate) ? '新增菜单' : '编辑菜单'));
+    const getTitle = computed(() =>
+      !unref(isUpdate)
+        ? t('router.system.userManagement.add')
+        : t('router.system.userManagement.edit')
+    );
     // 确定提交操作
     async function handlerSubmit() {
       try {
@@ -115,7 +119,9 @@ export default defineComponent({
         delete params.confirmPassword;
         if (unref(isUpdate)) Object.assign(params, { user_id: rowId.value });
         await userSave(params);
-        createMessage.success(!unref(isUpdate) ? t('common.addSuccess') : t('common.editSuccess'));
+        createMessage.success(
+          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
         closeDrawer();
         // 执行成功刷新列表
         emit('success');

@@ -149,7 +149,7 @@ export default defineComponent({
     function handleSuccess(data: PassingData) {
       const { isPassing, time } = data;
       modelRef.verify = isPassing;
-      createMessage.success(t('component.verify.time', { time: time.toFixed(1) }));
+      createMessage.success(t('component.verify.time', { time }));
     }
     return {
       t,
