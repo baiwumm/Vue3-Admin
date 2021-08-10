@@ -45,7 +45,7 @@
               icon: 'ant-design:delete-outlined',
               color: 'error',
               popConfirm: {
-                title: t('common.confirmDelete'),
+                title: t('router.common.confirmDelete'),
                 confirm: handleDelete.bind(null, record),
               },
             },
