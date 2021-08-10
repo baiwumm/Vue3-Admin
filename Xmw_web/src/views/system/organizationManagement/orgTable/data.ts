@@ -18,6 +18,13 @@ export const columns: BasicColumn[] = [
         slots: { customRender: 'org_type' },
     },
     {
+        title: t('router.system.organizationManagement.leader'),
+        dataIndex: 'leader',
+        customRender: ({ text }) => {
+            return text || '--'
+        },
+    },
+    {
         title: t('router.common.status'),
         dataIndex: 'status',
         slots: { customRender: 'status' },

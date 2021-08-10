@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-03 15:01:06
+ * @LastEditTime: 2021-08-10 10:15:08
  */
 'use strict';
 
@@ -23,9 +23,9 @@ class OrganizationManagementController extends Controller {
             let { org_name, org_code } = ctx.params;
             // 根据条件拼接筛选
             let conditions = 'where 1 = 1'
-            if (org_name) conditions += ` and org_name like '%${org_name}%'`
-            if (org_code) conditions += ` and org_code like '%${org_code}%'`
-            let data = await Raw.QueryList(`select * from xmw_organization ${conditions} order by create_time desc`);
+            if (org_name) conditions += ` and o.org_name like '%${org_name}%'`
+            if (org_code) conditions += ` and o.org_code like '%${org_code}%'`
+            let data = await Raw.QueryList(`select o.*,u.cn_name as leader from xmw_organization o left join xmw_user u on o.leader = u.user_id ${conditions} order by create_time desc`);
             const result = ctx.helper.initializeTree(data, 'org_id', 'parent_id', 'children')
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
