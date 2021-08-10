@@ -13,7 +13,7 @@
         <div class="top">
           <div class="header enter-x">
             <img src="../../../assets/images/logo.svg" class="logo" alt="logo" />
-            <span class="title">vue-admin-xmw-pro</span>
+            <span class="title">vue3-admin-xmw-pro</span>
           </div>
           <div class="desc enter-x">{{ t('sys.login.motto') }}</div>
         </div>
@@ -25,10 +25,7 @@
         <LoginForm />
       </Card>
     </div>
-    <LayoutFooter
-      style="background: none; left: 50%; transform: translateX(-50%)"
-      class="absolute bottom-0"
-    />
+    <LayoutFooter style="background: none" class="absolute bottom-0 inset-x-0" />
   </div>
 </template>
 

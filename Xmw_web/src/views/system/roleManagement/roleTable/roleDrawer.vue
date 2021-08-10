@@ -49,7 +49,7 @@ export default defineComponent({
     const checkedKeys = ref([]); // tree回显数据
     const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
       // 注册表单
-      labelWidth: 140,
+      labelWidth: 100,
       schemas: dataFormSchema,
       showActionButtonGroup: false,
       actionColOptions: {

@@ -2,8 +2,8 @@
   <Form
     ref="formLogin"
     @keypress.enter="onSubmit"
-    :label-col="{ span: 5 }"
-    :wrapper-col="{ span: 19 }"
+    :label-col="{ span: 6 }"
+    :wrapper-col="{ span: 18 }"
   >
     <FormItem :label="t('router.common.userName')" class="enter-x" v-bind="validateInfos.user_name">
       <Input size="large" v-model:value="modelRef.user_name" :placeholder="t('sys.login.userName')">
@@ -24,15 +24,15 @@
         </template>
       </InputPassword>
     </FormItem>
-    <FormItem :wrapper-col="{ span: 19, offset: 5 }" class="enter-x" v-bind="validateInfos.verify">
-      <BasicDragVerify @success="handleSuccess" width="318">
+    <FormItem :wrapper-col="{ span: 18, offset: 6 }" class="enter-x" v-bind="validateInfos.verify">
+      <BasicDragVerify @success="handleSuccess" width="301.5">
         <template #text="isPassing">
           <div v-if="isPassing"> {{ t('component.verify.successText') }} </div>
           <div v-else> {{ t('sys.login.sliderRight') }} </div>
         </template>
       </BasicDragVerify>
     </FormItem>
-    <FormItem :wrapper-col="{ span: 19, offset: 5 }" class="enter-x">
+    <FormItem :wrapper-col="{ span: 18, offset: 6 }" class="enter-x">
       <Button
         size="large"
         block

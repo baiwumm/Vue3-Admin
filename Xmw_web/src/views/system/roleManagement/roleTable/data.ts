@@ -113,7 +113,7 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        label: t('router.system.roleManagement.menuPermission'),
+        label: t('router.system.roleManagement.permission'),
         field: 'menu_role',
         slot: 'menu_role',
         colProps: { lg: 24, md: 24 },

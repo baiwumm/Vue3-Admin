@@ -69,20 +69,19 @@ export const dataFormSchema: FormSchema[] = [
         },
         colProps: { lg: 24, md: 24 },
     },
-    // {
-    //     field: 'leader',
-    //     label: '组织负责人',
-    //     component: 'ApiSelect',
-    //     colProps: { lg: 24, md: 24 },
-    //     componentProps: {
-    //         api: getUserList,
-    //         params: { current: 1, pageSize: 9999 },
-    //         placeholder: '请选择组织负责人',
-    //         resultField: 'records',
-    //         labelField: 'cn_name',
-    //         valueField: 'user_id',
-    //     }
-    // },
+    {
+        field: 'leader',
+        label: t('router.system.organizationManagement.leader'),
+        component: 'ApiSelect',
+        colProps: { lg: 24, md: 24 },
+        componentProps: {
+            api: getUserList,
+            params: { current: 1, pageSize: 9999 },
+            resultField: 'records',
+            labelField: 'cn_name',
+            valueField: 'user_id',
+        }
+    },
     {
         field: 'org_name',
         label: t('router.system.organizationManagement.orgName'),
