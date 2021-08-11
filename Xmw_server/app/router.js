@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 10:48:35
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-05 15:17:48
+ * @LastEditTime: 2021-08-11 15:19:16
  */
 'use strict';
 
@@ -52,4 +52,8 @@ module.exports = app => {
     router.get('/system/getInternationalLang', controller.system.internationalManagement.getInternationalLang); // 获取国际化语言
     router.post('/system/internationaSave', controller.system.internationalManagement.internationaSave); // 新增和更新国际化
     router.post('/system/internationalDel', controller.system.internationalManagement.internationalDel); // 删除国际化字段
+    // 个人中心
+    router.post('/personal/changeUserTag', controller.personal.personal.changeUserTag); // 修改用户标签
+    router.post('/personal/changeUserPassword', controller.personal.personal.changeUserPassword); // 修改用户密码
+    router.post('/personal/changeUserAvatar', controller.personal.personal.changeUserAvatar); // 修改用户头像
 };

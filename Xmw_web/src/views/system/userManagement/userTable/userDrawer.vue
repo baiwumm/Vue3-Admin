@@ -22,6 +22,7 @@ import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { userSave } from '/@/api/system/userManagement'; // 用户保存接口
 import { cloneDeep } from 'lodash-es'; // 深克隆
 import { useI18n } from '/@/hooks/web/useI18n';
+import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树接口
 export default defineComponent({
   name: 'UserDrawer',
   components: { BasicDrawer, BasicForm },
@@ -62,6 +63,15 @@ export default defineComponent({
         }).toString(CryptoJS.enc.Utf8);
         cloneData.password = decrypted;
         cloneData.confirmPassword = decrypted;
+        const postOptions = await getPostTree({ org_id: cloneData.org_id });
+        updateSchema([
+          {
+            field: 'post_id',
+            componentProps: {
+              treeData: postOptions,
+            },
+          },
+        ]);
         // 表单赋值
         setFieldsValue({
           ...cloneData,
@@ -89,9 +99,9 @@ export default defineComponent({
     });
 
     // AES/DES加密
-    function getAesString(mes, key, iv) {
-      var encrypted = CryptoJS.AES.encrypt(mes, key, {
-        iv: iv,
+    function getAesString(mes) {
+      var encrypted = CryptoJS.AES.encrypt(mes, crypto_key, {
+        iv: crypto_iv,
         mode: CryptoJS.mode.CBC,
         padding: CryptoJS.pad.Pkcs7,
       });
@@ -115,7 +125,7 @@ export default defineComponent({
         params.address = params.address.join(',');
         params.role_id = params.role_id.join(',');
         // 密码加密
-        params.password = getAesString(params.password, crypto_key, crypto_iv);
+        params.password = getAesString(params.password);
         delete params.confirmPassword;
         if (unref(isUpdate)) Object.assign(params, { user_id: rowId.value });
         await userSave(params);

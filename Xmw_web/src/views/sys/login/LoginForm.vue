@@ -137,6 +137,7 @@ export default defineComponent({
               description: `${t('sys.login.loginSuccessDesc')}: ${userInfo.cn_name}`,
               duration: 3,
             });
+          } else {
           }
         })
         .finally(() => {

@@ -1,109 +1,108 @@
-import { BasicColumn, FormSchema } from '/@/components/Table';
-import { getRoleList } from '/@/api/system/roleManagement'; // 引入角色管理接口
-import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 引入组织树接口
-import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树接口
-import cities from './cities.json' // 地址
+import { FormSchema } from '/@/components/Form';
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 const { t } = useI18n();
-// 表格列配置项
-export const columns: BasicColumn[] = [
+import cities from '/@/views/system/userManagement/userTable/cities' // 地址
+import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 引入组织树接口
+import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树接口
+/**
+ * @description: tabs配置项
+ * @param {*}
+ * @return {*}
+ */
+export const settingTabs = [
     {
-        title: t('router.common.userName'),
-        dataIndex: 'user_name'
+        key: '1',
+        name: t('router.common.baseSetting'),
+        component: 'UserSetting',
     },
     {
-        title: t('router.common.cnName'),
-        dataIndex: 'cn_name'
-    },
-    {
-        title: t('router.common.sex'),
-        dataIndex: 'sex',
-        slots: { customRender: 'sex' }
-    },
-    {
-        title: t('router.system.userManagement.org'),
-        dataIndex: 'org_name'
-    },
-    {
-        title: t('router.system.userManagement.post'),
-        dataIndex: 'post_name'
-    },
-    {
-        title: t('router.system.userManagement.phone'),
-        dataIndex: 'phone'
-    },
-    {
-        title: t('router.system.roleManagement.roleName'),
-        dataIndex: 'role_name',
-        slots: { customRender: 'role_name' }
-    },
-    {
-        title: t('router.common.status'),
-        dataIndex: 'status',
-        width: 80,
-        slots: { customRender: 'status' },
+        key: '2',
+        name: t('router.common.changePsd'),
+        component: 'ChangePsd',
     }
-]
-// 表格表单搜索
-export const searchFormSchema: FormSchema[] = [
-    {
-        field: 'user_name',
-        label: t('router.common.userName'),
-        component: 'Input',
-        componentProps: {
-            maxLength: 12
-        },
-    },
-    {
-        field: 'status',
-        label: t('router.common.status'),
-        component: 'Select',
-    },
-    {
-        field: 'role_id',
-        label: t('router.system.roleManagement.roleName'),
-        component: 'ApiSelect',
-        componentProps: {
-            api: getRoleList,
-            params: { current: 1, pageSize: 9999 },
-            resultField: 'records',
-            labelField: 'role_name',
-            valueField: 'role_id',
-        }
-    },
-]
+];
 
-export const dataFormSchema: FormSchema[] = [
+/**
+ * @description: 修改密码表单
+ * @param {*}
+ * @return {*}
+ */
+export const pwdForm: FormSchema[] = [
     {
-        field: 'role_id',
-        label: t('router.system.roleManagement.roleName'),
-        component: 'ApiSelect',
-        colProps: { lg: 24, md: 24 },
-        componentProps: {
-            api: getRoleList,
-            mode: 'multiple',
-            maxTagCount: 2,
-            params: { current: 1, pageSize: 9999 },
-            resultField: 'records',
-            labelField: 'role_name',
-            valueField: 'role_id',
-        },
+        field: 'passwordOld',
+        label: t('router.system.userManagement.currentPsd'),
+        component: 'InputPassword',
+        required: true,
         rules: [
             {
                 required: true,
-                type: 'array',
+                validator: async (rule, value) => {
+                    if (!value) {
+                        return Promise.reject(t('sys.login.password'));
+                    } else {
+                        if (value.length < 6 || value.length > 12) {
+                            return Promise.reject(t('router.system.userManagement.pwdLen'));
+                        }
+                    }
+                    return Promise.resolve();
+                },
+                trigger: 'change',
             },
         ],
     },
     {
-        field: 'user_name',
-        label: t('router.common.userName'),
-        required: true,
-        component: 'Input',
+        field: 'passwordNew',
+        label: t('router.system.userManagement.newPsd'),
+        component: 'StrengthMeter',
+        componentProps: {
+            maxLength: 12,
+            placeholder: t('common.inputText')
+        },
+        rules: [
+            {
+                required: true,
+                validator: async (rule, value) => {
+                    if (!value) {
+                        return Promise.reject(t('sys.login.password'));
+                    } else {
+                        if (value.length < 6 || value.length > 12) {
+                            return Promise.reject(t('router.system.userManagement.pwdLen'));
+                        }
+                    }
+                    return Promise.resolve();
+                },
+                trigger: 'change',
+            },
+        ],
+    },
+    {
+        field: 'confirmPassword',
+        label: t('router.system.userManagement.confirmPsd'),
+        component: 'InputPassword',
         componentProps: {
             maxLength: 12
         },
+        dynamicRules: ({ values }) => {
+            return [
+                {
+                    required: true,
+                    validator: (_, value) => {
+                        if (!value) {
+                            return Promise.reject(t('router.system.userManagement.PleaseConfirmPsd'));
+                        }
+                        if (value !== values.passwordNew) {
+                            return Promise.reject(t('router.system.userManagement.regConfirmPsd'));
+                        }
+                        return Promise.resolve();
+                    },
+                    trigger: 'change',
+                },
+            ];
+        },
     },
+];
+
+export const baseSetschemas: FormSchema[] = [
     {
         field: 'cn_name',
         label: t('router.common.cnName'),
@@ -130,58 +129,6 @@ export const dataFormSchema: FormSchema[] = [
         },
     },
     {
-        field: 'password',
-        label: t('router.common.passWord'),
-        component: 'StrengthMeter',
-        colProps: { lg: 24, md: 24 },
-        componentProps: {
-            maxLength: 12,
-            placeholder: t('common.inputText')
-        },
-        rules: [
-            {
-                required: true,
-                validator: async (rule, value) => {
-                    if (!value) {
-                        return Promise.reject(t('sys.login.password'));
-                    } else {
-                        if (value.length < 6 || value.length > 12) {
-                            return Promise.reject(t('router.system.userManagement.pwdLen'));
-                        }
-                    }
-                    return Promise.resolve();
-                },
-                trigger: 'change',
-            },
-        ],
-    },
-    {
-        field: 'confirmPassword',
-        label: t('router.system.userManagement.confirmPsd'),
-        component: 'InputPassword',
-        colProps: { lg: 24, md: 24 },
-        componentProps: {
-            maxLength: 12
-        },
-        dynamicRules: ({ values }) => {
-            return [
-                {
-                    required: true,
-                    validator: (_, value) => {
-                        if (!value) {
-                            return Promise.reject(t('router.system.userManagement.PleaseConfirmPsd'));
-                        }
-                        if (value !== values.password) {
-                            return Promise.reject(t('router.system.userManagement.regConfirmPsd'));
-                        }
-                        return Promise.resolve();
-                    },
-                    trigger: 'change',
-                },
-            ];
-        },
-    },
-    {
         field: 'address',
         label: t('router.system.userManagement.address'),
         component: 'Cascader',
@@ -198,13 +145,14 @@ export const dataFormSchema: FormSchema[] = [
         componentProps: ({ formModel, formActionType }) => {
             return {
                 api: getOrganizationTree,
+                labelInValue: true,
                 replaceFields: {
                     title: 'org_name',
                     key: 'org_id',
                     value: 'org_id',
                 },
                 onChange: async (e: any) => {
-                    let citiesOptions = await getPostTree({ org_id: e })
+                    let citiesOptions = await getPostTree({ org_id: e.value })
                     if (e === undefined) {
                         citiesOptions = [];
                     }
@@ -226,6 +174,7 @@ export const dataFormSchema: FormSchema[] = [
         label: t('router.system.userManagement.post'),
         colProps: { lg: 24, md: 24 },
         componentProps: {
+            labelInValue: true,
             replaceFields: {
                 title: 'post_name',
                 key: 'post_id',
@@ -274,20 +223,13 @@ export const dataFormSchema: FormSchema[] = [
         defaultValue: '1',
     },
     {
-        field: 'status',
-        label: t('router.common.status'),
-        component: 'RadioGroup',
-        defaultValue: '1',
-    },
-    {
-        field: 'sort',
-        label: t('router.common.sort'),
-        component: 'InputNumber',
-        required: true,
-        defaultValue: '1',
+        label: t('router.system.userManagement.motto'),
+        field: 'motto',
+        component: 'InputTextArea',
+        colProps: { lg: 24, md: 24 },
         componentProps: {
-            min: 1,
-            style: { width: '100%' }
+            rows: 4,
+            maxLength: 200
         },
     },
 ];

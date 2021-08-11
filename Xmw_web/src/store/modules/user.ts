@@ -108,6 +108,9 @@ export const useUserStore = defineStore({
                 }
                 return userInfo;
             } catch (error) {
+                const { createMessage } = useMessage();
+                const { t } = useI18n();
+                createMessage.error(t('sys.api.errMsg401'));
                 return Promise.reject(error);
             }
         },

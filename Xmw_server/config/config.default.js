@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 10:48:35
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-04 10:37:04
+ * @LastEditTime: 2021-08-11 16:41:09
  */
 'use strict';
 
@@ -83,6 +83,12 @@ module.exports = appInfo => {
         origin: "*", // 跨任何域
         allowMethods: "GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS", // 被允许的请求方式
         credentials: true // 支持cookie跨域
+    };
+    // 文件上传
+    config.multipart = {
+        fileSize: "2mb",
+        mode: "stream",
+        whitelist: ['.jpg', '.jpeg', '.png', '.xlsx', '.xls', '.jfif', '.gif']
     };
     return {
         ...config

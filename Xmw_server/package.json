@@ -7,6 +7,7 @@
     "declarations": true
   },
   "dependencies": {
+    "ali-oss": "^6.16.0",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
     "egg-redis": "^2.4.0",

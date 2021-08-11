@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-09 15:39:01
+ * @LastEditTime: 2021-08-11 17:17:55
  */
 'use strict';
 
@@ -64,12 +64,18 @@ class UserManagementController extends Controller {
                 await Raw.Insert('xmw_user', params);
             } else { // 编辑用户
                 params.update_last_time = new Date()
+                // 根据参数是否有user_name,判断是编辑用户还是更新基本信息
+                if (params.user_name) {
+                    // 根据性别写死头像
+                    params.sex == '0' ? params.avatar = 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/girl_avatar.svg' : params.avatar = 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/boy_avatar.svg'
+                }
                 const options = {
                     wherestr: `where user_id = ${user_id}`
                 };
                 await Raw.Update('xmw_user', params, options);
             }
-            await ctx.service.logs.saveLogs(`${user_id ? '编辑' : '新增'}用户:${params.cn_name}`)
+            let logInfo = params.user_name ? (user_id ? '编辑' : '新增') + '用户:' + params.cn_name : '更新基本信息'
+            await ctx.service.logs.saveLogs(logInfo)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('userSave方法报错：' + error)
