@@ -1,16 +1,14 @@
 <template>
-  <ScrollContainer>
-    <Card :bordered="false" :bodyStyle="{ height: '100%' }">
-      <div :class="prefixCls">
-        <Tabs tab-position="left" class="h-full">
-          <TabPane v-for="pane in settingTabs" :key="pane.key" :tab="pane.name">
-            <!-- 动态引入组件 -->
-            <component :is="pane.component"></component>
-          </TabPane>
-        </Tabs>
-      </div>
-    </Card>
-  </ScrollContainer>
+  <Card :bordered="false">
+    <div :class="prefixCls">
+      <Tabs tab-position="left" class="h-full">
+        <TabPane v-for="pane in settingTabs" :key="pane.key" :tab="pane.name">
+          <!-- 动态引入组件 -->
+          <component :is="pane.component"></component>
+        </TabPane>
+      </Tabs>
+    </div>
+  </Card>
 </template>
 
 <script lang="ts">
@@ -19,7 +17,6 @@ import { Card, Tabs } from 'ant-design-vue';
 import UserSetting from './userSetting.vue';
 import ChangePsd from './changePsd.vue';
 import { settingTabs } from './data';
-import { ScrollContainer } from '/@/components/Container/index';
 export default defineComponent({
   name: 'baseSetting',
   components: {
@@ -28,7 +25,6 @@ export default defineComponent({
     TabPane: Tabs.TabPane,
     UserSetting,
     ChangePsd,
-    ScrollContainer,
   },
   setup() {
     return {
