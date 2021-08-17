@@ -49,7 +49,6 @@ const transform: AxiosTransform = {
         }
         //  这里 code，result，message为 后台统一的字段，需要在 types.ts内修改为项目自己的接口返回格式
         const { resCode, response, resMsg } = data;
-
         // 这里逻辑可以根据项目进行修改
         const hasSuccess = data && Reflect.has(data, 'resCode') && resCode === ResultEnum.SUCCESS;
         if (hasSuccess) {
@@ -60,18 +59,36 @@ const transform: AxiosTransform = {
         // 如果不希望中断当前请求，请return数据，否则直接抛出异常即可
         let timeoutMsg = '';
         const userStore = useUserStore();
+        // 用户重复登录防抖操作
+        const debounce = (func: Function, delay: number, immediate: boolean = false): Function => {
+            let timer: number | undefined;
+            return (...args: any) => {
+                if (immediate) {
+                    func.apply(this, args) // 确保引用函数的指向正确，并且函数的参数也不变
+                    immediate = false
+                    return
+                }
+                clearTimeout(timer)
+                timer = window.setTimeout(() => {
+                    func.apply(this, args)
+                }, delay)
+            }
+        }
+        const authError = debounce((msg) => {
+            createInfoModal({
+                title: t('sys.app.logoutTip'),
+                content: msg,
+                onOk() {
+                    userStore.setToken(undefined);
+                    userStore.setSessionTimeout(true);
+                }
+            })
+        }, 500);
         switch (resCode) {
             case ResultEnum.TIMEOUT:
                 timeoutMsg = t('sys.api.timeoutMessage');
                 // 登录超时跳到登录页
-                createInfoModal({
-                    title: '温馨提示',
-                    content: t('sys.api.timeoutMessage'),
-                    onOk() {
-                        userStore.setToken(undefined);
-                        userStore.setSessionTimeout(true);
-                    }
-                })
+                authError(timeoutMsg)
                 break;
             default:
                 if (resMsg) {

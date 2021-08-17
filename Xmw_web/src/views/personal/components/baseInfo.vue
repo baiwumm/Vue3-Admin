@@ -41,6 +41,7 @@
           :closable="true"
           :color="tag.length > 4 ? 'cyan' : tag.length > 2 ? 'blue' : 'purple'"
           @close="handleClose(tag)"
+          style="margin-top: 8px"
         >
           {{ `${tag.slice(0, 8)}...` }}
         </Tag>
@@ -51,6 +52,7 @@
         :key="index"
         :color="tag.length > 4 ? 'cyan' : tag.length > 2 ? 'blue' : 'purple'"
         @close="handleClose(tag)"
+        style="margin-top: 8px"
       >
         {{ tag }}
       </Tag>
