@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-23 16:17:46
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-04 09:35:42
+ * @LastEditTime: 2021-08-20 16:19:21
  * @Description: 用户管理参数类型注解
  */
 /**
@@ -13,6 +13,9 @@
 export interface LoginParams {
     user_name: string; // 用户名
     password: string; // 密码
+    sessionId: string;
+    sig: string;
+    token: string;
 }
 
 /**

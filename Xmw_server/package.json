@@ -1,53 +1,68 @@
 {
-  "name": "mysql-server",
+  "name": "Egg-TypeScript",
   "version": "1.0.0",
-  "description": "",
+  "description": "egg.js typescript开发版本",
   "private": true,
   "egg": {
+    "typescript": true,
     "declarations": true
   },
+  "scripts": {
+    "start": "egg-scripts start --daemon --title=egg-server-Egg-TypeScript",
+    "stop": "egg-scripts stop --title=egg-server-Egg-TypeScript",
+    "dev": "egg-bin dev",
+    "debug": "egg-bin debug",
+    "test-local": "egg-bin test",
+    "test": "npm run lint -- --fix && npm run test-local",
+    "cov": "egg-bin cov",
+    "tsc": "ets && tsc -p tsconfig.json",
+    "ci": "npm run lint && npm run cov && npm run tsc",
+    "autod": "autod",
+    "lint": "eslint . --ext .ts",
+    "clean": "ets clean"
+  },
   "dependencies": {
+    "@alicloud/endpoint-util": "^0.0.1",
+    "@alicloud/openapi-client": "^0.3.3",
+    "@alicloud/tea-typescript": "^1.7.1",
+    "@alicloud/tea-util": "^1.4.2",
     "ali-oss": "^6.16.0",
-    "egg": "^2.15.1",
+    "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
     "egg-redis": "^2.4.0",
-    "egg-scripts": "^2.11.0",
+    "egg-scripts": "^2.6.0",
     "egg-sequelize": "^6.0.0",
     "egg-socket.io": "^4.1.6",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.2.5"
+    "mysql2": "^2.3.0"
   },
   "devDependencies": {
+    "@types/mocha": "^2.2.40",
+    "@types/node": "^7.0.12",
+    "@types/supertest": "^2.0.0",
     "autod": "^3.0.1",
     "autod-egg": "^1.1.0",
     "egg-bin": "^4.11.0",
-    "egg-ci": "^1.11.0",
-    "egg-mock": "^3.21.0",
-    "eslint": "^5.13.0",
-    "eslint-config-egg": "^7.1.0"
+    "egg-ci": "^1.8.0",
+    "egg-mock": "^3.16.0",
+    "eslint": "^6.7.2",
+    "eslint-config-egg": "^8.0.0",
+    "tslib": "^1.9.0",
+    "typescript": "^3.0.0"
   },
   "engines": {
-    "node": ">=10.0.0"
-  },
-  "scripts": {
-    "start": "egg-scripts start --daemon --title=egg-server-mysql-server",
-    "stop": "egg-scripts stop --title=egg-server-mysql-server",
-    "dev": "egg-bin dev",
-    "debug": "egg-bin debug",
-    "test": "npm run lint -- --fix && npm run test-local",
-    "test-local": "egg-bin test",
-    "cov": "egg-bin cov",
-    "lint": "eslint .",
-    "ci": "npm run lint && npm run cov",
-    "autod": "autod"
+    "node": ">=8.9.0"
   },
   "ci": {
-    "version": "10"
+    "version": "8"
   },
   "repository": {
     "type": "git",
     "url": ""
   },
+  "eslintIgnore": [
+    "coverage"
+  ],
   "author": "Xie Mingwei",
   "license": "MIT"
 }

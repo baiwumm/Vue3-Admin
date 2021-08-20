@@ -1,7 +1,6 @@
-'use strict';
+import { EggPlugin } from 'egg';
 
-/** @type Egg.EggPlugin */
-module.exports = {
+const plugin: EggPlugin = {
     cors: {
         enable: true,
         package: 'egg-cors'
@@ -13,9 +12,10 @@ module.exports = {
     redis: {
         enable: true,
         package: 'egg-redis',
-    },
+    }
 };
 exports.sequelize = {
     enable: true,
     package: 'egg-sequelize',
 };
+export default plugin;

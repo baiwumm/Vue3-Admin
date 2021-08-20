@@ -2,6 +2,9 @@
 const Sequelize = require('sequelize');
 const moment = require('moment');
 class RawClass {
+    sequelize: any;
+    app: any;
+    dataBaseType: any;
 
     constructor(config, app) {
         let setting = Object.assign({}, config);
@@ -37,14 +40,12 @@ class RawClass {
 
     //执行一条SQL语句，返回影响行。
     async Execute(sql, opts) {
-        var self = this;
         let {
-            sequelize,
-            dataBaseType
+            sequelize
         } = this;
         let _opts = Object.assign({}, opts);
         //// 结果将是一个空数组,元数据将包含受影响的行数.
-        const [results, metadata] = await sequelize.query(sql, _opts);
+        const [metadata] = await sequelize.query(sql, _opts);
         return metadata
     }
 
@@ -112,16 +113,16 @@ class RawClass {
         let wherestr = opts.wherestr || "";
         let sql = `UPDATE ${tablename} SET ${fieldstr} ${wherestr}`;
 
-        let [res1, res2] = await sequelize.query(sql, {
+        let res = await sequelize.query(sql, {
             replacements: Object.assign({}, rowData, opts.replacements),
             type: sequelize.QueryTypes.UPDATE
         });
-        return res2;
+        return res[1];
     }
 
     async Insert(tablename, insertobj, opts) {
         var self = this;
-        let { sequelize, dataBaseType } = this;
+        let { sequelize } = this;
         var rowData = { ...insertobj };
         self.save_amending(rowData);
         var str1 = Object.keys(rowData).join(",");
@@ -129,16 +130,14 @@ class RawClass {
         var sql = `insert into ${tablename} (${str1}) values (${str2})`;
         let _opts = Object.assign({}, { type: sequelize.QueryTypes.INSERT }, opts);
         _opts.replacements = Object.assign({}, rowData, _opts.replacements);
-        var [res1, res2] = await sequelize.query(sql, _opts);
-        return res2;
+        var res = await sequelize.query(sql, _opts);
+        return res[1];
     }
 
     async InsertList(tablename, lst, opts) {
         if (!Array.isArray(lst)) return 0;
         if (lst.length == 0) return 0;
-
-        var self = this;
-        let { sequelize, dataBaseType } = this;
+        let { sequelize } = this;
 
         for (const item of lst) {
             this.save_amending(item);
@@ -163,10 +162,7 @@ class RawClass {
     }
 
     async Delete(tablename, opts) {
-        var self = this;
-        let { sequelize, dataBaseType } = this;
-        //
-        var where = opts.wherestr || "";
+        let { sequelize } = this;
         var sql = `delete from ${tablename} ${opts.wherestr}`;
 
         let _opts = Object.assign({}, { type: sequelize.QueryTypes.DELETE }, opts);
@@ -176,7 +172,6 @@ class RawClass {
 
 
     async Transaction(invokefunc) {
-        let self = this;
 
         const sequelize = this.sequelize;
         return sequelize.transaction({

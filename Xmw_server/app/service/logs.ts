@@ -2,28 +2,28 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-03 10:43:05
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-03 11:40:12
+ * @LastEditTime: 2021-08-20 15:10:10
  * @Description: 记录用户操作日志
  */
-'use strict'
-const Service = require('egg').Service
+import { Service } from 'egg';
 
-class Logs extends Service {
+export default class Logs extends Service {
     // 记录每一个接口的操作到日志
-    async saveLogs(content) {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async saveLogs(content: string) {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { user_id } = ctx.session.userInfo
-            let url = ctx.request.url
+            let url: string = ctx.request.url
             // 正则先去掉http获取https
-            let path = ctx.header.referer.replace(/^https?\:\/\//i, "");
+            let path: any = ctx.request.header.referer
+            let relPath: string = path.replace(/^https?\:\/\//i, "")
             let logInfo = {
                 log_id: ctx.helper.snowflakeId(),
                 user_id: user_id,
                 content: content,
                 ip: ctx.request.ip,
-                path: path.slice(path.indexOf('/')),
+                path: relPath.slice(relPath.indexOf('/')),
                 // 判断url是否带参数，只获取路径
                 api_url: url.slice(0, url.indexOf('?') === -1 ? undefined : url.indexOf('?')),
                 user_agent: ctx.header['user-agent'],
@@ -37,5 +37,3 @@ class Logs extends Service {
         }
     }
 }
-
-module.exports = Logs

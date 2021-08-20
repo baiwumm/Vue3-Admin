@@ -3,7 +3,7 @@ module.exports = {
      * 格式化时间
      * @param
      */
-    dataFormat(value, fmt) {
+    dataFormat(value: string, fmt: string) {
         if (!value || value == "") return value;
         if (typeof value == "string" && value.indexOf(".") > -1)
             value = value.split(".")[0]; //时间格式带小数点则需把小数点后面的尾数去掉
@@ -40,10 +40,23 @@ module.exports = {
      * 雪花算法生成随机id
      * @param
      */
-    snowflakeId(flag) {
-        // flag判断是单个id生成还是多个id
-        const Snowflake = /** @class */ (function () {
-            function Snowflake(_workerId, _dataCenterId, _sequence) {
+    snowflakeId(flag: boolean) {
+        class Snowflake {
+            twepoch: bigint;
+            workerIdBits: bigint;
+            dataCenterIdBits: bigint;
+            maxWrokerId: bigint;
+            maxDataCenterId: bigint;
+            sequenceBits: bigint;
+            workerIdShift: any;
+            dataCenterIdShift: any;
+            timestampLeftShift: any;
+            sequenceMask: bigint;
+            lastTimestamp: bigint;
+            workerId: bigint;
+            dataCenterId: bigint;
+            sequence: bigint;
+            constructor(_workerId: bigint, _dataCenterId: bigint, _sequence: bigint) {
                 this.twepoch = 1288834974657n;
                 //this.twepoch = 0n;
                 this.workerIdBits = 5n;
@@ -71,17 +84,17 @@ module.exports = {
                 this.dataCenterId = BigInt(_dataCenterId);
                 this.sequence = BigInt(_sequence);
             }
-            Snowflake.prototype.tilNextMillis = function (lastTimestamp) {
+            tilNextMillis = (lastTimestamp: bigint) => {
                 var timestamp = this.timeGen();
                 while (timestamp <= lastTimestamp) {
                     timestamp = this.timeGen();
                 }
                 return BigInt(timestamp);
             };
-            Snowflake.prototype.timeGen = function () {
+            timeGen = () => {
                 return BigInt(Date.now());
             };
-            Snowflake.prototype.nextId = function () {
+            nextId = () => {
                 var timestamp = this.timeGen();
                 if (timestamp < this.lastTimestamp) {
                     throw new Error('Clock moved backwards. Refusing to generate id for ' +
@@ -101,8 +114,7 @@ module.exports = {
                     (this.workerId << this.workerIdShift) |
                     this.sequence;
             };
-            return Snowflake;
-        })();
+        }
         return flag ? new Snowflake(1n, 1n, 0n) : new Snowflake(1n, 1n, 0n).nextId().toString()
     },
 
@@ -112,7 +124,7 @@ module.exports = {
      * @param tree 树
      * @param parentId 父ID
      */
-    initializeTree(source, id, parentId, children) {
+    initializeTree(source: any, id: string, parentId: string, children: string) {
         let temp = JSON.parse(JSON.stringify(source))
         // 以id为键，当前对象为值，存入一个新的对象中
         let tempObj = {}
@@ -132,11 +144,11 @@ module.exports = {
      * 国际化语言处理，转成多层级对象
      * @param
      */
-    transformLang(list, lang) {
+    transformLang(list: any, lang: string, field: string) {
         const result = {};
         list.forEach((item) => {
             let current = result;
-            item.internation_name.split('.').forEach((key, index, arr) => {
+            item[field].split('.').forEach((key: string | number, index: number, arr: string | any[]) => {
                 if (index == arr.length - 1) {
                     current[key] = item[lang];
                 } else {

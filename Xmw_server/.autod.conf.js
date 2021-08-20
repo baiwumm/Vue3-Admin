@@ -2,28 +2,27 @@
 
 module.exports = {
   write: true,
-  prefix: '^',
   plugin: 'autod-egg',
-  test: [
-    'test',
-    'benchmark',
+  prefix: '^',
+  devprefix: '^',
+  exclude: [
+    'test/fixtures',
+    'coverage',
   ],
   dep: [
     'egg',
     'egg-scripts',
   ],
   devdep: [
-    'egg-ci',
-    'egg-bin',
-    'egg-mock',
     'autod',
     'autod-egg',
-    'eslint',
-    'eslint-config-egg',
+    'egg-bin',
+    'tslib',
+    'typescript',
   ],
-  exclude: [
-    './test/fixtures',
-    './dist',
+  keep: [
   ],
+  semver: [
+  ],
+  test: 'scripts',
 };
-

@@ -1,27 +1,26 @@
 /*
- * @Description:菜单管理模块接口
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-16 17:42:58
+ * @Author: Xie Mingwei
+ * @Date: 2021-08-20 13:43:28
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-05 17:02:46
+ * @LastEditTime: 2021-08-20 15:10:48
+ * @Description:菜单管理模块接口
  */
-'use strict';
+import { Controller } from 'egg';
+import { resResultModel, MenuListItem } from '../../public/resModel'
 
-const Controller = require('egg').Controller;
-class MenuManagementController extends Controller {
+export default class MenuManagementController extends Controller {
     /**
      * @description: 获取菜单树结构
      * @param {*} title:菜单名称,status:状态,current:页码,pageSize:条数
      * @return {*}
      */
-    async getMenuTree() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async getMenuTree(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { title, status } = ctx.params;
             // 根据条件拼接筛选
-            let conditions = 'where 1 = 1'
+            let conditions: string = 'where 1 = 1'
             if (title) conditions += ` and title like '%${title}%'`
             if (status) conditions += ` and status = ${status}`
             let menu_data = await Raw.QueryList(`select u.*,i.zh_CN as lang from xmw_menu u left join xmw_international i on u.title = i.internation_name ${conditions} order by sort desc,create_time asc `);
@@ -34,13 +33,13 @@ class MenuManagementController extends Controller {
     }
 
     /**
-     * @description: 获取路由菜单
-     * @param {*} 
-     * @return {*}
-     */
-    async getMenuList() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    * @description: 获取路由菜单
+    * @param {*} 
+    * @return {*}
+    */
+    public async getMenuList(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
@@ -51,7 +50,7 @@ class MenuManagementController extends Controller {
             where  FIND_IN_SET(role_id,(select role_id from xmw_user where user_id=${user_id})))
             order by sort desc,create_time asc`);
             // 组装路由数据格式
-            let menuData = sqlData.map(v => {
+            let menuData = sqlData.map((v: MenuListItem) => {
                 let menuItem = {
                     menu_id: v.menu_id, //路由id
                     path: v.path, // 路由地址
@@ -82,13 +81,13 @@ class MenuManagementController extends Controller {
     }
 
     /**
-     * @description: 新增和更新菜单
-     * @param {*} params:表单数据
-     * @return {*}
-     */
-    async menuSave() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    * @description: 新增和更新菜单
+    * @param {*} params:表单数据
+    * @return {*}
+    */
+    public async menuSave(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
@@ -117,7 +116,7 @@ class MenuManagementController extends Controller {
                 };
                 await Raw.Update('xmw_menu', params, options);
             }
-            await ctx.service.logs.saveLogs(`${menu_id ? '编辑' : '新增'}菜单 权限标识:${params.permission}`)
+            await service.logs.saveLogs(`${menu_id ? '编辑' : '新增'}菜单 权限标识:${params.permission}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('menuSave方法报错：' + error)
@@ -130,13 +129,13 @@ class MenuManagementController extends Controller {
      * @param {*} ids:id集合,用,分隔
      * @return {*}
      */
-    async menuDel() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async menuDel(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { ids, permission } = ctx.params
             // 判断当前菜单是否存在子级
-            let conditions = `where parent_id = '${ids}'`
+            let conditions: string = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_menu ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '当前菜单是否存在子级,不能删除!', response: {} }
@@ -144,7 +143,7 @@ class MenuManagementController extends Controller {
             await Raw.Delete("xmw_menu", {
                 wherestr: `where menu_id in (${ids})`
             });
-            await ctx.service.logs.saveLogs(`删除菜单 权限标识:${permission}`)
+            await service.logs.saveLogs(`删除菜单 权限标识:${permission}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('menuDel方法报错：' + error)
@@ -152,4 +151,3 @@ class MenuManagementController extends Controller {
         }
     }
 }
-module.exports = MenuManagementController;

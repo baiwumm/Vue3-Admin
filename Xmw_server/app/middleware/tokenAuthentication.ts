@@ -4,16 +4,16 @@
  * @Autor: Xie Mingwei
  * @Date: 2020-10-28 09:42:50
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-06 14:52:08
+ * @LastEditTime: 2021-08-20 10:37:36
  */
 'use strict';
-
+import { Context } from 'egg';
 const jwt = require('jsonwebtoken');
 
-module.exports = (options, app) => {
-    return async function tokenAuthentication(ctx, next) {
+export default function tokenAuthentication(): any {
+    return async (ctx: Context, next: () => Promise<any>) => {
         try {
-            const { Raw } = app.Db.xmw;
+            const config = ctx.app.config;
             const requestUrl = ctx.request.url;
             // 白名单:登录、国际化语言接口不用携带token
             const whiteUrl = ['/login', '/system/getInternationalLang']
@@ -32,7 +32,7 @@ module.exports = (options, app) => {
             if (token) {
                 let overdue = true;
                 // 解析token生成用户信息
-                jwt.verify(token, app.config.privateKey, (err, decoded) => {
+                jwt.verify(token, config.privateKey, (err) => {
                     if (err) {   //如果token过期或解析错误则会执行err的代码块
                         ctx.logger.error(err);
                         overdue = false;
@@ -47,6 +47,5 @@ module.exports = (options, app) => {
             ctx.logger.info(error)
             return ctx.body = { resCode: 400, resMsg: 'token令牌认证失败!', response: error }
         }
-
-    }
+    };
 }

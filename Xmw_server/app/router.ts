@@ -1,18 +1,7 @@
-/*
- * @Description: 后台路由管理
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-15 10:48:35
- * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-11 15:19:16
- */
-'use strict';
+import { Application } from 'egg';
 
-/**
- * @param {Egg.Application} app - egg application
- */
-module.exports = app => {
-    const { router, controller } = app;
+export default (app: Application) => {
+    const { controller, router } = app;
     //   系统设置模块接口
     router.post('/login', controller.system.userManagement.login); // 用户登录
     router.get('/logout', controller.system.userManagement.logout); // 用户注销
@@ -52,6 +41,7 @@ module.exports = app => {
     router.get('/system/getInternationalLang', controller.system.internationalManagement.getInternationalLang); // 获取国际化语言
     router.post('/system/internationaSave', controller.system.internationalManagement.internationaSave); // 新增和更新国际化
     router.post('/system/internationalDel', controller.system.internationalManagement.internationalDel); // 删除国际化字段
+
     // 个人中心
     router.post('/personal/changeUserTag', controller.personal.personal.changeUserTag); // 修改用户标签
     router.post('/personal/changeUserPassword', controller.personal.personal.changeUserPassword); // 修改用户密码

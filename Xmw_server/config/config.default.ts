@@ -1,49 +1,34 @@
 /*
- * @Description: egg.js配置文件
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-15 10:48:35
+ * @Author: Xie Mingwei
+ * @Date: 2021-08-19 18:02:52
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-16 10:01:58
+ * @LastEditTime: 2021-08-20 14:29:11
+ * @Description: egg.js配置文件
  */
-'use strict';
+import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
-module.exports = appInfo => {
-    /**
-     * built-in config
-     * @type {Egg.EggAppConfig}
-     **/
-    const config = exports = {
-        Db: {
-            xmw: {
-                dialect: "mysql",
-                database: 'xmw_vue3_egg',
-                host: "127.0.0.1",
-                username: 'root',
-                password: '123456',
-                dialectOptions: {
-                    dateStrings: true,
-                    typeCast: true
-                },
-                timezone: '+08:00', // 保存为本地时区
-                port: 3306,
-                dialectOptions: {
-                    dateStrings: true,
-                    typeCast(field, next) {
-                        if (field.type === "DATETIME") {
-                            return field.string();
-                        }
-                        return next();
-                    }
-                }
+export default (appInfo: EggAppInfo) => {
+    const config = {} as PowerPartial<EggAppConfig>;
+    // 数据库配置
+    config.Db = {
+        xmw: {
+            dialect: "mysql",
+            database: 'xmw_vue3_egg',
+            host: "127.0.0.1",
+            username: 'root',
+            password: '123456',
+            timezone: '+08:00', // 保存为本地时区
+            port: 3306,
+            dialectOptions: {
+                dateStrings: true,
+                typeCast: true
             }
         }
-    };
+    }
+    // override config from framework / plugin
     // use for cookie sign key, should change to your own and keep security
-    config.keys = appInfo.name + '_1626317297628_4474';
+    config.keys = appInfo.name + '_1629367306448_5070';
+
     // 配置需要的中间件，数组顺序即为中间件的加载顺序
     config.middleware = ['tokenAuthentication', 'params']
     config.expiresIn = 3 * 24 * 60 * 60;// token过期时间 单位秒，默认3天
@@ -90,7 +75,15 @@ module.exports = appInfo => {
         mode: "stream",
         whitelist: ['.jpg', '.jpeg', '.png', '.xlsx', '.xls', '.jfif', '.gif']
     };
+
+    // 用户默认头像
+    config.avatar = {
+        male: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/boy_avatar.svg',
+        female: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/girl_avatar.svg'
+    }
+
+    // the return config will combines to EggAppConfig
     return {
-        ...config
+        ...config,
     };
 };

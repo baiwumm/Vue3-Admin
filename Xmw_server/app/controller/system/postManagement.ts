@@ -1,28 +1,25 @@
 /*
- * @Description: 岗位管理API接口
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-15 15:00:42
+ * @Author: Xie Mingwei
+ * @Date: 2021-08-20 14:03:50
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-03 14:42:39
+ * @LastEditTime: 2021-08-20 15:11:39
+ * @Description:岗位管理API接口
  */
-'use strict';
-
-const Controller = require('egg').Controller;
-class PostManagementController extends Controller {
-
+import { Controller } from 'egg';
+import { resResultModel } from '../../public/resModel'
+export default class PostManagementController extends Controller {
     /**
      * @description: 获取岗位树结构
      * @param {*} 
      * @return {*}
      */
-    async getPostTree() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async getPostTree(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { post_name, org_id } = ctx.params;
             // 根据条件拼接筛选
-            let conditions = 'where 1 = 1'
+            let conditions: string = 'where 1 = 1'
             if (post_name) conditions += ` and n.post_name like '%${post_name}%'`
             if (org_id) conditions += ` and t.org_id = '${org_id}'`
             let data = await Raw.QueryList(`select n.*,org_name from xmw_post n left join xmw_organization t on n.org_id = t.org_id ${conditions} order by n.create_time desc`);
@@ -39,9 +36,9 @@ class PostManagementController extends Controller {
      * @param {*} params:表单数据
      * @return {*}
      */
-    async postSave() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async postSave(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
@@ -51,7 +48,7 @@ class PostManagementController extends Controller {
                 return ctx.body = { resCode: -1, resMsg: '父级不能是自己!', response: {} }
             }
             // 判断部门名称和部门编码是否已存在
-            let conditions = `where (post_name = '${params.post_name}' and (org_id = '${params.org_id}' or parent_id = '${params.parent_id}'))`
+            let conditions: string = `where (post_name = '${params.post_name}' and (org_id = '${params.org_id}' or parent_id = '${params.parent_id}'))`
             if (post_id) conditions += ` and post_id != '${post_id}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
             if (exist.total) {
@@ -70,7 +67,7 @@ class PostManagementController extends Controller {
                 };
                 await Raw.Update('xmw_post', params, options);
             }
-            await ctx.service.logs.saveLogs(`${post_id ? '编辑' : '新增'}岗位:${params.post_name}`)
+            await service.logs.saveLogs(`${post_id ? '编辑' : '新增'}岗位:${params.post_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('postSave方法报错：' + error)
@@ -79,17 +76,17 @@ class PostManagementController extends Controller {
     }
 
     /**
-     * @description: 删除岗位
-     * @param {*} ids:id集合,用,分隔
-     * @return {*}
-     */
-    async postDel() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    * @description: 删除岗位
+    * @param {*} ids:id集合,用,分隔
+    * @return {*}
+    */
+    public async postDel(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { ids, post_name } = ctx.params
             // 判断当前岗位是否存在子级
-            let conditions = `where parent_id = '${ids}'`
+            let conditions: string = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_post ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '当前岗位存在子级,不能删除!', response: {} }
@@ -97,7 +94,7 @@ class PostManagementController extends Controller {
             await Raw.Delete("xmw_post", {
                 wherestr: `where post_id in (${ids})`
             });
-            await ctx.service.logs.saveLogs(`删除岗位:${post_name}`)
+            await service.logs.saveLogs(`删除岗位:${post_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('postDel方法报错：' + error)
@@ -105,4 +102,3 @@ class PostManagementController extends Controller {
         }
     }
 }
-module.exports = PostManagementController;

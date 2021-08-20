@@ -91,6 +91,7 @@ const transform: AxiosTransform = {
                 authError(timeoutMsg)
                 break;
             default:
+                console.log(resCode)
                 if (resMsg) {
                     timeoutMsg = resMsg;
                 }

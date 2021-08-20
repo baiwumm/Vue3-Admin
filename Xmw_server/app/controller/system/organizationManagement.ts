@@ -1,28 +1,25 @@
 /*
- * @Description: 组织管理API接口
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-15 15:00:42
+ * @Author: Xie Mingwei
+ * @Date: 2021-08-20 14:00:10
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-10 10:15:08
+ * @LastEditTime: 2021-08-20 15:11:21
+ * @Description:组织管理API接口
  */
-'use strict';
-
-const Controller = require('egg').Controller;
-class OrganizationManagementController extends Controller {
-
+import { Controller } from 'egg';
+import { resResultModel } from '../../public/resModel'
+export default class OrganizationManagementController extends Controller {
     /**
      * @description: 获取组织树结构
      * @param {*} 
      * @return {*}
      */
-    async getOrganizationTree() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async getOrganizationTree(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { org_name, org_code } = ctx.params;
             // 根据条件拼接筛选
-            let conditions = 'where 1 = 1'
+            let conditions: string = 'where 1 = 1'
             if (org_name) conditions += ` and o.org_name like '%${org_name}%'`
             if (org_code) conditions += ` and o.org_code like '%${org_code}%'`
             let data = await Raw.QueryList(`select o.*,u.cn_name as leader from xmw_organization o left join xmw_user u on o.leader = u.user_id ${conditions} order by create_time desc`);
@@ -39,9 +36,9 @@ class OrganizationManagementController extends Controller {
      * @param {*} params:表单数据
      * @return {*}
      */
-    async organizationSave() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async organizationSave(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
@@ -51,7 +48,7 @@ class OrganizationManagementController extends Controller {
                 return ctx.body = { resCode: -1, resMsg: '父级不能是自己!', response: {} }
             }
             // 判断部门名称和部门编码是否已存在
-            let conditions = `where (org_name = '${params.org_name}' or org_code = '${params.org_code}')`
+            let conditions: string = `where (org_name = '${params.org_name}' or org_code = '${params.org_code}')`
             if (org_id) conditions += ` and org_id != '${org_id}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_organization ${conditions}`);
             if (exist.total) {
@@ -70,7 +67,7 @@ class OrganizationManagementController extends Controller {
                 };
                 await Raw.Update('xmw_organization', params, options);
             }
-            await ctx.service.logs.saveLogs(`${org_id ? '编辑' : '新增'}组织:${params.org_name}`)
+            await service.logs.saveLogs(`${org_id ? '编辑' : '新增'}组织:${params.org_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('organizationSave方法报错：' + error)
@@ -83,13 +80,13 @@ class OrganizationManagementController extends Controller {
      * @param {*} ids:id集合,用,分隔
      * @return {*}
      */
-    async organizationDel() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async organizationDel(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { ids, org_name } = ctx.params
             // 判断当前组织是否存在子级
-            let conditions = `where parent_id = '${ids}'`
+            let conditions: string = `where parent_id = '${ids}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_organization ${conditions}`);
             if (exist.total) {
                 return ctx.body = { resCode: -1, resMsg: '当前组织存在子级,不能删除!', response: {} }
@@ -97,7 +94,7 @@ class OrganizationManagementController extends Controller {
             await Raw.Delete("xmw_organization", {
                 wherestr: `where org_id in (${ids})`
             });
-            await ctx.service.logs.saveLogs(`删除组织:${org_name}`)
+            await service.logs.saveLogs(`删除组织:${org_name}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('organizationDel方法报错：' + error)
@@ -105,4 +102,3 @@ class OrganizationManagementController extends Controller {
         }
     }
 }
-module.exports = OrganizationManagementController;

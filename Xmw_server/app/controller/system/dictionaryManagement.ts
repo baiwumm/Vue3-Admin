@@ -1,27 +1,25 @@
 /*
- * @Description:字典管理模块接口
- * @Version: 3.30
- * @Autor: Xie Mingwei
- * @Date: 2021-07-16 17:42:58
+ * @Author: Xie Mingwei
+ * @Date: 2021-08-20 13:39:32
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-03 14:36:10
+ * @LastEditTime: 2021-08-20 15:01:41
+ * @Description:字典管理模块接口
  */
-'use strict';
-
-const Controller = require('egg').Controller;
-class DictionaryManagementController extends Controller {
+import { Controller } from 'egg';
+import { resResultModel } from '../../public/resModel'
+export default class DictionaryManagementController extends Controller {
     /**
      * @description: 获取字典列表
      * @param {*} dict_name:字典名称,dict_coding:字典编码,parent_id:父级id,current:页码,pageSize:条数
      * @return {*}
      */
-    async getDictionaryList() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async getDictionaryList(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { dict_name, dict_coding, parent_id, current, pageSize } = ctx.params;
             // 根据条件拼接筛选
-            let conditions = 'where 1 = 1'
+            let conditions: string = 'where 1 = 1'
             if (dict_name) conditions += ` and dict_name like '%${dict_name}%'`
             if (dict_coding) conditions += ` and dict_coding like '%${dict_coding}%'`
             if (parent_id) conditions += ` and parent_id = ${parent_id}`
@@ -40,15 +38,15 @@ class DictionaryManagementController extends Controller {
      * @param {*} params:表单数据
      * @return {*}
      */
-    async dictionarySave() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async dictionarySave(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             // 从session获取用户id
             let { user_id } = ctx.session.userInfo
             let { dictionary_id, ...params } = ctx.params
             // 判断字典编码和字典名称是否已存在
-            let conditions = `where (dict_coding = '${params.dict_coding}' or dict_name = '${params.dict_name}')`
+            let conditions: string = `where (dict_coding = '${params.dict_coding}' or dict_name = '${params.dict_name}')`
             if (dictionary_id) conditions += ` and dictionary_id != '${dictionary_id}'`
             const exist = await Raw.Query(`select count(1) as total from xmw_dictionary ${conditions}`);
             if (exist.total) {
@@ -75,7 +73,7 @@ class DictionaryManagementController extends Controller {
                     wherestr: `where dictionary_id = ${dictionary_id}`
                 };
                 await Raw.Update('xmw_dictionary', params, options);
-                await ctx.service.logs.saveLogs(`编辑字典:${params.dict_name || params.dictionary_label}`)
+                await service.logs.saveLogs(`编辑字典:${params.dict_name || params.dictionary_label}`)
             }
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
@@ -89,9 +87,9 @@ class DictionaryManagementController extends Controller {
      * @param {*} ids:id集合,用,分隔
      * @return {*}
      */
-    async dictionaryDel() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async dictionaryDel(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { ids, dict_name, dictionary_label } = ctx.params
             // 判断字典是否有子项
@@ -102,7 +100,7 @@ class DictionaryManagementController extends Controller {
             await Raw.Delete("xmw_dictionary", {
                 wherestr: `where dictionary_id in (${ids})`
             });
-            await ctx.service.logs.saveLogs(`删除${dict_name ? '字典' : '字典子项'}:${dict_name || dictionary_label}`)
+            await service.logs.saveLogs(`删除${dict_name ? '字典' : '字典子项'}:${dict_name || dictionary_label}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('dictionaryDel方法报错：' + error)
@@ -115,9 +113,9 @@ class DictionaryManagementController extends Controller {
      * @param {*} dict_coding:字典编码
      * @return {*}
      */
-    async dictionaryModel() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async dictionaryModel(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { dict_coding } = ctx.params
             let parentDict = await Raw.Query(`select dictionary_id from xmw_dictionary where dict_coding = '${dict_coding}'`)
@@ -134,5 +132,5 @@ class DictionaryManagementController extends Controller {
             return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
+
 }
-module.exports = DictionaryManagementController;

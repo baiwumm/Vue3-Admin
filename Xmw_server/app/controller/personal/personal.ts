@@ -1,12 +1,12 @@
 /*
  * @Author: Xie Mingwei
- * @Date: 2021-08-10 17:41:43
+ * @Date: 2021-08-20 14:13:55
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-11 16:39:24
+ * @LastEditTime: 2021-08-20 14:16:00
  * @Description:个人中心模块接口
  */
-
-'use strict';
+import { Controller } from 'egg';
+import { resResultModel } from '../../public/resModel'
 let OSS = require('ali-oss');
 // 阿里云对象存储配置
 let client = new OSS({
@@ -15,17 +15,15 @@ let client = new OSS({
     accessKeySecret: 'bAqE12OuQ9uHwxkdTltOWRogJUXfmG',
     bucket: 'xmwpro',
 });
-const Controller = require('egg').Controller;
-class PersonalManagementController extends Controller {
-
+export default class PersonalManagementController extends Controller {
     /**
      * @description: 修改用户标签
      * @param {*}tags:标签集合
      * @return {*}
      */
-    async changeUserTag() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async changeUserTag(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { user_id } = ctx.session.userInfo
             let { tags } = ctx.params
@@ -33,7 +31,7 @@ class PersonalManagementController extends Controller {
                 wherestr: `where user_id=${user_id}`
             };
             await Raw.Update('xmw_user', { tag: tags }, options);
-            await ctx.service.logs.saveLogs(`修改标签:${tags}`)
+            await service.logs.saveLogs(`修改标签:${tags}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('changeUserTag方法报错：' + error)
@@ -46,9 +44,9 @@ class PersonalManagementController extends Controller {
      * @param {*}passwordOld:原密码,passwordNew:新密码
      * @return {*}
      */
-    async changeUserPassword() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async changeUserPassword(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { user_id } = ctx.session.userInfo
             const { passwordOld, passwordNew } = ctx.params
@@ -59,7 +57,7 @@ class PersonalManagementController extends Controller {
                     wherestr: `where user_id=${user_id}`
                 };
                 await Raw.Update('xmw_user', row, options);
-                await ctx.service.logs.saveLogs(`修改用户密码`)
+                await service.logs.saveLogs(`修改用户密码`)
                 return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
             } else {
                 return ctx.body = { resCode: -1, resMsg: '原密码不正确!', response: {} }
@@ -75,9 +73,9 @@ class PersonalManagementController extends Controller {
      * @param {*}
      * @return {*}
      */
-    async changeUserAvatar() {
-        const { app, ctx } = this;
-        const { Raw } = app.Db.xmw;
+    public async changeUserAvatar(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
         try {
             let { user_id } = ctx.session.userInfo
             let stream = await this.ctx.getFileStream();
@@ -92,13 +90,11 @@ class PersonalManagementController extends Controller {
                 wherestr: `where user_id=${user_id}`
             };
             await Raw.Update('xmw_user', row, options);
-            await ctx.service.logs.saveLogs(`更换用户头像:${avatarInfo.fullPath}`)
+            await service.logs.saveLogs(`更换用户头像:${avatarInfo.fullPath}`)
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: avatarInfo }
         } catch (error) {
             ctx.logger.info('changeUserAvatar方法报错：' + error)
             return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
-
 }
-module.exports = PersonalManagementController;
