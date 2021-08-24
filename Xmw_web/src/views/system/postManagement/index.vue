@@ -4,12 +4,7 @@
   </PageWrapper>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { PageWrapper } from '/@/components/Page';
 import PostTable from './postTable/index.vue';
-export default defineComponent({
-  name: 'postManagement',
-  components: { PageWrapper, PostTable },
-});
 </script>

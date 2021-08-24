@@ -45,8 +45,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, nextTick, watch, ref } from 'vue';
+<script lang="ts" setup>
+import { nextTick, watch, ref, defineProps } from 'vue';
 import { columns } from './data'; //表格列配置项
 import { useMessage } from '/@/hooks/web/useMessage';
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; //表格组件
@@ -60,92 +60,75 @@ import {
 import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
-const props = {
+
+const props = defineProps({
   parent_id: { type: String },
-};
-export default defineComponent({
-  name: 'ditcItemTable',
-  components: { BasicTable, DitcItemModal, TableAction, Tag, Badge },
-  props,
-  setup(props) {
-    const { t } = useI18n();
-    const { createMessage } = useMessage();
-    const [registerModal, { openModal }] = useModal(); // 注册模态框
-    const [registerTable, { reload }] = useTable({
-      // 注册表格
-      title: t('router.system.dictionaryManagement.dictItemtitle'),
-      api: getDictionaryList,
-      rowKey: 'dictionary_id',
-      columns,
-      immediate: false,
-      showIndexColumn: false,
-      useSearchForm: false,
-      showTableSetting: true,
-      bordered: true,
-      actionColumn: {
-        width: 80,
-        title: t('router.common.action'),
-        dataIndex: 'action',
-        slots: { customRender: 'action' },
-      },
-      //   请求之前对参数进行处理
-      beforeFetch: handleBeforeFetch,
-    });
-    //   请求字典数据
-    let statusOptions = ref({});
-    async function initOptions() {
-      statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
-    }
-    initOptions();
-    //   新增操作
-    function handleCreate() {
-      openModal(true, {
-        isUpdate: false,
-        parent_id: props.parent_id,
-      });
-    }
-    //   编辑操作
-    function handleEdit(record: Recordable) {
-      openModal(true, {
-        record,
-        isUpdate: true,
-        parent_id: props.parent_id,
-      });
-    }
-    //   删除操作
-    async function handleDelete(record: Recordable) {
-      await dictionaryDel({ ids: record.dictionary_id, dictionary_label: record.dictionary_label });
-      createMessage.success(t('router.common.deleteSuccess'));
-      await reload();
-    }
-    // 重新请求列表
-    function handleSuccess() {
-      reload();
-    }
-    //   请求之前对参数进行处理
-    function handleBeforeFetch(params) {
-      return Object.assign(params, { parent_id: props.parent_id });
-    }
-    // 监听字典列表的parent_id
-    watch(
-      () => props.parent_id,
-      () => {
-        nextTick(() => {
-          reload();
-        });
-      }
-    );
-    return {
-      registerTable,
-      registerModal,
-      handleCreate,
-      handleEdit,
-      handleDelete,
-      handleSuccess,
-      statusOptions,
-      formatDictValue,
-      t,
-    };
-  },
 });
+const { t } = useI18n();
+const { createMessage } = useMessage();
+const [registerModal, { openModal }] = useModal(); // 注册模态框
+const [registerTable, { reload }] = useTable({
+  // 注册表格
+  title: t('router.system.dictionaryManagement.dictItemtitle'),
+  api: getDictionaryList,
+  rowKey: 'dictionary_id',
+  columns,
+  immediate: false,
+  showIndexColumn: false,
+  useSearchForm: false,
+  showTableSetting: true,
+  bordered: true,
+  actionColumn: {
+    width: 80,
+    title: t('router.common.action'),
+    dataIndex: 'action',
+    slots: { customRender: 'action' },
+  },
+  //   请求之前对参数进行处理
+  beforeFetch: handleBeforeFetch,
+});
+//   请求字典数据
+let statusOptions = ref({});
+async function initOptions() {
+  statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+}
+initOptions();
+//   新增操作
+function handleCreate() {
+  openModal(true, {
+    isUpdate: false,
+    parent_id: props.parent_id,
+  });
+}
+//   编辑操作
+function handleEdit(record: Recordable) {
+  openModal(true, {
+    record,
+    isUpdate: true,
+    parent_id: props.parent_id,
+  });
+}
+//   删除操作
+async function handleDelete(record: Recordable) {
+  await dictionaryDel({ ids: record.dictionary_id, dictionary_label: record.dictionary_label });
+  createMessage.success(t('router.common.deleteSuccess'));
+  await reload();
+}
+// 重新请求列表
+function handleSuccess() {
+  reload();
+}
+//   请求之前对参数进行处理
+function handleBeforeFetch(params) {
+  return Object.assign(params, { parent_id: props.parent_id });
+}
+// 监听字典列表的parent_id
+watch(
+  () => props.parent_id,
+  () => {
+    nextTick(() => {
+      reload();
+    });
+  }
+);
 </script>

@@ -2,13 +2,11 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-15 15:07:52
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-04 09:35:53
+ * @LastEditTime: 2021-08-23 10:14:23
  * @Description: 用户管理模块接口
  */
 import { defHttp } from '/@/utils/http/axios';
 import { LoginParams, GetUserInfoModel, getUserResultModel, userDelParams } from './model/userModel';
-
-import { ErrorMessageMode } from '/#/axios';
 
 enum Api {
     getUserList = '/system/getUserList', // 获取用户列表
@@ -32,14 +30,11 @@ export function userDel(params: userDelParams) {
     return defHttp.post({ url: Api.userDel, params: params });
 }
 
-export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') {
+export function loginApi(params: LoginParams) {
     return defHttp.post<GetUserInfoModel>(
         {
             url: Api.Login,
             params,
-        },
-        {
-            errorMessageMode: mode,
         }
     );
 }

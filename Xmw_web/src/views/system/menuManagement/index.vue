@@ -4,12 +4,7 @@
   </PageWrapper>
 </template>
 
-<script>
-import { defineComponent } from 'vue';
+<script lang="ts" setup>
 import { PageWrapper } from '/@/components/Page';
 import MenuTable from './menuTable/index.vue';
-export default defineComponent({
-  name: 'menuManagement',
-  components: { PageWrapper, MenuTable },
-});
 </script>

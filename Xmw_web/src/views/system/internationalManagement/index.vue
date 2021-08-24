@@ -3,12 +3,7 @@
     <InterTable />
   </PageWrapper>
 </template>
-<script>
+<script lang="ts" setup>
 import { PageWrapper } from '/@/components/Page';
 import InterTable from './interTable/index.vue';
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'internationalManagement',
-  components: { PageWrapper, InterTable },
-});
 </script>

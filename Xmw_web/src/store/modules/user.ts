@@ -1,5 +1,4 @@
 import type { UserInfo } from '/#/store';
-import type { ErrorMessageMode } from '/#/axios';
 import { defineStore } from 'pinia';
 import { store } from '/@/store';
 import { RoleEnum } from '/@/enums/roleEnum';
@@ -76,12 +75,11 @@ export const useUserStore = defineStore({
         async login(
             params: LoginParams & {
                 goHome?: boolean;
-                mode?: ErrorMessageMode;
             }
         ): Promise<GetUserInfoModel | null> {
             try {
-                const { goHome = true, mode, ...loginParams } = params;
-                const data = await loginApi(loginParams, mode);
+                const { goHome = true, ...loginParams } = params;
+                const data = await loginApi(loginParams);
                 const { token } = data;
 
                 // save token
@@ -106,9 +104,6 @@ export const useUserStore = defineStore({
                 }
                 return userInfo;
             } catch (error) {
-                const { createMessage } = useMessage();
-                const { t } = useI18n();
-                createMessage.error(t('sys.api.errMsg401'));
                 return Promise.reject(error);
             }
         },

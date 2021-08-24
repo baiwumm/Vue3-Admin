@@ -1,14 +1,9 @@
 <template>
-  <PageWrapper dense contentClass="flex">
+  <PageWrapper dense>
     <UserTable ref="userTable" />
   </PageWrapper>
 </template>
-<script>
+<script lang="ts" setup>
 import { PageWrapper } from '/@/components/Page';
 import UserTable from './userTable/index.vue';
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'userManagement',
-  components: { PageWrapper, UserTable },
-});
 </script>

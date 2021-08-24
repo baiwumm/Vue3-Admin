@@ -72,8 +72,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, nextTick } from 'vue';
+<script lang="ts" setup>
+import { ref, nextTick } from 'vue';
 import { columns, searchFormSchema } from './data'; // 列配置和搜索表单
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; // 表格组件
@@ -84,111 +84,89 @@ import { Tag, Badge } from 'ant-design-vue';
 import { formatDictValue } from '/@/utils';
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
-export default defineComponent({
-  name: 'orgTable',
-  components: { BasicTable, TableAction, OrgModal, Tag, Badge },
-  setup() {
-    const { t } = useI18n();
-    const { createMessage } = useMessage();
-    // 注册useModal
-    const [registerModal, { openModal }] = useModal();
-    // 注册useTable
-    const [registerTable, { reload, expandAll, collapseAll }] = useTable({
-      title: t('router.system.organizationManagement.title'),
-      isTreeTable: true,
-      api: getOrganizationTree,
-      rowKey: 'org_id',
-      columns,
-      formConfig: {
-        labelWidth: 160,
-        baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
-        schemas: searchFormSchema,
-        autoSubmitOnEnter: true,
-        resetButtonOptions: {
-          preIcon: 'ant-design:delete-outlined',
-        },
-        submitButtonOptions: {
-          preIcon: 'ant-design:search-outlined',
-        },
-      },
-      showIndexColumn: false,
-      useSearchForm: true,
-      showTableSetting: true,
-      bordered: true,
-      pagination: false,
-      actionColumn: {
-        width: 120,
-        title: t('router.common.action'),
-        dataIndex: 'action',
-        slots: { customRender: 'action' },
-      },
-    });
 
-    //   请求字典数据
-    let statusOptions = ref([]),
-      orgTypeOptions = ref([]),
-      tagOptions = ref({ '1': 'green', '2': 'cyan', '3': 'blue', '4': 'purple' });
-    async function initOptions() {
-      statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
-      orgTypeOptions.value['org_type'] = await dictionaryModel({
-        dict_coding: 'system_organization_type',
-      });
-    }
-    initOptions();
-    // 新增操作
-    function handleCreate() {
-      openModal(true, {
-        isUpdate: false,
-      });
-    }
-    // 编辑操作
-    function handleEdit(record: Recordable) {
-      openModal(true, {
-        record,
-        isUpdate: true,
-      });
-    }
-    //   删除操作
-    async function handleDelete(record: Recordable) {
-      await organizationDel({ ids: record.org_id, org_name: record.org_name });
-      createMessage.success(t('router.common.deleteSuccess'));
-      openModal(false, {
-        isDel: true,
-      });
-      await reload();
-    }
-    // 添加子级
-    function addChildOrg(record: Recordable) {
-      openModal(true, {
-        parent_id: record.org_id,
-        isUpdate: false,
-      });
-    }
-    // 新增编辑成功后的回调
-    async function handleSuccess() {
-      await reload();
-    }
-    // 表格接口请求成功后触发,默认展开所有
-    function onFetchSuccess() {
-      nextTick(expandAll);
-    }
-    return {
-      registerTable,
-      registerModal,
-      handleCreate,
-      handleEdit,
-      handleDelete,
-      handleSuccess,
-      statusOptions,
-      orgTypeOptions,
-      tagOptions,
-      formatDictValue,
-      expandAll,
-      collapseAll,
-      onFetchSuccess,
-      addChildOrg,
-      t,
-    };
+const { t } = useI18n();
+const { createMessage } = useMessage();
+// 注册useModal
+const [registerModal, { openModal }] = useModal();
+// 注册useTable
+const [registerTable, { reload, expandAll, collapseAll }] = useTable({
+  title: t('router.system.organizationManagement.title'),
+  isTreeTable: true,
+  api: getOrganizationTree,
+  rowKey: 'org_id',
+  columns,
+  formConfig: {
+    labelWidth: 160,
+    baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
+    schemas: searchFormSchema,
+    autoSubmitOnEnter: true,
+    resetButtonOptions: {
+      preIcon: 'ant-design:delete-outlined',
+    },
+    submitButtonOptions: {
+      preIcon: 'ant-design:search-outlined',
+    },
+  },
+  showIndexColumn: false,
+  useSearchForm: true,
+  showTableSetting: true,
+  bordered: true,
+  pagination: false,
+  actionColumn: {
+    width: 120,
+    title: t('router.common.action'),
+    dataIndex: 'action',
+    slots: { customRender: 'action' },
   },
 });
+
+//   请求字典数据
+let statusOptions = ref([]),
+  orgTypeOptions = ref([]),
+  tagOptions = ref({ '1': 'green', '2': 'cyan', '3': 'blue', '4': 'purple' });
+async function initOptions() {
+  statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+  orgTypeOptions.value['org_type'] = await dictionaryModel({
+    dict_coding: 'system_organization_type',
+  });
+}
+initOptions();
+// 新增操作
+function handleCreate() {
+  openModal(true, {
+    isUpdate: false,
+  });
+}
+// 编辑操作
+function handleEdit(record: Recordable) {
+  openModal(true, {
+    record,
+    isUpdate: true,
+  });
+}
+//   删除操作
+async function handleDelete(record: Recordable) {
+  await organizationDel({ ids: record.org_id, org_name: record.org_name });
+  createMessage.success(t('router.common.deleteSuccess'));
+  openModal(false, {
+    isDel: true,
+  });
+  await reload();
+}
+// 添加子级
+function addChildOrg(record: Recordable) {
+  openModal(true, {
+    parent_id: record.org_id,
+    isUpdate: false,
+  });
+}
+// 新增编辑成功后的回调
+async function handleSuccess() {
+  await reload();
+}
+// 表格接口请求成功后触发,默认展开所有
+function onFetchSuccess() {
+  nextTick(expandAll);
+}
 </script>

@@ -3,12 +3,7 @@
     <LogTable />
   </PageWrapper>
 </template>
-<script>
+<script lang="ts" setup>
 import { PageWrapper } from '/@/components/Page';
 import LogTable from './logTable/index.vue';
-import { defineComponent } from 'vue';
-export default defineComponent({
-  name: 'operationLogs',
-  components: { PageWrapper, LogTable },
-});
 </script>

@@ -101,11 +101,11 @@
     <MenuDrawer @register="registerDrawer" @success="handleSuccess" />
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { formatDictValue } from '/@/utils';
 import { getMenuTree, menuDel } from '/@/api/system/menuManagement'; // 菜单管理接口
 import { Tag, Badge } from 'ant-design-vue';
-import { defineComponent, ref, nextTick } from 'vue';
+import { ref, nextTick } from 'vue';
 import { BasicTable, useTable, TableAction } from '/@/components/Table'; //表格组件
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useDrawer } from '/@/components/Drawer'; // 抽屉组件
@@ -113,116 +113,96 @@ import MenuDrawer from './menuDrawer.vue'; //表单组件
 import { columns, searchFormSchema } from './data'; // 表格配置项
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 import { useI18n } from '/@/hooks/web/useI18n';
-export default defineComponent({
-  name: 'menuTable',
-  components: { BasicTable, MenuDrawer, TableAction, Tag, Badge },
-  setup() {
-    const { t } = useI18n();
-    const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
-    const [registerTable, { reload, getForm, expandAll, collapseAll }] = useTable({
-      //注册表格
-      title: t('router.system.menuManagement.title'),
-      isTreeTable: true,
-      api: getMenuTree,
-      rowKey: 'menu_id',
-      columns,
-      formConfig: {
-        labelWidth: 80,
-        schemas: searchFormSchema,
-        autoSubmitOnEnter: true,
-        baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
-        resetButtonOptions: {
-          preIcon: 'ant-design:delete-outlined',
-        },
-        submitButtonOptions: {
-          preIcon: 'ant-design:search-outlined',
-        },
-      },
-      showIndexColumn: false,
-      useSearchForm: true,
-      showTableSetting: true,
-      bordered: true,
-      pagination: false,
-      actionColumn: {
-        width: 80,
-        title: t('router.common.action'),
-        dataIndex: 'action',
-        slots: { customRender: 'action' },
-      },
-    });
-    const { createMessage } = useMessage();
-    // 请求字典数据
-    let options = ref({}),
-      tagOptions = ref({ dir: 'green', menu: 'cyan', button: 'blue' });
-    async function initOptions() {
-      options.value['menu_type'] = await dictionaryModel({ dict_coding: 'system_menu_type' });
-      options.value['hide_menu'] = await dictionaryModel({ dict_coding: 'system_isHide' });
-      options.value['ignore_keep_alive'] = await dictionaryModel({
-        dict_coding: 'system_menu_keepAlive',
-      });
-      options.value['affix'] = await dictionaryModel({ dict_coding: 'system_menu_affix' });
-      options.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
-      options.value['hide_childrenIn_menu'] = await dictionaryModel({
-        dict_coding: 'system_menu_hideChild',
-      });
-    }
-    initOptions();
-    //新增操作
-    function handleCreate() {
-      openDrawer(true, {
-        isUpdate: false,
-      });
-    }
-    // 编辑操作
-    function handleEdit(record: Recordable) {
-      openDrawer(true, {
-        record,
-        isUpdate: true,
-      });
-    }
-    //删除操作
-    async function handleDelete(record: Recordable) {
-      await menuDel({ ids: record.menu_id, permission: record.permission });
-      createMessage.success(t('router.common.deleteSuccess'));
-      openDrawer(false, {
-        isDel: true,
-      });
-      await reload();
-    }
-    // 操作成功重新请求列表
-    async function handleSuccess() {
-      await reload();
-    }
 
-    // 表格接口请求成功后触发,默认展开所有
-    async function onFetchSuccess() {
-      //   请求状态
-      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
-      getForm().updateSchema([
-        {
-          field: 'status',
-          componentProps: {
-            options: statusOptions,
-          },
-        },
-      ]);
-      nextTick(expandAll);
-    }
-    return {
-      registerTable,
-      registerDrawer,
-      handleCreate,
-      handleEdit,
-      handleDelete,
-      handleSuccess,
-      expandAll,
-      collapseAll,
-      options,
-      formatDictValue,
-      tagOptions,
-      onFetchSuccess,
-      t,
-    };
+const { t } = useI18n();
+const [registerDrawer, { openDrawer }] = useDrawer(); // 注册抽屉
+const [registerTable, { reload, getForm, expandAll, collapseAll }] = useTable({
+  //注册表格
+  title: t('router.system.menuManagement.title'),
+  isTreeTable: true,
+  api: getMenuTree,
+  rowKey: 'menu_id',
+  columns,
+  formConfig: {
+    labelWidth: 80,
+    schemas: searchFormSchema,
+    autoSubmitOnEnter: true,
+    baseColProps: { xs: 24, sm: 12, md: 12, lg: 12, xl: 8 },
+    resetButtonOptions: {
+      preIcon: 'ant-design:delete-outlined',
+    },
+    submitButtonOptions: {
+      preIcon: 'ant-design:search-outlined',
+    },
+  },
+  showIndexColumn: false,
+  useSearchForm: true,
+  showTableSetting: true,
+  bordered: true,
+  pagination: false,
+  actionColumn: {
+    width: 80,
+    title: t('router.common.action'),
+    dataIndex: 'action',
+    slots: { customRender: 'action' },
   },
 });
+const { createMessage } = useMessage();
+// 请求字典数据
+let options = ref({}),
+  tagOptions = ref({ dir: 'green', menu: 'cyan', button: 'blue' });
+async function initOptions() {
+  options.value['menu_type'] = await dictionaryModel({ dict_coding: 'system_menu_type' });
+  options.value['hide_menu'] = await dictionaryModel({ dict_coding: 'system_isHide' });
+  options.value['ignore_keep_alive'] = await dictionaryModel({
+    dict_coding: 'system_menu_keepAlive',
+  });
+  options.value['affix'] = await dictionaryModel({ dict_coding: 'system_menu_affix' });
+  options.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+  options.value['hide_childrenIn_menu'] = await dictionaryModel({
+    dict_coding: 'system_menu_hideChild',
+  });
+}
+initOptions();
+//新增操作
+function handleCreate() {
+  openDrawer(true, {
+    isUpdate: false,
+  });
+}
+// 编辑操作
+function handleEdit(record: Recordable) {
+  openDrawer(true, {
+    record,
+    isUpdate: true,
+  });
+}
+//删除操作
+async function handleDelete(record: Recordable) {
+  await menuDel({ ids: record.menu_id, permission: record.permission });
+  createMessage.success(t('router.common.deleteSuccess'));
+  openDrawer(false, {
+    isDel: true,
+  });
+  await reload();
+}
+// 操作成功重新请求列表
+async function handleSuccess() {
+  await reload();
+}
+
+// 表格接口请求成功后触发,默认展开所有
+async function onFetchSuccess() {
+  //   请求状态
+  const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+  getForm().updateSchema([
+    {
+      field: 'status',
+      componentProps: {
+        options: statusOptions,
+      },
+    },
+  ]);
+  nextTick(expandAll);
+}
 </script>

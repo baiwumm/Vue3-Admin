@@ -34,7 +34,7 @@
     <Divider />
     <!-- 添加标签 -->
     <div class="mb-2">{{ t('router.common.tag') }}</div>
-    <template v-for="(tag, index) in tags" :key="index">
+    <template v-for="(tag, index) in state.tags" :key="index">
       <Tooltip v-if="tag.length > 8" :title="tag">
         <Tag
           :key="tag"
@@ -59,12 +59,12 @@
     </template>
     <!-- 添加标签 -->
     <Input
-      v-if="inputVisible"
+      v-if="state.inputVisible"
       ref="inputRef"
       type="text"
       size="small"
       :style="{ width: '78px' }"
-      v-model:value="inputValue"
+      v-model:value="state.inputValue"
       @blur="handleInputConfirm"
       @keyup.enter="handleInputConfirm"
     />
@@ -75,7 +75,7 @@
   </Card>
 </template>
 
-<script lang="ts">
+<script lang="ts" setup>
 import { defineComponent, computed, ref, reactive, nextTick, toRefs, unref } from 'vue';
 import { Card, Avatar, Divider, Tag, Tooltip, Input } from 'ant-design-vue';
 import { useUserStore } from '/@/store/modules/user'; // 用户信息
@@ -89,89 +89,63 @@ import {
   EnvironmentOutlined,
   PlusOutlined,
 } from '@ant-design/icons-vue'; // antd图标
-export default defineComponent({
-  name: 'baseInfo',
-  components: {
-    Card,
-    Avatar,
-    Divider,
-    Tag,
-    Tooltip,
-    Input,
-    ClusterOutlined,
-    SolutionOutlined,
-    EnvironmentOutlined,
-    PlusOutlined,
-  },
-  setup() {
-    const { createMessage } = useMessage();
-    const { t } = useI18n();
-    const userStore = useUserStore();
-    const inputRef = ref();
-    const state = reactive({
-      tags: [],
+
+const { createMessage } = useMessage();
+const { t } = useI18n();
+const userStore = useUserStore();
+const inputRef = ref();
+const state = reactive({
+  tags: [],
+  inputVisible: false,
+  inputValue: '',
+});
+// 获取store用户信息
+const getUserInfo = computed(() => {
+  // 获取用户信息
+  const { tag } = userStore.getUserInfo;
+  state.tags = tag ? tag.split(',') : [];
+  return userStore.getUserInfo || {};
+});
+// 关闭输入框
+const handleClose = async (removedTag: string) => {
+  const tags = state.tags.filter((tag) => tag !== removedTag);
+  await changeUserTag({ tags: tags.join(',') });
+  createMessage.success(t('router.common.deleteSuccess'));
+  state.tags = tags;
+  //   更新store信息
+  userStore.setUserInfo(Object.assign(unref(getUserInfo), { tag: tags.join(',') }));
+};
+// 显示输入框
+const showInput = () => {
+  state.inputVisible = true;
+  nextTick(() => {
+    inputRef.value.focus();
+  });
+};
+const handleInputConfirm = async () => {
+  const inputValue = state.inputValue;
+  let tags = state.tags;
+  //   判断是否有值
+  if (!inputValue) {
+    Object.assign(state, {
+      tags,
       inputVisible: false,
       inputValue: '',
     });
-    // 获取store用户信息
-    const getUserInfo = computed(() => {
-      // 获取用户信息
-      const { tag } = userStore.getUserInfo;
-      state.tags = tag ? tag.split(',') : [];
-      return userStore.getUserInfo || {};
-    });
-    // 关闭输入框
-    const handleClose = async (removedTag: string) => {
-      const tags = state.tags.filter((tag) => tag !== removedTag);
-      await changeUserTag({ tags: tags.join(',') });
-      createMessage.success(t('router.common.deleteSuccess'));
-      state.tags = tags;
-      //   更新store信息
-      userStore.setUserInfo(Object.assign(unref(getUserInfo), { tag: tags.join(',') }));
-    };
-    // 显示输入框
-    const showInput = () => {
-      state.inputVisible = true;
-      nextTick(() => {
-        inputRef.value.focus();
-      });
-    };
-    const handleInputConfirm = async () => {
-      const inputValue = state.inputValue;
-      let tags = state.tags;
-      //   判断是否有值
-      if (!inputValue) {
-        Object.assign(state, {
-          tags,
-          inputVisible: false,
-          inputValue: '',
-        });
-        return;
-      }
-      //   不重复的值才插入
-      if (inputValue && tags.indexOf(inputValue) === -1) {
-        tags = [...tags, inputValue];
-      }
-      await changeUserTag({ tags: tags.join(',') });
-      createMessage.success(t('router.common.addSuccess'));
-      //   更新store信息
-      userStore.setUserInfo(Object.assign(unref(getUserInfo), { tag: tags.join(',') }));
-      Object.assign(state, {
-        tags,
-        inputVisible: false,
-        inputValue: '',
-      });
-    };
-    return {
-      getUserInfo,
-      ...toRefs(state),
-      showInput,
-      handleInputConfirm,
-      handleClose,
-      inputRef,
-      t,
-      useAppStore,
-    };
-  },
-});
+    return;
+  }
+  //   不重复的值才插入
+  if (inputValue && tags.indexOf(inputValue) === -1) {
+    tags = [...tags, inputValue];
+  }
+  await changeUserTag({ tags: tags.join(',') });
+  createMessage.success(t('router.common.addSuccess'));
+  //   更新store信息
+  userStore.setUserInfo(Object.assign(unref(getUserInfo), { tag: tags.join(',') }));
+  Object.assign(state, {
+    tags,
+    inputVisible: false,
+    inputValue: '',
+  });
+};
 </script>

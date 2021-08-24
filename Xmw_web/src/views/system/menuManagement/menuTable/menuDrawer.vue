@@ -10,154 +10,145 @@
     <BasicForm @register="registerForm" />
   </BasicDrawer>
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 import { menuSave } from '/@/api/system/menuManagement'; // 菜单保存接口
-import { defineComponent, ref, computed, unref } from 'vue';
+import { ref, computed, unref, defineEmits } from 'vue';
 import { BasicDrawer, useDrawerInner } from '/@/components/Drawer'; // 抽屉组件
 import { BasicForm, useForm } from '/@/components/Form/index'; // 表单组件
 import { dataFormSchema } from './data'; //表单配置项
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
-export default defineComponent({
-  name: 'MenuDrawer',
-  components: { BasicDrawer, BasicForm },
-  emits: ['success', 'register'],
-  setup(_, { emit }) {
-    const { t } = useI18n();
-    const { createMessage } = useMessage();
 
-    const isUpdate = ref(true);
-    const rowId = ref('');
+const emit = defineEmits(['success', 'register']);
+const { t } = useI18n();
+const { createMessage } = useMessage();
 
-    const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
-      //注册表单
-      labelWidth: 120,
-      schemas: dataFormSchema,
-      showActionButtonGroup: false,
-      actionColOptions: {
-        span: 23,
-      },
-      baseColProps: { lg: 12, md: 24 },
-    });
+const isUpdate = ref(true);
+const rowId = ref('');
 
-    const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
-      // 注册抽屉
-      resetFields();
-      setDrawerProps({ confirmLoading: false });
-      isUpdate.value = !!data?.isUpdate;
-
-      if (unref(isUpdate)) {
-        rowId.value = data.record.menu_id;
-        setFieldsValue({
-          ...data.record,
-        });
-      }
-      // 判断父级是否删除操作
-      if (data.isDel) {
-        // 操作成功后重新请求下拉树列表
-        updateSchema({
-          field: 'parent_id',
-          componentProps: {
-            params: { key: Math.random() },
-          },
-        });
-      }
-      //   请求字典数据
-      const menuTypeOptions = await dictionaryModel({ dict_coding: 'system_menu_type' });
-      const transitionNameOptions = await dictionaryModel({
-        dict_coding: 'system_menu_transitionName',
-      });
-      const hideChildOptions = await dictionaryModel({ dict_coding: 'system_menu_hideChild' });
-      const keepaliveOptions = await dictionaryModel({ dict_coding: 'system_menu_keepAlive' });
-      const affixOptions = await dictionaryModel({ dict_coding: 'system_menu_affix' });
-      const hideTabOptions = await dictionaryModel({ dict_coding: 'system_menu_hideTab' });
-      const visibleOptions = await dictionaryModel({ dict_coding: 'system_isHide' });
-      const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
-      updateSchema([
-        {
-          field: 'menu_type',
-          componentProps: {
-            options: menuTypeOptions,
-          },
-        },
-        {
-          field: 'transition_name',
-          componentProps: {
-            options: transitionNameOptions,
-          },
-        },
-        {
-          field: 'hide_childrenIn_menu',
-          componentProps: {
-            options: hideChildOptions,
-          },
-        },
-        {
-          field: 'ignore_keep_alive',
-          componentProps: {
-            options: keepaliveOptions,
-          },
-        },
-        {
-          field: 'affix',
-          componentProps: {
-            options: affixOptions,
-          },
-        },
-        {
-          field: 'hide_tab',
-          componentProps: {
-            options: hideTabOptions,
-          },
-        },
-        {
-          field: 'hide_menu',
-          componentProps: {
-            options: visibleOptions,
-          },
-        },
-        {
-          field: 'status',
-          componentProps: {
-            options: statusOptions,
-          },
-        },
-      ]);
-    });
-
-    const getTitle = computed(() =>
-      !unref(isUpdate)
-        ? t('router.system.menuManagement.add')
-        : t('router.system.menuManagement.edit')
-    );
-
-    async function handleSubmit() {
-      try {
-        const values = await validate();
-        setDrawerProps({ confirmLoading: true });
-        // 根据操作拼接表单参数
-        let params = { ...values };
-        if (unref(isUpdate)) Object.assign(params, { menu_id: rowId.value });
-        await menuSave(params);
-        createMessage.success(
-          !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
-        );
-        closeDrawer();
-        emit('success');
-        // 操作成功后重新请求下拉树列表
-        updateSchema({
-          field: 'parent_id',
-          componentProps: {
-            params: { key: Math.random() },
-          },
-        });
-      } finally {
-        setDrawerProps({ confirmLoading: false });
-      }
-    }
-
-    return { registerDrawer, registerForm, getTitle, handleSubmit };
+const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
+  //注册表单
+  labelWidth: 120,
+  schemas: dataFormSchema,
+  showActionButtonGroup: false,
+  actionColOptions: {
+    span: 23,
   },
+  baseColProps: { lg: 12, md: 24 },
 });
+
+const [registerDrawer, { setDrawerProps, closeDrawer }] = useDrawerInner(async (data) => {
+  // 注册抽屉
+  resetFields();
+  setDrawerProps({ confirmLoading: false });
+  isUpdate.value = !!data?.isUpdate;
+
+  if (unref(isUpdate)) {
+    rowId.value = data.record.menu_id;
+    setFieldsValue({
+      ...data.record,
+    });
+  }
+  // 判断父级是否删除操作
+  if (data.isDel) {
+    // 操作成功后重新请求下拉树列表
+    updateSchema({
+      field: 'parent_id',
+      componentProps: {
+        params: { key: Math.random() },
+      },
+    });
+  }
+  //   请求字典数据
+  const menuTypeOptions = await dictionaryModel({ dict_coding: 'system_menu_type' });
+  const transitionNameOptions = await dictionaryModel({
+    dict_coding: 'system_menu_transitionName',
+  });
+  const hideChildOptions = await dictionaryModel({ dict_coding: 'system_menu_hideChild' });
+  const keepaliveOptions = await dictionaryModel({ dict_coding: 'system_menu_keepAlive' });
+  const affixOptions = await dictionaryModel({ dict_coding: 'system_menu_affix' });
+  const hideTabOptions = await dictionaryModel({ dict_coding: 'system_menu_hideTab' });
+  const visibleOptions = await dictionaryModel({ dict_coding: 'system_isHide' });
+  const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+  updateSchema([
+    {
+      field: 'menu_type',
+      componentProps: {
+        options: menuTypeOptions,
+      },
+    },
+    {
+      field: 'transition_name',
+      componentProps: {
+        options: transitionNameOptions,
+      },
+    },
+    {
+      field: 'hide_childrenIn_menu',
+      componentProps: {
+        options: hideChildOptions,
+      },
+    },
+    {
+      field: 'ignore_keep_alive',
+      componentProps: {
+        options: keepaliveOptions,
+      },
+    },
+    {
+      field: 'affix',
+      componentProps: {
+        options: affixOptions,
+      },
+    },
+    {
+      field: 'hide_tab',
+      componentProps: {
+        options: hideTabOptions,
+      },
+    },
+    {
+      field: 'hide_menu',
+      componentProps: {
+        options: visibleOptions,
+      },
+    },
+    {
+      field: 'status',
+      componentProps: {
+        options: statusOptions,
+      },
+    },
+  ]);
+});
+
+const getTitle = computed(() =>
+  !unref(isUpdate) ? t('router.system.menuManagement.add') : t('router.system.menuManagement.edit')
+);
+
+async function handleSubmit() {
+  try {
+    const values = await validate();
+    setDrawerProps({ confirmLoading: true });
+    // 根据操作拼接表单参数
+    let params = { ...values };
+    if (unref(isUpdate)) Object.assign(params, { menu_id: rowId.value });
+    await menuSave(params);
+    createMessage.success(
+      !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+    );
+    closeDrawer();
+    emit('success');
+    // 操作成功后重新请求下拉树列表
+    updateSchema({
+      field: 'parent_id',
+      componentProps: {
+        params: { key: Math.random() },
+      },
+    });
+  } finally {
+    setDrawerProps({ confirmLoading: false });
+  }
+}
 </script>
