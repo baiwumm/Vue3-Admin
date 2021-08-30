@@ -7,6 +7,7 @@ export default (app: Application) => {
     router.get('/logout', controller.system.userManagement.logout); // 用户注销
     router.get('/getPermCode', controller.system.userManagement.getPermCode); // 获取按钮权限key
     router.get('/getUserInfo', controller.system.userManagement.getUserInfo); // 获取用户信息
+    router.get('/generateVerifCode', controller.system.userManagement.generateVerifCode); // 生成验证码
     // 系统设置-用户管理
     router.get('/system/getUserList', controller.system.userManagement.getUserList); // 获取用户列表
     router.post('/system/userSave', controller.system.userManagement.userSave); // 新增和更新用户

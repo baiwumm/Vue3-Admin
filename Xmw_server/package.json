@@ -22,10 +22,6 @@
     "clean": "ets clean"
   },
   "dependencies": {
-    "@alicloud/endpoint-util": "^0.0.1",
-    "@alicloud/openapi-client": "^0.3.3",
-    "@alicloud/tea-typescript": "^1.7.1",
-    "@alicloud/tea-util": "^1.4.2",
     "ali-oss": "^6.16.0",
     "egg": "^2.6.1",
     "egg-cors": "^2.2.3",
@@ -34,7 +30,8 @@
     "egg-sequelize": "^6.0.0",
     "egg-socket.io": "^4.1.6",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.3.0"
+    "mysql2": "^2.3.0",
+    "svg-captcha": "^1.4.0"
   },
   "devDependencies": {
     "@types/mocha": "^2.2.40",

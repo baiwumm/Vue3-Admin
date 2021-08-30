@@ -76,7 +76,7 @@
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, computed, ref, reactive, nextTick, toRefs, unref } from 'vue';
+import { computed, ref, reactive, nextTick, unref } from 'vue';
 import { Card, Avatar, Divider, Tag, Tooltip, Input } from 'ant-design-vue';
 import { useUserStore } from '/@/store/modules/user'; // 用户信息
 import { changeUserTag } from '/@/api/personal/personal'; // 个人中心接口
@@ -123,8 +123,8 @@ const showInput = () => {
   });
 };
 const handleInputConfirm = async () => {
-  const inputValue = state.inputValue;
-  let tags = state.tags;
+  const inputValue:string = state.inputValue;
+  let tags:string[] = state.tags;
   //   判断是否有值
   if (!inputValue) {
     Object.assign(state, {

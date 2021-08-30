@@ -78,7 +78,7 @@ onMounted(async () => {
       },
     },
   ]);
-  let userInfo = cloneDeep(unref(getUserInfo));
+  let userInfo:any = cloneDeep(unref(getUserInfo));
   userInfo.address = userInfo.address.split(',');
   //   生成key-label形式，为了拿到label
   userInfo.org_id = { key: userInfo.org_id, label: userInfo.org_name };

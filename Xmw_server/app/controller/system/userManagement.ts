@@ -4,19 +4,12 @@
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-20 16:51:20
+ * @LastEditTime: 2021-08-26 14:49:46
  */
 import { Controller } from 'egg';
 import { resResultModel } from '../../public/resModel'
-import Client, { AuthenticateSigRequest } from '../../public/client'
-const client = new Client({
-    accessKeyId: "LTAI4G5oHtJSRFXjq7ie45xh",
-    accessKeySecret: "bAqE12OuQ9uHwxkdTltOWRogJUXfmG",
-    endpoint: "afs.aliyuncs.com",
-    regionId: "cn-hangzhou",
-    toMap: Function
-})
 const jwt = require('jsonwebtoken');
+const svgCaptcha = require('svg-captcha');
 
 export default class UserManagementController extends Controller {
 
@@ -120,23 +113,13 @@ export default class UserManagementController extends Controller {
         const { ctx, service } = this;
         const { Raw } = ctx.app['Db'].xmw;
         try {
-            let { user_name, password, sessionId, sig, token } = ctx.params
+            let { user_name, password, verifyCode } = ctx.params
             let payload = { user_name, password }
-            // 验证智能验证
-            let aliyunValidated = new AuthenticateSigRequest({
-                scene: 'ic_login',
-                sessionId: sessionId,
-                sig: sig,
-                appKey: "FFFF0N000000000098FA",
-                token: token,
-                remoteIp: ctx.request.ip
-            })
-            let aliyunValidatedResult: any = await client.authenticateSig(aliyunValidated)
-            // 状态码返回100则代表验证成功,否则失败
-            if (aliyunValidatedResult.body.code !== 100) {
-                return ctx.body = { resCode: -1, resMsg: '智能验证失败!', response: aliyunValidatedResult.body.msg }
-            }
             let jwtToken = jwt.sign(payload, this.config.privateKey, { expiresIn: this.config.expiresIn });  //生成token
+            // 判断验证码是否正确
+            if (ctx.session.verifCode != verifyCode) {
+                return ctx.body = { resCode: -1, resMsg: '验证码错误!', response: {} }
+            }
             // 判断用户名密码是否正确
             const userInfo = await Raw.Query(`select t.*,a.org_name,b.post_name from xmw_user t 
             left join xmw_organization a on t.org_id = a.org_id
@@ -251,6 +234,34 @@ export default class UserManagementController extends Controller {
             return ctx.body = { resCode: 200, resMsg: '请求成功!', response: userInfo }
         } catch (error) {
             ctx.logger.info('getUserInfo方法报错：' + error)
+            return ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
+        }
+    }
+
+    /**
+     * @description: 生成验证码
+     * @param {*}
+     * @return {*}
+     */
+    public async generateVerifCode(): Promise<resResultModel> {
+        const { ctx } = this;
+        try {
+            const codeConfig = {
+                size: 4, // 验证码长度
+                ignoreChars: '0oO1ilI', // 验证码字符中排除 0oO1ilI
+                noise: 2, // 干扰线条的数量
+                width: 160,
+                height: 40,
+                fontSize: 50,
+                color: true, // 验证码的字符是否有颜色，默认没有，如果设定了背景，则默认有
+                background: '#fff',
+            };
+            const captcha = svgCaptcha.create(codeConfig);
+            ctx.response.type = 'image/svg+xml';
+            ctx.session.verifCode = captcha.text.toLowerCase(); // 存session用于验证接口获取文字码
+            return ctx.body = { resCode: 200, resMsg: '请求成功!', response: captcha.data }
+        } catch (error) {
+            ctx.logger.info('generateVerifCode方法报错：' + error)
             return ctx.body = { resCode: 400, resMsg: '请求失败!', response: error }
         }
     }

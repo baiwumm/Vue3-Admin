@@ -4,7 +4,7 @@
  * @Autor: Xie Mingwei
  * @Date: 2020-10-28 09:42:50
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-20 10:37:36
+ * @LastEditTime: 2021-08-26 14:20:55
  */
 'use strict';
 import { Context } from 'egg';
@@ -16,7 +16,7 @@ export default function tokenAuthentication(): any {
             const config = ctx.app.config;
             const requestUrl = ctx.request.url;
             // 白名单:登录、国际化语言接口不用携带token
-            const whiteUrl = ['/login', '/system/getInternationalLang']
+            const whiteUrl = ['/login', '/generateVerifCode', '/system/getInternationalLang']
             // 判断请求url是否在白名单,会有t参数,确保数据不会被浏览器长时间缓存
             for (let i = 0; i < whiteUrl.length; i++) {
                 if (requestUrl.includes(whiteUrl[i])) {

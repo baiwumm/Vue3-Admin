@@ -123,7 +123,7 @@ export const usePermissionStore = defineStore({
              * */
             const patchHomeAffix = (routes: AppRouteRecordRaw[]) => {
                 if (!routes || routes.length === 0) return;
-                let homePath: string = userStore.getUserInfo.homePath || PageEnum.BASE_HOME;
+                let homePath: string = PageEnum.BASE_HOME;
                 function patcher(routes: AppRouteRecordRaw[], parentPath = '') {
                     if (parentPath) parentPath = parentPath + '/';
                     routes.forEach((route: AppRouteRecordRaw) => {
