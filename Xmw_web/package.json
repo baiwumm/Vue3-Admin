@@ -34,7 +34,6 @@
         "gen:icon": "esno ./build/generate/icon/index.ts"
     },
     "dependencies": {
-        "@iconify/iconify": "^2.0.3",
         "@logicflow/core": "^0.6.1",
         "@logicflow/extension": "^0.6.1",
         "@vueuse/core": "^5.1.4",
@@ -48,7 +47,6 @@
         "lodash-es": "^4.17.21",
         "mockjs": "^1.1.0",
         "nprogress": "^0.2.0",
-        "particles-bg-vue": "^1.3.5",
         "particles.vue3": "^1.16.2",
         "path-to-regexp": "^6.2.0",
         "pinia": "^2.0.0-beta.5",
@@ -58,8 +56,10 @@
         "sortablejs": "^1.14.0",
         "vue": "3.2.2",
         "vue-i18n": "9.1.6",
+        "vue-okr-tree": "^1.0.9",
         "vue-router": "^4.0.10",
-        "vue-types": "^4.0.0"
+        "vue-types": "^4.0.0",
+        "vue3-blocks-tree": "^0.5.2"
     },
     "devDependencies": {
         "@commitlint/cli": "^12.1.4",

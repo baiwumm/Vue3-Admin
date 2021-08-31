@@ -53,7 +53,7 @@ export const columns: BasicColumn[] = [
     {
         title: t('router.system.menuManagement.permission'),
         dataIndex: 'permission',
-        width: 200,
+        width: 320,
         slots: { customRender: 'permission' }
     },
     {
@@ -163,7 +163,6 @@ export const dataFormSchema: FormSchema[] = [
         field: 'component',
         label: t('router.system.menuManagement.component'),
         component: 'Input',
-        required: true,
         colProps: { lg: 24, md: 24 },
         componentProps: {
             maxLength: 200

@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-30 11:08:06
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-04 09:31:22
+ * @LastEditTime: 2021-08-31 17:30:25
  * @Description:字典管理模块参数类型注解
  */
 
@@ -63,6 +63,8 @@ export interface dictSaveParams {
  */
 export interface dictDelParams {
     ids: string; // id集合,用,分割
+    dict_name?: string; //字典名称
+    dictionary_label?: string; //标签名称
 }
 
 /**

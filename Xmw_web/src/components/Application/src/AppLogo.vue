@@ -3,23 +3,25 @@
  * @Description: logo component
 -->
 <template>
-  <div class="anticon" :class="getAppLogoClass" @click="goHome">
-    <img src="../../../assets/images/logo.png" />
-    <div class="ml-2 truncate md:opacity-100" :class="getTitleClass" v-show="showTitle">
-      {{ title }}
+    <div class="anticon" :class="getAppLogoClass" @click="goHome">
+        <img src="../../../assets/images/logo.svg" />
+        <div
+            class="ml-2 truncate md:opacity-100"
+            :class="getTitleClass"
+            v-show="showTitle"
+        >{{ title }}</div>
     </div>
-  </div>
 </template>
 <script lang="ts">
-  import { defineComponent, computed, unref } from 'vue';
-  import { useGlobSetting } from '/@/hooks/setting';
-  import { useGo } from '/@/hooks/web/usePage';
-  import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { PageEnum } from '/@/enums/pageEnum';
-  import { useUserStore } from '/@/store/modules/user';
+import { defineComponent, computed, unref } from 'vue';
+import { useGlobSetting } from '/@/hooks/setting';
+import { useGo } from '/@/hooks/web/usePage';
+import { useMenuSetting } from '/@/hooks/setting/useMenuSetting';
+import { useDesign } from '/@/hooks/web/useDesign';
+import { PageEnum } from '/@/enums/pageEnum';
+import { useUserStore } from '/@/store/modules/user';
 
-  const props = {
+const props = {
     /**
      * The theme of the current parent component
      */
@@ -32,50 +34,50 @@
      * The title is also displayed when the menu is collapsed
      */
     alwaysShowTitle: { type: Boolean },
-  };
+};
 
-  export default defineComponent({
+export default defineComponent({
     name: 'AppLogo',
     props: props,
     setup(props) {
-      const { prefixCls } = useDesign('app-logo');
-      const { getCollapsedShowTitle } = useMenuSetting();
-      const userStore = useUserStore();
-      const { title } = useGlobSetting();
-      const go = useGo();
+        const { prefixCls } = useDesign('app-logo');
+        const { getCollapsedShowTitle } = useMenuSetting();
+        const userStore = useUserStore();
+        const { title } = useGlobSetting();
+        const go = useGo();
 
-      const getAppLogoClass = computed(() => [
-        prefixCls,
-        props.theme,
-        { 'collapsed-show-title': unref(getCollapsedShowTitle) },
-      ]);
+        const getAppLogoClass = computed(() => [
+            prefixCls,
+            props.theme,
+            { 'collapsed-show-title': unref(getCollapsedShowTitle) },
+        ]);
 
-      const getTitleClass = computed(() => [
-        `${prefixCls}__title`,
-        {
-          'xs:opacity-0': !props.alwaysShowTitle,
-        },
-      ]);
+        const getTitleClass = computed(() => [
+            `${prefixCls}__title`,
+            {
+                'xs:opacity-0': !props.alwaysShowTitle,
+            },
+        ]);
 
-      function goHome() {
-        go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
-      }
+        function goHome() {
+            go(userStore.getUserInfo.homePath || PageEnum.BASE_HOME);
+        }
 
-      return {
-        getAppLogoClass,
-        getTitleClass,
-        getCollapsedShowTitle,
-        goHome,
-        title,
-        prefixCls,
-      };
+        return {
+            getAppLogoClass,
+            getTitleClass,
+            getCollapsedShowTitle,
+            goHome,
+            title,
+            prefixCls,
+        };
     },
-  });
+});
 </script>
 <style lang="less" scoped>
-  @prefix-cls: ~'@{namespace}-app-logo';
+@prefix-cls: ~"@{namespace}-app-logo";
 
-  .@{prefix-cls} {
+.@{prefix-cls} {
     display: flex;
     align-items: center;
     padding-left: 7px;
@@ -83,25 +85,25 @@
     transition: all 0.2s ease;
 
     &.light {
-      border-bottom: 1px solid @border-color-base;
+        border-bottom: 1px solid @border-color-base;
     }
 
     &.collapsed-show-title {
-      padding-left: 20px;
+        padding-left: 20px;
     }
 
     &.light &__title {
-      color: @primary-color;
+        color: @primary-color;
     }
 
     &.dark &__title {
-      color: @white;
+        color: @white;
     }
 
     &__title {
-      font-size: 16px;
-      font-weight: 700;
-      transition: all 0.5s;
+        font-size: 16px;
+        font-weight: 700;
+        transition: all 0.5s;
     }
-  }
+}
 </style>

@@ -1,13 +1,13 @@
 <template>
-  <BasicModal
-    v-bind="$attrs"
-    @register="registerModal"
-    :title="getTitle"
-    @ok="handleSubmit"
-    width="720px"
-  >
-    <BasicForm @register="registerForm" />
-  </BasicModal>
+    <BasicModal
+        v-bind="$attrs"
+        @register="registerModal"
+        :title="getTitle"
+        @ok="handleSubmit"
+        width="720px"
+    >
+        <BasicForm @register="registerForm" />
+    </BasicModal>
 </template>
 <script lang="ts" setup>
 import { ref, computed, unref, defineEmits } from 'vue';
@@ -23,90 +23,90 @@ const emit = defineEmits(['success', 'register']);
 const { t } = useI18n();
 const { createMessage } = useMessage();
 
-const isUpdate = ref(true);
-const rowId = ref('');
+const isUpdate = ref<boolean>(true);
+const rowId = ref<string>('');
 // 注册表单
 const [registerForm, { setFieldsValue, updateSchema, resetFields, validate }] = useForm({
-  labelWidth: 100,
-  schemas: dataFormSchema,
-  showActionButtonGroup: false,
-  actionColOptions: {
-    span: 23,
-  },
-  baseColProps: { lg: 12, md: 24 },
+    labelWidth: 100,
+    schemas: dataFormSchema,
+    showActionButtonGroup: false,
+    actionColOptions: {
+        span: 23,
+    },
+    baseColProps: { lg: 12, md: 24 },
 });
 // useModalInner用于独立的 Modal 内部调用
 const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data) => {
-  resetFields();
-  setModalProps({ confirmLoading: false });
-  isUpdate.value = !!data?.isUpdate;
+    resetFields();
+    setModalProps({ confirmLoading: false });
+    isUpdate.value = !!data?.isUpdate;
 
-  if (unref(isUpdate)) {
-    rowId.value = data.record.post_id;
-    setFieldsValue({
-      ...data.record,
-    });
-  }
-  //  添加子级
-  if (data.parent_id) {
-    setFieldsValue({
-      parent_id: data.parent_id,
-    });
-  }
-  //   判断父级是否删除操作
-  if (data.isDel) {
-    // 操作成功后重新请求下拉树列表
-    updateSchema({
-      field: 'parent_id',
-      componentProps: {
-        params: { key: Math.random() },
-      },
-    });
-  }
-  updateSchema([
-    {
-      field: 'parent_id',
-      componentProps: { disabled: !!data?.parent_id },
-    },
-  ]);
-  //   请求状态和组织类型
-  const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
-  updateSchema([
-    {
-      field: 'status',
-      componentProps: {
-        options: statusOptions,
-      },
-    },
-  ]);
+    if (unref(isUpdate)) {
+        rowId.value = data.record.post_id;
+        setFieldsValue({
+            ...data.record,
+        });
+    }
+    //  添加子级
+    if (data.parent_id) {
+        setFieldsValue({
+            parent_id: data.parent_id,
+        });
+    }
+    //   判断父级是否删除操作
+    if (data.isDel) {
+        // 操作成功后重新请求下拉树列表
+        updateSchema({
+            field: 'parent_id',
+            componentProps: {
+                params: { key: Math.random() },
+            },
+        });
+    }
+    updateSchema([
+        {
+            field: 'parent_id',
+            componentProps: { disabled: !!data?.parent_id },
+        },
+    ]);
+    //   请求状态和组织类型
+    const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
+    updateSchema([
+        {
+            field: 'status',
+            componentProps: {
+                options: statusOptions,
+            },
+        },
+    ]);
 });
 
 const getTitle = computed(() =>
-  !unref(isUpdate) ? t('router.system.postManagement.add') : t('router.system.postManagement.edit')
+    !unref(isUpdate) ? t('router.system.postManagement.add') : t('router.system.postManagement.edit')
 );
 // 新增编辑操作
 async function handleSubmit() {
-  try {
-    const values = await validate();
-    setModalProps({ confirmLoading: true });
-    // 根据操作拼接表单参数
-    let params = { ...values };
-    if (unref(isUpdate)) Object.assign(params, { post_id: rowId.value });
-    await postSave(params);
-    createMessage.success(
-      !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
-    );
-    closeModal();
-    emit('success');
-    // 操作成功后重新请求下拉树列表
-    updateSchema({
-      field: 'parent_id',
-      componentProps: {
-        params: { key: Math.random() },
-      },
-    });
-  } finally {
-    setModalProps({ confirmLoading: false });
-  }
+    try {
+        const values = await validate();
+        setModalProps({ confirmLoading: true });
+        // 根据操作拼接表单参数
+        let params = { ...values };
+        if (unref(isUpdate)) Object.assign(params, { post_id: rowId.value });
+        await postSave(params);
+        createMessage.success(
+            !unref(isUpdate) ? t('router.common.addSuccess') : t('router.common.editSuccess')
+        );
+        closeModal();
+        emit('success');
+        // 操作成功后重新请求下拉树列表
+        updateSchema({
+            field: 'parent_id',
+            componentProps: {
+                params: { key: Math.random() },
+            },
+        });
+    } finally {
+        setModalProps({ confirmLoading: false });
+    }
 }
 </script>

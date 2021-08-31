@@ -61,7 +61,6 @@ const draggableDirective: Directive = {
                 // 鼠标移动的距离
                 let disX = e.clientX - mouseX;
                 let disY = e.clientY - mouseY;
-                console.log(rightLimit, disX)
                 // 左右边界
                 if (disX < 0 && disX <= -leftLimit) {
                     el.style.left = (left - leftLimit) + 'px';

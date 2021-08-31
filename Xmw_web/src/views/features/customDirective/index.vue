@@ -110,12 +110,12 @@
                 >
                     <div
                         id="draggableBox"
-                        style="width: 100%;height:200px;border:1px solid red"
+                        style="width: 100%;height: 200px;border: 1px solid red"
                         :style="{ borderColor: useAppStore().getProjectConfig.themeColor }"
                     >
                         <div
                             v-draggable:draggableBox
-                            style="width:50px;height:50px;"
+                            style="width: 50px;height: 50px;"
                             :style="{ background: useAppStore().getProjectConfig.themeColor }"
                         ></div>
                     </div>
