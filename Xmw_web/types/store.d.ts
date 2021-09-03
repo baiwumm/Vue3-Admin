@@ -57,6 +57,7 @@ export interface UserInfo {
     user_id?: string; // 用户id
     user_name: string; // 用户名
     work_no?: string | null; // 工号
+    tag?: string; // 标签
     roles?: RoleInfo[];
 }
 

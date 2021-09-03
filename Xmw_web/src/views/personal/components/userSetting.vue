@@ -2,6 +2,7 @@
     <CollapseContainer :title="t('router.common.baseSetting')" :canExpan="false">
         <Row :gutter="24">
             <Col :span="14">
+                <!-- 用户设置表单 -->
                 <BasicForm @register="register" />
                 <Button
                     type="primary"
@@ -28,11 +29,11 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, unref, computed } from 'vue';
-import { CollapseContainer } from '/@/components/Container';
+import { onMounted, ref, unref, computed } from 'vue'; // 引入 Composition-API
+import { CollapseContainer } from '/@/components/Container'; // 引入Container组件
 import { BasicForm, useForm } from '/@/components/Form/index'; // 表单组件
 import { baseSetschemas } from './data'; //基本设置表单
-import { Button, Row, Col } from 'ant-design-vue';
+import { Button, Row, Col } from 'ant-design-vue'; // 引入antd组件
 import { CropperAvatar } from '/@/components/Cropper'; // 图片裁剪组件
 import { useMessage } from '/@/hooks/web/useMessage'; // 模态框组件
 import { useUserStore } from '/@/store/modules/user'; // 用户vuex
@@ -43,10 +44,11 @@ import { userSave } from '/@/api/system/userManagement'; // 用户保存接口
 import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树接口
 import { changeUserAvatar } from '/@/api/personal/personal'; // 个人中心接口
 
-const { createMessage } = useMessage();
-const { t } = useI18n();
-const userStore = useUserStore();
-const loading = ref(false);
+const { createMessage } = useMessage();  //消息函数
+const { t } = useI18n(); // 国际化函数
+const userStore = useUserStore(); // Vuex用户信息
+const loading = ref<boolean>(false); // 加载Loading...
+// 注册表单
 const [register, { updateSchema, setFieldsValue, validate }] = useForm({
     labelWidth: 100,
     schemas: baseSetschemas,
@@ -63,18 +65,8 @@ onMounted(async () => {
     const sexOptions = await dictionaryModel({ dict_coding: 'system_sex' });
     const postOptions = await getPostTree({ org_id: org_id });
     updateSchema([
-        {
-            field: 'sex',
-            componentProps: {
-                options: sexOptions,
-            },
-        },
-        {
-            field: 'post_id',
-            componentProps: {
-                treeData: postOptions,
-            },
-        },
+        { field: 'sex', componentProps: { options: sexOptions } },
+        { field: 'post_id', componentProps: { treeData: postOptions } }
     ]);
     let userInfo: any = cloneDeep(unref(getUserInfo));
     userInfo.address = userInfo.address.split(',');

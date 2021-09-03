@@ -8,7 +8,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.copyTip') + ' v-copy'"
                 >
                     <InputSearch :placeholder="t('common.inputText')" v-model:value="copyText">
@@ -25,7 +24,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.longpressTip') + ' v-longpress'"
                 >
                     <a-button
@@ -39,7 +37,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.debounceTip') + ' v-debounce'"
                 >
                     <a-button
@@ -53,7 +50,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.throllteTip') + ' v-throllte'"
                 >
                     <a-button
@@ -67,7 +63,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.emojiTip') + ' v-emoji'"
                 >
                     <Input v-emoji :placeholder="t('router.features.customDirective.emojiTip')" />
@@ -77,7 +72,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.inputTip') + ' v-input'"
                 >
                     <Input
@@ -91,7 +85,6 @@
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.rippleTip') + ' v-ripple'"
                 >
                     <a-button
@@ -101,11 +94,21 @@
                     >{{ t('router.features.customDirective.rippleTip') }}</a-button>
                 </Card>
             </Col>
+            <!-- 点击外部指令 v-clickOutside -->
+            <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <Card
+                    :bordered="false"
+                    :title="t('router.features.customDirective.clickOutsideTip') + ' v-clickOutside'"
+                >
+                    <ClickOutSide @clickOutside="handleClickOutside">
+                        <a-button type="primary" block @click="innerClick">{{ onClickOutsideText }}</a-button>
+                    </ClickOutSide>
+                </Card>
+            </Col>
             <!-- 拖拽指令 v-draggable-->
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card
                     :bordered="false"
-                    hoverable
                     :title="t('router.features.customDirective.draggableTip') + ' v-draggable'"
                 >
                     <div
@@ -130,7 +133,7 @@ import { defineComponent } from 'vue';
 import RippleDirective from '/@/directives/ripple';
 export default defineComponent({
     directives: {
-        Ripple: RippleDirective,
+        Ripple: RippleDirective
     },
 });
 </script>
@@ -140,12 +143,15 @@ import { PageWrapper } from '/@/components/Page';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
 import { Button, Row, Col, Card, InputSearch, Input } from 'ant-design-vue';
+import { ClickOutSide } from '/@/components/ClickOutSide';
 import { useAppStore } from '/@/store/modules/app';
 const { t } = useI18n();
 const { createMessage } = useMessage();
 
 const copyText = ref<string>('vue3-admin')
 const inputValue = ref<string>('')
+const onClickOutsideText = ref<string>(t('router.features.customDirective.clickOutsideTip'))
+
 
 // 长按指令回调
 function initLongpress() {
@@ -160,6 +166,15 @@ function initDebounce() {
 // 节流指令回调
 function initThrollte() {
     createMessage.success(t('layout.setting.operatingTitle'))
+}
+
+// 点击外部指令
+function handleClickOutside() {
+    onClickOutsideText.value = t('router.features.customDirective.clickOutside')
+}
+
+function innerClick() {
+    onClickOutsideText.value = t('router.features.customDirective.clickOutsideInner')
 }
 </script>
 <style lang="less" scoped>

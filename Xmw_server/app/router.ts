@@ -47,4 +47,10 @@ export default (app: Application) => {
     router.post('/personal/changeUserTag', controller.personal.personal.changeUserTag); // 修改用户标签
     router.post('/personal/changeUserPassword', controller.personal.personal.changeUserPassword); // 修改用户密码
     router.post('/personal/changeUserAvatar', controller.personal.personal.changeUserAvatar); // 修改用户头像
+
+    // 综合组件-新闻公告
+    router.get('/integrated/getNewsList', controller.integrated.news.getNewsList); // 获取新闻公告列表
+    router.post('/integrated/newsSave', controller.integrated.news.newsSave); // 新增和更新新闻公告
+    router.post('/integrated/newsDel', controller.integrated.news.newsDel); // 删除新闻公告
+    router.post('/integrated/setNewsPlacedTop', controller.integrated.news.setNewsPlacedTop); // 更改置顶状态
 };

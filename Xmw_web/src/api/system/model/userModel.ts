@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-07-23 16:17:46
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-26 14:05:47
+ * @LastEditTime: 2021-09-03 10:49:41
  * @Description: 用户管理参数类型注解
  */
 /**
@@ -60,6 +60,7 @@ export interface GetUserInfoModel {
     user_id?: string; // 用户id
     user_name: string; // 用户名
     work_no?: string | null; // 工号
+    tag?: string; // 标签
     roles?: RoleInfo[];
 }
 

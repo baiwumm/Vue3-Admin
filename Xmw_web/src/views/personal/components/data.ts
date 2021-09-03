@@ -1,7 +1,7 @@
-import { FormSchema } from '/@/components/Form';
+import { FormSchema } from '/@/components/Form'; // 引入form 组件
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
-const { t } = useI18n();
-import cities from '/@/views/system/userManagement/userTable/cities' // 地址
+const { t } = useI18n(); // 国际化函数
+import cities from '/@/views/system/userManagement/userTable/cities.json' // 地址
 import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 引入组织树接口
 import { getPostTree } from '/@/api/system/postManagement'; // 引入岗位树接口
 /**

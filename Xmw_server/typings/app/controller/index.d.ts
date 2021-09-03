@@ -2,6 +2,7 @@
 // Do not modify this file!!!!!!!!!
 
 import 'egg';
+import ExportIntegratedNews from '../../../app/controller/integrated/news';
 import ExportPersonalPersonal from '../../../app/controller/personal/personal';
 import ExportSystemDictionaryManagement from '../../../app/controller/system/dictionaryManagement';
 import ExportSystemInternationalManagement from '../../../app/controller/system/internationalManagement';
@@ -14,6 +15,9 @@ import ExportSystemUserManagement from '../../../app/controller/system/userManag
 
 declare module 'egg' {
   interface IController {
+    integrated: {
+      news: ExportIntegratedNews;
+    }
     personal: {
       personal: ExportPersonalPersonal;
     }
