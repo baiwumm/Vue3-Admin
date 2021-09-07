@@ -2,7 +2,7 @@ English | [简体中文](./README.zh-CN.md)
 
 <p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue-Admin-Xmw-Pro Logo"></p>
 
-<h1 align="center">Vue-Admin-Xmw-Pro</h1>
+<h1 align="center">Vue3-Admin-Xmw-Pro</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
@@ -24,9 +24,9 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Project Description
 
- [vue-admin-xmw-pro](http://www.xmwpro.com/) is a background management system solutions，it is developed with front and rear end separation technology。It uses the latest technology stack and provides rich functional components. I hope this project can help you.
+ [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, using the new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
-- 🎯 Front-end technology stack： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[axios](https://github.com/axios/axios/)、[g2plot](https://github.com/antvis/G2Plot/)
+- 🎯 Front-end technology stack： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
 - 🔗 Front Gate： [Xmw_web](./Xmw_web)
 
@@ -34,13 +34,13 @@ English | [简体中文](./README.zh-CN.md)
 
 - 🔗 Backend Portal： [Xmw_server](./Xmw_server)
 
-- 😝 Online Preview： http://www.xmwpro.com
+- 😝 Online Preview： http://vue3.xmwpro.com
 
 - 🔑 username：**admin**，password：**123456**
 
-- [🚀 github warehouse address](https://github.com/FollowTrend/vue-admin-xmw-pro/)
+- [🚀 github warehouse address](https://github.com/FollowTrend/vue3-xmw-admin-pro/)
 
-- [🚀 Code cloud warehouse address](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- [🚀 Code cloud warehouse address](https://gitee.com/xmwjackey/vue3-admin-xmw-pro/)
 
 - 📄 Document Address：**In the works！**
 
@@ -48,9 +48,9 @@ English | [简体中文](./README.zh-CN.md)
 
 ## Environment and Dependencies
 
-- node
-- yarn
-- webpack
+- node (The node.js version must be 12.x or later, but not 13.x)
+- yarn (Yarn1.x must be used, otherwise the dependency may not install)
+- vite
 - @vue/cli
 
 > The [YARN](https://yarnpkg.com/) package management tool is recommended for this project
@@ -59,8 +59,8 @@ English | [简体中文](./README.zh-CN.md)
 
 - Pull the project code
 ```bash
-git clone https://github.com/FollowTrend/vue-admin-xmw-pro.git
-cd vue-admin-xmw-pro
+git clone https://gitee.com/xmwjackey/vue3-admin-xmw-pro.git
+cd vue3-admin-xmw-pro
 cd Xmw_web
 ```
 
@@ -87,41 +87,28 @@ yarn run build
 - Workbench
 
 - Integrated Components
-  - Advanced Form
-  - Announcements
   - Organizational Structure
-  - Advanced Table
-  - Advanced Dtails
+  - News Bulletin
 
 - Personal Center
 
 - System Settings
-  - List of Users
+  - User Management
   - Menu Management
   - Role Management
-  - Permission Management
+  - Organization Management
+  - Post Management
   - Operation Log
   - Dictionary Management
+  - Internationalization
 
 - Function Page
-  - Generate QR Code
-  - Rich Text Editor
-  - Custom VUE Directives
-  - Image Recognition
-  - Chat Room
-  - Waterfall Flow
-  - Music Player
-  - Video Player
-  - Lazy Loading
-  - Virtual List
-
-- Tool Page
-  - Picture Effect
-  - Embedded Routers
-  - Verification Code
   - Guide Page
-  - Outer Chain
-  - Credit Card Form
+  - Image Recognition
+  - Custom Instruction
+  - Multilevel Menu
+  - Qr Code
+
 ```
 
 ## Demo Figure
@@ -138,8 +125,9 @@ yarn run build
 | Project                                                          |
 | ---------------------------------------------------------------- |
 | [vue.js Build an incremental framework for the user interface](https://github.com/vuejs/vue/)                              |
-| [Ant Design Vue Pro Front-end scaffolding based on ANTD VUE](https://github.com/vueComponent/ant-design-vue-pro/)     |
+| [Vben Admin a front-end framework out of the box](https://github.com/anncwb/vue-vben-admin/)     |
 | [Ant Design Vue-High quality VUE components right out of the box](https://github.com/vueComponent/ant-design-vue/) |
+| [TypeScript is a superset of JavaScript types that can be compiled into pure JavaScript](https://github.com/microsoft/TypeScript/) |
 | [axios Promise-based HTTP library](https://github.com/axios/axios/)   |
 | [egg.js Designed for enterprise-class frameworks and applications](https://github.com/eggjs/egg/)                              |
 | [egg-socket.io enables real-time, bidirectional and event-based communication between the browser and the server](https://github.com/eggjs/egg-socket.io/)     |

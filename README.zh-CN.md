@@ -2,7 +2,7 @@
 
 <p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue-Admin-Xmw-Pro Logo"></p>
 
-<h1 align="center">Vue-Admin-Xmw-Pro</h1>
+<h1 align="center">Vue3-Admin-Xmw-Pro</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
@@ -24,9 +24,9 @@
 
 ## 项目简介
 
-  [vue-admin-xmw-pro](http://www.xmwpro.com/) 是一个后台管理系统解决方案，采用前后端分离技术开发。它使用了最新的技术栈，提供了丰富的功能组件，希望本项目可以帮助到您。
+  [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
-- 🎯 前端技术栈： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[axios](https://github.com/axios/axios/)、[g2plot](https://github.com/antvis/G2Plot/)
+- 🎯 前端技术栈： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
 - 🔗 前端传送门： [Xmw_web](./Xmw_web)
 
@@ -34,13 +34,13 @@
 
 - 🔗 后端传送门： [Xmw_server](./Xmw_server)
 
-- 😝 线上预览： http://www.xmwpro.com
+- 😝 线上预览： http://vue3.xmwpro.com
 
 - 🔑 用户名：**admin**，密码：**123456**
 
-- [🚀 github 仓库地址](https://github.com/FollowTrend/vue-admin-xmw-pro/)
+- [🚀 github 仓库地址](https://github.com/FollowTrend/vue3-xmw-admin-pro/)
 
-- [🚀 码云仓库地址](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- [🚀 码云仓库地址](https://gitee.com/xmwjackey/vue3-admin-xmw-pro/)
 
 - 📄 文档地址：**正在编写中！**
 
@@ -48,9 +48,9 @@
 
 ## 环境和依赖
 
-- node
-- yarn
-- webpack
+- node (Node.js 版本要求12.x以上，且不能为13.x版本，这里推荐 14.x 及以上)
+- yarn (必须使用Yarn1.x，否则依赖可能安装不上)
+- vite
 - @vue/cli
 
 > 推荐本项目使用 [Yarn](https://yarnpkg.com/) 包管理工具
@@ -59,8 +59,8 @@
 
 - 拉取项目代码
 ```bash
-git clone https://github.com/FollowTrend/vue-admin-xmw-pro.git
-cd vue-admin-xmw-pro
+git clone https://gitee.com/xmwjackey/vue3-admin-xmw-pro.git
+cd vue3-admin-xmw-pro
 // 进入前端
 cd Xmw_web
 // 进入后端
@@ -93,41 +93,28 @@ yarn run build
 - 工作台
 
 - 综合组件
-  - 高级表单
-  - 通知公告
   - 组织架构
-  - 高级表格
-  - 高级详情
+  - 新闻公告
 
 - 个人中心
 
 - 系统设置
-  - 用户列表
+  - 用户管理
   - 菜单管理
   - 角色管理
-  - 权限管理
+  - 组织管理
+  - 岗位管理
   - 操作日志
   - 字典管理
+  - 国际化
 
 - 功能页
-  - 生成二维码
-  - 富文本编辑器
-  - 自定义vue指令
-  - 图像识别
-  - 聊天室
-  - 瀑布流
-  - 音乐播放器
-  - 视频播放器
-  - 懒加载
-  - 虚拟列表
-
-- 工具页
-  - 图片效果
-  - 嵌套路由
-  - 验证码
   - 引导页
-  - 外链
-  - 信用卡表单
+  - 图像识别
+  - 自定义指令
+  - 多级菜单
+  - 二维码
+
 ```
 
 ## 演示图
@@ -144,8 +131,9 @@ yarn run build
 | 项目                                                          |
 | ---------------------------------------------------------------- |
 | [vue.js 构建用户界面的渐进式框架](https://github.com/vuejs/vue/)                              |
-| [Ant Design Vue Pro基于Antd Vue的前端脚手架](https://github.com/vueComponent/ant-design-vue-pro/)     |
+| [Vben Admin一个开箱即用的前端框架](https://github.com/anncwb/vue-vben-admin/)     |
 | [Ant Design Vue-开箱即用的高质量Vue组件](https://github.com/vueComponent/ant-design-vue/) |
+| [TypeScript是JavaScript类型的超集，它可以编译成纯JavaScript](https://github.com/microsoft/TypeScript/) |
 | [axios 基于 promise 的 HTTP 库](https://github.com/axios/axios/)                          |
 | [egg.js 为企业级框架和应用而生](https://github.com/eggjs/egg/)                              |
 | [egg-socket.io 支持浏览器和服务器之间的实时、双向和基于事件的通信](https://github.com/eggjs/egg-socket.io/)     |
