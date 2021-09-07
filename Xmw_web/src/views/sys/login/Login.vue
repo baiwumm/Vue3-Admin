@@ -2,12 +2,15 @@
     <div :class="prefixCls" class="relative w-full h-full px-4">
         <!-- 粒子背景 -->
         <Particles id="tsparticles" :options="ParticlesConfig" />
+        <!-- 切换语言 -->
         <AppLocalePicker
             class="absolute text-white top-4 right-4 enter-x xl:text-gray-600"
             :showText="false"
             v-if="showLocale"
         />
+        <!-- 切换黑暗模式 -->
         <AppDarkModeToggle class="absolute top-3 right-7 enter-x" />
+        <!-- 登录表单 -->
         <div class="login-container">
             <Card :bordered="false">
                 <div class="top">
@@ -21,7 +24,9 @@
                     {{
                         t('sys.login.welcome')
                     }}
-                    <em style="margin-left: 10px">{{ t('sys.login.managementSystem') }}</em>
+                    <em
+                        style="margin-left: 10px"
+                    >{{ t('sys.login.managementSystem') }}</em>
                 </p>
                 <!-- 登录表单 -->
                 <LoginForm />
@@ -32,10 +37,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import { Card } from 'ant-design-vue';
-import LoginForm from './LoginForm.vue';
-import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application';
+import { defineComponent, ref } from 'vue'; // 引入 Composition-API
+import { Card } from 'ant-design-vue'; // 引入antd组件
+import LoginForm from './LoginForm.vue'; // 引入表单
+import { AppLocalePicker, AppDarkModeToggle } from '/@/components/Application'; // 引入国际化、黑暗模式
 import { useDesign } from '/@/hooks/web/useDesign';
 import { useLocaleStore } from '/@/store/modules/locale';
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化
@@ -50,9 +55,10 @@ export default defineComponent({
         LayoutFooter: createAsyncComponent(() => import('/@/layouts/default/footer/index.vue')),
     },
     setup() {
-        const { t } = useI18n();
+        const { t } = useI18n(); // 国际化函数
         const { prefixCls } = useDesign('login');
         const localeStore = useLocaleStore();
+        // 粒子背景配置
         const ParticlesConfig = ref({
             background: {
                 position: '50% 50%',

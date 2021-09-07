@@ -53,4 +53,6 @@ export default (app: Application) => {
     router.post('/integrated/newsSave', controller.integrated.news.newsSave); // 新增和更新新闻公告
     router.post('/integrated/newsDel', controller.integrated.news.newsDel); // 删除新闻公告
     router.post('/integrated/setNewsPlacedTop', controller.integrated.news.setNewsPlacedTop); // 更改置顶状态
+    router.post('/integrated/saveAlreadyNews', controller.integrated.news.saveAlreadyNews); // 存储已读user_id
+    router.get('/integrated/getNewsUnreadyCount', controller.integrated.news.getNewsUnreadyCount); // 查询未读数量
 };

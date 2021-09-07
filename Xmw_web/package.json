@@ -34,6 +34,7 @@
         "gen:icon": "esno ./build/generate/icon/index.ts"
     },
     "dependencies": {
+        "@antv/g2plot": "^2.3.32",
         "@logicflow/core": "^0.6.1",
         "@logicflow/extension": "^0.6.1",
         "@vueuse/core": "^5.1.4",
@@ -45,6 +46,7 @@
         "echarts": "^5.1.2",
         "intro.js": "^4.1.0",
         "lodash-es": "^4.17.21",
+        "mitt": "^3.0.0",
         "mockjs": "^1.1.0",
         "nprogress": "^0.2.0",
         "particles.vue3": "^1.16.2",

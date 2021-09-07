@@ -100,3 +100,24 @@ export function formatDictValue(options: Array<any>, value: string) {
 
 export const crypto_key = CryptoJS.enc.Utf8.parse('ABCDEF0123456789') //十六位十六进制数作为密钥
 export const crypto_iv = CryptoJS.enc.Utf8.parse('ABCDEF0123456789') //十六位十六进制数作为密钥偏移量
+
+export const timeFix = () => {
+    const time = new Date()
+    const hour = time.getHours()
+    return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '夜深了'
+}
+
+export const welcome = () => {
+    const arr = ['休息一会儿吧', '准备吃什么呢?', '要不要打一把 LOL', '我猜你可能累了', '认真工作吧']
+    const index = Math.floor(Math.random() * arr.length)
+    return arr[index]
+}
+
+// 千位格式化数字
+export const filterDigital = (value, decimal) => {
+    if (!value) {
+        return '0'
+    }
+    const intPartFormat = (+value || 0).toFixed(decimal).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,') // 将整数部分逢三一断
+    return intPartFormat
+}

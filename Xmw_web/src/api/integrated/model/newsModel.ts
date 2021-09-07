@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-09-02 17:08:39
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-09-03 15:27:45
+ * @LastEditTime: 2021-09-07 10:19:52
  * @Description:新闻公告模块类型注解
  */
 
@@ -29,7 +29,7 @@ export interface getNewsResultModel {
     update_last_time: string; // 最后一次更新时间
     status: string; // 状态
     placed_top: string; // 是否置顶
-    already: boolean; // 是否已读
+    already: number; // 是否已读
     avatar: string; // 发布者头像
 }
 
@@ -50,5 +50,10 @@ export interface newsDelParams {
 export interface newsPlacedTopParams {
     news_id: string; // 唯一id
     placed_top: string; // 是否置顶
+    title: string; // 标题
+}
+
+export interface alreadyParams {
+    news_id: string; // 唯一id
     title: string; // 标题
 }

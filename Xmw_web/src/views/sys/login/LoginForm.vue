@@ -67,15 +67,15 @@
 <script lang="ts">
 import CryptoJS from 'crypto-js'; // AES/DES加密
 import { crypto_key, crypto_iv } from '/@/utils'; // AES/DES加密秘钥
-import { defineComponent, reactive, ref, toRaw, UnwrapRef, onMounted } from 'vue';
-import { Form, Input, Row, Col, Button, Alert, InputGroup } from 'ant-design-vue';
+import { defineComponent, reactive, ref, toRaw, UnwrapRef, onMounted } from 'vue'; // 引入 Composition-API
+import { Form, Input, Row, Col, Button, Alert, InputGroup } from 'ant-design-vue'; // 引入antd组件
 import { useMessage } from '/@/hooks/web/useMessage';
 const useForm = Form.useForm;
-import { UserOutlined, LockOutlined } from '@ant-design/icons-vue';
+import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'; // 引入antd图标
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化
 import { useUserStore } from '/@/store/modules/user';
-import { cloneDeep } from 'lodash-es';
-import { generateVerifCode } from '/@/api/system/userManagement';
+import { cloneDeep } from 'lodash-es'; // 引入深克隆函数
+import { generateVerifCode } from '/@/api/system/userManagement'; // 引入验证码接口
 // 登录表单数据类型注解
 interface FormState {
     user_name: string;

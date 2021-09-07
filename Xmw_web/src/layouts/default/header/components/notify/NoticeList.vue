@@ -1,188 +1,135 @@
 <template>
-  <a-list :class="prefixCls" bordered :pagination="getPagination">
-    <template v-for="item in getData" :key="item.id">
-      <a-list-item class="list-item">
-        <a-list-item-meta>
-          <template #title>
-            <div class="title">
-              <a-typography-paragraph
-                @click="handleTitleClick(item)"
-                style="width: 100%; margin-bottom: 0 !important"
-                :style="{ cursor: isTitleClickable ? 'pointer' : '' }"
-                :delete="!!item.titleDelete"
-                :ellipsis="
-                  $props.titleRows > 0 ? { rows: $props.titleRows, tooltip: item.title } : false
-                "
-                :content="item.title"
-              />
-              <div class="extra" v-if="item.extra">
-                <a-tag class="tag" :color="item.color">
-                  {{ item.extra }}
-                </a-tag>
-              </div>
-            </div>
-          </template>
-
-          <template #avatar>
-            <a-avatar v-if="item.avatar" class="avatar" :src="item.avatar" />
-            <span v-else> {{ item.avatar }}</span>
-          </template>
-
-          <template #description>
-            <div>
-              <div class="description" v-if="item.description">
-                <a-typography-paragraph
-                  style="width: 100%; margin-bottom: 0 !important"
-                  :ellipsis="
-                    $props.descRows > 0
-                      ? { rows: $props.descRows, tooltip: item.description }
-                      : false
-                  "
-                  :content="item.description"
-                />
-              </div>
-              <div class="datetime">
-                {{ item.datetime }}
-              </div>
-            </div>
-          </template>
-        </a-list-item-meta>
-      </a-list-item>
-    </template>
-  </a-list>
+    <a-list
+        :class="prefixCls"
+        bordered
+        :loading="loading"
+        class="overflow-y-scroll notify-list"
+        :pagination="getPagination"
+    >
+        <template v-for="item in getData" :key="item.id">
+            <a-list-item class="relative">
+                <a-list-item-meta>
+                    <template #title>
+                        <a-typography-paragraph
+                            @click="handleTitleClick(item)"
+                            style="width: 100%; margin-bottom: 0 !important"
+                            :style="{ cursor: isTitleClickable ? 'pointer' : '' }"
+                            :ellipsis="
+                                titleRows > 0 ? { rows: titleRows, tooltip: item.title } : false
+                            "
+                            :content="item.title"
+                        />
+                    </template>
+                    <!-- 头像 -->
+                    <template #avatar>
+                        <Badge :dot="!item.already" :offset="[10, 5]">
+                            <a-avatar :src="item.avatar" />
+                        </Badge>
+                    </template>
+                    <!-- 相对时间 -->
+                    <template #description>
+                        <Time :value="relativeTime(item.create_time)" />
+                    </template>
+                </a-list-item-meta>
+            </a-list-item>
+        </template>
+    </a-list>
 </template>
 <script lang="ts">
-  import { computed, defineComponent, PropType, ref, watch, unref } from 'vue';
-  import { ListItem } from './data';
-  import { useDesign } from '/@/hooks/web/useDesign';
-  import { List, Avatar, Tag, Typography } from 'ant-design-vue';
-  import { isNumber } from '/@/utils/is';
-  export default defineComponent({
+import { computed, defineComponent, PropType, ref, unref } from 'vue'; // 引入 Composition-API
+import { getNewsResultModel } from '/@/api/integrated/model/newsModel' // 新闻公告数据类型注解
+import { useDesign } from '/@/hooks/web/useDesign';
+import { List, Avatar, Tag, Typography, Badge } from 'ant-design-vue'; // 引入antd组件
+import { Time } from '/@/components/Time'; // 相对时间
+export default defineComponent({
     components: {
-      [Avatar.name]: Avatar,
-      [List.name]: List,
-      [List.Item.name]: List.Item,
-      AListItemMeta: List.Item.Meta,
-      ATypographyParagraph: Typography.Paragraph,
-      [Tag.name]: Tag,
+        [Avatar.name]: Avatar,
+        [List.name]: List,
+        [List.Item.name]: List.Item,
+        AListItemMeta: List.Item.Meta,
+        ATypographyParagraph: Typography.Paragraph,
+        [Tag.name]: Tag,
+        Time,
+        Badge
     },
     props: {
-      list: {
-        type: Array as PropType<ListItem[]>,
-        default: () => [],
-      },
-      pageSize: {
-        type: [Boolean, Number] as PropType<Boolean | Number>,
-        default: 5,
-      },
-      currentPage: {
-        type: Number,
-        default: 1,
-      },
-      titleRows: {
-        type: Number,
-        default: 1,
-      },
-      descRows: {
-        type: Number,
-        default: 2,
-      },
-      onTitleClick: {
-        type: Function as PropType<(Recordable) => void>,
-      },
+        list: {
+            type: Array as PropType<getNewsResultModel[]>,
+            default: () => [],
+        },
+        pageSize: {
+            type: [Boolean, Number] as PropType<Boolean | Number>,
+            default: 5,
+        },
+        currentPage: {
+            type: Number,
+            default: 1,
+        },
+        total: {
+            type: Number,
+            default: 0,
+        },
+        titleRows: {
+            type: Number,
+            default: 1,
+        },
+        onTitleClick: {
+            type: Function as PropType<(Recordable) => void>,
+        },
+        loading: {
+            type: Boolean,
+            default: false,
+        },
     },
-    emits: ['update:currentPage'],
+    emits: ['loadingMore'],
     setup(props, { emit }) {
-      const { prefixCls } = useDesign('header-notify-list');
-      const current = ref(props.currentPage || 1);
-      const getData = computed(() => {
-        const { pageSize, list } = props;
-        console.log('refreshData', list);
-        if (pageSize === false) return [];
-        let size = isNumber(pageSize) ? pageSize : 5;
-        return list.slice(size * (unref(current) - 1), size * unref(current));
-      });
-      watch(
-        () => props.currentPage,
-        (v) => {
-          current.value = v;
-        }
-      );
-      const isTitleClickable = computed(() => !!props.onTitleClick);
-      const getPagination = computed(() => {
-        const { list, pageSize } = props;
-        if (pageSize > 0 && list && list.length > pageSize) {
-          return {
-            total: list.length,
-            pageSize,
-            //size: 'small',
-            current: unref(current),
-            onChange(page) {
-              current.value = page;
-              emit('update:currentPage', page);
-            },
-          };
-        } else {
-          return false;
-        }
-      });
+        const { prefixCls } = useDesign('header-notify-list');
+        const current = ref(props.currentPage || 1);
+        const getData = computed(() => {
+            const { list } = props
+            return list
+        });
+        const isTitleClickable = computed(() => !!props.onTitleClick);
 
-      function handleTitleClick(item: ListItem) {
-        props.onTitleClick && props.onTitleClick(item);
-      }
-
-      return { prefixCls, getPagination, getData, handleTitleClick, isTitleClickable };
+        const getPagination = computed(() => {
+            const { total, pageSize } = props;
+            if (total < pageSize && unref(current) === 1) {
+                return false
+            } else {
+                return {
+                    total: total,
+                    pageSize,
+                    // size: 'small',
+                    current: unref(current),
+                    onChange(page) {
+                        current.value = page;
+                        emit('loadingMore', page)
+                    },
+                };
+            }
+        });
+        function relativeTime(time) {
+            return new Date(time).getTime()
+        }
+        function handleTitleClick(item: getNewsResultModel) {
+            props.onTitleClick && props.onTitleClick(item);
+        }
+        return { prefixCls, getData, handleTitleClick, isTitleClickable, getPagination, relativeTime };
     },
-  });
+});
 </script>
 <style lang="less" scoped>
-  @prefix-cls: ~'@{namespace}-header-notify-list';
+@prefix-cls: ~"@{namespace}-header-notify-list";
 
-  .@{prefix-cls} {
+.@{prefix-cls} {
+    width: 300px;
+    max-height: 430px;
     &::-webkit-scrollbar {
-      display: none;
+        display: none;
     }
 
     ::v-deep(.ant-pagination-disabled) {
-      display: inline-block !important;
+        display: inline-block !important;
     }
-
-    &-item {
-      padding: 6px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: all 0.3s;
-
-      .title {
-        margin-bottom: 8px;
-        font-weight: normal;
-
-        .extra {
-          float: right;
-          margin-top: -1.5px;
-          margin-right: 0;
-          font-weight: normal;
-
-          .tag {
-            margin-right: 0;
-          }
-        }
-
-        .avatar {
-          margin-top: 4px;
-        }
-
-        .description {
-          font-size: 12px;
-          line-height: 18px;
-        }
-
-        .datetime {
-          margin-top: 4px;
-          font-size: 12px;
-          line-height: 18px;
-        }
-      }
-    }
-  }
+}
 </style>

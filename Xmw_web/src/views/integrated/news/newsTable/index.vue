@@ -48,8 +48,6 @@
         </BasicTable>
         <!-- 表单模态框 -->
         <NewsModal @register="registerModal" @success="handleSuccess" />
-        <!-- 新闻公告详情页 -->
-        <DetailsModal @register="registerDetailsModal" />
     </div>
 </template>
 
@@ -61,16 +59,15 @@ import { useModal } from '/@/components/Modal'; // 模态框组件
 import { useMessage } from '/@/hooks/web/useMessage'; // 信息模态框
 import { getNewsList, newsDel } from '/@/api/integrated/news'; // 新闻公告接口
 import NewsModal from './newsModal.vue'; // 表单模态框
-import DetailsModal from './detailsModal.vue'; // 详情页面
 import { dictionaryModel } from '/@/api/system/dictionaryManagement'; // 字典查询接口
 import { useI18n } from '/@/hooks/web/useI18n'; // 国际化配置
 import { formatDictValue } from '/@/utils'; // 工具函数
 import { Badge, Tag } from 'ant-design-vue'; // 引入antd组件
+import mybus from '/@/utils/eventBus'; // 引入mitt工具类
 
 const { t } = useI18n(); // 国际化函数
 const { createMessage } = useMessage(); //消息函数
 const [registerModal, { openModal }] = useModal(); // 注册模态框
-const [registerDetailsModal, { openModal: openDetailsModal }] = useModal(); // 注册详情页模态框
 const [registerTable, { reload, getForm }] = useTable({
     // 注册表格
     title: t('router.integrated.news.title'),
@@ -138,6 +135,6 @@ async function onFetchSuccess() {
 
 // 展示新闻公告详情
 function showNewsDetails(record: Recordable) {
-    openDetailsModal(true, { record })
+    mybus.emit('notify-details', record)
 }
 </script>

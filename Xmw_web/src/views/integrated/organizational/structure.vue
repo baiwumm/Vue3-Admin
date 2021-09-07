@@ -129,30 +129,39 @@ onMounted(async () => {
 
 <style lang="less" scoped>
 @bgColor: background-color;
+
 .org-tree-node-label {
     white-space: nowrap;
 }
+
 /deep/ .bg-primary {
     @{bgColor}: @primary-color;
 }
+
 /deep/ .bg-white {
     @{bgColor}: white;
 }
+
 /deep/ .bg-orange {
     @{bgColor}: orange;
 }
+
 /deep/ .bg-gold {
     @{bgColor}: gold;
 }
+
 /deep/ .bg-gray {
     @{bgColor}: gray;
 }
+
 /deep/ .bg-lightpink {
     @{bgColor}: lightpink;
 }
+
 /deep/ .bg-chocolate {
     @{bgColor}: chocolate;
 }
+
 /deep/ .bg-tomato {
     @{bgColor}: tomato;
 }

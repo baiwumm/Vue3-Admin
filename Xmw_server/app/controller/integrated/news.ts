@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-09-02 16:35:50
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-09-03 14:53:56
+ * @LastEditTime: 2021-09-07 10:46:38
  * @Description:新闻公告模块接口
  */
 
@@ -20,11 +20,14 @@ export default class NewsController extends Controller {
         const { Raw } = ctx.app['Db'].xmw;
         try {
             let { title, type, current, pageSize } = ctx.params;
+            let { user_id } = ctx.session.userInfo
             // 根据条件拼接筛选
             let conditions: string = 'where 1 = 1'
             if (title) conditions += ` and title like '%${title}%'`
             if (type) conditions += ` and type = '${type}'`
-            const result = await Raw.QueryPageData(`select n.*,u.cn_name as author_name,u.avatar from xmw_news n left join xmw_user u on n.author = u.user_id  ${conditions} order by placed_top desc,create_time desc`, current, pageSize)
+            const result = await Raw.QueryPageData(`select n.*,u.cn_name as author_name,u.avatar, case when a.user_id = ${user_id} then 1 else 0 end as already  from xmw_news n 
+            left join xmw_user u on n.author = u.user_id 
+            left join xmw_news_already a on n.news_id = a.news_id  ${conditions} order by placed_top desc,create_time desc`, current, pageSize)
             return ctx.body = { resCode: 200, resMsg: '请求成功!', response: result }
         } catch (error) {
             ctx.logger.info('getNewsList方法报错：' + error)
@@ -104,6 +107,56 @@ export default class NewsController extends Controller {
             return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
         } catch (error) {
             ctx.logger.info('setNewsPlacedTop方法报错：' + error)
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+        }
+    }
+
+    /**
+     * @description: 存储已读user_id
+     * @param {*} news_id:新闻公告id
+     * @return {*}
+     */
+    public async saveAlreadyNews(): Promise<resResultModel> {
+        const { ctx, service } = this;
+        const { Raw } = ctx.app['Db'].xmw;
+        try {
+            let { news_id, title } = ctx.params;
+            let { user_id } = ctx.session.userInfo
+            // 整理参数
+            let params = {
+                news_id,
+                user_id,
+                already_id: ctx.helper.snowflakeId(),
+                create_time: new Date()
+            }
+            await Raw.Insert('xmw_news_already', params);
+            await service.logs.saveLogs(`读取消息:${title}`)
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: {} }
+        } catch (error) {
+            ctx.logger.info('saveAlreadyNews方法报错：' + error)
+            return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
+        }
+    }
+
+    /**
+     * @description: 查询未读数量
+     * @param {*} 
+     * @return {*}
+     */
+    public async getNewsUnreadyCount(): Promise<resResultModel> {
+        const { ctx } = this;
+        const { Raw } = ctx.app['Db'].xmw;
+        try {
+            let { user_id } = ctx.session.userInfo
+            // 查询总数量
+            const newsCount = await Raw.Query(`select count(*) as total from xmw_news`)
+            // 查询已读数量
+            const alreadyCount = await Raw.Query(`select count(*) as total from xmw_news_already where user_id = ${user_id}`)
+            // 计算未读数量
+            const unreadyCount = newsCount.total - alreadyCount.total
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: { unreadyCount: unreadyCount } }
+        } catch (error) {
+            ctx.logger.info('getNewsUnreadyCount方法报错：' + error)
             return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }
         }
     }
