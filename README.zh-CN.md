@@ -1,30 +1,27 @@
-简体中文 | [English](./README.md)
+简体中文 | [English](./README.en-US.md)
 
-<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue-Admin-Xmw-Pro Logo"></p>
+<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
 
 <h1 align="center">Vue3-Admin-Xmw-Pro</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/vue.svg" alt="vue">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
   </a>
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/egg.svg" alt="egg">
-  </a>
-  <a href="https://github.com/sequelize/sequelize/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/socket.svg" alt="sequelize">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg.svg" alt="egg">
   </a>
   <a>
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/build.svg">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/build.svg">
   </a>
 </p>
 
 ## 项目简介
 
-  [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
+  [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
 - 🎯 前端技术栈： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
@@ -119,12 +116,10 @@ yarn run build
 
 ## 演示图
 
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-1.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-2.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/login.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/workbench.jpg) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-3.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-4.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-5.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-6.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-7.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-8.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-9.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-10.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/personal.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/menuManagement.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/customDirective.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/qrcode.jpg) |
 
 ## 特别鸣谢（感谢巨人）
 

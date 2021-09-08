@@ -1,174 +1,174 @@
-<div align="center"> <a href="https://github.com/anncwb/vue-vben-admin"> <img alt="VbenAdmin Logo" width="200" height="200" src="https://anncwb.github.io/anncwb/images/logo.png"> </a> <br> <br>
+简体中文 | [English](./README.en-US.md)
 
-[![license](https://img.shields.io/github/license/anncwb/vue-vben-admin.svg)](LICENSE)
+<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
 
-<h1>Vue vben admin</h1>
-</div>
-
-**中文** | [English](./README.md)
-
-## 简介
-
-Vue Vben Admin 是一个免费开源的中后台模版。使用了最新的`vue3`,`vite2`,`TypeScript`等主流技术开发，开箱即用的中后台前端解决方案，也可用于学习参考。
-
-## 特性
-
-- **最新技术栈**：使用 Vue3/vite2 等前端前沿技术开发
-- **TypeScript**: 应用程序级 JavaScript 的语言
-- **主题**：可配置的主题
-- **国际化**：内置完善的国际化方案
-- **Mock 数据** 内置 Mock 数据方案
-- **权限** 内置完善的动态路由权限生成方案
-- **组件** 二次封装了多个常用的组件
-
-## 预览
-
-- [vue-vben-admin](https://vvbin.cn/next/) - 完整版中文站点
-- [vue-vben-admin-gh-pages](https://anncwb.github.io/vue-vben-admin/) - 完整版 github 站点
-- [vben-admin-thin-next](https://vvbin.cn/thin/next/) - 简化版中文站点
-- [vben-admin-thin-gh-pages](https://anncwb.github.io/vben-admin-thin-next/) - 简化版 github 站点
-
-测试账号: vben/123456
+<h1 align="center">Vue-Admin-Xmw-Pro</h1>
 
 <p align="center">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview1.png">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview2.png">
-    <img alt="VbenAdmin Logo" width="100%" src="https://anncwb.github.io/anncwb/images/preview3.png">
+  <a href="https://github.com/vuejs/vue/" target="_blank">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/vue.svg" alt="vue">
+  </a>
+  <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
+  </a>
+  <a href="https://github.com/vuejs/vue-router/" target="_blank">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue-router.svg" alt="vue-router">
+  </a>
+  <a href="https://github.com/kazupon/vue-i18n/" target="_blank">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue-i18n.svg" alt="vue-i18n">
+  </a>
+  <a>
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/build.svg">
+  </a>
 </p>
 
-### 使用 Gitpod
+## 项目简介
 
-在 Gitpod（适用于 GitHub 的免费在线开发环境）中打开项目，并立即开始编码.
+[vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，它基于 [vue.js](https://github.com/vuejs/vue/) 和 [vben-admin](https://github.com/anncwb/vue-vben-admin/)实现，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/anncwb/vue-vben-admin)
+- 😝 线上预览: http://vue3.xmwpro.com
 
-## 文档
+- 🔑 用户名：**admin**，密码：**123456**
 
-[文档地址](https://vvbin.cn/doc-next/)
+- 📄 文档地址：**正在编写中！**
 
-## 准备
+- 🔗 后端传送门：[Xmw_server](../Xmw_server)
 
-- [node](http://nodejs.org/) 和 [git](https://git-scm.com/) -项目开发环境
-- [Vite](https://vitejs.dev/) - 熟悉 vite 特性
-- [Vue3](https://v3.vuejs.org/) - 熟悉 Vue 基础语法
-- [TypeScript](https://www.typescriptlang.org/) - 熟悉`TypeScript`基本语法
-- [Es6+](http://es6.ruanyifeng.com/) - 熟悉 es6 基本语法
-- [Vue-Router-Next](https://next.router.vuejs.org/) - 熟悉 vue-router 基本使用
-- [Ant-Design-Vue](https://2x.antdv.com/docs/vue/introduce-cn/) - ui 基本使用
-- [Mock.js](https://github.com/nuysoft/Mock) - mockjs 基本语法
+- ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-## 安装使用
+## 环境和依赖
 
-- 获取项目代码
+- node (Node.js 版本要求12.x以上，且不能为13.x版本，这里推荐 14.x 及以上)
+- yarn (必须使用Yarn1.x，否则依赖可能安装不上)
+- vite
+- @vue/cli
 
+> 推荐本项目使用 [Yarn](https://yarnpkg.com/) 包管理工具
+
+## 项目运行
+
+- 拉取项目代码
 ```bash
-git clone https://github.com/anncwb/vue-vben-admin.git
+git clone https://github.com/FollowTrend/vue3-admin-xmw-pro.git
+cd vue3-admin-xmw-pro
+cd Xmw_web
 ```
 
 - 安装依赖
-
-```bash
-cd vue-vben-admin
-
+```
 yarn install
+```
+
+- 开发模式运行
+```
+yarn run serve
+```
+
+- 编译项目
+```
+yarn run build
+```
+
+## 目录结构
+
+```
+├── build # 打包脚本相关
+│   ├── config # 配置文件
+│   ├── generate # 生成器
+│   ├── script # 脚本
+│   └── vite # vite配置
+├── mock # mock文件夹
+├── public # 公共静态资源目录
+├── src # 主目录
+│   ├── api # 接口文件
+│   ├── assets # 资源文件
+│   │   ├── icons # icon sprite 图标文件夹
+│   │   ├── images # 项目存放图片的文件夹
+│   │   └── svg # 项目存放svg图片的文件夹
+│   ├── components # 公共组件
+│   ├── design # 样式文件
+│   ├── directives # 指令
+│   ├── enums # 枚举/常量
+│   ├── hooks # hook
+│   │   ├── component # 组件相关hook
+│   │   ├── core # 基础hook
+│   │   ├── event # 事件相关hook
+│   │   ├── setting # 配置相关hook
+│   │   └── web # web相关hook
+│   ├── layouts # 布局文件
+│   │   ├── default # 默认布局
+│   │   ├── iframe # iframe布局
+│   │   └── page # 页面布局
+│   ├── locales # 多语言
+│   ├── logics # 逻辑
+│   ├── main.ts # 主入口
+│   ├── router # 路由配置
+│   ├── settings # 项目配置
+│   │   ├── componentSetting.ts # 组件配置
+│   │   ├── designSetting.ts # 样式配置
+│   │   ├── encryptionSetting.ts # 加密配置
+│   │   ├── localeSetting.ts # 多语言配置
+│   │   ├── projectSetting.ts # 项目配置
+│   │   └── siteSetting.ts # 站点配置
+│   ├── store # 数据仓库
+│   ├── utils # 工具类
+│   └── views # 页面
+├── test # 测试
+│   └── server # 测试用到的服务
+│       ├── api # 测试服务器
+│       ├── upload # 测试上传服务器
+│       └── websocket # 测试ws服务器
+├── types # 类型文件
+├── vite.config.ts # vite配置文件
+└── windi.config.ts # windcss配置文件
 
 ```
 
-- 运行
+## 功能模块
 
-```bash
-yarn serve
+```
+- 登录 / 注销
+
+- 工作台
+
+- 综合组件
+  - 组织架构
+  - 新闻公告
+
+- 个人中心
+
+- 系统设置
+  - 用户管理
+  - 菜单管理
+  - 角色管理
+  - 组织管理
+  - 岗位管理
+  - 操作日志
+  - 字典管理
+  - 国际化
+
+- 功能页
+  - 引导页
+  - 图像识别
+  - 自定义指令
+  - 多级菜单
+  - 二维码
+
 ```
 
-- 打包
+## 演示图
 
-```bash
-yarn build
-```
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/login.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/workbench.jpg) |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/personal.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/menuManagement.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/customDirective.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/qrcode.jpg) |
 
-## 更新日志
+## 特别鸣谢（感谢巨人）
 
-[CHANGELOG](./CHANGELOG.zh_CN.md)
-
-## 项目地址
-
-- [vue-vben-admin](https://github.com/anncwb/vue-vben-admin) - 完整版
-- [vue-vben-admin-thin-next](https://github.com/anncwb/vben-admin-thin-next) - 简化版
-
-## 如何贡献
-
-非常欢迎你的加入！[提一个 Issue](https://github.com/anncwb/vue-vben-admin/issues/new/choose) 或者提交一个 Pull Request。
-
-**Pull Request:**
-
-1. Fork 代码!
-2. 创建自己的分支: `git checkout -b feat/xxxx`
-3. 提交你的修改: `git commit -am 'feat(function): add xxxxx'`
-4. 推送您的分支: `git push origin feat/xxxx`
-5. 提交`pull request`
-
-## Git 贡献提交规范
-
-- 参考 [vue](https://github.com/vuejs/vue/blob/dev/.github/COMMIT_CONVENTION.md) 规范 ([Angular](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-changelog-angular))
-
-  - `feat` 增加新功能
-  - `fix` 修复问题/BUG
-  - `style` 代码风格相关无影响运行结果的
-  - `perf` 优化/性能提升
-  - `refactor` 重构
-  - `revert` 撤销修改
-  - `test` 测试相关
-  - `docs` 文档/注释
-  - `chore` 依赖更新/脚手架配置修改等
-  - `workflow` 工作流改进
-  - `ci` 持续集成
-  - `types` 类型定义文件更改
-  - `wip` 开发中
-
-## 浏览器支持
-
-本地开发推荐使用`Chrome 80+` 浏览器
-
-支持现代浏览器, 不支持 IE
-
-| [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>IE | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png" alt=" Edge" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Edge | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Firefox | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Chrome | [<img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" />](http://godban.github.io/browsers-support-badges/)</br>Safari |
-| :-: | :-: | :-: | :-: | :-: |
-| not support | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
-
-## 相关仓库
-
-如果这些插件对你有帮助，可以给一个 star 支持下
-
-- [vite-plugin-mock](https://github.com/anncwb/vite-plugin-mock) - 用于本地及开发环境数据 mock
-- [vite-plugin-html](https://github.com/anncwb/vite-plugin-html) - 用于 html 模版转换及压缩
-- [vite-plugin-style-import](https://github.com/anncwb/vite-plugin-style-import) - 用于组件库样式按需引入
-- [vite-plugin-theme](https://github.com/anncwb/vite-plugin-theme) - 用于在线切换主题色等颜色相关配置
-- [vite-plugin-imagemin](https://github.com/anncwb/vite-plugin-imagemin) - 用于打包压缩图片资源
-- [vite-plugin-compression](https://github.com/anncwb/vite-plugin-compression) - 用于打包输出.gz|.brotil 文件
-- [vite-plugin-svg-icons](https://github.com/anncwb/vite-plugin-svg-icons) - 用于快速生成 svg 雪碧图
-
-## 后台整合示例
-
-- [lamp-cloud](https://github.com/zuihou/lamp-cloud) - 基于 SpringCloud Alibaba 的微服务中后台快速开发平台
-
-## 维护者
-
-[@Vben](https://github.com/anncwb)
-
-## 捐赠
-
-如果你觉得这个项目对你有帮助，你可以帮作者买一杯咖啡表示支持!
-
-![donate](https://anncwb.github.io/anncwb/images/sponsor.png)
-
-<a style="display: block;width: 100px;height: 50px;line-height: 50px; color: #fff;text-align: center; background: #408aed;border-radius: 4px;" href="https://www.paypal.com/paypalme/cvvben">Paypal Me</a>
-
-## 交流
-
-`Vue-vben-Admin` 是完全开源免费的项目，在帮助开发者更方便地进行中大型管理系统开发，同时也提供 QQ 交流群使用问题欢迎在群内提问。
-
-- QQ 群 `569291866`
-
-## License
-
-[MIT © Vben-2020](./LICENSE)
+| 项目                                                          |
+| ---------------------------------------------------------------- |
+| [vue.js 构建用户界面的渐进式框架](https://github.com/vuejs/vue/)                              |
+| [Vben Admin一个开箱即用的前端框架](https://github.com/anncwb/vue-vben-admin/)     |
+| [Ant Design Vue-开箱即用的高质量Vue组件](https://github.com/vueComponent/ant-design-vue/) |
+| [TypeScript是JavaScript类型的超集，它可以编译成纯JavaScript](https://github.com/microsoft/TypeScript/) |
+| [axios 基于 promise 的 HTTP 库](https://github.com/axios/axios)                          |

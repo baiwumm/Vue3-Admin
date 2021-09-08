@@ -1,30 +1,27 @@
 English | [简体中文](./README.zh-CN.md)
 
-<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue-Admin-Xmw-Pro Logo"></p>
+<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
 
 <h1 align="center">Vue3-Admin-Xmw-Pro</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/vue.svg" alt="vue">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
   </a>
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/egg.svg" alt="egg">
-  </a>
-  <a href="https://github.com/sequelize/sequelize/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/socket.svg" alt="sequelize">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg.svg" alt="egg">
   </a>
   <a>
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/build.svg">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/build.svg">
   </a>
 </p>
 
 ## Project Description
 
- [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, using the new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+ [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
 - 🎯 Front-end technology stack： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
@@ -113,12 +110,10 @@ yarn run build
 
 ## Demo Figure
 
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-1.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-2.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/login.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/workbench.jpg) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-3.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-4.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-5.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-6.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-7.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-8.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-9.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/xmw-demo-10.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/personal.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/menuManagement.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/customDirective.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/qrcode.jpg) |
 
 ## Special Thanks（Thanks to the giant）
 

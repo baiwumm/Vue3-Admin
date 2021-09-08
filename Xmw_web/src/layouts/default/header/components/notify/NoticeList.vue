@@ -122,7 +122,7 @@ export default defineComponent({
 @prefix-cls: ~"@{namespace}-header-notify-list";
 
 .@{prefix-cls} {
-    width: 300px;
+    width: 320px;
     max-height: 430px;
     &::-webkit-scrollbar {
         display: none;

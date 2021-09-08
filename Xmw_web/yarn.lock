@@ -3688,10 +3688,10 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@*, commander@^7.1.0, commander@^7.2.0:
-  version "7.2.0"
-  resolved "https://registry.npmjs.org/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
-  integrity sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==
+commander@*:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-8.1.0.tgz#db36e3e66edf24ff591d639862c6ab2c52664362"
+  integrity sha512-mf45ldcuHSYShkplHHGKWb4TrmwQadxOn7v4WuhDJy0ZVoY5JFajaRDKD0PNe5qXzBX0rhovjTnP6Kz9LETcuA==
 
 commander@^2.20.0, commander@^2.8.1:
   version "2.20.3"
@@ -3707,6 +3707,11 @@ commander@^6.0.0:
   version "6.2.1"
   resolved "https://registry.npmjs.org/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
   integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
+
+commander@^7.1.0, commander@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.npmjs.org/commander/-/commander-7.2.0.tgz#a36cb57d0b501ce108e4d20559a150a391d97ab7"
+  integrity sha512-QrWXB+ZQSVPmIWIhtEO9H+gwHaMGYiF5ChvoJ+K9ZGHG/sVsa6yiesAD1GC/x46sET00Xlwo1u49RVVVzvcSkw==
 
 commitizen@^4.0.3, commitizen@^4.2.4:
   version "4.2.4"
@@ -3999,11 +4004,6 @@ core-js-compat@^3.14.0:
   dependencies:
     browserslist "^4.16.6"
     semver "7.0.0"
-
-core-js@^2.6.5:
-  version "2.6.12"
-  resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.6.12.tgz#d9333dfa7b065e347cc5682219d6f690859cc2ec"
-  integrity sha512-Kb2wC0fvsWfQrgk8HU5lW6U/Lcs8+9aaYcy4ZFc6DDlo4nZ7n70dEgE5rtR0oG6ufKDUnrwfWL1mXR5ljDatrQ==
 
 core-js@^3.12.1:
   version "3.14.0"
@@ -5746,11 +5746,6 @@ gitconfiglocal@^1.0.0:
   integrity sha1-QdBF84UaXqiPA/JMocYXgRRGS5s=
   dependencies:
     ini "^1.3.2"
-
-github-markdown-css@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/github-markdown-css/-/github-markdown-css-4.0.0.tgz#be9f4caf7a389228d4c368336260ffc909061f35"
-  integrity sha512-mH0bcIKv4XAN0mQVokfTdKo2OD5K8WJE9+lbMdM32/q0Ie5tXgVN/2o+zvToRMxSTUuiTRcLg5hzkFfOyBYreg==
 
 gl-matrix@^3.0.0, gl-matrix@^3.3.0:
   version "3.3.0"
@@ -8178,7 +8173,7 @@ mkdirp@^0.5.5:
 
 mockjs@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npmjs.org/mockjs/-/mockjs-1.1.0.tgz#e6a0c378e91906dbaff20911cc0273b3c7d75b06"
+  resolved "https://registry.yarnpkg.com/mockjs/-/mockjs-1.1.0.tgz#e6a0c378e91906dbaff20911cc0273b3c7d75b06"
   integrity sha512-eQsKcWzIaZzEZ07NuEyO4Nw65g0hdWAyurVol1IPl1gahRwY+svqzfgfey8U8dahLwG44d6/RwEzuK52rSa/JQ==
   dependencies:
     commander "*"
@@ -9317,11 +9312,6 @@ pretty-quick@^3.1.1:
     ignore "^5.1.4"
     mri "^1.1.5"
     multimatch "^4.0.0"
-
-prismjs@^1.22.0:
-  version "1.24.1"
-  resolved "https://registry.yarnpkg.com/prismjs/-/prismjs-1.24.1.tgz#c4d7895c4d6500289482fa8936d9cdd192684036"
-  integrity sha512-mNPsedLuk90RVJioIky8ANZEwYm5w9LcvCXrxHlwf4fNVSn8jEipMybMkWUyyF0JhnC+C4VcOVSBuHRKs1L5Ow==
 
 process-nextick-args@~2.0.0:
   version "2.0.1"
@@ -11796,16 +11786,6 @@ vue-i18n@9.1.6:
     "@intlify/vue-devtools" "9.1.6"
     "@vue/devtools-api" "^6.0.0-beta.7"
 
-vue-okr-tree@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/vue-okr-tree/-/vue-okr-tree-1.0.9.tgz#813936d874722a7f23bbd990637579299b970c2c"
-  integrity sha512-pq3LFUleCQoPFwHpYM3FT2SG+tyWFC8gI3fWq6C9Fn8NCfu0C6IY8aA9CHHyIjTnBk3DSH0/3hNqgQ/JXkCIKQ==
-  dependencies:
-    core-js "^2.6.5"
-    github-markdown-css "^4.0.0"
-    prismjs "^1.22.0"
-    vue "^2.6.10"
-
 vue-router@^4.0.10:
   version "4.0.10"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-4.0.10.tgz#ec8fda032949b2a31d3273170f8f376e86eb52ac"
@@ -11847,11 +11827,6 @@ vue@3.2.2:
     "@vue/compiler-dom" "3.2.2"
     "@vue/runtime-dom" "3.2.2"
     "@vue/shared" "3.2.2"
-
-vue@^2.6.10:
-  version "2.6.14"
-  resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.14.tgz#e51aa5250250d569a3fbad3a8a5a687d6036e235"
-  integrity sha512-x2284lgYvjOMj3Za7kqzRcUSxBboHqtgRE2zlos1qWaOye5yUmHn42LB1250NJBLRwEcdrB0JRwyPTEPhfQjiQ==
 
 w3c-hr-time@^1.0.2:
   version "1.0.2"
