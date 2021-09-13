@@ -43,7 +43,7 @@
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-- 😝 Vue3+Typescript版本： [vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- 😝 Vue2版本： [vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
 
 ## 环境和依赖
 
