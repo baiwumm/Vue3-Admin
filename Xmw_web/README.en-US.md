@@ -36,6 +36,8 @@ English | [简体中文](./README.md)
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
+- 😝 Vue3+Typescript Version： [vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+
 ## Environment and Dependencies
 
 - node (The node.js version must be 12.x or later, but not 13.x)
@@ -153,6 +155,10 @@ yarn run build
   - Custom Instruction
   - Multilevel Menu
   - Qr Code
+  - Waterfall Flow
+  - Lazy Load
+  - Virtual Rolling
+  - Verification Code
 
 ```
 
@@ -162,6 +168,7 @@ yarn run build
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/personal.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/menuManagement.jpg) |
 | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/customDirective.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/qrcode.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/captcha.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/lazyLoad.png) |
 
 ## Special Thanks（Thanks to the giant）
 

@@ -28,7 +28,12 @@
                     </template>
                     <!-- 相对时间 -->
                     <template #description>
+                        <ClockCircleOutlined class="mr-2" />
                         <Time :value="relativeTime(item.create_time)" />
+                        <a-tag
+                            :color="useAppStore().getProjectConfig.themeColor"
+                            class="float-right"
+                        >{{ item.author_name }}</a-tag>
                     </template>
                 </a-list-item-meta>
             </a-list-item>
@@ -41,6 +46,8 @@ import { getNewsResultModel } from '/@/api/integrated/model/newsModel' // 新闻
 import { useDesign } from '/@/hooks/web/useDesign';
 import { List, Avatar, Tag, Typography, Badge } from 'ant-design-vue'; // 引入antd组件
 import { Time } from '/@/components/Time'; // 相对时间
+import { useAppStore } from '/@/store/modules/app'; // vuex配置
+import { ClockCircleOutlined } from '@ant-design/icons-vue'
 export default defineComponent({
     components: {
         [Avatar.name]: Avatar,
@@ -50,7 +57,8 @@ export default defineComponent({
         ATypographyParagraph: Typography.Paragraph,
         [Tag.name]: Tag,
         Time,
-        Badge
+        Badge,
+        ClockCircleOutlined
     },
     props: {
         list: {
@@ -114,7 +122,7 @@ export default defineComponent({
         function handleTitleClick(item: getNewsResultModel) {
             props.onTitleClick && props.onTitleClick(item);
         }
-        return { prefixCls, getData, handleTitleClick, isTitleClickable, getPagination, relativeTime };
+        return { prefixCls, getData, handleTitleClick, isTitleClickable, getPagination, relativeTime, useAppStore };
     },
 });
 </script>

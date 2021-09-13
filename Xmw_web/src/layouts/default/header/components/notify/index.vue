@@ -68,7 +68,7 @@ async function onNoticeClick(record) {
     if (!record.already) {
         let params = {
             news_id: record.news_id,
-            title: record.news_id
+            title: record.title
         }
         await saveAlreadyNews(params).then(() => {
             record.already = 1

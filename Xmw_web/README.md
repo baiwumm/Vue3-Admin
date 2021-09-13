@@ -36,6 +36,8 @@
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
+- 😝 Vue3+Typescript版本： [vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+
 ## 环境和依赖
 
 - node (Node.js 版本要求12.x以上，且不能为13.x版本，这里推荐 14.x 及以上)
@@ -153,6 +155,10 @@ yarn run build
   - 自定义指令
   - 多级菜单
   - 二维码
+  - 瀑布流
+  - 懒加载
+  - 虚拟滚动
+  - 验证码
 
 ```
 
@@ -162,6 +168,7 @@ yarn run build
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/personal.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/menuManagement.jpg) |
 | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/customDirective.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/qrcode.jpg) |
+| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/captcha.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/lazyLoad.png) |
 
 ## 特别鸣谢（感谢巨人）
 

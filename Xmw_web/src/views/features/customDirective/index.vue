@@ -105,6 +105,20 @@
                     </ClickOutSide>
                 </Card>
             </Col>
+            <!-- 图片懒加载指令 v-lazyLoad -->
+            <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
+                <Card
+                    :bordered="false"
+                    :title="t('router.features.customDirective.lazyLoadTip') + ' v-lazyLoad'"
+                >
+                    <router-link :to="{ path: '/features/lazyLoad' }">
+                        <a-button
+                            type="primary"
+                            block
+                        >{{ t('router.features.customDirective.lazyLoadTip') }}</a-button>
+                    </router-link>
+                </Card>
+            </Col>
             <!-- 拖拽指令 v-draggable-->
             <Col :xs="24" :sm="12" :md="8" :lg="6" :xl="6">
                 <Card

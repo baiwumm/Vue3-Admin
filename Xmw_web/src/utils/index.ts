@@ -3,6 +3,12 @@ import type { App, Plugin } from 'vue';
 import CryptoJS from 'crypto-js' // AES/DES加密解密
 import { unref } from 'vue';
 import { isObject } from '/@/utils/is';
+import beauty001 from '/@/assets/images/001.jpg'
+import beauty002 from '/@/assets/images/002.jpg'
+import beauty003 from '/@/assets/images/003.jpg'
+import beauty004 from '/@/assets/images/004.jpg'
+import beauty005 from '/@/assets/images/005.jpg'
+import beauty006 from '/@/assets/images/006.jpg'
 
 export const noop = () => { };
 
@@ -121,3 +127,22 @@ export const filterDigital = (value, decimal) => {
     const intPartFormat = (+value || 0).toFixed(decimal).replace(/\d{1,3}(?=(\d{3})+(\.\d*)?$)/g, '$&,') // 将整数部分逢三一断
     return intPartFormat
 }
+
+// 验证码模块
+// 生成一个随机数
+export const randomNum = (min, max) => {
+    return Math.floor(Math.random() * (max - min) + min)
+}
+// 生成一个随机的颜色
+export const randomColor = (min, max) => {
+    let r = randomNum(min, max)
+    let g = randomNum(min, max)
+    let b = randomNum(min, max)
+    return 'rgb(' + r + ',' + g + ',' + b + ')'
+}
+export const _code_chars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+export const _code_color1 = ['#fffff0', '#f0ffff', '#f0fff0', '#fff0f0']
+export const _code_color2 = ['#FF0033', '#006699', '#993366', '#FF9900', '#66CC66', '#FF33CC']
+
+export const beautyList = [beauty001, beauty002, beauty003, beauty004, beauty005, beauty006]
+export const randomImg = beautyList[randomNum(1, 6)]
