@@ -1,6 +1,7 @@
 logs/
 npm-debug.log
 node_modules/
+dist
 coverage/
 .idea/
 run/
