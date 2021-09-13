@@ -53,9 +53,12 @@ import { ref, reactive, onMounted, createApp } from 'vue';// 引入 Composition-
 import VueBlocksTree from 'vue3-blocks-tree';
 import 'vue3-blocks-tree/dist/vue3-blocks-tree.css';
 import { useI18n } from '/@/hooks/web/useI18n';  // 国际化配置
-import { Row, Col, Card, Checkbox, RadioGroup, RadioButton, Spin, Select, SelectOption, Space } from 'ant-design-vue'; // 引入antd组件
+import { Row, Col, Card, Checkbox, Spin, Select, Space, Radio } from 'ant-design-vue'; // 引入antd组件
 import { getOrganizationTree } from '/@/api/system/organizationManagement'; // 组织树接口
 import { getPostTree } from '/@/api/system/postManagement'; // 岗位树接口
+const RadioGroup = Radio.Group
+const RadioButton = Radio.Button
+const SelectOption = Select.Option
 // 架构Tree类型接口
 interface treeResult {
     org_name: string;

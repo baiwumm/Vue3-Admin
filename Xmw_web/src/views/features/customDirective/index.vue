@@ -156,11 +156,12 @@ import { ref } from 'vue';
 import { PageWrapper } from '/@/components/Page';
 import { useMessage } from '/@/hooks/web/useMessage';
 import { useI18n } from '/@/hooks/web/useI18n';
-import { Button, Row, Col, Card, InputSearch, Input } from 'ant-design-vue';
+import { Button, Row, Col, Card, Input } from 'ant-design-vue';
 import { ClickOutSide } from '/@/components/ClickOutSide';
 import { useAppStore } from '/@/store/modules/app';
 const { t } = useI18n();
 const { createMessage } = useMessage();
+const InputSearch = Input.Search
 
 const copyText = ref<string>('vue3-admin')
 const inputValue = ref<string>('')

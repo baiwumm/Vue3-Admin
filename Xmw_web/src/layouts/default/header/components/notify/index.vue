@@ -36,7 +36,7 @@
 </template>
 <script lang="ts" setup>
 import { ref, reactive, onMounted, unref, onBeforeMount, onBeforeUnmount } from 'vue'; // 引入 Composition-API
-import { Popover, Tabs, Badge, TabPane } from 'ant-design-vue'; // 引入antd组件
+import { Popover, Tabs, Badge } from 'ant-design-vue'; // 引入antd组件
 import { BellOutlined } from '@ant-design/icons-vue';// 引入antd图标
 import NoticeList from './NoticeList.vue'; // 引入NoticeList子组件
 import { useDesign } from '/@/hooks/web/useDesign';
@@ -45,6 +45,7 @@ import { tabListData } from './data' // 引入配置数据
 import DetailsModal from './detailsModal.vue'; // 详情页面
 import { useModal } from '/@/components/Modal'; // 模态框组件
 import mybus from '/@/utils/eventBus'; // 引入mitt工具类
+const TabPane = Tabs.TabPane
 
 const { prefixCls } = useDesign('header-notify');
 const [registerModal, { openModal }] = useModal(); // 注册模态框

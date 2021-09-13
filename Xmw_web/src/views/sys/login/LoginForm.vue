@@ -68,7 +68,7 @@
 import CryptoJS from 'crypto-js'; // AES/DES加密
 import { crypto_key, crypto_iv } from '/@/utils'; // AES/DES加密秘钥
 import { defineComponent, reactive, ref, toRaw, UnwrapRef, onMounted } from 'vue'; // 引入 Composition-API
-import { Form, Input, Row, Col, Button, Alert, InputGroup } from 'ant-design-vue'; // 引入antd组件
+import { Form, Input, Row, Col, Button, Alert } from 'ant-design-vue'; // 引入antd组件
 import { useMessage } from '/@/hooks/web/useMessage';
 const useForm = Form.useForm;
 import { UserOutlined, LockOutlined } from '@ant-design/icons-vue'; // 引入antd图标
@@ -95,7 +95,7 @@ export default defineComponent({
         Alert,
         UserOutlined,
         LockOutlined,
-        InputGroup
+        InputGroup: Input.Group
     },
     setup() {
         const { t } = useI18n();
