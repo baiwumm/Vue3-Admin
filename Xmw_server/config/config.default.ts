@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-19 18:02:52
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-20 14:29:11
+ * @LastEditTime: 2021-09-15 14:46:49
  * @Description: egg.js配置文件
  */
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
@@ -29,6 +29,8 @@ export default (appInfo: EggAppInfo) => {
     // use for cookie sign key, should change to your own and keep security
     config.keys = appInfo.name + '_1629367306448_5070';
 
+    config.proxy = true;
+
     // 配置需要的中间件，数组顺序即为中间件的加载顺序
     config.middleware = ['tokenAuthentication', 'params']
     config.expiresIn = 3 * 24 * 60 * 60;// token过期时间 单位秒，默认3天
@@ -52,7 +54,7 @@ export default (appInfo: EggAppInfo) => {
     }
     config.cluster = {
         listen: {
-            port: 7001,
+            port: 7003,
             hostname: "127.0.0.1",
             // path: '/var/run/egg.sock',
         },

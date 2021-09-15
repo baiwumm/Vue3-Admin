@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/vue.svg" alt="vue">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
     <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
@@ -18,7 +18,7 @@
     <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue-i18n.svg" alt="vue-i18n">
   </a>
   <a>
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/build.svg">
+    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/build.svg">
   </a>
 </p>
 
