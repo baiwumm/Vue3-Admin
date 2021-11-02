@@ -37,7 +37,7 @@
             {
               auth: ['system:dictionary:ditc:edit'],
               icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record, $event),
+              onClick: handleEdit.bind(null, record),
             },
             {
               auth: ['system:dictionary:ditc:delete'],
@@ -49,6 +49,7 @@
               },
             },
           ]"
+          :stopButtonPropagation="true"
         />
       </template>
     </BasicTable>
@@ -123,9 +124,7 @@ function handleCreate() {
   });
 }
 // 编辑操作
-function handleEdit(record: Recordable, event) {
-  console.log(event);
-  event.preventDefault();
+function handleEdit(record: Recordable) {
   openModal(true, {
     record,
     isUpdate: true,
