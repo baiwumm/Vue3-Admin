@@ -1,12 +1,19 @@
-export const fallData = [
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/001.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/002.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/003.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/004.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/005.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/006.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/001.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/002.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/003.jfif', title: '美女1' },
-    { imgSrc: 'https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/004.jfif', title: '美女1' }
+import { randomNum, beautyList } from '/@/utils'
+
+let waterFallData: any = [
 ]
+
+for (let i = 0; i < 20; i++) {
+    waterFallData.push({
+        imgSrc: beautyList[randomNum(1, 6)]
+    })
+}
+
+export async function getData(): Promise<unknown[]> {
+    return new Promise((resolve, reject) => {
+        const ret = [...waterFallData, ...waterFallData]
+        setTimeout(() => {
+            resolve(ret)
+        }, 1000)
+    })
+}

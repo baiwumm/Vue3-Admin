@@ -107,8 +107,11 @@ const [registerTable, { reload, getForm }] = useTable({
 //  请求字典数据
 let options = ref([]);
 async function initOptions() {
-  options.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
-  options.value['sex'] = await dictionaryModel({ dict_coding: 'system_sex' });
+  let params = { dict_coding: 'system_status,system_sex' };
+  await dictionaryModel(params).then((res) => {
+    options.value['status'] = res.system_status;
+    options.value['sex'] = res.system_sex;
+  });
 }
 initOptions();
 // 新增操作
@@ -141,14 +144,15 @@ async function handleSuccess() {
 
 // 表格接口请求成功后触发
 async function onFetchSuccess() {
-  const statusOptions = await dictionaryModel({ dict_coding: 'system_status' });
-  getForm().updateSchema([
-    {
-      field: 'status',
-      componentProps: {
-        options: statusOptions,
+  await dictionaryModel({ dict_coding: 'system_status' }).then((res) => {
+    getForm().updateSchema([
+      {
+        field: 'status',
+        componentProps: {
+          options: res.system_status,
+        },
       },
-    },
-  ]);
+    ]);
+  });
 }
 </script>

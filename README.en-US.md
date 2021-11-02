@@ -2,7 +2,7 @@ English | [简体中文](./README.md)
 
 <p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
 
-<h1 align="center">Vue3-Admin-Xmw-Pro</h1>
+<h1 align="center">Vue3-admin-xmw-pro</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
@@ -21,13 +21,13 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
- [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+ [Vue3-admin-xmw-pro](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
-- 🎯 Front-end technology stack： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
+- 🎯 Front-end technology stack： [Vue3.0](https://github.com/vuejs/vue/)、[Ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
 - 🔗 Front Gate： [Xmw_web](./Xmw_web)
 
-- 🎯 Backend technology stack： [egg.js](https://github.com/eggjs/egg/)、[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken/)、[sequelize](https://github.com/sequelize/sequelize/)、[redis](https://github.com/redis/redis/)
+- 🎯 Backend technology stack： [Egg.js](https://github.com/eggjs/egg/)、[Jsonwebtoken](https://github.com/auth0/node-jsonwebtoken/)、[Sequelize](https://github.com/sequelize/sequelize/)、[Redis](https://github.com/redis/redis/)
 
 - 🔗 Backend Portal： [Xmw_server](./Xmw_server)
 
@@ -43,7 +43,7 @@ English | [简体中文](./README.md)
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
-- 😝 Vue2 Version： [vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- 😝 Vue2 Version： [Vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
 
 ## Environment and Dependencies
 

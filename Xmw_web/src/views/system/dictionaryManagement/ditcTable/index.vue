@@ -37,7 +37,7 @@
             {
               auth: ['system:dictionary:ditc:edit'],
               icon: 'clarity:note-edit-line',
-              onClick: handleEdit.bind(null, record),
+              onClick: handleEdit.bind(null, record, $event),
             },
             {
               auth: ['system:dictionary:ditc:delete'],
@@ -111,7 +111,9 @@ const [registerTable, { reload, getDataSource, getSelectRowKeys, setSelectedRowK
 //   请求字典数据
 let statusOptions = ref([]);
 async function initOptions() {
-  statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+  await dictionaryModel({ dict_coding: 'system_status' }).then((res) => {
+    statusOptions.value['status'] = res.system_status;
+  });
 }
 initOptions();
 // 新增操作
@@ -121,7 +123,9 @@ function handleCreate() {
   });
 }
 // 编辑操作
-function handleEdit(record: Recordable) {
+function handleEdit(record: Recordable, event) {
+  console.log(event);
+  event.preventDefault();
   openModal(true, {
     record,
     isUpdate: true,

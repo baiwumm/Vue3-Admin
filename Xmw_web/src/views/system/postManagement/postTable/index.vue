@@ -116,7 +116,9 @@ const [registerTable, { reload, expandAll, collapseAll }] = useTable({
 //   请求字典数据
 let statusOptions = ref([]);
 async function initOptions() {
-  statusOptions.value['status'] = await dictionaryModel({ dict_coding: 'system_status' });
+  await dictionaryModel({ dict_coding: 'system_status' }).then((res) => {
+    statusOptions.value['status'] = res.system_status;
+  });
 }
 initOptions();
 // 新增操作

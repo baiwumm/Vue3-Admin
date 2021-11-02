@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-20 13:39:32
  * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-20 15:01:41
+ * @LastEditTime: 2021-11-02 10:33:20
  * @Description:字典管理模块接口
  */
 import { Controller } from 'egg';
@@ -118,15 +118,17 @@ export default class DictionaryManagementController extends Controller {
         const { Raw } = ctx.app['Db'].xmw;
         try {
             let { dict_coding } = ctx.params
-            let parentDict = await Raw.Query(`select dictionary_id from xmw_dictionary where dict_coding = '${dict_coding}'`)
-            // 如果parentDict存在dictionary_id,则代表有数据
-            if (parentDict) {
-                let conditions = `where status = 1 and parent_id = '${parentDict.dictionary_id}'`
-                const result = await Raw.QueryList(`select dictionary_label as label,dictionary_value as value from xmw_dictionary ${conditions} order by sort desc `);
-                return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
-            } else {
-                return ctx.body = { resCode: 200, resMsg: '字典编码不存在!', response: [] }
+            // 判断传的是数组集合还是单个
+            const dict_arr = dict_coding.split(',')
+            let result = {}
+            for (let i = 0; i < dict_arr.length; i++) {
+                let parentDict = await Raw.Query(`select dictionary_id from xmw_dictionary where dict_coding = '${dict_arr[i]}'`)
+                if (parentDict) {
+                    let conditions = `where status = 1 and parent_id = '${parentDict.dictionary_id}'`
+                    result[dict_arr[i]] = await Raw.QueryList(`select dictionary_label as label,dictionary_value as value from xmw_dictionary ${conditions} order by sort desc `);
+                }
             }
+            return ctx.body = { resCode: 200, resMsg: '操作成功!', response: result }
         } catch (error) {
             ctx.logger.info('dictionaryModel方法报错：' + error)
             return ctx.body = { resCode: 400, resMsg: '操作失败!', response: error }

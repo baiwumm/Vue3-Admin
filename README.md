@@ -2,7 +2,7 @@
 
 <p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
 
-<h1 align="center">Vue3-Admin-Xmw-Pro</h1>
+<h1 align="center">Vue3-admin-xmw-pro</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
@@ -21,13 +21,13 @@
 
 ## 项目简介
 
-  [vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
+  [Vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
-- 🎯 前端技术栈： [vue.js](https://github.com/vuejs/vue/)、[ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
+- 🎯 前端技术栈： [Vue3.0](https://github.com/vuejs/vue/)、[Ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
 - 🔗 前端传送门： [Xmw_web](./Xmw_web)
 
-- 🎯 后端技术栈： [egg.js](https://github.com/eggjs/egg/)、[jsonwebtoken](https://github.com/auth0/node-jsonwebtoken/)、[sequelize](https://github.com/sequelize/sequelize/)、[redis](https://github.com/redis/redis/)
+- 🎯 后端技术栈： [Egg.js](https://github.com/eggjs/egg/)、[Jsonwebtoken](https://github.com/auth0/node-jsonwebtoken/)、[Sequelize](https://github.com/sequelize/sequelize/)、[Redis](https://github.com/redis/redis/)
 
 - 🔗 后端传送门： [Xmw_server](./Xmw_server)
 
@@ -43,7 +43,7 @@
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-- 😝 Vue2版本： [vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- 😝 Vue2版本： [Vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
 
 ## 环境和依赖
 
