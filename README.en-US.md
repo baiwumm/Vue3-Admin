@@ -35,15 +35,15 @@ English | [简体中文](./README.md)
 
 - 🔑 username：**admin**，password：**123456**
 
-- [🚀 github warehouse address](https://github.com/FollowTrend/vue3-xmw-admin-pro/)
+- [🚀 github warehouse address](https://github.com/Cyan-Xmw/vue3-xmw-admin-pro/)
 
-- [🚀 Code cloud warehouse address](https://gitee.com/xmwjackey/vue3-admin-xmw-pro/)
+- [🚀 Code cloud warehouse address](https://gitee.com/Cyan-Xmw/vue3-xmw-admin-pro/)
 
 - 📄 Document Address：**In the works！**
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
-- 😝 Vue2 Version： [Vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- 😝 Vue2 Version： [Vue-admin-xmw-pro](https://gitee.com/Cyan-Xmw/vue-admin-xmw-pro/)
 
 ## Environment and Dependencies
 
