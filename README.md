@@ -35,15 +35,15 @@
 
 - 🔑 用户名：**admin**，密码：**123456**
 
-- [🚀 github 仓库地址](https://github.com/FollowTrend/vue3-xmw-admin-pro/)
+- [🚀 github 仓库地址](https://github.com/Cyan-Xmw/vue3-xmw-admin-pro/)
 
-- [🚀 码云仓库地址](https://gitee.com/xmwjackey/vue3-admin-xmw-pro/)
+- [🚀 码云仓库地址](https://gitee.com/Cyan-Xmw/vue3-xmw-admin-pro/)
 
 - 📄 文档地址：**正在编写中！**
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-- 😝 Vue2版本： [Vue-admin-xmw-pro](https://gitee.com/xmwjackey/vue-admin-xmw-pro/)
+- 😝 Vue2版本： [Vue-admin-xmw-pro](https://gitee.com/Cyan-Xmw/vue-admin-xmw-pro/)
 
 ## 环境和依赖
 
