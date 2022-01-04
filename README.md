@@ -43,7 +43,7 @@
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-- 😝 Vue2版本： [Vue-admin-xmw-pro](https://gitee.com/Cyan-Xmw/vue-admin-xmw-pro/)
+- 😝 Vue2版本： [Vue-xmw-admin-pro](https://gitee.com/Cyan-Xmw/vue-xmw-admin-pro/)
 
 ## 环境和依赖
 
