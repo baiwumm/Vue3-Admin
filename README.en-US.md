@@ -43,7 +43,7 @@ English | [简体中文](./README.md)
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
-- 😝 Vue2 Version： [Vue-admin-xmw-pro](https://gitee.com/Cyan-Xmw/vue-admin-xmw-pro/)
+- 😝 Vue2 Version： [Vue-xmw-admin-pro](https://gitee.com/Cyan-Xmw/vue-xmw-admin-pro/)
 
 ## Environment and Dependencies
 
