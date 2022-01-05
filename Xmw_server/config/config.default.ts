@@ -13,10 +13,10 @@ export default (appInfo: EggAppInfo) => {
     config.Db = {
         xmw: {
             dialect: "mysql",
-            database: 'xmw_vue3_egg',
+            database: 'vue3-xmw-admin-pro',
             host: "127.0.0.1",
             username: 'root',
-            password: '123456',
+            password: '',
             timezone: '+08:00', // 保存为本地时区
             port: 3306,
             dialectOptions: {
