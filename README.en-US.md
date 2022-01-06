@@ -58,8 +58,8 @@ English | [简体中文](./README.md)
 
 - Pull the project code
 ```bash
-git clone https://gitee.com/xmwjackey/vue3-admin-xmw-pro.git
-cd vue3-admin-xmw-pro
+git clone https://gitee.com/Cyan-Xmw/vue3-xmw-admin-pro.git
+cd vue3-xmw-admin-pro
 cd Xmw_web
 ```
 

@@ -58,8 +58,8 @@
 
 - 拉取项目代码
 ```bash
-git clone https://gitee.com/xmwjackey/vue3-admin-xmw-pro.git
-cd vue3-admin-xmw-pro
+git clone https://gitee.com/Cyan-Xmw/vue3-xmw-admin-pro.git
+cd vue3-xmw-admin-pro
 // 进入前端
 cd Xmw_web
 // 进入后端
