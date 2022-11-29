@@ -11,8 +11,8 @@ let OSS = require('ali-oss');
 // 阿里云对象存储配置
 let client = new OSS({
     region: 'oss-cn-beijing',
-    accessKeyId: 'LTAI4G5oHtJSRFXjq7ie45xh',
-    accessKeySecret: 'bAqE12OuQ9uHwxkdTltOWRogJUXfmG',
+    accessKeyId: 'z3o5JqYZOqzRcOBe47jAwInWcKqhEi9tuZ94PRHCZCg=',
+    accessKeySecret: 'WWLrY4wZhLjVE+wux0TNhad2DXgU5w5PdOX86b1SotY=',
     bucket: 'xmwpro',
 });
 export default class PersonalManagementController extends Controller {
