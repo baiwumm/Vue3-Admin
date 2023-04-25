@@ -1,30 +1,30 @@
 简体中文 | [English](./README.en-US.md)
 
-<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
+<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
 
-<h1 align="center">Vue3-Admin-Xmw-Pro</h1>
+<h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg.svg" alt="egg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg" alt="egg">
   </a>
   <a href="https://github.com/eggjs/egg-redis/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg-redis.svg" alt="egg-redis">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg-redis.svg" alt="egg-redis">
   </a>
   <a href="https://github.com/auth0/node-jsonwebtoken/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/jsonwebtoken.svg" alt="jsonwebtoken">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/jsonwebtoken.svg" alt="jsonwebtoken">
   </a>
   <a href="https://github.com/sequelize/sequelize/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg-sequelize.svg" alt="sequelize">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg-sequelize.svg" alt="sequelize">
   </a>
   <a>
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/build.svg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg">
   </a>
 </p>
 
 ## 项目简介
 
-[vue3-admin-xmw-pro](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，后端基于 [Egg.js](https://github.com/eggjs/egg/) 和 [sequelize](https://github.com/sequelize/sequelize/)实现。Egg.js 为企业级框架和应用而生，我们希望由 Egg.js 孕育出更多上层框架，帮助开发团队和开发人员降低开发和维护成本。
+[Vue3-Admin](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，后端基于 [Egg.js](https://github.com/eggjs/egg/) 和 [sequelize](https://github.com/sequelize/sequelize/)实现。Egg.js 为企业级框架和应用而生，我们希望由 Egg.js 孕育出更多上层框架，帮助开发团队和开发人员降低开发和维护成本。
 
 - 😝 线上预览: http://vue3.xmwpro.com
 
@@ -45,8 +45,8 @@
 
 - 拉取项目代码
 ```bash
-git clone https://github.com/FollowTrend/vue3-admin-xmw-pro.git
-cd vue3-admin-xmw-pro
+git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+cd Vue3-Admin
 cd Xmw_server
 ```
 

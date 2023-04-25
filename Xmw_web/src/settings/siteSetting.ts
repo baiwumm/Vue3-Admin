@@ -1,8 +1,8 @@
 // github repo url
-export const GITHUB_URL = 'https://github.com/FollowTrend/vue3-xmw-admin-pro';
+export const GITHUB_URL = 'https://github.com/Cyan-Xmw/Vue3-Admin';
 
 // vue-vben-admin-next-doc
-export const DOC_URL = 'https://vvbin.cn/doc-next/';
+export const DOC_URL = 'http://doc.vvbin.cn/';
 
 // site url
-export const SITE_URL = 'https://vvbin.cn/next/';
+export const SITE_URL = 'https://vben.vvbin.cn/';

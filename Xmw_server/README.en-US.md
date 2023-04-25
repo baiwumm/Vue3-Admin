@@ -1,30 +1,30 @@
 English | [简体中文](./README.md)
 
-<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
+<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
 
-<h1 align="center">Vue3-Admin-Xmw-Pro</h1>
+<h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg.svg" alt="egg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg" alt="egg">
   </a>
   <a href="https://github.com/eggjs/egg-redis/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg-redis.svg" alt="egg-redis">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg-redis.svg" alt="egg-redis">
   </a>
   <a href="https://github.com/auth0/node-jsonwebtoken/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/jsonwebtoken.svg" alt="jsonwebtoken">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/jsonwebtoken.svg" alt="jsonwebtoken">
   </a>
   <a href="https://github.com/sequelize/sequelize/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg-sequelize.svg" alt="sequelize">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg-sequelize.svg" alt="sequelize">
   </a>
   <a>
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/build.svg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg">
   </a>
 </p>
 
 ## Project Description
 
-[vue3-admin-xmw-pro] (http://vue3.xmwpro.com/) is a background management system solutions, The back-end is based on [Egg.js](https://github.com/eggjs/egg/) and [sequelize](https://github.com/sequelize/sequelize/). Egg.js was born for enterprise-level frameworks and applications, and we hope that more upper-layer frameworks will emerge from egg.js to help development teams and developers reduce development and maintenance costs.
+[Vue3-Admin](http://vue3.xmwpro.com/) is a background management system solutions, The back-end is based on [Egg.js](https://github.com/eggjs/egg/) and [sequelize](https://github.com/sequelize/sequelize/). Egg.js was born for enterprise-level frameworks and applications, and we hope that more upper-layer frameworks will emerge from egg.js to help development teams and developers reduce development and maintenance costs.
 
 - 😝 Online Preview: http://vue3.xmwpro.com
 
@@ -45,8 +45,8 @@ English | [简体中文](./README.md)
 
 - Pull the project code
 ```bash
-git clone https://github.com/FollowTrend/vue3-admin-xmw-pro.git
-cd vue3-admin-xmw-pro
+git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+cd Vue3-Admin
 cd Xmw_server
 ```
 

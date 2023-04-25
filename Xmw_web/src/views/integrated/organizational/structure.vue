@@ -89,7 +89,7 @@ const labelClassNameItem = reactive([
     { value: 'bg-tomato', label: t('router.integrated.organizational.tomato') },
 ])
 const treeProps = { label: 'org_name', children: 'children', key: 'org_id' } // 组件配置
-const treeData = reactive<treeResult>({ org_name: 'Xmw Admin', expand: false, key: 0 });
+const treeData = reactive<treeResult>({ org_name: 'Vue3 Admin', expand: false, key: 0 });
 
 // 不同类型接口切换
 async function getArchitectureTree() {

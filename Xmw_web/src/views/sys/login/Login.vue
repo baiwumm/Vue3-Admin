@@ -15,8 +15,8 @@
             <Card :bordered="false">
                 <div class="top">
                     <div class="header enter-x">
-                        <img src="../../../assets/images/logo.svg" class="logo" alt="logo" />
-                        <span class="title">vue3-admin-xmw-pro</span>
+                        <img src="../../../assets/images/logo.png" class="logo" alt="logo" />
+                        <span class="title">Vue3 Admin</span>
                     </div>
                     <div class="desc enter-x">{{ t('sys.login.motto') }}</div>
                 </div>

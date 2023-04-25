@@ -25,7 +25,7 @@ export default defineComponent({
         const { setWatermark } = useWatermark();
         useContentViewHeight();
         onMounted(() => {
-            setWatermark('Xmw Admin')
+            setWatermark('Vue3 Admin')
         })
         return {
             prefixCls,

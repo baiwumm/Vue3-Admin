@@ -7,7 +7,7 @@
 
             <a @click="openWindow(DOC_URL)">{{ t('layout.footer.onlineDocument') }}</a>
         </div>
-        <div>Copyright &copy; 2021 vue3-admin-xmw-pro by 843348394@qq.com</div>
+        <div>Copyright &copy; 2021 Vue3 Admin by 843348394@qq.com</div>
     </Footer>
 </template>
 

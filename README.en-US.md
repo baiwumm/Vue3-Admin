@@ -1,21 +1,21 @@
 English | [简体中文](./README.md)
 
-<p align="center"><img width="100" src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue-admin-xmw-pro/logo.svg" alt="Vue3-Admin-Xmw-Pro Logo"></p>
+<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
 
-<h1 align="center">Vue3-admin-xmw-pro</h1>
+<h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/vue.svg" alt="vue">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/antd.svg" alt="Ant Design of Vue">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/antd.svg" alt="Ant Design of Vue">
   </a>
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/egg.svg" alt="egg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg" alt="egg">
   </a>
   <a>
-    <img src="https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/build.svg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg">
   </a>
 </p>
 
@@ -35,15 +35,15 @@ English | [简体中文](./README.md)
 
 - 🔑 username：**admin**，password：**123456**
 
-- [🚀 github warehouse address](https://github.com/Cyan-Xmw/vue3-xmw-admin-pro/)
+- [🚀 github warehouse address](https://github.com/Cyan-Xmw/Vue3-Admin/)
 
-- [🚀 Code cloud warehouse address](https://gitee.com/Cyan-Xmw/vue3-xmw-admin-pro/)
+- [🚀 Code cloud warehouse address](https://gitee.com/Cyan-Xmw/Vue2-Admin/)
 
 - 📄 Document Address：**In the works！**
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
-- 😝 Vue2 Version： [Vue-xmw-admin-pro](https://gitee.com/Cyan-Xmw/vue-xmw-admin-pro/)
+- 😝 Vue2 Version： [Vue2 Admin](https://github.com/Cyan-Xmw/Vue2-Admin/)
 
 ## Environment and Dependencies
 
@@ -58,8 +58,8 @@ English | [简体中文](./README.md)
 
 - Pull the project code
 ```bash
-git clone https://gitee.com/Cyan-Xmw/vue3-xmw-admin-pro.git
-cd vue3-xmw-admin-pro
+git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+cd Vue3-Admin
 cd Xmw_web
 ```
 
@@ -116,11 +116,11 @@ yarn run build
 
 ## Demo Figure
 
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/login.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/workbench.jpg) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/login.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/workbench.jpg) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/personal.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/menuManagement.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/customDirective.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/qrcode.jpg) |
-| ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/captcha.jpg) | ![](https://xmwpro.oss-cn-beijing.aliyuncs.com/vue3-admin-xmw-pro/lazyLoad.png) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/personal.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/menuManagement.jpg) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/customDirective.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/qrcode.jpg) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/captcha.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/lazyLoad.png) |
 
 ## Special Thanks（Thanks to the giant）
 
