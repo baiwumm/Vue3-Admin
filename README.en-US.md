@@ -21,9 +21,9 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
- [Vue3 Admin](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+ [Vue3 Admin](http://vue3.xmwpro.com/) based on [Vben Admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
-- 🎯 Front-end technology stack： [Vue3.0](https://github.com/vuejs/vue/)、[Ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
+- 🎯 Front-end technology stack： [Vue3.0](https://github.com/vuejs/core/)、[Ant Design Vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
 - 🔗 Front Gate： [Xmw_web](./Xmw_web)
 
@@ -126,12 +126,12 @@ yarn run build
 
 | Project                                                          |
 | ---------------------------------------------------------------- |
-| [vue.js Build an incremental framework for the user interface](https://github.com/vuejs/vue/)                              |
+| [Vue3.0 Build an incremental framework for the user interface](https://github.com/vuejs/core/)                              |
 | [Vben Admin a front-end framework out of the box](https://github.com/anncwb/vue-vben-admin/)     |
 | [Ant Design Vue-High quality VUE components right out of the box](https://github.com/vueComponent/ant-design-vue/) |
 | [TypeScript is a superset of JavaScript types that can be compiled into pure JavaScript](https://github.com/microsoft/TypeScript/) |
-| [axios Promise-based HTTP library](https://github.com/axios/axios/)   |
-| [egg.js Designed for enterprise-class frameworks and applications](https://github.com/eggjs/egg/)                              |
-| [egg-socket.io enables real-time, bidirectional and event-based communication between the browser and the server](https://github.com/eggjs/egg-socket.io/)     |
-| [jsonwebtoken A solution to implement Token technology](https://github.com/auth0/node-jsonwebtoken/) |
-| [sequelize Orm framework](https://github.com/sequelize/sequelize/)                          |
+| [Axios Promise-based HTTP library](https://github.com/axios/axios/)   |
+| [Egg.js Designed for enterprise-class frameworks and applications](https://github.com/eggjs/egg/)                              |
+| [Egg-socket.io enables real-time, bidirectional and event-based communication between the browser and the server](https://github.com/eggjs/egg-socket.io/)     |
+| [Jsonwebtoken A solution to implement Token technology](https://github.com/auth0/node-jsonwebtoken/) |
+| [Sequelize Orm framework](https://github.com/sequelize/sequelize/)                          |

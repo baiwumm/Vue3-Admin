@@ -5,7 +5,7 @@
 <h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
-  <a href="https://github.com/vuejs/vue/" target="_blank">
+  <a href="https://github.com/vuejs/core/" target="_blank">
     <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
@@ -21,7 +21,7 @@
 
 ## 项目简介
 
-[Vue3-Admin](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，它基于 [vue.js](https://github.com/vuejs/vue/) 和 [vben-admin](https://github.com/anncwb/vue-vben-admin/)实现，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
+[Vue3-Admin](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，它基于 [Vue3.0](https://github.com/vuejs/core/) 和 [Vben Admin](https://github.com/anncwb/vue-vben-admin/)实现，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
 - 😝 线上预览: http://vue3.xmwpro.com
 
@@ -171,8 +171,8 @@ yarn run build
 
 | 项目                                                          |
 | ---------------------------------------------------------------- |
-| [vue.js 构建用户界面的渐进式框架](https://github.com/vuejs/vue/)                              |
+| [Vue3.0 构建用户界面的渐进式框架](https://github.com/vuejs/core/)                              |
 | [Vben Admin一个开箱即用的前端框架](https://github.com/anncwb/vue-vben-admin/)     |
 | [Ant Design Vue-开箱即用的高质量Vue组件](https://github.com/vueComponent/ant-design-vue/) |
 | [TypeScript是JavaScript类型的超集，它可以编译成纯JavaScript](https://github.com/microsoft/TypeScript/) |
-| [axios 基于 promise 的 HTTP 库](https://github.com/axios/axios)                          |
+| [Axios 基于 promise 的 HTTP 库](https://github.com/axios/axios)                          |

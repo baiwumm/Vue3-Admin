@@ -24,7 +24,7 @@
 
 ## 项目简介
 
-[Vue3-Admin](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，后端基于 [Egg.js](https://github.com/eggjs/egg/) 和 [sequelize](https://github.com/sequelize/sequelize/)实现。Egg.js 为企业级框架和应用而生，我们希望由 Egg.js 孕育出更多上层框架，帮助开发团队和开发人员降低开发和维护成本。
+[Vue3-Admin](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，后端基于 [Egg.js](https://github.com/eggjs/egg/) 和 [Sequelize](https://github.com/sequelize/sequelize/)实现。Egg.js 为企业级框架和应用而生，我们希望由 Egg.js 孕育出更多上层框架，帮助开发团队和开发人员降低开发和维护成本。
 
 - 😝 线上预览: http://vue3.xmwpro.com
 

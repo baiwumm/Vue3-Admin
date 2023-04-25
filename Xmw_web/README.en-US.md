@@ -5,7 +5,7 @@ English | [简体中文](./README.md)
 <h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
-  <a href="https://github.com/vuejs/vue/" target="_blank">
+  <a href="https://github.com/vuejs/core/" target="_blank">
     <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
@@ -21,7 +21,7 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
-[Vue3-Admin](http://vue3.xmwpro.com/) is a background management system solutions, It is based on [vue.Js](https://github.com/vuejs/vue/) and [vben-admin](https://github.com/anncwb/vue-vben-admin/). It uses a new technology stack: Vue3, Vite, TypeScript, etc., and provides a complete front and back end permission management scheme, rich theme configuration and dark theme adaptation, and secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+[Vue3-Admin](http://vue3.xmwpro.com/) is a background management system solutions, It is based on [Vue3.0](https://github.com/vuejs/core/) and [Vben Admin](https://github.com/anncwb/vue-vben-admin/). It uses a new technology stack: Vue3, Vite, TypeScript, etc., and provides a complete front and back end permission management scheme, rich theme configuration and dark theme adaptation, and secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
 - 😝 Online Preview: http://vue3.xmwpro.com
 
@@ -171,8 +171,8 @@ yarn run build
 
 | Project                                                          |
 | ---------------------------------------------------------------- |
-| [vue.js Build an incremental framework for the user interface](https://github.com/vuejs/vue/)                              |
+| [Vue3.0 Build an incremental framework for the user interface](https://github.com/vuejs/core/)                              |
 | [Vben Admin a front-end framework out of the box](https://github.com/anncwb/vue-vben-admin/)     |
 | [Ant Design Vue-High quality VUE components right out of the box](https://github.com/vueComponent/ant-design-vue/) |
 | [TypeScript is a superset of JavaScript types that can be compiled into pure JavaScript](https://github.com/microsoft/TypeScript/) |
-| [axios Promise-based HTTP library](https://github.com/axios/axios)   |
+| [Axios Promise-based HTTP library](https://github.com/axios/axios)   |
