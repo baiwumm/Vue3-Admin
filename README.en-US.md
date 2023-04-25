@@ -21,7 +21,7 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
- [Vue3-admin-xmw-pro](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+ [Vue3 Admin](http://vue3.xmwpro.com/) based on [Vben admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
 - 🎯 Front-end technology stack： [Vue3.0](https://github.com/vuejs/vue/)、[Ant-design-vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
