@@ -1,27 +1,27 @@
 简体中文 | [English](./README.en-US.md)
 
-<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
+<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png!cyan" alt="Vue3 Admin Logo"></p>
 
 <h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/core/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/vue.svg" alt="vue">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/vue.svg!cyan" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/antd.svg" alt="Ant Design of Vue">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/antd.svg!cyan" alt="Ant Design of Vue">
   </a>
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg" alt="egg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg!cyan" alt="egg">
   </a>
   <a>
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg">
+    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg!cyan">
   </a>
 </p>
 
 ## 项目简介
 
-  [Vue3-Admin](http://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
+  [Vue3 Admin](https://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
 - 🎯 前端技术栈： [Vue3.0](https://github.com/vuejs/core/)、[Ant Design Vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
@@ -31,13 +31,11 @@
 
 - 🔗 后端传送门： [Xmw_server](./Xmw_server)
 
-- 😝 线上预览： http://vue3.xmwpro.com
-
-- 🔑 用户名：**admin**，密码：**123456**
+- 😝 线上预览： https://vue3.xmwpro.com
 
 - [🚀 github 仓库地址](https://github.com/Cyan-Xmw/Vue3-Admin/)
 
-- [🚀 码云仓库地址](https://gitee.com/Cyan-Xmw/Vue2-Admin/)
+- [🚀 码云仓库地址](https://gitee.com/Cyan-Xmw/Vue3-Admin/)
 
 - 📄 文档地址：**正在编写中！**
 
@@ -122,11 +120,11 @@ yarn run build
 
 ## 演示图
 
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/login.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/workbench.jpg) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/login.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/workbench.jpg!cyan) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/personal.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/menuManagement.jpg) |
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/customDirective.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/qrcode.jpg) |
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/captcha.jpg) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/lazyLoad.png) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/personal.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/menuManagement.jpg!cyan) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/customDirective.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/qrcode.jpg!cyan) |
+| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/captcha.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/lazyLoad.png!cyan) |
 
 ## 特别鸣谢（感谢巨人）
 
