@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-19 18:02:52
  * @LastEditors: Cyan
- * @LastEditTime: 2023-04-25 14:35:17
+ * @LastEditTime: 2023-07-17 15:03:38
  * @Description: egg.js配置文件
  */
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
@@ -80,8 +80,8 @@ export default (appInfo: EggAppInfo) => {
 
     // 用户默认头像
     config.avatar = {
-        male: 'https://ali-oss.xmwpro.com/project/vue3-admin/avatar/boy_avatar.svg',
-        female: 'https://ali-oss.xmwpro.com/project/vue3-admin/avatar/girl_avatar.svg'
+        male: 'https://ali-oss.xmwpro.com/project/vue3-admin/avatar/boy_avatar.svg!cyan',
+        female: 'https://ali-oss.xmwpro.com/project/vue3-admin/avatar/girl_avatar.svg!cyan'
     }
 
     // the return config will combines to EggAppConfig

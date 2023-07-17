@@ -1,11 +1,11 @@
 <template>
     <Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
         <div :class="`${prefixCls}__links`">
-            <a @click="openWindow(SITE_URL)">{{ t('layout.footer.onlinePreview') }}</a>
+            <a @click="openWindow('https://vue2.xmwpro.com/')">Vue2 Admin</a>
 
             <GithubFilled @click="openWindow(GITHUB_URL)" :class="`${prefixCls}__github`" />
 
-            <a @click="openWindow(DOC_URL)">{{ t('layout.footer.onlineDocument') }}</a>
+            <a @click="openWindow('https://react.xmwpro.com/')">Xmw Admin</a>
         </div>
         <div>Copyright &copy; 2021 Vue3 Admin by 843348394@qq.com</div>
     </Footer>

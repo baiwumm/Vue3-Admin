@@ -63,7 +63,7 @@ const qrCodeList: QrCodeResult[] = [
     { title: t('router.features.qrcode.title2'), url: qrCodeUrl, tag: 'img' },
     { title: t('router.features.qrcode.title3'), url: qrCodeUrl, options: { color: { dark: '#55D187' } } },
     { title: t('router.features.qrcode.title4'), url: qrCodeUrl, logo: LogoImg },
-    { title: t('router.features.qrcode.title5'), url: qrCodeUrl, options: { color: { dark: '#55D187' } }, width: 300, logo: 'https://ali-oss.xmwpro.com/project/vue3-admin/logo.svg' },
+    { title: t('router.features.qrcode.title5'), url: qrCodeUrl, options: { color: { dark: '#55D187' } }, width: 300, logo: 'https://ali-oss.xmwpro.com/project/vue3-admin/logo.svg!cyan' },
     { title: t('router.features.qrcode.title6'), url: qrCodeUrl, width: 300, logo: { src: LogoImg, logoSize: 0.2, borderSize: 0.05, borderRadius: 50, bgColor: 'gold' } },
     { title: t('router.features.qrcode.title7'), url: qrCodeUrl, width: 300 },
 ]
