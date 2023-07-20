@@ -3,8 +3,8 @@
  * @Version: 3.30
  * @Autor: Xie Mingwei
  * @Date: 2021-07-15 15:00:42
- * @LastEditors: Xie Mingwei
- * @LastEditTime: 2021-08-26 14:49:46
+ * @LastEditors: Cyan
+ * @LastEditTime: 2023-07-20 17:16:09
  */
 import { Controller } from 'egg';
 import { resResultModel } from '../../public/resModel'
@@ -117,7 +117,7 @@ export default class UserManagementController extends Controller {
             let payload = { user_name, password }
             let jwtToken = jwt.sign(payload, this.config.privateKey, { expiresIn: this.config.expiresIn });  //生成token
             // 判断验证码是否正确
-            if (ctx.session.verifCode != verifyCode) {
+            if (ctx.session.verifCode.toLowerCase() != verifyCode.toLowerCase()) {
                 return ctx.body = { resCode: -1, resMsg: '验证码错误!', response: {} }
             }
             // 判断用户名密码是否正确
