@@ -1,13 +1,13 @@
 <template>
     <Footer :class="prefixCls" v-if="getShowLayoutFooter" ref="footerRef">
         <div :class="`${prefixCls}__links`">
-            <a @click="openWindow('https://vue2.xmwpro.com/')">Vue2 Admin</a>
+            <a @click="openWindow('https://vue2.baiwumm.com/')">Vue2 Admin</a>
 
             <GithubFilled @click="openWindow(GITHUB_URL)" :class="`${prefixCls}__github`" />
 
-            <a @click="openWindow('https://react.xmwpro.com/')">Xmw Admin</a>
+            <a @click="openWindow('https://react.baiwumm.com/')">Xmw Admin</a>
         </div>
-        <div>Copyright &copy; 2021 Vue3 Admin by 843348394@qq.com</div>
+        <div>Copyright &copy; 2021 Vue3 Admin by 843348394@qq.com<a href="https://beian.miit.gov.cn/" target="_blank" style="color: rgba(0, 0, 0, 0.45); font-size: 14px; margin-left: 10px;"> 粤ICP备2023007649号-2 </a></div>
     </Footer>
 </template>
 

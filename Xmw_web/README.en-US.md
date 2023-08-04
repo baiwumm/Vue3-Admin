@@ -21,9 +21,9 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
-[Vue3 Admin](https://vue3.xmwpro.com/) is a background management system solutions, It is based on [Vue3.0](https://github.com/vuejs/core/) and [Vben Admin](https://github.com/anncwb/vue-vben-admin/). It uses a new technology stack: Vue3, Vite, TypeScript, etc., and provides a complete front and back end permission management scheme, rich theme configuration and dark theme adaptation, and secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+[Vue3 Admin](https://vue3.baiwumm.com/) is a background management system solutions, It is based on [Vue3.0](https://github.com/vuejs/core/) and [Vben Admin](https://github.com/anncwb/vue-vben-admin/). It uses a new technology stack: Vue3, Vite, TypeScript, etc., and provides a complete front and back end permission management scheme, rich theme configuration and dark theme adaptation, and secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
-- 😝 Online Preview: http://vue3.xmwpro.com
+- 😝 Online Preview: http://vue3.baiwumm.com
 
 - 🔑 username：**admin**，password：**123456**
 
@@ -31,7 +31,7 @@ English | [简体中文](./README.md)
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
-- 😝 Vue2： [Vue2 Admin](https://github.com/Cyan-Xmw/Vue2-Admin/)
+- 😝 Vue2： [Vue2 Admin](https://github.com/baiwumm/Vue2-Admin/)
 
 ## Environment and Dependencies
 
@@ -46,7 +46,7 @@ English | [简体中文](./README.md)
 
 - Pull the project code
 ```bash
-git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+git clone https://github.com/baiwumm/Vue3-Admin.git
 cd Vue3-Admin
 cd Xmw_web
 ```

@@ -21,9 +21,9 @@
 
 ## 项目简介
 
-[Vue3 Admin](http://vue3.xmwpro.com/) 是一个后台管理系统解决方案，它基于 [Vue3.0](https://github.com/vuejs/core/) 和 [Vben Admin](https://github.com/anncwb/vue-vben-admin/)实现，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
+[Vue3 Admin](http://vue3.baiwumm.com/) 是一个后台管理系统解决方案，它基于 [Vue3.0](https://github.com/vuejs/core/) 和 [Vben Admin](https://github.com/anncwb/vue-vben-admin/)实现，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
-- 😝 线上预览: https://vue3.xmwpro.com
+- 😝 线上预览: https://vue3.baiwumm.com
 
 - 🔑 用户名：**admin**，密码：**123456**
 
@@ -31,7 +31,7 @@
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-- 😝 Vue2版本： [Vue2 Admin](https://github.com/Cyan-Xmw/Vue2-Admin/)
+- 😝 Vue2版本： [Vue2 Admin](https://github.com/baiwumm/Vue2-Admin/)
 
 ## 环境和依赖
 
@@ -46,7 +46,7 @@
 
 - 拉取项目代码
 ```bash
-git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+git clone https://github.com/baiwumm/Vue3-Admin.git
 cd Vue3-Admin
 cd Xmw_web
 ```

@@ -21,7 +21,7 @@
 
 ## 项目简介
 
-  [Vue3 Admin](https://vue3.xmwpro.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
+  [Vue3 Admin](https://vue3.baiwumm.com/) 基于 [Vben Admin](https://github.com/anncwb/vue-vben-admin/) 二次开发，它使用了全新的技术栈：Vue3、Vite、TypeScript等，提供了完善的前后端权限管理方案，丰富的主题配置及黑暗主题适配，对日常使用频率较高的组件二次封装,满足基础工作需求，希望本项目可以帮助到您。
 
 - 🎯 前端技术栈： [Vue3.0](https://github.com/vuejs/core/)、[Ant Design Vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
@@ -31,17 +31,17 @@
 
 - 🔗 后端传送门： [Xmw_server](./Xmw_server)
 
-- 😝 线上预览： https://vue3.xmwpro.com
+- 😝 线上预览： https://vue3.baiwumm.com
 
-- [🚀 github 仓库地址](https://github.com/Cyan-Xmw/Vue3-Admin/)
+- [🚀 github 仓库地址](https://github.com/baiwumm/Vue3-Admin/)
 
-- [🚀 码云仓库地址](https://gitee.com/Cyan-Xmw/Vue3-Admin/)
+- [🚀 码云仓库地址](https://gitee.com/baiwumm/Vue3-Admin/)
 
 - 📄 文档地址：**正在编写中！**
 
 - ❤️ star：**如果可以的话，请顺手给个star，表示对作者的鼓励，万分感谢！**
 
-- 😝 Vue2版本： [Vue2 Admin](https://github.com/Cyan-Xmw/Vue2-Admin/)
+- 😝 Vue2版本： [Vue2 Admin](https://github.com/baiwumm/Vue2-Admin/)
 
 ## 环境和依赖
 
@@ -56,7 +56,7 @@
 
 - 拉取项目代码
 ```bash
-git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+git clone https://github.com/baiwumm/Vue3-Admin.git
 cd Vue3-Admin
 // 进入前端
 cd Xmw_web

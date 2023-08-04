@@ -24,9 +24,9 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
-[Vue3 Admin](https://vue3.xmwpro.com/) is a background management system solutions, The back-end is based on [Egg.js](https://github.com/eggjs/egg/) and [Sequelize](https://github.com/sequelize/sequelize/). Egg.js was born for enterprise-level frameworks and applications, and we hope that more upper-layer frameworks will emerge from egg.js to help development teams and developers reduce development and maintenance costs.
+[Vue3 Admin](https://vue3.baiwumm.com/) is a background management system solutions, The back-end is based on [Egg.js](https://github.com/eggjs/egg/) and [Sequelize](https://github.com/sequelize/sequelize/). Egg.js was born for enterprise-level frameworks and applications, and we hope that more upper-layer frameworks will emerge from egg.js to help development teams and developers reduce development and maintenance costs.
 
-- 😝 Online Preview: https://vue3.xmwpro.com
+- 😝 Online Preview: https://vue3.baiwumm.com
 
 - 🔗 Front Gate：[Xmw_web](../Xmw_web)
 
@@ -43,7 +43,7 @@ English | [简体中文](./README.md)
 
 - Pull the project code
 ```bash
-git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+git clone https://github.com/baiwumm/Vue3-Admin.git
 cd Vue3-Admin
 cd Xmw_server
 ```

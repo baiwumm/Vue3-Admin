@@ -21,7 +21,7 @@ English | [简体中文](./README.md)
 
 ## Project Description
 
- [Vue3 Admin](https://vue3.xmwpro.com/) based on [Vben Admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
+ [Vue3 Admin](https://vue3.baiwumm.com/) based on [Vben Admin](https://github.com/anncwb/vue-vben-admin/), secondary development, It uses a new technology stack: Vue3, Vite, TypeScript, etc., provide perfect front and back end permission management scheme, rich theme configuration and dark theme adaptation, secondary encapsulation of frequently used components to meet basic work requirements. I hope this project can help you.
 
 - 🎯 Front-end technology stack： [Vue3.0](https://github.com/vuejs/core/)、[Ant Design Vue](https://github.com/vueComponent/ant-design-vue/)、[Vite](https://github.com/vitejs/vite/)、[TypeScript](https://github.com/microsoft/TypeScript)
 
@@ -31,17 +31,17 @@ English | [简体中文](./README.md)
 
 - 🔗 Backend Portal： [Xmw_server](./Xmw_server)
 
-- 😝 Online Preview： https://vue3.xmwpro.com
+- 😝 Online Preview： https://vue3.baiwumm.com
 
 - 🔑 username：**admin**，password：**123456**
 
-- [🚀 github warehouse address](https://github.com/Cyan-Xmw/Vue3-Admin/)
+- [🚀 github warehouse address](https://github.com/baiwumm/Vue3-Admin/)
 
-- [🚀 Code cloud warehouse address](https://gitee.com/Cyan-Xmw/Vue3-Admin/)
+- [🚀 Code cloud warehouse address](https://gitee.com/baiwumm/Vue3-Admin/)
 
 - ❤️ star：**If possible, please give me a STAR to show my encouragement to the author. Thank you very much!**
 
-- 😝 Vue2 Version： [Vue2 Admin](https://github.com/Cyan-Xmw/Vue2-Admin/)
+- 😝 Vue2 Version： [Vue2 Admin](https://github.com/baiwumm/Vue2-Admin/)
 
 ## Environment and Dependencies
 
@@ -56,7 +56,7 @@ English | [简体中文](./README.md)
 
 - Pull the project code
 ```bash
-git clone https://github.com/Cyan-Xmw/Vue3-Admin.git
+git clone https://github.com/baiwumm/Vue3-Admin.git
 cd Vue3-Admin
 cd Xmw_web
 ```
