@@ -1,24 +1,24 @@
 English | [简体中文](./README.md)
 
-<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
+<p align="center"><img width="100" src="https://cdn.baiwumm.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
 
 <h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg" alt="egg">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/egg.svg" alt="egg">
   </a>
   <a href="https://github.com/eggjs/egg-redis/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg-redis.svg" alt="egg-redis">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/egg-redis.svg" alt="egg-redis">
   </a>
   <a href="https://github.com/auth0/node-jsonwebtoken/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/jsonwebtoken.svg" alt="jsonwebtoken">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/jsonwebtoken.svg" alt="jsonwebtoken">
   </a>
   <a href="https://github.com/sequelize/sequelize/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg-sequelize.svg" alt="sequelize">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/egg-sequelize.svg" alt="sequelize">
   </a>
   <a>
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/build.svg">
   </a>
 </p>
 

@@ -8,7 +8,7 @@
                 <div class="lazy-img-cpntainer">
                     <div
                         class="img-waterMarker"
-                        v-waterMarker="{ text: 'XmwPro版权所有', textColor: useAppStore().getProjectConfig.themeColor }"
+                        v-waterMarker="{ text: 'Vue3 Admin', textColor: useAppStore().getProjectConfig.themeColor }"
                     ></div>
                     <img
                         class="lazy-img"

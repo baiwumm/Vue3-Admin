@@ -1,21 +1,21 @@
 English | [简体中文](./README.md)
 
-<p align="center"><img width="100" src="https://ali-oss.xmwpro.com/project/vue3-admin/logo.png!cyan" alt="Vue3 Admin Logo"></p>
+<p align="center"><img width="100" src="https://cdn.baiwumm.com/project/vue3-admin/logo.png!baiwu" alt="Vue3 Admin Logo"></p>
 
 <h1 align="center">Vue3 Admin</h1>
 
 <p align="center">
   <a href="https://github.com/vuejs/core/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/vue.svg!cyan" alt="vue">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/vue.svg" alt="vue">
   </a>
   <a href="https://github.com/vueComponent/ant-design-vue/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/antd.svg!cyan" alt="Ant Design of Vue">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/antd.svg" alt="Ant Design of Vue">
   </a>
   <a href="https://github.com/eggjs/egg/" target="_blank">
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/egg.svg!cyan" alt="egg">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/egg.svg" alt="egg">
   </a>
   <a>
-    <img src="https://ali-oss.xmwpro.com/project/vue3-admin/shield/build.svg!cyan">
+    <img src="https://cdn.baiwumm.com/project/vue3-admin/shield/build.svg">
   </a>
 </p>
 
@@ -159,11 +159,11 @@ yarn run build
 
 ## Demo Figure
 
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/login.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/workbench.jpg!cyan) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/login.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/workbench.jpg!baiwu) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/personal.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/menuManagement.jpg!cyan) |
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/customDirective.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/qrcode.jpg!cyan) |
-| ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/captcha.jpg!cyan) | ![](https://ali-oss.xmwpro.com/project/vue3-admin/demo/lazyLoad.png!cyan) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/personal.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/menuManagement.jpg!baiwu) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/customDirective.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/qrcode.jpg!baiwu) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/captcha.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/lazyLoad.png!baiwu) |
 
 ## Special Thanks（Thanks to the giant）
 

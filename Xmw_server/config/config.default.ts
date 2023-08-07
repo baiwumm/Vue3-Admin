@@ -2,7 +2,7 @@
  * @Author: Xie Mingwei
  * @Date: 2021-08-19 18:02:52
  * @LastEditors: Cyan
- * @LastEditTime: 2023-07-17 15:03:38
+ * @LastEditTime: 2023-08-07 17:42:46
  * @Description: egg.js配置文件
  */
 import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
@@ -13,7 +13,7 @@ export default (appInfo: EggAppInfo) => {
     config.Db = {
         xmw: {
             dialect: "mysql",
-            database: 'vue3_xmwpro_com',
+            database: 'vue3_baiwumm_com',
             host: "127.0.0.1",
             username: 'root',
             password: '123456',
@@ -80,8 +80,8 @@ export default (appInfo: EggAppInfo) => {
 
     // 用户默认头像
     config.avatar = {
-        male: 'https://ali-oss.xmwpro.com/project/vue3-admin/avatar/boy_avatar.svg!cyan',
-        female: 'https://ali-oss.xmwpro.com/project/vue3-admin/avatar/girl_avatar.svg!cyan'
+        male: 'https://cdn.baiwumm.com/project/vue3-admin/avatar/boy.svg',
+        female: 'https://cdn.baiwumm.com/project/vue3-admin/avatar/girl.svg'
     }
 
     // the return config will combines to EggAppConfig
