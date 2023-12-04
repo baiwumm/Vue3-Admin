@@ -4,7 +4,7 @@ const lazyLoadDirective: Directive = {
     beforeMount(el, binding) {
         // 设置图片加载失败的默认图片
         el.onerror = () => {
-            el.src = 'https://cdn.baiwumm.com/project/vue3-admin/error.png!baiwu'
+            el.src = 'https://cdn.baiwumm.com/project/vue3-admin/error.png'
         }
         el.$data_src = binding.value.src;
     },

@@ -1,6 +1,6 @@
 English | [简体中文](./README.md)
 
-<p align="center"><img width="100" src="https://cdn.baiwumm.com/project/vue3-admin/logo.png!baiwu" alt="Vue3 Admin Logo"></p>
+<p align="center"><img width="100" src="https://cdn.baiwumm.com/project/vue3-admin/logo.png" alt="Vue3 Admin Logo"></p>
 
 <h1 align="center">Vue3 Admin</h1>
 
@@ -159,11 +159,11 @@ yarn run build
 
 ## Demo Figure
 
-| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/login.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/workbench.jpg!baiwu) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/login.jpg) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/workbench.jpg) |
 | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/personal.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/menuManagement.jpg!baiwu) |
-| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/customDirective.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/qrcode.jpg!baiwu) |
-| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/captcha.jpg!baiwu) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/lazyLoad.png!baiwu) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/personal.jpg) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/menuManagement.jpg) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/customDirective.jpg) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/qrcode.jpg) |
+| ![](https://cdn.baiwumm.com/project/vue3-admin/demo/captcha.jpg) | ![](https://cdn.baiwumm.com/project/vue3-admin/demo/lazyLoad.png) |
 
 ## Special Thanks（Thanks to the giant）
 
