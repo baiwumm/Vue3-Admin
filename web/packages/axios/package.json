@@ -1,0 +1,21 @@
+{
+  "name": "@sa/axios",
+  "version": "1.2.6",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./src/*"]
+    }
+  },
+  "dependencies": {
+    "@sa/utils": "workspace:*",
+    "axios": "1.7.2",
+    "axios-retry": "4.4.1",
+    "qs": "6.12.2"
+  },
+  "devDependencies": {
+    "@types/qs": "6.9.15"
+  }
+}
