@@ -1,0 +1,27 @@
+{
+  "name": "vue3-admin",
+  "version": "1.0.0",
+  "description": "Background application based on Nest.js and Vue3 full stack",
+  "main": "index.js",
+  "author": {
+    "name": "baiwumm",
+    "email": "baiwumm@foxmail.com",
+    "url": "https://baiwumm.com"
+  },
+  "homepage": "https://github.com/baiwumm/Vue3-Admin",
+  "repository": {
+    "url": "https://github.com/baiwumm/Vue3-Admin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/baiwumm/Vue3-Admin/issues"
+  },
+  "scripts": {
+    "release": "release-it"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+    "@release-it/conventional-changelog": "^8.0.1",
+    "release-it": "^17.5.0"
+  }
+}
