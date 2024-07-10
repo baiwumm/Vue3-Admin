@@ -51,6 +51,28 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'administrative',
+    path: '/administrative',
+    component: 'layout.base',
+    meta: {
+      title: 'administrative',
+      i18nKey: 'route.administrative',
+      icon: 'ri:quill-pen-line'
+    },
+    children: [
+      {
+        name: 'administrative_organization',
+        path: '/administrative/organization',
+        component: 'view.administrative_organization',
+        meta: {
+          title: 'administrative_organization',
+          i18nKey: 'route.administrative_organization',
+          icon: 'ri:exchange-2-line'
+        }
+      }
+    ]
+  },
+  {
     name: 'function',
     path: '/function',
     component: 'layout.base',

@@ -181,7 +181,9 @@ const local: App.I18n.Schema = {
     exception: '异常页',
     exception_403: '403',
     exception_404: '404',
-    exception_500: '500'
+    exception_500: '500',
+    administrative: '智能行政',
+    administrative_organization: '组织管理'
   },
   page: {
     login: {
