@@ -1,0 +1,28 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 组织实体
+model Organization {
+  id        String     @id @default(uuid()) // 主键
+  name      String     @unique // 组织名称
+  code      String     @unique // 组织编码
+  parentId    String?  
+  parent      Organization? @relation(name: "OrgHierarchy", fields: [parentId], references: [id])
+  subOrganizations Organization[] @relation(name: "OrgHierarchy")
+  sort       Int // 排序
+  description String? // 组织描述
+  createdAt DateTime @default(now()) // 创建时间
+  updatedAt DateTime @updatedAt // 更新时间
+}
