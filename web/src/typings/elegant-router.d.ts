@@ -33,6 +33,8 @@ declare module "@elegant-router/types" {
     "404": "/404";
     "500": "/500";
     "about": "/about";
+    "administrative": "/administrative";
+    "administrative_organization": "/administrative/organization";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -105,6 +107,7 @@ declare module "@elegant-router/types" {
     | "404"
     | "500"
     | "about"
+    | "administrative"
     | "function"
     | "home"
     | "iframe-page"
@@ -136,6 +139,7 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "login"
     | "about"
+    | "administrative_organization"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"
