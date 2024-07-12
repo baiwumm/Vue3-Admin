@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 14:17:49
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-10 15:49:15
+ * @LastEditTime: 2024-07-12 14:37:05
  * @Description: 全局异常过滤器
  */
 import {
@@ -15,6 +15,7 @@ import {
 import { Response } from 'express';
 
 import { responseMessage } from '@/utils';
+import { RESPONSE_MSG } from '@/enums'
 
 // @Catch() 装饰器绑定所需的元数据到异常过滤器上。它告诉 Nest这个特定的过滤器正在寻找
 @Catch()
@@ -33,6 +34,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
     // 自定义异常返回体
     response
       .status(statusCode)
-      .json(responseMessage(null, '服务器内部错误!', statusCode));
+      .json(responseMessage(null, RESPONSE_MSG.ERROR, statusCode));
   }
 }
