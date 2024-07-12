@@ -23,6 +23,7 @@ model Organization {
   children Organization[] @relation(name: "OrgHierarchy")
   sort       Int // 排序
   description String? // 组织描述
+  icon       String? // 组织图标
   createdAt DateTime @default(now()) // 创建时间
   updatedAt DateTime @updatedAt // 更新时间
 }
