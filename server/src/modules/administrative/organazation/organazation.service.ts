@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-12 13:41:00
+ * @LastEditTime: 2024-07-12 17:47:09
  * @Description: OrganazationService - 组织管理
  */
 import { Injectable } from '@nestjs/common';
@@ -76,7 +76,7 @@ export class OrganazationService {
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
-        return responseMessage(null, '组织名称和编码已存在!', -1);
+        return responseMessage(null, '组织名称或编码已存在!', -1);
       }
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
     }
@@ -89,7 +89,7 @@ export class OrganazationService {
     try {
       // 判断父级不能是子级
       if (id === body.parentId) {
-        return responseMessage(null, '父级不能和自己相同!', -1);
+        return responseMessage(null, '父级不能是自己!', -1);
       }
       const result = await this.prisma.organization.update({
         where: { id },
@@ -99,7 +99,7 @@ export class OrganazationService {
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
-        return responseMessage(null, '组织名称和编码已存在!', -1);
+        return responseMessage(null, '组织名称或编码已存在!', -1);
       }
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
     }
@@ -117,7 +117,7 @@ export class OrganazationService {
         },
       });
       if (hasChildren > 0) {
-        return responseMessage(null, '该组织下有子组织，不能删除!', -1);
+        return responseMessage(null, '该组织下有子级，不能删除!', -1);
       } else {
         const result = await this.prisma.organization.delete({
           where: { id },
