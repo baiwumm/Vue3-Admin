@@ -20,7 +20,7 @@ model Organization {
   code      String     @unique // 组织编码
   parentId    String?  
   parent      Organization? @relation(name: "OrgHierarchy", fields: [parentId], references: [id])
-  subOrganizations Organization[] @relation(name: "OrgHierarchy")
+  children Organization[] @relation(name: "OrgHierarchy")
   sort       Int // 排序
   description String? // 组织描述
   createdAt DateTime @default(now()) // 创建时间
