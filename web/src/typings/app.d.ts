@@ -607,6 +607,8 @@ declare namespace App {
             name: string;
             code: string;
             description: string;
+            icon: string;
+            iconTip: string;
             addOrg: string,
             editOrg: string
           }

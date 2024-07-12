@@ -436,6 +436,8 @@ const local: App.I18n.Schema = {
         name: 'Organization name',
         code: 'Organization code',
         description: 'Description',
+        icon: 'Organization Icon',
+        iconTip: 'Please check the system icon usage on the official website',
         addOrg: 'Add Organization',
         editOrg: 'Edit Organization'
       }

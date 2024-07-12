@@ -48,8 +48,9 @@
 </template>
 
 <script setup lang="tsx">
+import { ref } from "vue";
 import { $t } from "@/locales";
-import { Button, Popconfirm, Tag } from "ant-design-vue";
+import { Button, Popconfirm, Tag, Space, Tooltip } from "ant-design-vue";
 import {
   useTable,
   useTableOperate,
@@ -61,6 +62,9 @@ import HeaderSearch from "./modules/header-search.vue";
 import dayjs from "dayjs";
 
 const { tableWrapperRef, scrollConfig } = useTableScroll();
+
+// 编辑的数据
+const editingData = ref<Api.Administrative.Organization | null>(null);
 
 const {
   columns,
@@ -79,17 +83,21 @@ const {
   },
   columns: () => [
     {
-      key: "index",
-      title: $t("common.index"),
-      dataIndex: "index",
-      align: "center",
-      width: 64,
-    },
-    {
       key: "name",
       dataIndex: "name",
       title: $t("page.administrative.organization.name"),
       align: "center",
+      customRender: ({ text, record }) => (
+        <Tag bordered={false}>
+          <Space>
+            <SvgIcon
+              icon={record.icon || "ri:exchange-2-line"}
+              class="text-base"
+            />
+            {text}
+          </Space>
+        </Tag>
+      ),
     },
     {
       key: "code",
@@ -107,6 +115,15 @@ const {
       dataIndex: "description",
       title: $t("page.administrative.organization.description"),
       align: "center",
+      ellipsis: true,
+      customRender: ({ text }) =>
+        text ? (
+          <Tooltip title={text} placement="topLeft">
+            {text}
+          </Tooltip>
+        ) : (
+          "--"
+        ),
     },
     {
       key: "sort",
@@ -124,6 +141,7 @@ const {
       dataIndex: "createdAt",
       title: $t("common.createdAt"),
       align: "center",
+      width: 160,
       customRender: ({ text }) => dayjs(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
@@ -138,7 +156,7 @@ const {
             type="primary"
             ghost
             size="small"
-            onClick={() => edit(record.id)}
+            onClick={() => edit(record)}
           >
             {$t("common.edit")}
           </Button>
@@ -159,7 +177,6 @@ const {
 const {
   drawerVisible,
   operateType,
-  editingData,
   handleAdd,
   handleEdit,
   checkedRowKeys,
@@ -183,7 +200,8 @@ const handleDelete = (id: number) => {
 /**
  * @description: 编辑组织
  */
-const edit = (id: number) => {
-  handleEdit(id);
+const edit = (record: Api.Administrative.Organization) => {
+  editingData.value = record;
+  handleEdit(record.id);
 };
 </script>

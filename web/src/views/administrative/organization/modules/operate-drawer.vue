@@ -53,6 +53,7 @@ function createDefaultModel(): Api.Administrative.SaveOrganization {
     code: "",
     sort: 1,
     description: "",
+    icon: undefined,
   };
 }
 
@@ -92,7 +93,14 @@ async function handleSubmit() {
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
-      ...pick(model, ["parentId", "name", "code", "sort", "description"]),
+      ...pick(model, [
+        "parentId",
+        "name",
+        "code",
+        "sort",
+        "description",
+        "icon",
+      ]),
     };
     await (isAdd ? createOrganazation : updateOrganazation)(params)
       .then(({ error }) => {
@@ -135,7 +143,7 @@ watch(visible, () => {
           allow-clear
           tree-default-expand-all
           :tree-data="dataSource"
-          tree-node-filter-prop="label"
+          tree-node-filter-prop="name"
           :fieldNames="{ value: 'id', label: 'name' }"
         />
       </AFormItem>
@@ -176,6 +184,19 @@ watch(visible, () => {
           :max="999"
           :placeholder="$t('form.enter') + $t('form.sort')"
           style="width: 100%"
+        />
+      </AFormItem>
+      <AFormItem
+        :label="$t('page.administrative.organization.icon')"
+        name="icon"
+        :tooltip="$t('page.administrative.organization.iconTip')"
+      >
+        <AInput
+          v-model:value="model.icon"
+          show-count
+          :placeholder="
+            $t('form.enter') + $t('page.administrative.organization.icon')
+          "
         />
       </AFormItem>
       <AFormItem

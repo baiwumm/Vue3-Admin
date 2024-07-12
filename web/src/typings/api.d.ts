@@ -224,6 +224,7 @@ declare namespace Api {
       parentId?: string; // 父级id
       parentName?: string; // 父级名称
       description?: string; // 组织描述
+      icon?: string; // 组织图标
       children?: Organization[]
     }>
     /**
@@ -233,6 +234,6 @@ declare namespace Api {
     /**
      * @description: 创建/更新组织
      */
-    type SaveOrganization = Pick<Organization, 'name' | 'code' | 'parentId' | 'description' | 'sort'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
+    type SaveOrganization = Pick<Organization, 'name' | 'code' | 'parentId' | 'description' | 'sort' | 'icon'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
   }
 }

@@ -436,6 +436,8 @@ const local: App.I18n.Schema = {
         name: '组织名称',
         code: '组织编码',
         description: '组织描述',
+        icon: '组织图标',
+        iconTip: '请查看官网系统图标用法',
         addOrg: '新增组织',
         editOrg: '编辑组织'
       }
