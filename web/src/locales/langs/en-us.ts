@@ -45,7 +45,9 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: 'Yes',
       no: 'No'
-    }
+    },
+    createdAt: 'CreatedAt',
+    updatedAt: 'UpdatedAt'
   },
   request: {
     logout: 'Logout user after request failed',
@@ -428,6 +430,15 @@ const local: App.I18n.Schema = {
           local: 'Local Icon'
         }
       }
+    },
+    administrative: {
+      organization: {
+        name: 'Organization name',
+        code: 'Organization code',
+        description: 'Description',
+        addOrg: 'Add Organization',
+        editOrg: 'Edit Organization'
+      }
     }
   },
   form: {
@@ -455,7 +466,13 @@ const local: App.I18n.Schema = {
     email: {
       required: 'Please enter email',
       invalid: 'Email format is incorrect'
-    }
+    },
+    enter: 'Please enter ',
+    select: 'Please select ',
+    sort: 'Sort',
+    sortTip: 'The larger the order, the higher the position',
+    parent: 'Parent',
+    parentTip: 'The default is top-level'
   },
   dropdown: {
     closeCurrent: 'Close Current',

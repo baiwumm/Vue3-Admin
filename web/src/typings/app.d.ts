@@ -294,6 +294,8 @@ declare namespace App {
           yes: string;
           no: string;
         };
+        createdAt: string;
+        updatedAt: string;
       };
       request: {
         logout: string;
@@ -600,6 +602,15 @@ declare namespace App {
             };
           };
         };
+        administrative: {
+          organization: {
+            name: string;
+            code: string;
+            description: string;
+            addOrg: string,
+            editOrg: string
+          }
+        }
       };
       form: {
         required: string;
@@ -609,6 +620,12 @@ declare namespace App {
         confirmPwd: FormMsg;
         code: FormMsg;
         email: FormMsg;
+        enter: string;
+        select: string;
+        sort: string;
+        sortTip: string;
+        parent: string;
+        parentTip: string;
       };
       dropdown: Record<Global.DropdownKey, string>;
       icon: {
@@ -627,8 +644,8 @@ declare namespace App {
 
     type GetI18nKey<T extends Record<string, unknown>, K extends keyof T = keyof T> = K extends string
       ? T[K] extends Record<string, unknown>
-        ? `${K}.${GetI18nKey<T[K]>}`
-        : K
+      ? `${K}.${GetI18nKey<T[K]>}`
+      : K
       : never;
 
     type I18nKey = GetI18nKey<Schema>;
@@ -677,7 +694,7 @@ declare namespace App {
     /** The backend service response data */
     type Response<T = unknown> = {
       /** The backend service response code */
-      code: string;
+      code: number;
       /** The backend service response message */
       msg: string;
       /** The backend service response data */

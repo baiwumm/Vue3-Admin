@@ -45,7 +45,9 @@ const local: App.I18n.Schema = {
     yesOrNo: {
       yes: '是',
       no: '否'
-    }
+    },
+    createdAt: '创建时间',
+    updatedAt: '更新时间'
   },
   request: {
     logout: '请求失败后登出用户',
@@ -428,6 +430,15 @@ const local: App.I18n.Schema = {
           local: '本地图标'
         }
       }
+    },
+    administrative: {
+      organization: {
+        name: '组织名称',
+        code: '组织编码',
+        description: '组织描述',
+        addOrg: '新增组织',
+        editOrg: '编辑组织'
+      }
     }
   },
   form: {
@@ -455,7 +466,13 @@ const local: App.I18n.Schema = {
     email: {
       required: '请输入邮箱',
       invalid: '邮箱格式不正确'
-    }
+    },
+    enter: '请输入',
+    select: '请选择',
+    sort: '排序',
+    sortTip: '排序越大，位置越靠前',
+    parent: '父级',
+    parentTip: '不选默认为顶级'
   },
   dropdown: {
     closeCurrent: '关闭',
