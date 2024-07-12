@@ -5,20 +5,19 @@
  */
 declare namespace Api {
   namespace Common {
-    /** common params of paginating */
-    interface PaginatingCommonParams {
-      /** current page number */
-      current: number;
-      /** page size */
-      size: number;
-      /** total count */
-      total: number;
+    // 分页参数
+    type PaginatingCommonParams = {
+      current: number; // 页码
+      size: number; // 条数
+      total: number; //总条数
     }
 
-    /** common params of paginating query list data */
-    interface PaginatingQueryRecord<T = any> extends PaginatingCommonParams {
+    // 分页列表
+    type PaginatingQueryRecord<T = any> = {
       records: T[];
-    }
+    } & PaginatingCommonParams;
+
+    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
     /**
      * enable status
@@ -30,18 +29,10 @@ declare namespace Api {
 
     /** common record */
     type CommonRecord<T = any> = {
-      /** record id */
-      id: number;
-      /** record creator */
-      createBy: string;
-      /** record create time */
-      createTime: string;
-      /** record updater */
-      updateBy: string;
-      /** record update time */
-      updateTime: string;
-      /** record status */
-      status: EnableStatus;
+      id: number; // 主键
+      sort: number; // 排序
+      createdAt: string; // 创建时间
+      updatedAt: string; // 更新时间
     } & T;
   }
 
@@ -138,7 +129,7 @@ declare namespace Api {
     /** user search params */
     type UserSearchParams = Partial<
       Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
-        CommonSearchParams
+      CommonSearchParams
     >;
 
     /** user list */
@@ -218,5 +209,30 @@ declare namespace Api {
       pId: number;
       children?: MenuTree[];
     };
+  }
+
+  /**
+   * @description: 智能行政
+   */
+  namespace Administrative {
+    /**
+     * @description: 组织管理
+     */
+    type Organization = Common.CommonRecord<{
+      name: string; // 组织名称
+      code: string; // 组织编码
+      parentId?: string; // 父级id
+      parentName?: string; // 父级名称
+      description?: string; // 组织描述
+      children?: Organization[]
+    }>
+    /**
+     * @description: 查询参数
+     */
+    type OrganizationSearchParams = Partial<Pick<Organization, 'name' | 'code'>>;
+    /**
+     * @description: 创建/更新组织
+     */
+    type SaveOrganization = Pick<Organization, 'name' | 'code' | 'parentId' | 'description' | 'sort'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
   }
 }
