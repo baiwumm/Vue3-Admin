@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 14:05:23
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-10 14:24:36
+ * @LastEditTime: 2024-07-11 16:26:16
  * @Description: 全局响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -27,6 +27,6 @@ export class ResponseDto {
   @ApiProperty({ description: '业务数据' })
   data?: any;
 
-  @ApiProperty({ type: Number, description: '时间戳' })
+  @ApiProperty({ type: Number, description: '时间戳', default: 1720685424078 })
   timestamp: number;
 }
