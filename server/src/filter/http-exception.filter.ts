@@ -5,12 +5,7 @@
  * @LastEditTime: 2024-07-10 15:48:42
  * @Description: http 异常过滤器
  */
-import {
-  ArgumentsHost,
-  Catch,
-  ExceptionFilter,
-  HttpException,
-} from '@nestjs/common';
+import { ArgumentsHost, Catch, ExceptionFilter, HttpException } from '@nestjs/common';
 import { Response } from 'express';
 
 import { responseMessage } from '@/utils';
@@ -27,8 +22,6 @@ export class HttpExceptionsFilter implements ExceptionFilter {
     const statusCode = exception.getStatus();
 
     // 自定义异常返回体
-    response
-      .status(statusCode)
-      .json(responseMessage(null, exception.message, statusCode));
+    response.status(statusCode).json(responseMessage(null, exception.message, statusCode));
   }
 }

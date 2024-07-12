@@ -17,5 +17,5 @@ export enum RESPONSE_CODE {
 export enum RESPONSE_MSG {
   SUCCESS = '请求成功',
   FAILURE = '请求失败',
-  ERROR = '服务器内部错误'
+  ERROR = '服务器错误',
 }
