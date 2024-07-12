@@ -145,7 +145,18 @@ watch(visible, () => {
           :tree-data="dataSource"
           tree-node-filter-prop="name"
           :fieldNames="{ value: 'id', label: 'name' }"
-        />
+        >
+          <template #title="{ icon, name }">
+            <ASpace align="center">
+              <svg-icon
+                :icon="icon || 'ri:exchange-2-line'"
+                class="inline-block"
+                style="vertical-align: -2px"
+              />
+              {{ name }}
+            </ASpace>
+          </template>
+        </ATreeSelect>
       </AFormItem>
       <AFormItem
         :label="$t('page.administrative.organization.name')"
