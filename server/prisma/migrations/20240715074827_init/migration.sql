@@ -6,6 +6,7 @@ CREATE TABLE "Organization" (
     "parentId" TEXT,
     "sort" INTEGER NOT NULL,
     "description" TEXT,
+    "icon" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
