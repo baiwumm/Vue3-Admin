@@ -38,9 +38,19 @@ declare namespace Api {
       name: string; // 组织名称
       code: string; // 组织编码
       parentId: string; // 父级id
-      parentName: string; // 父级名称
+      posts: Post[]; // 关联岗位
       description: string; // 组织描述
       children?: Organization[];
+    }>;
+    /**
+     * @description: 岗位管理
+     */
+    type Post = Common.CommonRecord<{
+      name: string; // 岗位名称
+      parentId: string; // 父级id
+      organization: Organization; // 所属组织
+      description: string; // 岗位描述
+      children?: Post[];
     }>;
   }
 }
