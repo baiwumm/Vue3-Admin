@@ -13,7 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 组织实体
+// 智能行政 - 组织管理
 model Organization {
   id        String     @id @default(uuid()) // 主键
   name      String     @unique // 组织名称
@@ -24,6 +24,22 @@ model Organization {
   sort       Int // 排序
   description String? // 组织描述
   icon       String? // 组织图标
+  posts     Post[] // 岗位
+  createdAt DateTime @default(now()) // 创建时间
+  updatedAt DateTime @updatedAt // 更新时间
+}
+
+// 智能行政 - 岗位管理
+model Post {
+  id        String     @id @default(uuid()) // 主键
+  name      String     @unique // 岗位名称
+  orgId       String  // 关联的组织 id
+  organization Organization @relation(fields: [orgId], references: [id])   
+  parentId  String?    
+  parent      Post? @relation(name: "PostHierarchy", fields: [parentId], references: [id])
+  children Post[] @relation(name: "PostHierarchy")
+  sort       Int // 排序
+  description String? // 岗位描述
   createdAt DateTime @default(now()) // 创建时间
   updatedAt DateTime @updatedAt // 更新时间
 }
