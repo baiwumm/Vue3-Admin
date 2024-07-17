@@ -57,7 +57,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     meta: {
       title: 'administrative',
       i18nKey: 'route.administrative',
-      icon: 'ri:quill-pen-line'
+      icon: 'ri:quill-pen-line',
+      order: 2
     },
     children: [
       {
@@ -68,6 +69,16 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'administrative_organization',
           i18nKey: 'route.administrative_organization',
           icon: 'ri:exchange-2-line'
+        }
+      },
+      {
+        name: 'administrative_post-manage',
+        path: '/administrative/post-manage',
+        component: 'view.administrative_post-manage',
+        meta: {
+          title: 'administrative_post-manage',
+          i18nKey: 'route.administrative_post-manage',
+          icon: 'ri:contacts-book-3-line'
         }
       }
     ]

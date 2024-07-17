@@ -606,11 +606,19 @@ declare namespace App {
           organization: {
             name: string;
             code: string;
+            posts: string;
             description: string;
             icon: string;
             iconTip: string;
             addOrg: string,
             editOrg: string
+          },
+          postManage: {
+            name: string;
+            orgId: string;
+            description: string;
+            addPost: string;
+            editPost: string;
           }
         }
       };

@@ -35,6 +35,7 @@ declare module "@elegant-router/types" {
     "about": "/about";
     "administrative": "/administrative";
     "administrative_organization": "/administrative/organization";
+    "administrative_post-manage": "/administrative/post-manage";
     "function": "/function";
     "function_hide-child": "/function/hide-child";
     "function_hide-child_one": "/function/hide-child/one";
@@ -140,6 +141,7 @@ declare module "@elegant-router/types" {
     | "login"
     | "about"
     | "administrative_organization"
+    | "administrative_post-manage"
     | "function_hide-child_one"
     | "function_hide-child_three"
     | "function_hide-child_two"

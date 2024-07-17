@@ -185,7 +185,8 @@ const local: App.I18n.Schema = {
     exception_404: '404',
     exception_500: '500',
     administrative: '智能行政',
-    administrative_organization: '组织管理'
+    administrative_organization: '组织管理',
+    'administrative_post-manage': '岗位管理'
   },
   page: {
     login: {
@@ -435,11 +436,19 @@ const local: App.I18n.Schema = {
       organization: {
         name: '组织名称',
         code: '组织编码',
+        posts: '关联岗位',
         description: '组织描述',
         icon: '组织图标',
         iconTip: '请查看官网系统图标用法',
         addOrg: '新增组织',
         editOrg: '编辑组织'
+      },
+      postManage: {
+        name: '岗位名称',
+        orgId: '所属组织',
+        description: '岗位描述',
+        addPost: '新增岗位',
+        editPost: '编辑岗位'
       }
     }
   },

@@ -19,6 +19,12 @@ declare namespace Api {
 
     type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
 
+    // 查询时间
+    type SearchTime = {
+      startTime?: number; // 开始时间
+      endTime?: number; // 结束时间
+    }
+
     /**
      * enable status
      *
@@ -221,10 +227,10 @@ declare namespace Api {
     type Organization = Common.CommonRecord<{
       name: string; // 组织名称
       code: string; // 组织编码
-      parentId?: string; // 父级id
-      parentName?: string; // 父级名称
+      parentId?: string; // 父级 id
       description?: string; // 组织描述
       icon?: string; // 组织图标
+      posts: PostManage[]; // 关联岗位
       children?: Organization[]
     }>
     /**
@@ -235,5 +241,25 @@ declare namespace Api {
      * @description: 创建/更新组织
      */
     type SaveOrganization = Pick<Organization, 'name' | 'code' | 'parentId' | 'description' | 'sort' | 'icon'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
+
+    /**
+     * @description: 岗位管理
+     */
+    type PostManage = Common.CommonRecord<{
+      name: string; // 岗位名称
+      parentId?: string; // 父级 id
+      orgId?: string; // 所属组织 id
+      organization: Organization; // 所属组织
+      description?: string; // 岗位描述
+      children?: PostManage[]
+    }>
+    /**
+     * @description: 查询参数
+     */
+    type PostManageSearchParams = Partial<Pick<PostManage, 'name' | 'orgId'>> & Api.Common.SearchTime;
+    /**
+     * @description: 创建/更新岗位
+     */
+    type SavePostManage = Pick<PostManage, 'name' | 'parentId' | 'orgId' | 'description' | 'sort'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
   }
 }

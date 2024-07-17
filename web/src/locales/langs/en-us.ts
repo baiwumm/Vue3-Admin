@@ -185,7 +185,8 @@ const local: App.I18n.Schema = {
     exception_404: '404',
     exception_500: '500',
     administrative: 'Administrative',
-    administrative_organization: 'Organization'
+    administrative_organization: 'Organization',
+    'administrative_post-manage': 'Post Manage'
   },
   page: {
     login: {
@@ -435,11 +436,19 @@ const local: App.I18n.Schema = {
       organization: {
         name: 'Organization name',
         code: 'Organization code',
+        posts: 'Posts',
         description: 'Description',
         icon: 'Organization Icon',
         iconTip: 'Please check the system icon usage on the official website',
         addOrg: 'Add Organization',
         editOrg: 'Edit Organization'
+      },
+      postManage: {
+        name: 'Post Name',
+        orgId: 'Organization',
+        description: 'Description',
+        addPost: 'Add Post',
+        editPost: 'Edit Post'
       }
     }
   },

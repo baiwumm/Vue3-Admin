@@ -5,3 +5,10 @@ export enum SetupStoreId {
   Route = 'route-store',
   Tab = 'tab-store'
 }
+
+/**
+ * @description: 公共文案
+ */
+export enum UNIFORM_TEXT {
+  NULL = '--',
+}
