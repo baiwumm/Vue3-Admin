@@ -2,14 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-12 17:47:09
+ * @LastEditTime: 2024-07-17 10:39:18
  * @Description: OrganazationService - 组织管理
  */
 import { Injectable } from '@nestjs/common';
 
 import { RESPONSE_MSG } from '@/enums';
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { removeEmptyChildren, responseMessage } from '@/utils';
+import { convertFlatDataToTree, responseMessage } from '@/utils';
 
 import { OrganazationParamsDto } from './dto/params-organazation.dto';
 import { SaveOrganazationDto } from './dto/save-organazation.dto';
@@ -23,7 +23,7 @@ export class OrganazationService {
    */
   async findAll({ name, code }: OrganazationParamsDto) {
     // 条件判断
-    const where = { parentId: null }; // 只查询顶级
+    const where = {}; // 查询参数
     // 模糊查询
     if (name) {
       where['name'] = { contains: name, mode: 'insensitive' };
@@ -35,20 +35,15 @@ export class OrganazationService {
     const result = await this.prisma.organization.findMany({
       where,
       include: {
-        children: {
-          include: {
-            children: true, // 这里是关键，它允许递归获取子组织，这里意味子级最多三层，加上父级
-          },
-        },
+        posts: true,
       },
       orderBy: [
         { sort: 'asc' }, // 按照sort字段升序
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
-    removeEmptyChildren(result);
     return responseMessage({
-      records: result,
+      records: convertFlatDataToTree(result),
     });
   }
 
