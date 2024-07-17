@@ -11,7 +11,7 @@ import { request } from '@/service/request';
  * @description: 获取组织管理列表
  * @param {Api.Administrative.OrganizationSearchParams} params
  */
-export function getOrganazationList(params: Api.Administrative.OrganizationSearchParams) {
+export function getOrganazationList(params?: Api.Administrative.OrganizationSearchParams) {
   return request<Api.Common.PaginatingQueryRecord<Api.Administrative.Organization>>({ url: '/organazation', params });
 }
 
