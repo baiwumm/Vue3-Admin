@@ -60,8 +60,11 @@ import { getOrganazationList, delOrganazation } from "@/service/api";
 import OperateDrawer from "./modules/operate-drawer.vue";
 import HeaderSearch from "./modules/header-search.vue";
 import dayjs from "dayjs";
+import SvgIcon from "@/components/custom/svg-icon.vue";
+import { UNIFORM_TEXT } from "@/enum";
+import { map } from "lodash-es";
 
-const { tableWrapperRef, scrollConfig } = useTableScroll();
+const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
 // 编辑的数据
 const editingData = ref<Api.Administrative.Organization | null>(null);
@@ -86,7 +89,6 @@ const {
       key: "name",
       dataIndex: "name",
       title: $t("page.administrative.organization.name"),
-      align: "center",
       customRender: ({ text, record }) => (
         <Tag bordered={false}>
           <Space>
@@ -111,6 +113,27 @@ const {
       ),
     },
     {
+      key: "posts",
+      dataIndex: "posts",
+      title: $t("page.administrative.organization.posts"),
+      align: "center",
+      customRender: ({ text: posts }) =>
+        posts?.length ? (
+          <Space direction="vertical">
+            {map(posts, (post) => (
+              <Tag bordered={false}>
+                <Space>
+                  <SvgIcon icon="ri:contacts-book-3-line" class="text-base" />
+                  {post.name}
+                </Space>
+              </Tag>
+            ))}
+          </Space>
+        ) : (
+          UNIFORM_TEXT.NULL
+        ),
+    },
+    {
       key: "description",
       dataIndex: "description",
       title: $t("page.administrative.organization.description"),
@@ -122,7 +145,7 @@ const {
             {text}
           </Tooltip>
         ) : (
-          "--"
+          UNIFORM_TEXT.NULL
         ),
     },
     {
@@ -141,7 +164,6 @@ const {
       dataIndex: "createdAt",
       title: $t("common.createdAt"),
       align: "center",
-      width: 160,
       customRender: ({ text }) => dayjs(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {

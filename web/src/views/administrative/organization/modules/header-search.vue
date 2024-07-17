@@ -3,7 +3,7 @@ import { $t } from "@/locales";
 import { useAntdForm } from "@/hooks/common/form";
 
 defineOptions({
-  name: "UserSearch",
+  name: "HeaderSearch",
 });
 
 interface Emits {
