@@ -13,6 +13,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// 状态
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+// 性别
+enum Sex {
+  FEMALE
+  MALE
+}
+
 // 智能行政 - 组织管理
 model Organization {
   id        String     @id @default(uuid()) // 主键
@@ -20,13 +32,14 @@ model Organization {
   code      String     @unique // 组织编码
   parentId    String?  
   parent      Organization? @relation(name: "OrgHierarchy", fields: [parentId], references: [id])
-  children Organization[] @relation(name: "OrgHierarchy")
+  users       User[]    // 关联用户
   sort       Int // 排序
   description String? // 组织描述
   icon       String? // 组织图标
   posts     Post[] // 岗位
   createdAt DateTime @default(now()) // 创建时间
   updatedAt DateTime @updatedAt // 更新时间
+  children Organization[] @relation(name: "OrgHierarchy")
 }
 
 // 智能行政 - 岗位管理
@@ -37,9 +50,40 @@ model Post {
   organization Organization @relation(fields: [orgId], references: [id])   
   parentId  String?    
   parent      Post? @relation(name: "PostHierarchy", fields: [parentId], references: [id])
-  children Post[] @relation(name: "PostHierarchy")
+  users       User[]   // 关联用户
   sort       Int // 排序
   description String? // 岗位描述
   createdAt DateTime @default(now()) // 创建时间
   updatedAt DateTime @updatedAt // 更新时间
+  children Post[] @relation(name: "PostHierarchy")
 }
+
+
+// 系统管理 - 用户管理
+model User {
+  id        String     @id @default(uuid()) // 主键
+  userName  String     @unique // 用户名
+  password  String     // 密码
+  cnName    String     // 中文名
+  email     String    @unique // 电子邮箱
+  phone     String    @unique // 手机号
+  avatar    String?    // 头像
+  sex       Sex        // 性别
+  status    Status     // 状态
+  sort      Int // 排序
+  token     String?    // token
+  tags      String[]   @default([]) // 标签
+  city      String[]   @default([]) // 城市
+  address   String?    // 详细地址
+  orgId     String    // 关联的组织 id
+  organization Organization @relation(fields: [orgId], references: [id])
+  postId    String    // 关联的岗位 id
+  post      Post      @relation(fields: [postId], references: [id])
+  loginCount Int?     @default(0) // 登录次数
+  lastIp     String?    // 最后登录ip
+  lastLoginAt DateTime? // 最后登录时间
+  createdAt DateTime @default(now()) // 创建时间
+  updatedAt DateTime @updatedAt // 更新时间
+}
+
+
