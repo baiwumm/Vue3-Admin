@@ -1,4 +1,5 @@
 declare namespace Api {
+  import { SEX, STATUS } from '@/enums';
   namespace Common {
     /**
      * @description: 全局响应体
@@ -51,6 +52,36 @@ declare namespace Api {
       organization: Organization; // 所属组织
       description: string; // 岗位描述
       children?: Post[];
+    }>;
+  }
+
+  /**
+   * @description: 系统管理
+   */
+  namespace SystemManage {
+    /**
+     * @description: 用户管理
+     */
+    type User = Common.CommonRecord<{
+      userName: string; // 用户名
+      password: string; // 密码
+      cnName: string; // 中文名
+      email: string; // 电子邮箱
+      phone: string; // 手机号
+      avatar: string; // 头像
+      sex: SEX; // 性别
+      status: STATUS; // 状态
+      token?: string; // token
+      tags: string[]; // 标签
+      city: string[]; // 城市
+      address?: string; // 详细地址
+      orgId: string; // 组织 id
+      organization: Api.Administrative.Organization; // 所属组织
+      postId: string; // 岗位 id
+      post: Api.Administrative.Post; // 所属岗位
+      loginCount: number; // 登录次数
+      lastIp?: string; // 最后一次登录 ip
+      lastLoginAt?: string; // 最后登录时间
     }>;
   }
 }
