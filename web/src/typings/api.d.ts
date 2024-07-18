@@ -4,42 +4,50 @@
  * All backend api type
  */
 declare namespace Api {
+  import { SEX, STATUS } from '@/enum'
   namespace Common {
-    // 分页参数
-    type PaginatingCommonParams = {
+    /**
+    * @description: 请求分页参数
+    */
+    type PaginatingParams = {
       current: number; // 页码
       size: number; // 条数
+    };
+    /**
+     * @description: 分页响应体
+     */
+    type PaginatingResponse = {
       total: number; //总条数
-    }
+    } & PaginatingParams;
 
-    // 分页列表
+    /**
+     * @description: 分页列表
+     */
     type PaginatingQueryRecord<T = any> = {
       records: T[];
-    } & PaginatingCommonParams;
+    } & PaginatingResponse;
 
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
-
-    // 查询时间
+    /**
+     * @description: 查询时间
+     */
     type SearchTime = {
       startTime?: number; // 开始时间
       endTime?: number; // 结束时间
     }
 
     /**
-     * enable status
-     *
-     * - "1": enabled
-     * - "2": disabled
+     * @description: 公共字段
      */
-    type EnableStatus = '1' | '2';
-
-    /** common record */
-    type CommonRecord<T = any> = {
+    type ColumnId = {
       id: number; // 主键
+    }
+    type ColumnFields = {
       sort: number; // 排序
       createdAt: string; // 创建时间
       updatedAt: string; // 更新时间
-    } & T;
+    } & ColumnId;
+    /** common record */
+    type CommonRecord<T = any> = ColumnFields & T;
   }
 
   /**
@@ -85,136 +93,38 @@ declare namespace Api {
    * backend api module: "systemManage"
    */
   namespace SystemManage {
-    type CommonSearchParams = Pick<Common.PaginatingCommonParams, 'current' | 'size'>;
-
-    /** role */
-    type Role = Common.CommonRecord<{
-      /** role name */
-      roleName: string;
-      /** role code */
-      roleCode: string;
-      /** role description */
-      roleDesc: string;
-    }>;
-
-    /** role search params */
-    type RoleSearchParams = Partial<
-      Pick<Api.SystemManage.Role, 'roleName' | 'roleCode' | 'status'> & CommonSearchParams
-    >;
-
-    /** role list */
-    type RoleList = Common.PaginatingQueryRecord<Role>;
-
-    /** all role */
-    type AllRole = Pick<Role, 'id' | 'roleName' | 'roleCode'>;
-
     /**
-     * user gender
-     *
-     * - "1": "male"
-     * - "2": "female"
+     * @description: 用户管理
      */
-    type UserGender = '1' | '2';
-
-    /** user */
-    type User = Common.CommonRecord<{
-      /** user name */
-      userName: string;
-      /** user gender */
-      userGender: UserGender;
-      /** user nick name */
-      nickName: string;
-      /** user phone */
-      userPhone: string;
-      /** user email */
-      userEmail: string;
-      /** user role code collection */
-      userRoles: string[];
-    }>;
-
-    /** user search params */
-    type UserSearchParams = Partial<
-      Pick<Api.SystemManage.User, 'userName' | 'userGender' | 'nickName' | 'userPhone' | 'userEmail' | 'status'> &
-      CommonSearchParams
-    >;
-
-    /** user list */
-    type UserList = Common.PaginatingQueryRecord<User>;
-
+    type UserManage = Common.CommonRecord<{
+      userName: string; // 用户名
+      password: string; // 密码
+      cnName: string; // 中文名
+      avatar?: string; // 头像
+      phone: string; // 手机号
+      email: string; // 邮箱
+      sex: SEX; // 性别
+      status: STATUS; // 状态
+      token?: string; // token
+      tags: string[]; // 标签
+      city: string[]; // 城市
+      address?: string; // 详细地址
+      orgId?: string; // 所属组织 id
+      organization: Api.Administrative.Organization; // 所属组织
+      postId?: string; // 所属岗位 id
+      post: Api.Administrative.PostManage; // 所属岗位
+      loginCount: number; // 登录次数
+      lastIp?: string; // 最后一次登录 ip
+      lastLoginAt?: string; // 最后登录时间
+    }>
     /**
-     * menu type
-     *
-     * - "1": directory
-     * - "2": menu
+     * @description: 查询参数
      */
-    type MenuType = '1' | '2';
-
-    type MenuButton = {
-      /**
-       * button code
-       *
-       * it can be used to control the button permission
-       */
-      code: string;
-      /** button description */
-      desc: string;
-    };
-
+    type UserManageSearchParams = Partial<Pick<UserManage, 'userName' | 'status'>> & Api.Common.PaginatingParams;
     /**
-     * icon type
-     *
-     * - "1": iconify icon
-     * - "2": local icon
+     * @description: 创建/更新用户
      */
-    type IconType = '1' | '2';
-
-    type MenuPropsOfRoute = Pick<
-      import('vue-router').RouteMeta,
-      | 'i18nKey'
-      | 'keepAlive'
-      | 'constant'
-      | 'order'
-      | 'href'
-      | 'hideInMenu'
-      | 'activeMenu'
-      | 'multiTab'
-      | 'fixedIndexInTab'
-      | 'query'
-    >;
-
-    type Menu = Common.CommonRecord<{
-      /** parent menu id */
-      parentId: number;
-      /** menu type */
-      menuType: MenuType;
-      /** menu name */
-      menuName: string;
-      /** route name */
-      routeName: string;
-      /** route path */
-      routePath: string;
-      /** component */
-      component?: string;
-      /** iconify icon name or local icon name */
-      icon: string;
-      /** icon type */
-      iconType: IconType;
-      /** buttons */
-      buttons?: MenuButton[] | null;
-      /** children menu */
-      children?: Menu[];
-    }> &
-      MenuPropsOfRoute;
-
-    /** menu list */
-    type MenuList = Common.PaginatingQueryRecord<Menu>;
-
-    type MenuTree = {
-      id: number;
-      label: string;
-      pId: number;
-      children?: MenuTree[];
-    };
+    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
   }
 
   /**
@@ -240,7 +150,7 @@ declare namespace Api {
     /**
      * @description: 创建/更新组织
      */
-    type SaveOrganization = Pick<Organization, 'name' | 'code' | 'parentId' | 'description' | 'sort' | 'icon'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
+    type SaveOrganization = Omit<Organization, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
 
     /**
      * @description: 岗位管理
@@ -260,6 +170,6 @@ declare namespace Api {
     /**
      * @description: 创建/更新岗位
      */
-    type SavePostManage = Pick<PostManage, 'name' | 'parentId' | 'orgId' | 'description' | 'sort'> & Partial<Pick<Api.Common.CommonRecord, 'id'>>
+    type SavePostManage = Omit<PostManage, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
   }
 }
