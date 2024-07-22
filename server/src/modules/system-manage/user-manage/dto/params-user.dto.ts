@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 13:48:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-18 13:57:27
+ * @LastEditTime: 2024-07-18 18:00:30
  * @Description: 请求参数 DTO
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -20,7 +20,7 @@ export class UserParamsDto extends PaginatingDTO {
   name?: string;
 
   @ApiProperty({
-    type: String,
+    enum: STATUS,
     description: '状态',
     default: 0,
     required: false,
