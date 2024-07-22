@@ -2,10 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-11 17:36:44
+ * @LastEditTime: 2024-07-22 11:22:07
  * @Description: OrganazationController
  */
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 
 import { OrganazationParamsDto } from './dto/params-organazation.dto';
@@ -44,7 +44,7 @@ export class OrganazationController {
   @Get(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '查询组织详情' })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.organazationService.findOne(id);
   }
 
@@ -54,7 +54,7 @@ export class OrganazationController {
   @Patch(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '更新组织' })
-  update(@Param('id') id: string, @Body() body: SaveOrganazationDto) {
+  update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveOrganazationDto) {
     return this.organazationService.update(id, body);
   }
 
@@ -64,7 +64,7 @@ export class OrganazationController {
   @Delete(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '删除组织' })
-  remove(@Param('id') id: string) {
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.organazationService.remove(id);
   }
 }

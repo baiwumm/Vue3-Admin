@@ -2,10 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-17 15:33:35
+ * @LastEditTime: 2024-07-22 11:21:33
  * @Description: PostManageController
  */
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 
 import { PostParamsDto } from './dto/params-post.dto';
@@ -44,7 +44,7 @@ export class PostManageController {
   @Get(':id')
   @ApiOkResponse({ type: ResponseSavePostDto })
   @ApiOperation({ summary: '查询岗位详情' })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.postManageService.findOne(id);
   }
 
@@ -54,7 +54,7 @@ export class PostManageController {
   @Patch(':id')
   @ApiOkResponse({ type: ResponseSavePostDto })
   @ApiOperation({ summary: '更新岗位' })
-  update(@Param('id') id: string, @Body() body: SavePostDto) {
+  update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SavePostDto) {
     return this.postManageService.update(id, body);
   }
 
@@ -64,7 +64,7 @@ export class PostManageController {
   @Delete(':id')
   @ApiOkResponse({ type: ResponseSavePostDto })
   @ApiOperation({ summary: '删除岗位' })
-  remove(@Param('id') id: string) {
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.postManageService.remove(id);
   }
 }

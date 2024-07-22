@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:14:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-18 16:17:57
+ * @LastEditTime: 2024-07-22 11:17:36
  * @Description:
  */
 
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 
 import { UserParamsDto } from './dto/params-user.dto';
@@ -45,7 +45,7 @@ export class UserManageController {
   @Get(':id')
   @ApiOkResponse({ type: ResponseSaveUserDto })
   @ApiOperation({ summary: '查询用户详情' })
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.userManageService.findOne(id);
   }
 
@@ -55,7 +55,7 @@ export class UserManageController {
   @Patch(':id')
   @ApiOkResponse({ type: SaveUserDto })
   @ApiOperation({ summary: '更新用户' })
-  update(@Param('id') id: string, @Body() body: SaveUserDto) {
+  update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveUserDto) {
     return this.userManageService.update(id, body);
   }
 
@@ -65,7 +65,7 @@ export class UserManageController {
   @Delete(':id')
   @ApiOkResponse({ type: ResponseSaveUserDto })
   @ApiOperation({ summary: '删除用户' })
-  remove(@Param('id') id: string) {
+  remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.userManageService.remove(id);
   }
 }
