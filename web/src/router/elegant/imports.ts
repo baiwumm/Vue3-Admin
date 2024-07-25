@@ -24,5 +24,6 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   administrative_organization: () => import("@/views/administrative/organization/index.vue"),
   "administrative_post-manage": () => import("@/views/administrative/post-manage/index.vue"),
   home: () => import("@/views/home/index.vue"),
+  "system-manage_user-manage": () => import("@/views/system-manage/user-manage/index.vue"),
   "user-center": () => import("@/views/user-center/index.vue"),
 };

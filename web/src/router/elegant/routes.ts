@@ -120,6 +120,29 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
+    name: 'system-manage',
+    path: '/system-manage',
+    component: 'layout.base',
+    meta: {
+      title: 'system-manage',
+      i18nKey: 'route.system-manage',
+      order: 3,
+      icon: 'ri:settings-2-line'
+    },
+    children: [
+      {
+        name: 'system-manage_user-manage',
+        path: '/system-manage/user-manage',
+        component: 'view.system-manage_user-manage',
+        meta: {
+          title: 'system-manage_user-manage',
+          i18nKey: 'route.system-manage_user-manage',
+          icon: 'ri:user-settings-line'
+        }
+      }
+    ]
+  },
+  {
     name: 'user-center',
     path: '/user-center',
     component: 'layout.base$view.user-center',

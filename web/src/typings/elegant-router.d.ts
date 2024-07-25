@@ -27,6 +27,8 @@ declare module "@elegant-router/types" {
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
+    "system-manage": "/system-manage";
+    "system-manage_user-manage": "/system-manage/user-manage";
     "user-center": "/user-center";
   };
 
@@ -47,6 +49,18 @@ declare module "@elegant-router/types" {
     RouteKey,
     | "root"
     | "not-found"
+    | "exception"
+    | "exception_403"
+    | "exception_404"
+    | "exception_500"
+    | "document"
+    | "document_project"
+    | "document_project-link"
+    | "document_vue"
+    | "document_vite"
+    | "document_unocss"
+    | "document_naive"
+    | "document_antd"
   >;
 
   /**
@@ -67,6 +81,7 @@ declare module "@elegant-router/types" {
     | "home"
     | "iframe-page"
     | "login"
+    | "system-manage"
     | "user-center"
   >;
 
@@ -77,6 +92,8 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
+    | "exception"
+    | "document"
   >;
 
   /**
@@ -93,6 +110,7 @@ declare module "@elegant-router/types" {
     | "administrative_organization"
     | "administrative_post-manage"
     | "home"
+    | "system-manage_user-manage"
     | "user-center"
   >;
 
@@ -103,6 +121,16 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
+    | "exception_403"
+    | "exception_404"
+    | "exception_500"
+    | "document_project"
+    | "document_project-link"
+    | "document_vue"
+    | "document_vite"
+    | "document_unocss"
+    | "document_naive"
+    | "document_antd"
   >;
 
   /**
