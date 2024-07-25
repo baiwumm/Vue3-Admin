@@ -17,18 +17,6 @@ declare module "@elegant-router/types" {
   export type RouteMap = {
     "root": "/";
     "not-found": "/:pathMatch(.*)*";
-    "exception": "/exception";
-    "exception_403": "/exception/403";
-    "exception_404": "/exception/404";
-    "exception_500": "/exception/500";
-    "document": "/document";
-    "document_project": "/document/project";
-    "document_project-link": "/document/project-link";
-    "document_vue": "/document/vue";
-    "document_vite": "/document/vite";
-    "document_unocss": "/document/unocss";
-    "document_naive": "/document/naive";
-    "document_antd": "/document/antd";
     "403": "/403";
     "404": "/404";
     "500": "/500";
@@ -36,30 +24,9 @@ declare module "@elegant-router/types" {
     "administrative": "/administrative";
     "administrative_organization": "/administrative/organization";
     "administrative_post-manage": "/administrative/post-manage";
-    "function": "/function";
-    "function_hide-child": "/function/hide-child";
-    "function_hide-child_one": "/function/hide-child/one";
-    "function_hide-child_three": "/function/hide-child/three";
-    "function_hide-child_two": "/function/hide-child/two";
-    "function_multi-tab": "/function/multi-tab";
-    "function_request": "/function/request";
-    "function_super-page": "/function/super-page";
-    "function_tab": "/function/tab";
-    "function_toggle-auth": "/function/toggle-auth";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
-    "manage": "/manage";
-    "manage_menu": "/manage/menu";
-    "manage_role": "/manage/role";
-    "manage_user": "/manage/user";
-    "manage_user-detail": "/manage/user-detail/:id";
-    "multi-menu": "/multi-menu";
-    "multi-menu_first": "/multi-menu/first";
-    "multi-menu_first_child": "/multi-menu/first/child";
-    "multi-menu_second": "/multi-menu/second";
-    "multi-menu_second_child": "/multi-menu/second/child";
-    "multi-menu_second_child_home": "/multi-menu/second/child/home";
     "user-center": "/user-center";
   };
 
@@ -75,28 +42,16 @@ declare module "@elegant-router/types" {
 
   /**
    * custom route key
-   */ 
+   */
   export type CustomRouteKey = Extract<
     RouteKey,
     | "root"
     | "not-found"
-    | "exception"
-    | "exception_403"
-    | "exception_404"
-    | "exception_500"
-    | "document"
-    | "document_project"
-    | "document_project-link"
-    | "document_vue"
-    | "document_vite"
-    | "document_unocss"
-    | "document_naive"
-    | "document_antd"
   >;
 
   /**
    * the generated route key
-   */ 
+   */
   export type GeneratedRouteKey = Exclude<RouteKey, CustomRouteKey>;
 
   /**
@@ -109,12 +64,9 @@ declare module "@elegant-router/types" {
     | "500"
     | "about"
     | "administrative"
-    | "function"
     | "home"
     | "iframe-page"
     | "login"
-    | "manage"
-    | "multi-menu"
     | "user-center"
   >;
 
@@ -125,8 +77,6 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
-    | "exception"
-    | "document"
   >;
 
   /**
@@ -142,21 +92,7 @@ declare module "@elegant-router/types" {
     | "about"
     | "administrative_organization"
     | "administrative_post-manage"
-    | "function_hide-child_one"
-    | "function_hide-child_three"
-    | "function_hide-child_two"
-    | "function_multi-tab"
-    | "function_request"
-    | "function_super-page"
-    | "function_tab"
-    | "function_toggle-auth"
     | "home"
-    | "manage_menu"
-    | "manage_role"
-    | "manage_user-detail"
-    | "manage_user"
-    | "multi-menu_first_child"
-    | "multi-menu_second_child_home"
     | "user-center"
   >;
 
@@ -167,16 +103,6 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
-    | "exception_403"
-    | "exception_404"
-    | "exception_500"
-    | "document_project"
-    | "document_project-link"
-    | "document_vue"
-    | "document_vite"
-    | "document_unocss"
-    | "document_naive"
-    | "document_antd"
   >;
 
   /**
@@ -214,8 +140,8 @@ declare module "@elegant-router/types" {
    */
   type GetChildRouteKey<K extends RouteKey, T extends RouteKey = RouteKey> = T extends `${K}_${infer R}`
     ? R extends `${string}_${string}`
-      ? never
-      : T
+    ? never
+    : T
     : never;
 
   /**
@@ -223,10 +149,10 @@ declare module "@elegant-router/types" {
    */
   type SingleLevelRoute<K extends SingleLevelRouteKey = SingleLevelRouteKey> = K extends string
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component: `layout.${RouteLayout}$view.${K}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component: `layout.${RouteLayout}$view.${K}`;
+    }
     : never;
 
   /**
@@ -234,21 +160,21 @@ declare module "@elegant-router/types" {
    */
   type LastLevelRoute<K extends GeneratedRouteKey> = K extends LastLevelRouteKey
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component: `view.${K}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component: `view.${K}`;
+    }
     : never;
-  
+
   /**
    * the center level route
    */
   type CenterLevelRoute<K extends GeneratedRouteKey> = K extends CenterLevelRouteKey
     ? Omit<ElegantConstRoute, 'component'> & {
-        name: K;
-        path: RouteMap[K];
-        children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
-      }
+      name: K;
+      path: RouteMap[K];
+      children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
+    }
     : never;
 
   /**
@@ -256,22 +182,22 @@ declare module "@elegant-router/types" {
    */
   type MultiLevelRoute<K extends FirstLevelRouteNotSingleKey = FirstLevelRouteNotSingleKey> = K extends string
     ? ElegantConstRoute & {
-        name: K;
-        path: RouteMap[K];
-        component: `layout.${RouteLayout}`;
-        children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
-      }
+      name: K;
+      path: RouteMap[K];
+      component: `layout.${RouteLayout}`;
+      children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
+    }
     : never;
-  
+
   /**
    * the custom first level route
    */
   type CustomSingleLevelRoute<K extends CustomFirstLevelRouteKey = CustomFirstLevelRouteKey> = K extends string
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component?: `layout.${RouteLayout}$view.${LastLevelRouteKey}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component?: `layout.${RouteLayout}$view.${LastLevelRouteKey}`;
+    }
     : never;
 
   /**
@@ -279,10 +205,10 @@ declare module "@elegant-router/types" {
    */
   type CustomLastLevelRoute<K extends CustomRouteKey> = K extends CustomLastLevelRouteKey
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component?: `view.${LastLevelRouteKey}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component?: `view.${LastLevelRouteKey}`;
+    }
     : never;
 
   /**
@@ -290,10 +216,10 @@ declare module "@elegant-router/types" {
    */
   type CustomCenterLevelRoute<K extends CustomRouteKey> = K extends CustomCenterLevelRouteKey
     ? Omit<ElegantConstRoute, 'component'> & {
-        name: K;
-        path: RouteMap[K];
-        children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
-      }
+      name: K;
+      path: RouteMap[K];
+      children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
+    }
     : never;
 
   /**
@@ -301,13 +227,13 @@ declare module "@elegant-router/types" {
    */
   type CustomMultiLevelRoute<K extends CustomFirstLevelRouteNotSingleKey = CustomFirstLevelRouteNotSingleKey> =
     K extends string
-      ? ElegantConstRoute & {
-          name: K;
-          path: RouteMap[K];
-          component: `layout.${RouteLayout}`;
-          children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
-        }
-      : never;
+    ? ElegantConstRoute & {
+      name: K;
+      path: RouteMap[K];
+      component: `layout.${RouteLayout}`;
+      children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
+    }
+    : never;
 
   /**
    * the custom route
