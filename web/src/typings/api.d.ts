@@ -42,7 +42,6 @@ declare namespace Api {
       id: number; // 主键
     }
     type ColumnFields = {
-      sort: number; // 排序
       createdAt: string; // 创建时间
       updatedAt: string; // 更新时间
     } & ColumnId;
@@ -113,6 +112,7 @@ declare namespace Api {
       organization: Api.Administrative.Organization; // 所属组织
       postId?: string; // 所属岗位 id
       post: Api.Administrative.PostManage; // 所属岗位
+      sort: number; // 排序
       loginCount: number; // 登录次数
       lastIp?: string; // 最后一次登录 ip
       lastLoginAt?: string; // 最后登录时间
@@ -140,7 +140,8 @@ declare namespace Api {
       parentId?: string; // 父级 id
       description?: string; // 组织描述
       icon?: string; // 组织图标
-      posts: PostManage[]; // 关联岗位
+      sort: number; // 排序
+      posts?: PostManage[]; // 关联岗位
       children?: Organization[]
     }>
     /**
@@ -150,7 +151,7 @@ declare namespace Api {
     /**
      * @description: 创建/更新组织
      */
-    type SaveOrganization = Omit<Organization, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
+    type SaveOrganization = Omit<Organization, keyof Api.Common.ColumnFields | 'posts'> & Partial<Api.Common.ColumnId>;
 
     /**
      * @description: 岗位管理
@@ -160,6 +161,7 @@ declare namespace Api {
       parentId?: string; // 父级 id
       orgId?: string; // 所属组织 id
       organization: Organization; // 所属组织
+      sort: number; // 排序
       description?: string; // 岗位描述
       children?: PostManage[]
     }>
@@ -170,6 +172,6 @@ declare namespace Api {
     /**
      * @description: 创建/更新岗位
      */
-    type SavePostManage = Omit<PostManage, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
+    type SavePostManage = Omit<PostManage, keyof Api.Common.ColumnFields | 'organization'> & Partial<Api.Common.ColumnId>;
   }
 }
