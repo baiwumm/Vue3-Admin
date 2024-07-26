@@ -126,6 +126,9 @@ importers:
       eslint:
         specifier: 9.6.0
         version: 9.6.0
+      eslint-plugin-simple-import-sort:
+        specifier: ^12.1.1
+        version: 12.1.1(eslint@9.6.0)
       eslint-plugin-vue:
         specifier: 9.27.0
         version: 9.27.0(eslint@9.6.0)
@@ -2113,6 +2116,11 @@ packages:
         optional: true
       eslint-config-prettier:
         optional: true
+
+  eslint-plugin-simple-import-sort@12.1.1:
+    resolution: {integrity: sha512-6nuzu4xwQtE3332Uz0to+TxDQYRLTKRESSc2hefVT48Zc8JthmN23Gx9lnYhu0FtkRSL1oxny3kJ2aveVhmOVA==}
+    peerDependencies:
+      eslint: '>=5.0.0'
 
   eslint-plugin-unicorn@53.0.0:
     resolution: {integrity: sha512-kuTcNo9IwwUCfyHGwQFOK/HjJAYzbODHN3wP0PgqbW+jbXqpNWxNVpVhj2tO9SixBwuAdmal8rVcWKBxwFnGuw==}
@@ -6855,6 +6863,10 @@ snapshots:
       synckit: 0.8.8
     optionalDependencies:
       eslint-config-prettier: 9.1.0(eslint@9.6.0)
+
+  eslint-plugin-simple-import-sort@12.1.1(eslint@9.6.0):
+    dependencies:
+      eslint: 9.6.0
 
   eslint-plugin-unicorn@53.0.0(eslint@9.6.0):
     dependencies:
