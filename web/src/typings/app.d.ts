@@ -296,6 +296,9 @@ declare namespace App {
         };
         createdAt: string;
         updatedAt: string;
+        prevStep: string;
+        nextStep: string;
+        commit: string;
       };
       request: {
         logout: string;
@@ -445,163 +448,6 @@ declare namespace App {
           };
           creativity: string;
         };
-        function: {
-          tab: {
-            tabOperate: {
-              title: string;
-              addTab: string;
-              addTabDesc: string;
-              closeTab: string;
-              closeCurrentTab: string;
-              closeAboutTab: string;
-              addMultiTab: string;
-              addMultiTabDesc1: string;
-              addMultiTabDesc2: string;
-            };
-            tabTitle: {
-              title: string;
-              changeTitle: string;
-              change: string;
-              resetTitle: string;
-              reset: string;
-            };
-          };
-          multiTab: {
-            routeParam: string;
-            backTab: string;
-          };
-          toggleAuth: {
-            toggleAccount: string;
-            authHook: string;
-            superAdminVisible: string;
-            adminVisible: string;
-            adminOrUserVisible: string;
-          };
-          request: {
-            repeatedErrorOccurOnce: string;
-            repeatedError: string;
-            repeatedErrorMsg1: string;
-            repeatedErrorMsg2: string;
-          };
-        };
-        manage: {
-          common: {
-            status: {
-              enable: string;
-              disable: string;
-            };
-          };
-          role: {
-            title: string;
-            roleName: string;
-            roleCode: string;
-            roleStatus: string;
-            roleDesc: string;
-            form: {
-              roleName: string;
-              roleCode: string;
-              roleStatus: string;
-              roleDesc: string;
-            };
-            addRole: string;
-            editRole: string;
-            menuAuth: string;
-            buttonAuth: string;
-          };
-          user: {
-            title: string;
-            userName: string;
-            userGender: string;
-            nickName: string;
-            userPhone: string;
-            userEmail: string;
-            userStatus: string;
-            userRole: string;
-            form: {
-              userName: string;
-              userGender: string;
-              nickName: string;
-              userPhone: string;
-              userEmail: string;
-              userStatus: string;
-              userRole: string;
-            };
-            addUser: string;
-            editUser: string;
-            gender: {
-              male: string;
-              female: string;
-            };
-          };
-          menu: {
-            home: string;
-            title: string;
-            id: string;
-            parentId: string;
-            menuType: string;
-            menuName: string;
-            constant: string;
-            routeName: string;
-            routePath: string;
-            pathParam: string;
-            layout: string;
-            page: string;
-            i18nKey: string;
-            icon: string;
-            localIcon: string;
-            iconTypeTitle: string;
-            order: string;
-            keepAlive: string;
-            href: string;
-            hideInMenu: string;
-            activeMenu: string;
-            multiTab: string;
-            fixedIndexInTab: string;
-            query: string;
-            button: string;
-            buttonCode: string;
-            buttonDesc: string;
-            menuStatus: string;
-            form: {
-              home: string;
-              menuType: string;
-              menuName: string;
-              routeName: string;
-              routePath: string;
-              pathParam: string;
-              layout: string;
-              queryKey: string;
-              page: string;
-              i18nKey: string;
-              icon: string;
-              localIcon: string;
-              queryValue: string;
-              order: string;
-              keepAlive: string;
-              href: string;
-              hideInMenu: string;
-              activeMenu: string;
-              multiTab: string;
-              fixedInTab: string;
-              fixedIndexInTab: string;
-              button: string;
-              buttonCode: string;
-              buttonDesc: string;
-              menuStatus: string;
-            };
-            addMenu: string;
-            editMenu: string;
-            addChildMenu: string;
-            type: {
-              directory: string;
-              menu: string;
-            };
-            iconType: {
-              iconify: string;
-              local: string;
-            };
-          };
-        };
         administrative: {
           organization: {
             name: string;
@@ -620,6 +466,32 @@ declare namespace App {
             addPost: string;
             editPost: string;
           }
+        },
+        systemManage: {
+          userManage: {
+            userName: string;
+            userNameTip: string;
+            cnName: string;
+            phone: string;
+            phoneTip: string;
+            email: string;
+            emailTip: string;
+            sex: string;
+            orgId: string;
+            postId: string;
+            city: string;
+            address: string;
+            tags: string;
+            addUser: string;
+            editUser: string;
+            personalInfo: string;
+            userInfo: string;
+            settingPassword: string;
+            sexMap: {
+              male: string;
+              female: string;
+            }
+          }
         }
       };
       form: {
@@ -630,6 +502,11 @@ declare namespace App {
         confirmPwd: FormMsg;
         code: FormMsg;
         email: FormMsg;
+        status: string;
+        statusMap: {
+          active: string;
+          inactive: string;
+        },
         enter: string;
         select: string;
         sort: string;

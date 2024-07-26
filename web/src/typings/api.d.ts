@@ -124,7 +124,7 @@ declare namespace Api {
     /**
      * @description: 创建/更新用户
      */
-    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
+    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields | 'organization' | 'post' | 'loginCount'> & Partial<Api.Common.ColumnId>;
   }
 
   /**

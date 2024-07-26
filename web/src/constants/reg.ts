@@ -1,8 +1,12 @@
-export const REG_USER_NAME = /^[\u4E00-\u9FA5a-zA-Z0-9_-]{4,16}$/;
+/**
+ * @description: 用户名
+ */
+export const REG_USER_NAME = /^[a-zA-Z0-9_-]{4,16}$/;
 
-/** Phone reg */
-export const REG_PHONE =
-  /^[1](([3][0-9])|([4][01456789])|([5][012356789])|([6][2567])|([7][0-8])|([8][0-9])|([9][012356789]))[0-9]{8}$/;
+/**
+ * @description: 手机号码
+ */
+export const REG_PHONE = /^1[3-9]\d{9}$/;
 
 /**
  * Password reg
@@ -11,8 +15,10 @@ export const REG_PHONE =
  */
 export const REG_PWD = /^\w{6,18}$/;
 
-/** Email reg */
-export const REG_EMAIL = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+/**
+ * @description: 电子邮箱
+ */
+export const REG_EMAIL = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 /** Six digit code reg */
 export const REG_CODE_SIX = /^\d{6}$/;
