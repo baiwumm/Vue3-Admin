@@ -17,18 +17,6 @@ declare module "@elegant-router/types" {
   export type RouteMap = {
     "root": "/";
     "not-found": "/:pathMatch(.*)*";
-    "exception": "/exception";
-    "exception_403": "/exception/403";
-    "exception_404": "/exception/404";
-    "exception_500": "/exception/500";
-    "document": "/document";
-    "document_project": "/document/project";
-    "document_project-link": "/document/project-link";
-    "document_vue": "/document/vue";
-    "document_vite": "/document/vite";
-    "document_unocss": "/document/unocss";
-    "document_naive": "/document/naive";
-    "document_antd": "/document/antd";
     "403": "/403";
     "404": "/404";
     "500": "/500";
@@ -56,28 +44,17 @@ declare module "@elegant-router/types" {
 
   /**
    * custom route key
-   */ 
+   */
   export type CustomRouteKey = Extract<
     RouteKey,
     | "root"
     | "not-found"
-    | "exception"
-    | "exception_403"
-    | "exception_404"
-    | "exception_500"
-    | "document"
-    | "document_project"
-    | "document_project-link"
-    | "document_vue"
-    | "document_vite"
-    | "document_unocss"
-    | "document_naive"
     | "document_antd"
   >;
 
   /**
    * the generated route key
-   */ 
+   */
   export type GeneratedRouteKey = Exclude<RouteKey, CustomRouteKey>;
 
   /**
@@ -133,16 +110,6 @@ declare module "@elegant-router/types" {
     CustomRouteKey,
     | "root"
     | "not-found"
-    | "exception_403"
-    | "exception_404"
-    | "exception_500"
-    | "document_project"
-    | "document_project-link"
-    | "document_vue"
-    | "document_vite"
-    | "document_unocss"
-    | "document_naive"
-    | "document_antd"
   >;
 
   /**
@@ -180,8 +147,8 @@ declare module "@elegant-router/types" {
    */
   type GetChildRouteKey<K extends RouteKey, T extends RouteKey = RouteKey> = T extends `${K}_${infer R}`
     ? R extends `${string}_${string}`
-      ? never
-      : T
+    ? never
+    : T
     : never;
 
   /**
@@ -189,10 +156,10 @@ declare module "@elegant-router/types" {
    */
   type SingleLevelRoute<K extends SingleLevelRouteKey = SingleLevelRouteKey> = K extends string
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component: `layout.${RouteLayout}$view.${K}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component: `layout.${RouteLayout}$view.${K}`;
+    }
     : never;
 
   /**
@@ -200,21 +167,21 @@ declare module "@elegant-router/types" {
    */
   type LastLevelRoute<K extends GeneratedRouteKey> = K extends LastLevelRouteKey
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component: `view.${K}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component: `view.${K}`;
+    }
     : never;
-  
+
   /**
    * the center level route
    */
   type CenterLevelRoute<K extends GeneratedRouteKey> = K extends CenterLevelRouteKey
     ? Omit<ElegantConstRoute, 'component'> & {
-        name: K;
-        path: RouteMap[K];
-        children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
-      }
+      name: K;
+      path: RouteMap[K];
+      children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
+    }
     : never;
 
   /**
@@ -222,22 +189,22 @@ declare module "@elegant-router/types" {
    */
   type MultiLevelRoute<K extends FirstLevelRouteNotSingleKey = FirstLevelRouteNotSingleKey> = K extends string
     ? ElegantConstRoute & {
-        name: K;
-        path: RouteMap[K];
-        component: `layout.${RouteLayout}`;
-        children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
-      }
+      name: K;
+      path: RouteMap[K];
+      component: `layout.${RouteLayout}`;
+      children: (CenterLevelRoute<GetChildRouteKey<K>> | LastLevelRoute<GetChildRouteKey<K>>)[];
+    }
     : never;
-  
+
   /**
    * the custom first level route
    */
   type CustomSingleLevelRoute<K extends CustomFirstLevelRouteKey = CustomFirstLevelRouteKey> = K extends string
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component?: `layout.${RouteLayout}$view.${LastLevelRouteKey}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component?: `layout.${RouteLayout}$view.${LastLevelRouteKey}`;
+    }
     : never;
 
   /**
@@ -245,10 +212,10 @@ declare module "@elegant-router/types" {
    */
   type CustomLastLevelRoute<K extends CustomRouteKey> = K extends CustomLastLevelRouteKey
     ? Omit<ElegantConstRoute, 'children'> & {
-        name: K;
-        path: RouteMap[K];
-        component?: `view.${LastLevelRouteKey}`;
-      }
+      name: K;
+      path: RouteMap[K];
+      component?: `view.${LastLevelRouteKey}`;
+    }
     : never;
 
   /**
@@ -256,10 +223,10 @@ declare module "@elegant-router/types" {
    */
   type CustomCenterLevelRoute<K extends CustomRouteKey> = K extends CustomCenterLevelRouteKey
     ? Omit<ElegantConstRoute, 'component'> & {
-        name: K;
-        path: RouteMap[K];
-        children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
-      }
+      name: K;
+      path: RouteMap[K];
+      children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
+    }
     : never;
 
   /**
@@ -267,13 +234,13 @@ declare module "@elegant-router/types" {
    */
   type CustomMultiLevelRoute<K extends CustomFirstLevelRouteNotSingleKey = CustomFirstLevelRouteNotSingleKey> =
     K extends string
-      ? ElegantConstRoute & {
-          name: K;
-          path: RouteMap[K];
-          component: `layout.${RouteLayout}`;
-          children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
-        }
-      : never;
+    ? ElegantConstRoute & {
+      name: K;
+      path: RouteMap[K];
+      component: `layout.${RouteLayout}`;
+      children: (CustomCenterLevelRoute<GetChildRouteKey<K>> | CustomLastLevelRoute<GetChildRouteKey<K>>)[];
+    }
+    : never;
 
   /**
    * the custom route
