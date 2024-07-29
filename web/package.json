@@ -67,7 +67,8 @@
     "vue": "3.4.31",
     "vue-draggable-plus": "0.5.0",
     "vue-i18n": "9.13.1",
-    "vue-router": "4.4.0"
+    "vue-router": "4.4.0",
+    "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
     "@elegant-router/vue": "0.3.7",
