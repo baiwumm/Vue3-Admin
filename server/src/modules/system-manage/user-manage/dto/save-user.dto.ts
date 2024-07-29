@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:57:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-18 17:17:50
+ * @LastEditTime: 2024-07-29 11:28:07
  * @Description: 保存用户数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsDate, IsEmail, IsIP, IsMobilePhone, IsNotEmpty, IsNumber, IsUrl, IsUUID, Length } from 'class-validator';
+import { IsEmail, IsMobilePhone, IsNotEmpty, IsNumber, IsUrl, IsUUID, Length } from 'class-validator';
 
 import { SEX, STATUS } from '@/enums';
 
@@ -89,14 +89,6 @@ export class SaveUserDto {
   sort: number;
 
   @ApiProperty({
-    type: String,
-    description: 'token',
-    default: '',
-    required: false,
-  })
-  token?: string;
-
-  @ApiProperty({
     type: [String],
     description: '标签',
     default: ['暴发户', '帅气男孩'],
@@ -120,50 +112,19 @@ export class SaveUserDto {
   })
   address?: string;
 
-  // @ApiProperty({
-  //   type: String,
-  //   description: '组织id',
-  //   default: 'f45cd48b-e703-49db-91be-ae7f594e73e0',
-  // })
-  // @IsUUID('all', { message: 'orgId 参数不正确' })
-  // orgId: string;
-
-  // @ApiProperty({
-  //   type: String,
-  //   description: '岗位id',
-  //   default: '34f2d5e1-7378-46b3-8f0c-56cfdbb8f3eb',
-  // })
-  // @IsUUID('all', { message: 'postId 参数不正确' })
-  // postId: string;
-
   @ApiProperty({
-    type: Number,
-    description: '登录次数',
-    default: 99,
+    type: String,
+    description: '组织id',
+    default: 'f45cd48b-e703-49db-91be-ae7f594e73e0',
   })
-  @IsNumber(
-    {},
-    {
-      message: '排序必须为数字',
-    },
-  )
-  loginCount: number;
+  @IsUUID('all', { message: 'orgId 参数不正确' })
+  orgId: string;
 
   @ApiProperty({
     type: String,
-    description: '最后一次登录 ip',
-    default: '183.14.31.127',
-    required: false,
+    description: '岗位id',
+    default: '34f2d5e1-7378-46b3-8f0c-56cfdbb8f3eb',
   })
-  @IsIP(4, { message: 'Ip 地址不正确' })
-  lastIp?: string;
-
-  @ApiProperty({
-    type: String,
-    description: '最后一次登录时间',
-    default: '2024-07-17 01:02:27.831',
-    required: false,
-  })
-  @IsDate({ message: 'lastLoginAt 参数不正确' })
-  lastLoginAt?: string;
+  @IsUUID('all', { message: 'postId 参数不正确' })
+  postId: string;
 }

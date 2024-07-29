@@ -2,20 +2,25 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-18 17:21:02
+ * @LastEditTime: 2024-07-29 11:36:56
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
 
 import { RESPONSE_MSG } from '@/enums';
+import { AuthService } from '@/modules/auth/auth.service';
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { responseMessage } from '@/utils';
 
 import { UserParamsDto } from './dto/params-user.dto';
+import { SaveUserDto } from './dto/save-user.dto';
 
 @Injectable()
 export class UserManageService {
-  constructor(private prisma: PrismaService) { }
+  constructor(
+    private prisma: PrismaService,
+    private authService: AuthService,
+  ) { }
 
   /**
    * @description: 查询用户列表
@@ -68,10 +73,15 @@ export class UserManageService {
   /**
    * @description: 创建用户
    */
-  async create(body) {
+  async create(body: SaveUserDto) {
     try {
+      // 密码加密
+      const hashedPassword = await this.authService.hashPassword(body.password);
       const result = await this.prisma.user.create({
-        data: body,
+        data: {
+          ...body,
+          password: hashedPassword,
+        } as any,
       });
       return responseMessage<Api.SystemManage.User>(result);
     } catch (error) {
@@ -86,11 +96,11 @@ export class UserManageService {
   /**
    * @description: 更新用户
    */
-  async update(id: string, body) {
+  async update(id: string, body: SaveUserDto) {
     try {
       const result = await this.prisma.user.update({
         where: { id },
-        data: body,
+        data: body as any,
       });
       return responseMessage<Api.SystemManage.User>(result);
     } catch (error) {
