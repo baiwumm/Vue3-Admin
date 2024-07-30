@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import * as fs from 'fs';
 
 import { RESPONSE_CODE, RESPONSE_MSG } from '@/enums';
 
@@ -51,4 +52,20 @@ export const convertFlatDataToTree = <T extends { id: any; parentId?: any }>(
     }));
 
   return cleanUpEmptyChildren(roots);
+};
+
+/**
+ * @description: 生成文件上传文件夹
+ * @param {string} filePath
+ */
+export const checkDirAndCreate = (filePath: string): void => {
+  const pathArr = filePath.split('/');
+  let checkPath = '.';
+  let item: string;
+  for (item of pathArr) {
+    checkPath += `/${item}`;
+    if (!fs.existsSync(checkPath)) {
+      fs.mkdirSync(checkPath);
+    }
+  }
 };

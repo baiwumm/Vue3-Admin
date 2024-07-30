@@ -19,19 +19,3 @@ export enum RESPONSE_MSG {
   FAILURE = '请求失败',
   ERROR = '服务器错误',
 }
-
-/**
- * @description: 状态
- */
-export enum STATUS {
-  ACTIVE,
-  INACTIVE,
-}
-
-/**
- * @description: 用户性别
- */
-export enum SEX {
-  FEMALE,
-  MALE,
-}
