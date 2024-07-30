@@ -13,13 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// 状态
+// User - status
 enum Status {
   ACTIVE
   INACTIVE
 }
 
-// 性别
+// User - sex
 enum Sex {
   FEMALE
   MALE
@@ -67,9 +67,9 @@ model User {
   cnName    String     // 中文名
   email     String    @unique // 电子邮箱
   phone     String    @unique // 手机号
-  avatar    String?    // 头像
-  sex       Sex        // 性别
-  status    Status     // 状态
+  avatar    String    // 头像
+  sex       Sex       @default(FEMALE) // 性别
+  status    Status    @default(ACTIVE) // 状态
   sort      Int // 排序
   token     String?    // token
   tags      String[]   @default([]) // 标签
@@ -79,7 +79,7 @@ model User {
   organization Organization @relation(fields: [orgId], references: [id])
   postId    String    // 关联的岗位 id
   post      Post      @relation(fields: [postId], references: [id])
-  loginCount Int?     @default(0) // 登录次数
+  loginCount Int     @default(0) // 登录次数
   lastIp     String?    // 最后登录ip
   lastLoginAt DateTime? // 最后登录时间
   createdAt DateTime @default(now()) // 创建时间
