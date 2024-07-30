@@ -285,7 +285,10 @@ const local: App.I18n.Schema = {
         editUser: 'Edit User',
         personalInfo: 'Personal Info',
         userInfo: 'User Info',
+        settingAvatar: 'Setting Avatar',
         settingPassword: 'Setting Password',
+        password: 'Password',
+        confirmPassword: 'Comfirm Password',
         sexMap: {
           male: 'Male',
           female: 'Female'
@@ -329,7 +332,12 @@ const local: App.I18n.Schema = {
     sort: 'Sort',
     sortTip: 'The larger the order, the higher the position',
     parent: 'Parent',
-    parentTip: 'The default is top-level'
+    parentTip: 'The default is top-level',
+    upload: {
+      limitSize: 'The file size cannot exceed {size}',
+      error: 'File upload failure',
+      fileType: 'Only {type} files can be uploaded'
+    }
   },
   dropdown: {
     closeCurrent: 'Close Current',
@@ -349,6 +357,15 @@ const local: App.I18n.Schema = {
     expand: 'Expand Menu',
     pin: 'Pin',
     unpin: 'Unpin'
+  },
+  components: {
+    strengthMeter: {
+      veryWeak: 'VeryWeak',
+      weak: 'Weak',
+      general: 'General',
+      strong: 'Strong',
+      veryStrong: 'VeryStrong',
+    }
   }
 };
 

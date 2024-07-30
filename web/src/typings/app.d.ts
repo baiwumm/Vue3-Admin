@@ -486,7 +486,10 @@ declare namespace App {
             editUser: string;
             personalInfo: string;
             userInfo: string;
+            settingAvatar: string;
             settingPassword: string;
+            password: string;
+            confirmPassword: string;
             sexMap: {
               male: string;
               female: string;
@@ -513,6 +516,11 @@ declare namespace App {
         sortTip: string;
         parent: string;
         parentTip: string;
+        upload: {
+          limitSize: string;
+          error: string;
+          fileType: string;
+        }
       };
       dropdown: Record<Global.DropdownKey, string>;
       icon: {
@@ -527,6 +535,15 @@ declare namespace App {
         pin: string;
         unpin: string;
       };
+      components: {
+        strengthMeter: {
+          veryWeak: string;
+          weak: string;
+          general: string;
+          strong: string;
+          veryStrong: string;
+        }
+      }
     };
 
     type GetI18nKey<T extends Record<string, unknown>, K extends keyof T = keyof T> = K extends string

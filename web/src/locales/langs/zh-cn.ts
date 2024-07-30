@@ -285,7 +285,10 @@ const local: App.I18n.Schema = {
         editUser: '编辑用户',
         personalInfo: '个人信息',
         userInfo: '用户信息',
+        settingAvatar: '设置头像',
         settingPassword: '设置密码',
+        password: '密码',
+        confirmPassword: '确认密码',
         sexMap: {
           male: '男',
           female: '女'
@@ -329,7 +332,12 @@ const local: App.I18n.Schema = {
     sort: '排序',
     sortTip: '排序越大，位置越靠前',
     parent: '父级',
-    parentTip: '不选默认为顶级'
+    parentTip: '不选默认为顶级',
+    upload: {
+      limitSize: '文件大小不能超过{size}',
+      error: '文件上传失败',
+      fileType: '只能上传 {type} 文件'
+    }
   },
   dropdown: {
     closeCurrent: '关闭',
@@ -349,6 +357,15 @@ const local: App.I18n.Schema = {
     expand: '展开菜单',
     pin: '固定',
     unpin: '取消固定'
+  },
+  components: {
+    strengthMeter: {
+      veryWeak: '非常弱',
+      weak: '弱',
+      general: '一般',
+      strong: '强',
+      veryStrong: '非常强',
+    }
   }
 };
 
