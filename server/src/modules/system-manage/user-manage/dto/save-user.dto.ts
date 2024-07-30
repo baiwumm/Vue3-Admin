@@ -2,13 +2,43 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:57:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-29 11:28:07
+ * @LastEditTime: 2024-07-30 11:28:40
  * @Description: 保存用户数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsMobilePhone, IsNotEmpty, IsNumber, IsUrl, IsUUID, Length } from 'class-validator';
+import { Sex, Status } from '@prisma/client';
+import {
+  IsEmail,
+  IsMobilePhone,
+  IsNotEmpty,
+  IsNumber,
+  IsUUID,
+  Length,
+  registerDecorator,
+  ValidationOptions,
+} from 'class-validator';
 
-import { SEX, STATUS } from '@/enums';
+function IsImageUrl(validationOptions?: ValidationOptions) {
+  return function (object: unknown, propertyName: string) {
+    registerDecorator({
+      name: 'isImageUrl',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      validator: {
+        validate(value: any) {
+          const url = value;
+          // 正则表达式来匹配常见的图片格式
+          const regex = /\.(jpg|jpeg|png|webp|avif|gif|svg|tiff)$/i;
+          return typeof url === 'string' && regex.test(url);
+        },
+        defaultMessage() {
+          return `${propertyName} must be a valid image URL`;
+        },
+      },
+    });
+  };
+}
 
 export class SaveUserDto {
   @ApiProperty({
@@ -22,10 +52,9 @@ export class SaveUserDto {
   @ApiProperty({
     type: String,
     description: '密码',
-    default: 'IqDDrMKzGqHgIOW7ya8cMQ==',
+    default: '$2b$10$46pBPB5U2RJr3kGoEdve6uyPQSb6PC0e78VgR4m6Ro4fLj.8ilvry',
   })
-  @IsNotEmpty({ message: '密码必填' })
-  password: string;
+  password?: string;
 
   @ApiProperty({
     type: String,
@@ -55,25 +84,25 @@ export class SaveUserDto {
   @ApiProperty({
     type: String,
     description: '头像地址',
-    default: 'https://cdn.baiwumm.com/avatar.jpg',
+    default: 'http://localhost:3000/static/image/2024-07/395e036d-34b3-4bbb-ab0f-99bf10a63f97.jpeg',
     required: false,
   })
-  @IsUrl({}, { message: '头像地址不正确' })
-  avatar?: string;
+  @IsImageUrl({ message: '头像地址格式不正确' })
+  avatar: string;
 
   @ApiProperty({
-    enum: SEX,
+    enum: Sex,
     description: '性别',
-    example: SEX.FEMALE,
+    example: Sex.FEMALE,
   })
-  sex: SEX;
+  sex: Sex;
 
   @ApiProperty({
-    enum: STATUS,
+    enum: Status,
     description: '状态',
-    example: STATUS.ACTIVE,
+    example: Status.ACTIVE,
   })
-  status: STATUS;
+  status: Status;
 
   @ApiProperty({
     type: Number,

@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 13:48:58
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-18 18:00:30
+ * @LastEditTime: 2024-07-30 14:51:56
  * @Description: 请求参数 DTO
  */
 import { ApiProperty } from '@nestjs/swagger';
+import { Status } from '@prisma/client';
 
 import { PaginatingDTO } from '@/dto/params.dto';
-import { STATUS } from '@/enums';
 
 export class UserParamsDto extends PaginatingDTO {
   @ApiProperty({
@@ -17,13 +17,13 @@ export class UserParamsDto extends PaginatingDTO {
     required: false,
     default: 'admin',
   })
-  name?: string;
+  userName?: string;
 
   @ApiProperty({
-    enum: STATUS,
+    enum: Status,
     description: '状态',
-    default: 0,
+    default: Status.ACTIVE,
     required: false,
   })
-  status?: STATUS;
+  status?: Status;
 }

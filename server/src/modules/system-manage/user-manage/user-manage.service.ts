@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-29 11:36:56
+ * @LastEditTime: 2024-07-30 14:52:07
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -25,15 +25,15 @@ export class UserManageService {
   /**
    * @description: 查询用户列表
    */
-  async findAll({ name, status, current, size }: UserParamsDto) {
+  async findAll({ userName, status, current, size }: UserParamsDto) {
     // 分页处理，这里获取到的分页是字符串，需要转换成整数
     const take = Number(size);
     const skip = (Number(current) - 1) * take;
     // 条件判断
     const where = {}; // 查询参数
     // 模糊查询
-    if (name) {
-      where['name'] = { contains: name, mode: 'insensitive' };
+    if (userName) {
+      where['userName'] = { contains: userName, mode: 'insensitive' };
     }
 
     if (status) {
@@ -44,12 +44,31 @@ export class UserManageService {
       skip,
       take,
       where,
-      include: {
+      select: {
+        id: true,
+        userName: true,
+        cnName: true,
+        email: true,
+        phone: true,
+        avatar: true,
+        sex: true,
+        status: true,
+        sort: true,
+        tags: true,
+        city: true,
+        address: true,
+        orgId: true,
         organization: true,
+        postId: true,
         post: true,
+        loginCount: true,
+        lastIp: true,
+        lastLoginAt: true,
+        createdAt: true,
+        updatedAt: true,
       },
       orderBy: [
-        { sort: 'asc' }, // 按照sort字段升序
+        { sort: 'desc' }, // 按照sort字段升序
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
@@ -77,6 +96,7 @@ export class UserManageService {
     try {
       // 密码加密
       const hashedPassword = await this.authService.hashPassword(body.password);
+      // 这里不知道为什么 prisma 客户端会报类型错误
       const result = await this.prisma.user.create({
         data: {
           ...body,
@@ -98,6 +118,7 @@ export class UserManageService {
    */
   async update(id: string, body: SaveUserDto) {
     try {
+      // 这里不知道为什么 prisma 客户端会报类型错误
       const result = await this.prisma.user.update({
         where: { id },
         data: body as any,
