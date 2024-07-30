@@ -3,11 +3,14 @@ import { computed, ref, reactive, watch, nextTick } from "vue";
 import { $t } from "@/locales";
 import PersonalInfo from "./personal-info.vue"; // 个人信息
 import UserInfo from "./user-info.vue"; // 用户信息
-import SettingPassword from "./setting-password.vue"; // 设置密码
 import { useAntdForm, useFormRules } from "@/hooks/common/form";
 import { STATUS, SEX } from "@/enum";
 import { getOrganazationList, getPostList } from "@/service/api";
-import { pick, keys } from "lodash-es";
+import { pick, keys, omit, initial } from "lodash-es";
+import StrengthMeter from "@/components/custom/strength-meter.vue";
+import { createUser, updateUser } from "@/service/api";
+import SettingAvatar from "./setting-avatar.vue";
+import type { StepsProps } from "ant-design-vue/es/steps";
 
 defineOptions({
   name: "OperateModal",
@@ -54,13 +57,18 @@ type Props = {
 };
 const props = defineProps<Props>();
 
+// 父组件自定义事件
+interface Emits {
+  (e: "submitted"): void;
+}
+const emit = defineEmits<Emits>();
+
 // 抽屉显示状态
 const visible = defineModel<boolean>("visible", {
   default: false,
 });
 
 const { formRef, validate, resetFields } = useAntdForm();
-const { defaultRequiredRule, formRules } = useFormRules();
 
 // 抽屉标题
 const title = computed(() => {
@@ -87,7 +95,9 @@ function createDefaultModel(): Api.SystemManage.SaveUserManage {
     city: [],
     address: undefined,
     tags: [],
+    avatar: "",
     password: "",
+    confirmPassword: "",
   };
 }
 
@@ -102,30 +112,31 @@ type RuleKey = Extract<
   | "postId"
   | "city"
   | "tags"
+  | "avatar"
   | "password"
+  | "confirmPassword"
 >;
 
-const rules: Record<RuleKey, App.Global.FormRule | App.Global.FormRule[]> = {
-  userName: formRules.userName,
-  cnName: defaultRequiredRule,
-  phone: formRules.phone,
-  email: formRules.email,
-  orgId: defaultRequiredRule,
-  postId: defaultRequiredRule,
-  city: defaultRequiredRule,
-  tags: { ...defaultRequiredRule, trigger: "change" },
-  password: defaultRequiredRule,
-};
+const rules = computed<
+  Record<RuleKey, App.Global.FormRule | App.Global.FormRule[]>
+>(() => {
+  const { defaultRequiredRule, formRules, createConfirmPwdRule } =
+    useFormRules();
 
-// 初始化
-async function handleInitModel() {
-  Object.assign(model, createDefaultModel());
-
-  if (props.operateType === "edit" && props.rowData) {
-    await nextTick();
-    Object.assign(model, props.rowData);
-  }
-}
+  return {
+    userName: formRules.userName,
+    cnName: defaultRequiredRule,
+    phone: formRules.phone,
+    email: formRules.email,
+    orgId: defaultRequiredRule,
+    postId: defaultRequiredRule,
+    city: defaultRequiredRule,
+    tags: { ...defaultRequiredRule, trigger: "change" },
+    avatar: defaultRequiredRule,
+    password: formRules.pwd,
+    confirmPassword: createConfirmPwdRule(model.password || ""),
+  };
+});
 
 // 分部表单子项
 const steps = [
@@ -135,15 +146,37 @@ const steps = [
   },
   { title: $t("page.systemManage.userManage.userInfo"), content: UserInfo },
   {
+    title: $t("page.systemManage.userManage.settingAvatar"),
+    content: SettingAvatar,
+  },
+  {
     title: $t("page.systemManage.userManage.settingPassword"),
-    content: SettingPassword,
+    content: StrengthMeter,
   },
 ];
-const items = steps.map((item) => ({ key: item.title, title: item.title }));
+const items = ref<StepsProps["items"]>([]);
+
+// 初始化
+async function handleInitModel() {
+  Object.assign(model, createDefaultModel());
+  items.value = steps.map((item) => ({ key: item.title, title: item.title }));
+  if (props.operateType === "edit" && props.rowData) {
+    await nextTick();
+    Object.assign(model, props.rowData);
+    items.value = initial(items.value);
+  }
+}
 
 // 关闭弹窗
 const closeModal = () => {
   visible.value = false;
+};
+
+// 更新 model 的值
+const updateModel = (
+  newValue: Record<keyof Api.SystemManage.SaveUserManage, string>,
+) => {
+  Object.assign(model, newValue);
 };
 
 // 提交数据
@@ -155,9 +188,30 @@ async function handleSubmit() {
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
-      ...pick(model, keys(createDefaultModel())),
+      ...(omit(pick(model, keys(createDefaultModel())), [
+        "password",
+        "confirmPassword",
+      ]) as Api.SystemManage.SaveUserManage),
     };
-    console.log("params", params);
+    // 只有新增的时候才传递密码参数
+    if (isAdd) {
+      Object.assign(params, {
+        password: model.password,
+      });
+    }
+    await (isAdd ? createUser : updateUser)(params)
+      .then(({ error }) => {
+        if (!error) {
+          window.$message?.success(
+            $t(isAdd ? "common.addSuccess" : "common.updateSuccess"),
+          );
+          closeModal();
+          emit("submitted");
+        }
+      })
+      .finally(() => {
+        loading.value = false;
+      });
   });
 }
 
@@ -185,23 +239,33 @@ watch(visible, () => {
           <component
             :is="steps[current].content"
             :model="model"
-            :organazationList="organazationList"
-            :postList="postList"
+            :organazationList="current === 1 ? organazationList : undefined"
+            :postList="current === 1 ? postList : undefined"
+            @update:model="updateModel"
           />
         </ARow>
       </AForm>
     </ASpace>
     <template #footer>
-      <AButton v-if="current > 0" style="margin-left: 8px" @click="prev">{{
-        $t("common.prevStep")
-      }}</AButton>
-      <AButton v-if="current < steps.length - 1" type="primary" @click="next">{{
-        $t("common.nextStep")
-      }}</AButton>
       <AButton
-        v-if="current == steps.length - 1"
+        v-if="current > 0"
+        style="margin-left: 8px"
+        @click="prev"
+        :disable="loading"
+        >{{ $t("common.prevStep") }}</AButton
+      >
+      <AButton
+        v-if="items && current < items.length - 1"
+        type="primary"
+        @click="next"
+        :disable="loading"
+        >{{ $t("common.nextStep") }}</AButton
+      >
+      <AButton
+        v-if="items && current === items.length - 1"
         type="primary"
         @click="handleSubmit"
+        :loading="loading"
       >
         {{ $t("common.commit") }}
       </AButton>

@@ -17,14 +17,14 @@ export enum UNIFORM_TEXT {
  * @description: 状态
  */
 export enum STATUS {
-  ACTIVE,
-  INACTIVE,
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
 }
 
 /**
  * @description: 用户性别
  */
 export enum SEX {
-  FEMALE,
-  MALE,
+  FEMALE = 'FEMALE',
+  MALE = 'MALE',
 }

@@ -204,11 +204,14 @@ watch(visible, () => {
       >
         <AInput
           v-model:value="model.icon"
-          show-count
           :placeholder="
             $t('form.enter') + $t('page.administrative.organization.icon')
           "
-        />
+        >
+          <template #suffix>
+            <SvgIcon v-if="model.icon" :icon="model.icon" class="text-icon" />
+          </template>
+        </AInput>
       </AFormItem>
       <AFormItem
         :label="$t('page.administrative.organization.description')"

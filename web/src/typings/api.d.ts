@@ -97,10 +97,10 @@ declare namespace Api {
      */
     type UserManage = Common.CommonRecord<{
       userName: string; // 用户名
-      password: string; // 密码
+      password?: string; // 密码
       cnName: string; // 中文名
-      avatar?: string; // 头像
-      phone: string; // 手机号
+      avatar: string; // 头像
+      phone: string; // 电话号码
       email: string; // 邮箱
       sex: SEX; // 性别
       status: STATUS; // 状态
@@ -124,7 +124,10 @@ declare namespace Api {
     /**
      * @description: 创建/更新用户
      */
-    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields | 'organization' | 'post' | 'loginCount'> & Partial<Api.Common.ColumnId>;
+    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields | 'organization' | 'post' | 'loginCount' | 'lastIp' | 'lastLoginAt'>
+      & Partial<Api.Common.ColumnId> & {
+        confirmPassword?: string;
+      };
   }
 
   /**

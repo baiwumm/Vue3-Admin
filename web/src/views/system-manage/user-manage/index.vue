@@ -2,6 +2,12 @@
   <div
     class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
   >
+    <!-- 顶部搜索 -->
+    <HeaderSearch
+      v-model:model="searchParams"
+      @reset="resetSearchParams"
+      @search="getDataByPage"
+    />
     <ACard
       :title="$t('route.system-manage_user-manage')"
       :bordered="false"
@@ -44,7 +50,7 @@
 import { ref } from "vue";
 import { getUserList, delUser } from "@/service/api";
 import { $t } from "@/locales";
-import { Button, Popconfirm, Tag, Space } from "ant-design-vue";
+import { Button, Popconfirm, Tag, Space, Tooltip } from "ant-design-vue";
 import SvgIcon from "@/components/custom/svg-icon.vue";
 import {
   useTable,
@@ -52,6 +58,11 @@ import {
   useTableScroll,
 } from "@/hooks/common/table";
 import OperateModal from "./modules/operate-modal.vue";
+import { SEX, UNIFORM_TEXT, STATUS } from "@/enum";
+import { eq, find, get } from "lodash-es";
+import dayjs from "dayjs";
+import { StatueOptions } from "@/constants";
+import HeaderSearch from "./modules/header-search.vue";
 
 // 编辑的数据
 const editingData = ref<Api.SystemManage.UserManage | null>(null);
@@ -67,7 +78,6 @@ const {
   loading,
   mobilePagination,
   searchParams,
-  updateSearchParams,
   resetSearchParams,
 } = useTable({
   apiFn: getUserList,
@@ -85,13 +95,125 @@ const {
       align: "center",
       fixed: "left",
       customRender: ({ text }) => (
-        <Tag bordered={false}>
+        <Tag bordered={false} color="purple">
           <Space>
             <SvgIcon icon="ri:user-line" class="text-base" />
             {text}
           </Space>
         </Tag>
       ),
+    },
+    {
+      key: "cnName",
+      dataIndex: "cnName",
+      title: $t("page.systemManage.userManage.cnName"),
+      align: "center",
+    },
+    {
+      key: "orgId",
+      dataIndex: "orgId",
+      title: $t("page.systemManage.userManage.orgId"),
+      align: "center",
+      customRender: ({ record }) => (
+        <Tag bordered={false}>
+          <Space>
+            <SvgIcon
+              icon={record.organization.icon || "ri:exchange-2-line"}
+              class="text-base"
+            />
+            {record.organization.name}
+          </Space>
+        </Tag>
+      ),
+    },
+    {
+      key: "postId",
+      dataIndex: "postId",
+      title: $t("page.systemManage.userManage.postId"),
+      align: "center",
+      customRender: ({ record }) => (
+        <Tag bordered={false}>
+          <Space>
+            <SvgIcon icon="ri:contacts-book-3-line" class="text-base" />
+            {record.post.name}
+          </Space>
+        </Tag>
+      ),
+    },
+    {
+      key: "sex",
+      dataIndex: "sex",
+      title: $t("page.systemManage.userManage.sex"),
+      align: "center",
+      customRender: ({ text }) => (
+        <Tag
+          bordered={false}
+          color={eq(text, SEX.MALE) ? "processing" : "magenta"}
+        >
+          <SvgIcon
+            icon={eq(text, SEX.MALE) ? "ri:men-line" : "ri:women-line"}
+            class="text-lg inline-block"
+          />
+        </Tag>
+      ),
+    },
+    {
+      key: "status",
+      dataIndex: "status",
+      title: $t("form.status"),
+      align: "center",
+      customRender: ({ text }) => (
+        <Tag
+          bordered={false}
+          color={eq(text, STATUS.ACTIVE) ? "processing" : "error"}
+        >
+          {get(
+            find(StatueOptions, ["value", text]),
+            "label",
+            UNIFORM_TEXT.NULL,
+          )}
+        </Tag>
+      ),
+    },
+    {
+      key: "phone",
+      dataIndex: "phone",
+      title: $t("page.systemManage.userManage.phone"),
+      align: "center",
+    },
+    {
+      key: "email",
+      dataIndex: "email",
+      title: $t("page.systemManage.userManage.email"),
+      align: "center",
+      ellipsis: true,
+      customRender: ({ text }) =>
+        text ? (
+          <Tooltip title={text} placement="topLeft">
+            {text}
+          </Tooltip>
+        ) : (
+          UNIFORM_TEXT.NULL
+        ),
+    },
+    {
+      key: "sort",
+      dataIndex: "sort",
+      title: $t("form.sort"),
+      align: "center",
+      customRender: ({ text }) => (
+        <Tag bordered={false} color="success">
+          {text}
+        </Tag>
+      ),
+    },
+    {
+      key: "createdAt",
+      dataIndex: "createdAt",
+      title: $t("common.createdAt"),
+      align: "center",
+      width: 160,
+      customRender: ({ text }) => dayjs(text).format("YYYY-MM-DD HH:mm:ss"),
     },
     {
       key: "operate",
