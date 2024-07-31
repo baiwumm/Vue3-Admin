@@ -1,21 +1,14 @@
 import { request } from '../request';
 
 /**
- * Login
- *
- * @param userName User name
- * @param password Password
+ * @description: 用户登录
+ * @param {Api.Auth.LoginParams} params
  */
-export function fetchLogin(userName: string, password: string) {
-  return request<Api.Auth.LoginToken>({
-    url: '/auth/login',
-    method: 'post',
-    data: {
-      userName,
-      password
-    }
-  });
-}
+export const fetchLogin = (params: Api.Auth.LoginParams) => request<Api.Auth.LoginToken>({
+  url: '/auth/login',
+  method: 'post',
+  data: params
+});
 
 /** Get user info */
 export function fetchGetUserInfo() {
@@ -46,3 +39,8 @@ export function fetchRefreshToken(refreshToken: string) {
 export function fetchCustomBackendError(code: string, msg: string) {
   return request({ url: '/auth/error', params: { code, msg } });
 }
+
+/**
+ * @description: 获取图形验证码
+ */
+export const getCaptcha = () => request({ url: '/auth/captcha' });

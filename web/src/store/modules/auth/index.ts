@@ -54,16 +54,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   /**
-   * Login
-   *
-   * @param userName User name
-   * @param password Password
-   * @param [redirect=true] Whether to redirect after login. Default is `true`
+   * @description: 用户登录
+   * @param {Api.Auth.LoginParams} params
+   * @param {*} redirect: 重定向地址
    */
-  async function login(userName: string, password: string, redirect = true) {
+  const login = async (params: Api.Auth.LoginParams, redirect = true) => {
     startLoading();
 
-    const { data: loginToken, error } = await fetchLogin(userName, password);
+    const { data: loginToken, error } = await fetchLogin(params);
 
     if (!error) {
       const pass = await loginByToken(loginToken);
@@ -77,8 +75,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
         if (routeStore.isInitAuthRoute) {
           window.$notification?.success({
-            message: $t('page.login.common.loginSuccess'),
-            description: $t('page.login.common.welcomeBack', { userName: userInfo.userName })
+            message: $t('page.login.loginSuccess'),
+            description: $t('page.login.welcomeBack', { userName: userInfo.userName })
           });
         }
       }

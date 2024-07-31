@@ -50,21 +50,28 @@ declare namespace Api {
   }
 
   /**
-   * Namespace Auth
-   *
-   * Backend api module: "auth"
+   * @description: 身份鉴权
    */
   namespace Auth {
-    interface LoginToken {
+    /**
+     * @description: 登录 token
+     */
+    type LoginToken = {
       token: string;
       refreshToken: string;
     }
 
-    interface UserInfo {
-      userId: string;
-      userName: string;
-      roles: string[];
-      buttons: string[];
+    /**
+     * @description: 登录用户信息
+     */
+    type UserInfo = Omit<SystemManage.UserManage, 'password' | 'token'>
+    /**
+     * @description: 登录参数
+     */
+    type LoginParams = {
+      userName: string; // 用户名
+      password: string; // 密码
+      captchaCode: string; // 验证码
     }
   }
 
@@ -87,9 +94,7 @@ declare namespace Api {
   }
 
   /**
-   * namespace SystemManage
-   *
-   * backend api module: "systemManage"
+   * @description: 系统管理
    */
   namespace SystemManage {
     /**
