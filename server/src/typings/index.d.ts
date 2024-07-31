@@ -26,6 +26,11 @@ declare namespace Api {
       createdAt: string; // 创建时间
       updatedAt: string; // 更新时间
     } & T;
+
+    // Session 存储信息
+    type SessionInfo = {
+      captchaCode: string; // 验证码
+    };
   }
 
   /**
