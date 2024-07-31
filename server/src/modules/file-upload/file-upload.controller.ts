@@ -2,18 +2,19 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-29 14:24:19
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-29 17:18:09
+ * @LastEditTime: 2024-07-31 15:22:31
  * @Description: FileUploadController
  */
 import { Controller, Post, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes } from '@nestjs/swagger';
+import { ApiBody, ApiConsumes, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { responseMessage } from '@/utils';
 
-import { FileUploadDto } from './dto';
+import { FileUploadDto, SingleFileResponseDto } from './dto';
 
+@ApiTags('文件上传')
 @Controller('upload')
 export class FileUploadController {
   /**
@@ -22,6 +23,7 @@ export class FileUploadController {
   @UseInterceptors(FileInterceptor('file'))
   @Post('single-file')
   @ApiConsumes('multipart/form-data')
+  @ApiOkResponse({ type: SingleFileResponseDto })
   @ApiBody({
     description: '单个文件上传',
     type: FileUploadDto,
