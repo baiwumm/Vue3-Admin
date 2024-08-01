@@ -8,14 +8,6 @@ export const themeSchemaRecord: Record<UnionKey.ThemeScheme, App.I18n.I18nKey> =
 
 export const themeSchemaOptions = transformRecordToOption(themeSchemaRecord);
 
-export const loginModuleRecord: Record<UnionKey.LoginModule, App.I18n.I18nKey> = {
-  'pwd-login': 'page.login.pwdLogin.title',
-  'code-login': 'page.login.codeLogin.title',
-  register: 'page.login.register.title',
-  'reset-pwd': 'page.login.resetPwd.title',
-  'bind-wechat': 'page.login.bindWeChat.title'
-};
-
 export const themeLayoutModeRecord: Record<UnionKey.ThemeLayoutMode, App.I18n.I18nKey> = {
   vertical: 'theme.layoutMode.vertical',
   'vertical-mix': 'theme.layoutMode.vertical-mix',
