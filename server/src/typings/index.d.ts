@@ -21,15 +21,16 @@ declare namespace Api {
     };
     // 公共列
     type CommonRecord<T = any> = {
-      id: number; // 主键
+      id: string; // 主键
       sort: number; // 排序
-      createdAt: string; // 创建时间
-      updatedAt: string; // 更新时间
+      createdAt: Date; // 创建时间
+      updatedAt: Date; // 更新时间
     } & T;
 
     // Session 存储信息
     type SessionInfo = {
       captchaCode: string; // 验证码
+      userInfo: SystemManage.User;
     };
   }
 
@@ -81,12 +82,12 @@ declare namespace Api {
       city: string[]; // 城市
       address?: string; // 详细地址
       orgId: string; // 组织 id
-      organization: Api.Administrative.Organization; // 所属组织
+      organization?: Api.Administrative.Organization; // 所属组织
       postId: string; // 岗位 id
-      post: Api.Administrative.Post; // 所属岗位
+      post?: Api.Administrative.Post; // 所属岗位
       loginCount: number; // 登录次数
       lastIp?: string; // 最后一次登录 ip
-      lastLoginAt?: string; // 最后登录时间
+      lastLoginAt?: Date; // 最后登录时间
     }>;
   }
 }
