@@ -2,24 +2,60 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-29 11:20:32
+ * @LastEditTime: 2024-08-01 18:09:11
  * @Description: AuthService
  */
 import { Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
+import { PrismaService } from '@/modules/prisma/prisma.service';
 import { responseMessage } from '@/utils';
+
+import { LoginParamsDto } from './dto/params-auth.dto';
 
 @Injectable()
 export class AuthService {
+  constructor(
+    private prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) { }
   /**
    * @description: 用户登录
    */
-  login() {
-    return responseMessage({
-      token: '111',
-      refreshToken: '222',
+  async login(params: LoginParamsDto, session: Api.Common.SessionInfo, ip: string) {
+    // 获取验证码
+    const { captchaCode } = params;
+    // 判断验证码
+    if (captchaCode.toUpperCase() !== session.captchaCode.toUpperCase()) {
+      return responseMessage(null, '验证码错误', -1);
+    }
+    // 登录参数校验结果
+    const user = await this.validateUser(params);
+
+    if (!user) {
+      return responseMessage(null, '用户名或密码错误', -1);
+    }
+
+    // 生成 token
+    const tokens = await this.generateTokens(user);
+
+    // 登录成功，更新用户信息
+    const userInfo = await this.prisma.user.update({
+      where: { id: user.id }, // 根据 id 找到产品
+      data: {
+        loginCount: { increment: 1 }, // 登录次数 + 1
+        lastLoginAt: new Date(),
+        lastIp: ip,
+        token: tokens.token,
+      },
     });
+
+    // 存储用户信息到 session
+    session.userInfo = userInfo;
+
+    // 验证成功，返回 token
+    return responseMessage(tokens);
   }
 
   /**
@@ -32,6 +68,41 @@ export class AuthService {
       roles: ['R_SUPER'],
       buttons: ['B_CODE1', 'B_CODE2', 'B_CODE3'],
     });
+  }
+
+  /**
+   * @description: 验证用户登录
+   */
+  async validateUser(params: LoginParamsDto): Promise<Api.SystemManage.User | null> {
+    // 解构参数
+    const { userName, password } = params;
+
+    // 查询数据库中对应的用户
+    const userInfo = await this.prisma.user.findUnique({
+      where: { userName },
+    });
+    if (userInfo && (await this.comparePassword(password, userInfo.password))) {
+      // 如果用户名密码正确，则返回用户对象
+      return userInfo;
+    }
+    return null;
+  }
+
+  /**
+   * @description: 生成双 token
+   */
+  async generateTokens(userInfo: Api.SystemManage.User) {
+    const payload = { userName: userInfo.userName, sub: userInfo.id };
+
+    const token = this.jwtService.sign(payload, {
+      expiresIn: '15m', // 设置访问 token 的过期时间为 15 分钟
+    });
+
+    const refreshToken = this.jwtService.sign(payload, {
+      expiresIn: '7d', // 设置刷新 token 的过期时间为 7 天
+    });
+
+    return { token, refreshToken };
   }
 
   /**

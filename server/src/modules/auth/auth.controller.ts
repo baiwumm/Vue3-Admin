@@ -2,10 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-31 15:39:14
+ * @LastEditTime: 2024-08-01 16:23:05
  * @Description: AuthController
  */
-import { Controller, Get, Post, Res, Session } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Post, Res, Session } from '@nestjs/common';
 import { ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 import { Response } from 'express';
 import svgCaptcha from 'svg-captcha';
@@ -13,6 +13,7 @@ import svgCaptcha from 'svg-captcha';
 import { responseMessage } from '@/utils';
 
 import { AuthService } from './auth.service';
+import { LoginParamsDto } from './dto/params-auth.dto';
 import { VerifyCodeResponseDto } from './dto/response-auth.dto';
 
 @ApiTags('身份鉴权')
@@ -23,8 +24,9 @@ export class AuthController {
    * @description: 用户登录
    */
   @Post('/login')
-  login() {
-    return this.authService.login();
+  @ApiOperation({ summary: '用户登录' })
+  login(@Body() body: LoginParamsDto, @Session() session: Api.Common.SessionInfo, @Ip() ip: string) {
+    return this.authService.login(body, session, ip);
   }
 
   /**
