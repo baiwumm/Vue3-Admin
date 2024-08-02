@@ -135,6 +135,7 @@ async function handleSubmit() {
                     shape="round"
                     :loading="authStore.loginLoading"
                     @click="handleSubmit"
+                    @pressEnter="handleSubmit"
                   >
                     {{ $t("common.confirm") }}
                   </AButton>
