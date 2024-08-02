@@ -96,6 +96,7 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       return response.data.data;
     },
     onError(error) {
+      const authStore = useAuthStore();
       // 当请求失败时，可以在这里处理显示错误信息的逻辑
       let message = error.response?.data?.msg || error.message;
       let backendErrorCode = error.response?.data?.code;
@@ -103,6 +104,7 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       // 错误信息通过弹窗形式显示
       const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
       if (modalLogoutCodes.includes(String(backendErrorCode))) {
+        authStore.resetStore();
         return;
       }
 
