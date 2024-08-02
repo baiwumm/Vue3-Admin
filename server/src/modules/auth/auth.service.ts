@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-01 18:09:11
+ * @LastEditTime: 2024-08-02 17:09:35
  * @Description: AuthService
  */
 import { Injectable } from '@nestjs/common';
@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { responseMessage } from '@/utils';
+import { omit, responseMessage } from '@/utils';
 
 import { LoginParamsDto } from './dto/params-auth.dto';
 
@@ -61,13 +61,8 @@ export class AuthService {
   /**
    * @description: 获取用户信息
    */
-  getUserInfo() {
-    return responseMessage({
-      userId: '0',
-      userName: 'Admin',
-      roles: ['R_SUPER'],
-      buttons: ['B_CODE1', 'B_CODE2', 'B_CODE3'],
-    });
+  getUserInfo(session: Api.Common.SessionInfo) {
+    return responseMessage(omit(session.userInfo, ['password', 'token']));
   }
 
   /**

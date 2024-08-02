@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-02 10:03:55
+ * @LastEditTime: 2024-08-02 14:02:37
  * @Description: AuthController
  */
 import { Body, Controller, Get, Ip, Post, Res, Session } from '@nestjs/common';
@@ -39,8 +39,8 @@ export class AuthController {
   })
   @ApiBearerAuth()
   @Get('/getUserInfo')
-  getUserInfo() {
-    return this.authService.getUserInfo();
+  getUserInfo(@Session() session: Api.Common.SessionInfo) {
+    return this.authService.getUserInfo(session);
   }
 
   /**
