@@ -36,6 +36,7 @@
     "class-validator": "^0.14.1",
     "dayjs": "^1.11.11",
     "express-session": "^1.18.0",
+    "lodash-es": "^4.17.21",
     "multer": "1.4.5-lts.1",
     "passport-jwt": "^4.0.1",
     "reflect-metadata": "^0.2.0",
