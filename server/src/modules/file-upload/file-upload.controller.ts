@@ -2,12 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-29 14:24:19
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-31 15:22:31
+ * @LastEditTime: 2024-08-02 10:01:55
  * @Description: FileUploadController
  */
-import { Controller, Post, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiBody, ApiConsumes, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiConsumes, ApiHeader, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 
 import { responseMessage } from '@/utils';
@@ -15,11 +16,18 @@ import { responseMessage } from '@/utils';
 import { FileUploadDto, SingleFileResponseDto } from './dto';
 
 @ApiTags('文件上传')
+@ApiHeader({
+  name: 'Authorization',
+  required: true,
+  description: 'token令牌',
+})
+@ApiBearerAuth()
 @Controller('upload')
 export class FileUploadController {
   /**
    * @description: 上传单个文件
    */
+  @UseGuards(AuthGuard('jwt'))
   @UseInterceptors(FileInterceptor('file'))
   @Post('single-file')
   @ApiConsumes('multipart/form-data')
