@@ -44,7 +44,7 @@ function transformElegantRouteToVueRoute(
   function getLayoutName(component: string) {
     const layout = component.replace(LAYOUT_PREFIX, '');
 
-    if (!layouts[layout]) {
+    if(!layouts[layout]) {
       throw new Error(`Layout component "${layout}" not found`);
     }
 
@@ -58,7 +58,7 @@ function transformElegantRouteToVueRoute(
   function getViewName(component: string) {
     const view = component.replace(VIEW_PREFIX, '');
 
-    if (!views[view]) {
+    if(!views[view]) {
       throw new Error(`View component "${view}" not found`);
     }
 
@@ -97,7 +97,7 @@ function transformElegantRouteToVueRoute(
     if (component) {
       if (isSingleLevelRoute(route)) {
         const { layout, view } = getSingleLevelRouteComponent(component);
-
+  
         const singleLevelRoute: RouteRecordRaw = {
           path,
           component: layouts[layout],
@@ -110,40 +110,40 @@ function transformElegantRouteToVueRoute(
             } as RouteRecordRaw
           ]
         };
-
+  
         return [singleLevelRoute];
       }
-
+  
       if (isLayout(component)) {
         const layoutName = getLayoutName(component);
-
+  
         vueRoute.component = layouts[layoutName];
       }
-
+  
       if (isView(component)) {
         const viewName = getViewName(component);
-
+  
         vueRoute.component = views[viewName];
       }
-
+  
     }
   } catch (error: any) {
     console.error(`Error transforming route "${route.name}": ${error.toString()}`);
     return [];
   }
 
-
+  
   // add redirect to child
   if (children?.length && !vueRoute.redirect) {
     vueRoute.redirect = {
       name: children[0].name
     };
   }
-
+  
   if (children?.length) {
     const childRoutes = children.flatMap(child => transformElegantRouteToVueRoute(child, layouts, views));
 
-    if (isFirstLevelRoute(route)) {
+    if(isFirstLevelRoute(route)) {
       vueRoute.children = childRoutes;
     } else {
       vueRoutes.push(...childRoutes);
@@ -170,7 +170,7 @@ const routeMap: RouteMap = {
   "administrative_post-manage": "/administrative/post-manage",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
-  "login": "/login",
+  "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
   "system-manage": "/system-manage",
   "system-manage_user-manage": "/system-manage/user-manage",
   "user-center": "/user-center"
