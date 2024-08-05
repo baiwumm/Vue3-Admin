@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-02 17:09:35
+ * @LastEditTime: 2024-08-05 10:55:02
  * @Description: AuthService
  */
 import { Injectable } from '@nestjs/common';
@@ -42,7 +42,7 @@ export class AuthService {
 
     // 登录成功，更新用户信息
     const userInfo = await this.prisma.user.update({
-      where: { id: user.id }, // 根据 id 找到产品
+      where: { id: user.id },
       data: {
         loginCount: { increment: 1 }, // 登录次数 + 1
         lastLoginAt: new Date(),
@@ -90,7 +90,7 @@ export class AuthService {
     const payload = { userName: userInfo.userName, sub: userInfo.id };
 
     const token = this.jwtService.sign(payload, {
-      expiresIn: '15m', // 设置访问 token 的过期时间为 15 分钟
+      expiresIn: '3d', // 设置访问 token 的过期时间为 15 分钟
     });
 
     const refreshToken = this.jwtService.sign(payload, {
@@ -98,6 +98,23 @@ export class AuthService {
     });
 
     return { token, refreshToken };
+  }
+
+  /**
+   * @description: 用户注销登录
+   */
+  async logout(session) {
+    const { userInfo } = session;
+    const { id } = userInfo;
+    // 清空数据库中 token
+    await this.prisma.user.update({
+      where: { id },
+      data: { token: null },
+    });
+    // 清除 session
+    session.destroy();
+    // 保存操作日志
+    return responseMessage({}, '注销成功');
   }
 
   /**

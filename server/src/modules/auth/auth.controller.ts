@@ -2,14 +2,16 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-02 14:02:37
+ * @LastEditTime: 2024-08-05 10:19:22
  * @Description: AuthController
  */
-import { Body, Controller, Get, Ip, Post, Res, Session } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Post, Res, Session, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 import { Response } from 'express';
 import svgCaptcha from 'svg-captcha';
 
+import { ResponseDto } from '@/dto/response.dto';
 import { responseMessage } from '@/utils';
 
 import { AuthService } from './auth.service';
@@ -32,6 +34,7 @@ export class AuthController {
   /**
    * @description: 获取用户信息
    */
+  @UseGuards(AuthGuard('jwt'))
   @ApiHeader({
     name: 'Authorization',
     required: true,
@@ -41,6 +44,18 @@ export class AuthController {
   @Get('/getUserInfo')
   getUserInfo(@Session() session: Api.Common.SessionInfo) {
     return this.authService.getUserInfo(session);
+  }
+
+  /**
+   * @description: 用户注销登录
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/logout')
+  @ApiOkResponse({ type: ResponseDto })
+  @ApiOperation({ summary: '注销登录' })
+  async logout(@Session() session: Api.Common.SessionInfo) {
+    const response = await this.authService.logout(session);
+    return response;
   }
 
   /**
