@@ -166,7 +166,7 @@ const local: App.I18n.Schema = {
       passwordPlaceholder: '请输入密码',
       codePlaceholder: '请输入验证码',
       loginSuccess: '登录成功',
-      welcomeBack: '欢迎回来，{userName} ！'
+      welcomeBack: '欢迎回来，{cnName} ！'
     },
     about: {
       title: '关于',
@@ -182,7 +182,7 @@ const local: App.I18n.Schema = {
       devDep: '开发依赖'
     },
     home: {
-      greeting: '早安，{userName}, 今天又是充满活力的一天!',
+      greeting: '早安，{cnName}, 今天又是充满活力的一天!',
       weatherDesc: '今日多云转晴，20℃ - 25℃!',
       projectCount: '项目数',
       todo: '待办',

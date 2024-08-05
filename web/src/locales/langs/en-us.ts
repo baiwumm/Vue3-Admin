@@ -166,7 +166,7 @@ const local: App.I18n.Schema = {
       passwordPlaceholder: 'Please enter phone number',
       codePlaceholder: 'Please enter verification code',
       loginSuccess: 'Login successfully',
-      welcomeBack: 'Welcome back, {userName} !'
+      welcomeBack: 'Welcome back, {cnName} !'
     },
     about: {
       title: 'About',
@@ -182,7 +182,7 @@ const local: App.I18n.Schema = {
       devDep: 'Development Dependency'
     },
     home: {
-      greeting: 'Good morning, {userName}, today is another day full of vitality!',
+      greeting: 'Good morning, {cnName}, today is another day full of vitality!',
       weatherDesc: 'Today is cloudy to clear, 20℃ - 25℃!',
       projectCount: 'Project Count',
       todo: 'Todo',
