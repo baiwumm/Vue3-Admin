@@ -2,12 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-01 16:32:15
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-02 09:53:55
+ * @LastEditTime: 2024-08-05 10:12:13
  * @Description: JWT 鉴权模块
  */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Strategy } from 'passport-jwt';
+import { Request } from 'express';
+import { ExtractJwt, Strategy } from 'passport-jwt';
 
 import { LoginParamsDto } from './dto/params-auth.dto';
 
@@ -17,13 +18,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       // 提供从请求中提取 JWT 的方法。我们将使用在 API 请求的授权头中提供token的标准方法
       // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      jwtFromRequest: (req) => {
-        const authHeader = req.headers.authorization || req.headers.Authorization;
-        if (authHeader && authHeader.startsWith('Bearer ')) {
-          return authHeader.replace('Bearer ', '');
+      jwtFromRequest: (req: Request) => {
+        // 获取当前 token
+        const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
+        // 缺少令牌
+        if (!token) {
+          throw new UnauthorizedException('未登录');
         }
-        console.log(1111);
-        throw new UnauthorizedException('未登录');
+        return token;
       },
       // 为了明确起见，我们选择默认的 false 设置，
       // 它将确保 JWT 没有过期的责任委托给 Passport 模块。
