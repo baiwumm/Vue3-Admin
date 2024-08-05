@@ -18,29 +18,6 @@ export const fetchGetUserInfo = () =>
   request<Api.Auth.UserInfo>({ url: "/auth/getUserInfo" });
 
 /**
- * Refresh token
- *
- * @param refreshToken Refresh token
- */
-export const fetchRefreshToken = (refreshToken: string) =>
-  request<Api.Auth.LoginToken>({
-    url: "/auth/refreshToken",
-    method: "post",
-    data: {
-      refreshToken,
-    },
-  });
-
-/**
- * return custom backend error
- *
- * @param code error code
- * @param msg error message
- */
-export const fetchCustomBackendError = (code: string, msg: string) =>
-  request({ url: "/auth/error", params: { code, msg } });
-
-/**
  * @description: 获取图形验证码
  */
 export const getCaptcha = () => request({ url: "/auth/captcha" });

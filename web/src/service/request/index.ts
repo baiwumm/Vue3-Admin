@@ -1,10 +1,9 @@
-import type { AxiosResponse } from 'axios';
 import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
 import { useAuthStore } from '@/store/modules/auth';
 import { localStg } from '@/utils/storage';
 import { getServiceBaseURL } from '@/utils/service';
 import { $t } from '@/locales';
-import { handleRefreshToken, showErrorMsg } from './shared';
+import { showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
 
 const isHttpProxy = import.meta.env.DEV && import.meta.env.VITE_HTTP_PROXY === 'Y';
@@ -29,24 +28,6 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       // 当后端返回的 code 为 200 (默认) 时，表示请求成功
       // 如果需要修改这个逻辑，可以在 `.env` 文件中修改 `VITE_SERVICE_SUCCESS_CODE`
       return String(response.data.code) === import.meta.env.VITE_SERVICE_SUCCESS_CODE;
-    },
-    async onBackendFail(response, instance) {
-      // 当后端返回的 code 在 `expiredTokenCodes` 中时，表示 token 过期，需要刷新 token
-      // `refreshToken` 接口不能返回 `expiredTokenCodes` 中的错误码，否则会死循环，应该返回 `logoutCodes` 或 `modalLogoutCodes`
-      const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
-      if (expiredTokenCodes.includes(String(response.data.code)) && !request.state.isRefreshingToken) {
-        request.state.isRefreshingToken = true;
-
-        const refreshConfig = await handleRefreshToken(response.config);
-
-        request.state.isRefreshingToken = false;
-
-        if (refreshConfig) {
-          return instance.request(refreshConfig) as Promise<AxiosResponse>;
-        }
-      }
-
-      return null;
     },
     transformBackendResponse(response) {
       return response.data.data;

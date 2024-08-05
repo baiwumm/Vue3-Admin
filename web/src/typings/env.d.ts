@@ -41,14 +41,6 @@ declare namespace Env {
      * use "," to separate multiple codes
      */
     readonly VITE_SERVICE_MODAL_LOGOUT_CODES: string;
-    /**
-     * token expired codes of backend service
-     *
-     * when the code is received, it will refresh the token and resend the request
-     *
-     * use "," to separate multiple codes
-     */
-    readonly VITE_SERVICE_EXPIRED_TOKEN_CODES: string;
     /** when the route mode is static, the defined super role */
     readonly VITE_STATIC_SUPER_ROLE: string;
     /**

@@ -58,7 +58,6 @@ declare namespace Api {
      */
     type LoginToken = {
       token: string;
-      refreshToken: string;
     }
 
     /**
