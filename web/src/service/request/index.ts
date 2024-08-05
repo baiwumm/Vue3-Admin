@@ -31,50 +31,6 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       return String(response.data.code) === import.meta.env.VITE_SERVICE_SUCCESS_CODE;
     },
     async onBackendFail(response, instance) {
-      const authStore = useAuthStore();
-
-      function handleLogout() {
-        authStore.resetStore();
-      }
-
-      function logoutAndCleanup() {
-        handleLogout();
-        window.removeEventListener('beforeunload', handleLogout);
-
-        request.state.errMsgStack = request.state.errMsgStack.filter(msg => msg !== response.data.msg);
-      }
-
-      // 当后端返回的 code 在 `logoutCodes` 中时，表示用户需要退出登录
-      const logoutCodes = import.meta.env.VITE_SERVICE_LOGOUT_CODES?.split(',') || [];
-      if (logoutCodes.includes(String(response.data.code))) {
-        handleLogout();
-        return null;
-      }
-
-      // 当后端返回的 code 在 `modalLogoutCodes` 中时，表示用户需要退出登录，通过弹窗形式提醒
-      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
-      if (modalLogoutCodes.includes(String(response.data.code)) && !request.state.errMsgStack?.includes(response.data.msg)) {
-        request.state.errMsgStack = [...(request.state.errMsgStack || []), response.data.msg];
-
-        // 防止用户刷新页面
-        window.addEventListener('beforeunload', handleLogout);
-
-        window.$modal?.error({
-          title: $t('common.error'),
-          content: response.data.msg,
-          okText: $t('common.confirm'),
-          maskClosable: false,
-          onOk() {
-            logoutAndCleanup();
-          },
-          onCancel() {
-            logoutAndCleanup();
-          }
-        });
-
-        return null;
-      }
-
       // 当后端返回的 code 在 `expiredTokenCodes` 中时，表示 token 过期，需要刷新 token
       // `refreshToken` 接口不能返回 `expiredTokenCodes` 中的错误码，否则会死循环，应该返回 `logoutCodes` 或 `modalLogoutCodes`
       const expiredTokenCodes = import.meta.env.VITE_SERVICE_EXPIRED_TOKEN_CODES?.split(',') || [];
@@ -101,11 +57,39 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
       let message = error.response?.data?.msg || error.message;
       let backendErrorCode = error.response?.data?.code;
 
-      // 错误信息通过弹窗形式显示
-      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
-      if (modalLogoutCodes.includes(String(backendErrorCode))) {
+      function handleLogout() {
         authStore.resetStore();
-        return;
+      }
+
+      function logoutAndCleanup() {
+        handleLogout();
+        window.removeEventListener('beforeunload', handleLogout);
+
+        request.state.errMsgStack = request.state.errMsgStack.filter(msg => msg !== message);
+      }
+
+      // 当后端返回的 code 在 `modalLogoutCodes` 中时，表示用户需要退出登录，通过弹窗形式提醒
+      const modalLogoutCodes = import.meta.env.VITE_SERVICE_MODAL_LOGOUT_CODES?.split(',') || [];
+      if (modalLogoutCodes.includes(String(backendErrorCode)) && !request.state.errMsgStack?.includes(message)) {
+        request.state.errMsgStack = [...(request.state.errMsgStack || []), message];
+
+        // 防止用户刷新页面
+        window.addEventListener('beforeunload', handleLogout);
+
+        window.$modal?.error({
+          title: $t('common.error'),
+          content: message,
+          okText: $t('common.confirm'),
+          maskClosable: false,
+          onOk() {
+            logoutAndCleanup();
+          },
+          onCancel() {
+            logoutAndCleanup();
+          }
+        });
+
+        return
       }
 
       // 当 token 过期时，刷新 token 并重试请求，所以不需要显示错误信息

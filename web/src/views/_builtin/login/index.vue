@@ -122,6 +122,7 @@ async function handleSubmit() {
                       v-model:value="model.captchaCode"
                       size="large"
                       :placeholder="$t('page.login.codePlaceholder')"
+                      @pressEnter="handleSubmit"
                     />
                     <!-- 图形验证码 -->
                     <CaptchaCode />
@@ -135,7 +136,6 @@ async function handleSubmit() {
                     shape="round"
                     :loading="authStore.loginLoading"
                     @click="handleSubmit"
-                    @pressEnter="handleSubmit"
                   >
                     {{ $t("common.confirm") }}
                   </AButton>
