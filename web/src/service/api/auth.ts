@@ -10,7 +10,9 @@ export const fetchLogin = (params: Api.Auth.LoginParams) => request<Api.Auth.Log
   data: params
 });
 
-/** Get user info */
+/**
+ * @description: 获取用户信息
+ */
 export function fetchGetUserInfo() {
   return request<Api.Auth.UserInfo>({ url: '/auth/getUserInfo' });
 }
@@ -44,3 +46,11 @@ export function fetchCustomBackendError(code: string, msg: string) {
  * @description: 获取图形验证码
  */
 export const getCaptcha = () => request({ url: '/auth/captcha' });
+
+/**
+ * @description: 用户注销登录
+ */
+export const fetchLogout = () => request({
+  url: '/auth/logout',
+  method: 'post',
+});
