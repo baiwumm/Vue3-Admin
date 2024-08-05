@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-05 11:12:52
+ * @LastEditTime: 2024-08-05 14:08:47
  * @Description: AuthService
  */
 import { Injectable } from '@nestjs/common';
@@ -87,7 +87,7 @@ export class AuthService {
    * @description: 生成双 token
    */
   async generateTokens(userInfo: Api.SystemManage.User) {
-    const payload = { userName: userInfo.userName, sub: userInfo.id };
+    const payload: Api.Common.TokenPayload = { userName: userInfo.userName, sub: userInfo.id };
 
     const token = this.jwtService.sign(payload, {
       expiresIn: '3d', // 设置访问 token 的过期时间为 3 天

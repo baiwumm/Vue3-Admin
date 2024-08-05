@@ -32,6 +32,11 @@ declare namespace Api {
       captchaCode: string; // 验证码
       userInfo: SystemManage.User;
     };
+
+    // token 生成信息
+    type TokenPayload = {
+      sub: string;
+    } & Pick<SystemManage.User, 'userName'>;
   }
 
   /**
