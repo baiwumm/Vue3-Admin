@@ -117,16 +117,20 @@ async function handleSubmit() {
                   </AInputPassword>
                 </AFormItem>
                 <AFormItem name="captchaCode">
-                  <div class="w-full flex-y-center gap-16px">
-                    <AInput
-                      v-model:value="model.captchaCode"
-                      size="large"
-                      :placeholder="$t('page.login.codePlaceholder')"
-                      @pressEnter="handleSubmit"
-                    />
-                    <!-- 图形验证码 -->
-                    <CaptchaCode />
-                  </div>
+                  <ARow>
+                    <ACol flex="auto">
+                      <AInput
+                        v-model:value="model.captchaCode"
+                        size="large"
+                        :placeholder="$t('page.login.codePlaceholder')"
+                        @pressEnter="handleSubmit"
+                      />
+                    </ACol>
+                    <ACol flex="132px">
+                      <!-- 图形验证码 -->
+                      <CaptchaCode />
+                    </ACol>
+                  </ARow>
                 </AFormItem>
                 <ASpace direction="vertical" size="large" class="w-full">
                   <AButton
