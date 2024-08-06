@@ -25,6 +25,14 @@ enum Sex {
   MALE
 }
 
+// Log - method
+enum Method {
+  GET
+  POST
+  PATCH
+  DELETE
+}
+
 // 智能行政 - 组织管理
 model Organization {
   id        String     @id @default(uuid()) // 主键
@@ -79,11 +87,26 @@ model User {
   organization Organization @relation(fields: [orgId], references: [id])
   postId    String    // 关联的岗位 id
   post      Post      @relation(fields: [postId], references: [id])
+  logs      Log[]    // 操作日志
   loginCount Int     @default(0) // 登录次数
   lastIp     String?    // 最后登录ip
   lastLoginAt DateTime? // 最后登录时间
   createdAt DateTime @default(now()) // 创建时间
   updatedAt DateTime @updatedAt // 更新时间
+}
+
+// 系统管理 - 操作日志
+model Log {
+  id        String     @id @default(uuid()) // 主键
+  userId    String     // 关联的用户 id
+  user      User       @relation(fields: [userId], references: [id])
+  ip        String     // ip
+  action    String     // 请求地址
+  method    Method     // 请求方法
+  params    Json      // 请求参数（JSON 对象）
+  os        String     // 系统
+  browser   String     // 浏览器
+  createdAt DateTime @default(now()) // 创建时间
 }
 
 
