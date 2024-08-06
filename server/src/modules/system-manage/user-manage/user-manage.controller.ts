@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:14:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-06 11:08:23
+ * @LastEditTime: 2024-08-06 17:47:17
  * @Description: UserManageController
  */
 
@@ -22,7 +22,7 @@ import { UserManageService } from './user-manage.service';
   description: 'token令牌',
 })
 @ApiBearerAuth()
-@Controller('user-manage')
+@Controller('system/user-manage')
 export class UserManageController {
   constructor(private readonly userManageService: UserManageService) { }
 

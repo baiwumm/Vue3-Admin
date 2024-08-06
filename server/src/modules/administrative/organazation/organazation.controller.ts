@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-02 10:03:07
+ * @LastEditTime: 2024-08-06 17:47:47
  * @Description: OrganazationController
  */
 import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
@@ -21,7 +21,7 @@ import { OrganazationService } from './organazation.service';
   description: 'token令牌',
 })
 @ApiBearerAuth()
-@Controller('organazation')
+@Controller('administrative/organazation')
 export class OrganazationController {
   constructor(private readonly organazationService: OrganazationService) { }
 
