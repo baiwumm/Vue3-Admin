@@ -59,6 +59,9 @@ importers:
       svg-captcha:
         specifier: ^1.4.0
         version: 1.4.0
+      ua-parser-js:
+        specifier: ^1.0.38
+        version: 1.0.38
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
@@ -2955,6 +2958,9 @@ packages:
     resolution: {integrity: sha512-/hreyEujaB0w76zKo6717l3L0o/qEUtRgdvUBvlkhoWeOVMjMuHNHk0BRBzikzuGDqNmPQbg5ifMEqsHLiIUcQ==}
     engines: {node: '>=14.17'}
     hasBin: true
+
+  ua-parser-js@1.0.38:
+    resolution: {integrity: sha512-Aq5ppTOfvrCMgAPneW1HfWj66Xi7XL+/mIy996R1/CLS/rcyJQm6QZdsKrUeivDFQ+Oc9Wyuwor8Ze8peEoUoQ==}
 
   uid-safe@2.1.5:
     resolution: {integrity: sha512-KPHm4VL5dDXKz01UuEd88Df+KzynaohSL9fBh096KWAxSKZQDI2uBrVqtvRM4rwrIrRRKsdLNML/lnaaVSRioA==}
@@ -6387,6 +6393,8 @@ snapshots:
   typescript@5.3.3: {}
 
   typescript@5.5.3: {}
+
+  ua-parser-js@1.0.38: {}
 
   uid-safe@2.1.5:
     dependencies:
