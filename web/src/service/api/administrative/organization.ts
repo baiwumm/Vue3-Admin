@@ -2,10 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:16:32
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-11 18:05:16
+ * @LastEditTime: 2024-08-06 17:50:38
  * @Description: 组织管理模块接口
  */
 import { request } from "@/service/request";
+
+const baseURL = '/administrative/organazation'
 
 /**
  * @description: 获取组织管理列表
@@ -15,7 +17,7 @@ export const getOrganazationList = (
   params?: Api.Administrative.OrganizationSearchParams,
 ) =>
   request<Api.Common.PaginatingQueryRecord<Api.Administrative.Organization>>({
-    url: "/organazation",
+    url: baseURL,
     params,
   });
 
@@ -25,7 +27,7 @@ export const getOrganazationList = (
  */
 export const getOrganazationDetail = (
   params: Pick<Api.Common.CommonRecord, "id">,
-) => request<Api.Administrative.Organization>({ url: "/organazation", params });
+) => request<Api.Administrative.Organization>({ url: baseURL, params });
 
 /**
  * @description: 创建组织
@@ -33,7 +35,7 @@ export const getOrganazationDetail = (
  */
 export const createOrganazation = (body: Api.Administrative.SaveOrganization) =>
   request<Api.Administrative.Organization>({
-    url: "/organazation",
+    url: baseURL,
     method: "post",
     data: body,
   });
@@ -47,7 +49,7 @@ export const updateOrganazation = ({
   ...body
 }: Api.Administrative.SaveOrganization) =>
   request<Api.Administrative.Organization>({
-    url: `/organazation/${id}`,
+    url: `${baseURL}/${id}`,
     method: "patch",
     data: body,
   });
@@ -58,6 +60,6 @@ export const updateOrganazation = ({
  */
 export const delOrganazation = ({ id }: Pick<Api.Common.CommonRecord, "id">) =>
   request<Api.Administrative.Organization>({
-    url: `/organazation/${id}`,
+    url: `${baseURL}/${id}`,
     method: "delete",
   });

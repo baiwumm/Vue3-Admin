@@ -2,11 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-16 16:28:27
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-05 11:10:05
+ * @LastEditTime: 2024-08-06 17:51:10
  * @Description: 岗位管理模块接口
  */
 
 import { request } from "@/service/request";
+
+const baseURL = '/administrative/post-manage'
 
 /**
  * @description: 获取岗位管理列表
@@ -16,7 +18,7 @@ export const getPostList = (
   params?: Api.Administrative.PostManageSearchParams,
 ) =>
   request<Api.Common.PaginatingQueryRecord<Api.Administrative.PostManage>>({
-    url: "/post-manage",
+    url: baseURL,
     params,
   });
 
@@ -25,7 +27,7 @@ export const getPostList = (
  * @param {Pick<Api.Common.CommonRecord,'id'>} params
  */
 export const getPostDetail = (params: Pick<Api.Common.CommonRecord, "id">) =>
-  request<Api.Administrative.PostManage>({ url: "/post-manage", params });
+  request<Api.Administrative.PostManage>({ url: baseURL, params });
 
 /**
  * @description: 创建岗位
@@ -33,7 +35,7 @@ export const getPostDetail = (params: Pick<Api.Common.CommonRecord, "id">) =>
  */
 export const createPost = (body: Api.Administrative.SavePostManage) =>
   request<Api.Administrative.PostManage>({
-    url: "/post-manage",
+    url: baseURL,
     method: "post",
     data: body,
   });
@@ -47,7 +49,7 @@ export const updatePost = ({
   ...body
 }: Api.Administrative.SavePostManage) =>
   request<Api.Administrative.PostManage>({
-    url: `/post-manage/${id}`,
+    url: `${baseURL}/${id}`,
     method: "patch",
     data: body,
   });
@@ -58,6 +60,6 @@ export const updatePost = ({
  */
 export const delPost = ({ id }: Pick<Api.Common.CommonRecord, "id">) =>
   request<Api.Administrative.PostManage>({
-    url: `/post-manage/${id}`,
+    url: `${baseURL}/${id}`,
     method: "delete",
   });

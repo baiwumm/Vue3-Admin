@@ -2,11 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 17:28:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-05 11:08:34
+ * @LastEditTime: 2024-08-06 17:51:42
  * @Description: 用户管理模块接口
  */
 
 import { request } from "@/service/request";
+
+const baseURL = '/system/user-manage'
 
 /**
  * @description: 获取用户管理列表
@@ -14,7 +16,7 @@ import { request } from "@/service/request";
  */
 export const getUserList = (params?: Api.SystemManage.UserManageSearchParams) =>
   request<Api.Common.PaginatingQueryRecord<Api.SystemManage.UserManage>>({
-    url: "/user-manage",
+    url: baseURL,
     params,
   });
 
@@ -23,7 +25,7 @@ export const getUserList = (params?: Api.SystemManage.UserManageSearchParams) =>
  * @param {Pick<Api.Common.CommonRecord,'id'>} params
  */
 export const getUserDetail = (params: Pick<Api.Common.CommonRecord, "id">) =>
-  request<Api.SystemManage.UserManage>({ url: "/user-manage", params });
+  request<Api.SystemManage.UserManage>({ url: baseURL, params });
 
 /**
  * @description: 创建用户
@@ -31,7 +33,7 @@ export const getUserDetail = (params: Pick<Api.Common.CommonRecord, "id">) =>
  */
 export const createUser = (body: Api.SystemManage.SaveUserManage) =>
   request<Api.SystemManage.UserManage>({
-    url: "/user-manage",
+    url: baseURL,
     method: "post",
     data: body,
   });
@@ -42,7 +44,7 @@ export const createUser = (body: Api.SystemManage.SaveUserManage) =>
  */
 export const updateUser = ({ id, ...body }: Api.SystemManage.SaveUserManage) =>
   request<Api.SystemManage.UserManage>({
-    url: `/user-manage/${id}`,
+    url: `${baseURL}/${id}`,
     method: "patch",
     data: body,
   });
@@ -53,6 +55,6 @@ export const updateUser = ({ id, ...body }: Api.SystemManage.SaveUserManage) =>
  */
 export const delUser = ({ id }: Api.Common.ColumnId) =>
   request<Api.SystemManage.UserManage>({
-    url: `/user-manage/${id}`,
+    url: `${baseURL}/${id}`,
     method: "delete",
   });
