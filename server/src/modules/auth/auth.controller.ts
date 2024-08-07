@@ -2,16 +2,17 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-05 10:19:22
+ * @LastEditTime: 2024-08-07 10:00:05
  * @Description: AuthController
  */
-import { Body, Controller, Get, Ip, Post, Res, Session, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Post, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 import { Response } from 'express';
 import svgCaptcha from 'svg-captcha';
 
 import { ResponseDto } from '@/dto/response.dto';
+import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 import { responseMessage } from '@/utils';
 
 import { AuthService } from './auth.service';
@@ -20,6 +21,7 @@ import { VerifyCodeResponseDto } from './dto/response-auth.dto';
 
 @ApiTags('身份鉴权')
 @Controller('auth')
+@UseInterceptors(LoggerInterceptor)
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
   /**

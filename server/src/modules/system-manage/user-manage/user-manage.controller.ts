@@ -2,13 +2,27 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:14:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-06 17:47:17
+ * @LastEditTime: 2024-08-07 09:51:02
  * @Description: UserManageController
  */
 
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
+
+import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { UserParamsDto } from './dto/params-user.dto';
 import { ResponseSaveUserDto, ResponseUserDto } from './dto/response-user.dto';
@@ -23,6 +37,7 @@ import { UserManageService } from './user-manage.service';
 })
 @ApiBearerAuth()
 @Controller('system/user-manage')
+@UseInterceptors(LoggerInterceptor)
 export class UserManageController {
   constructor(private readonly userManageService: UserManageService) { }
 

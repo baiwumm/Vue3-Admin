@@ -2,12 +2,26 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-06 17:47:47
+ * @LastEditTime: 2024-08-07 10:01:45
  * @Description: OrganazationController
  */
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
+
+import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { OrganazationParamsDto } from './dto/params-organazation.dto';
 import { ResponseOrganizationDto, ResponseSaveOrganizationDto } from './dto/response-organazation.dto';
@@ -22,6 +36,7 @@ import { OrganazationService } from './organazation.service';
 })
 @ApiBearerAuth()
 @Controller('administrative/organazation')
+@UseInterceptors(LoggerInterceptor)
 export class OrganazationController {
   constructor(private readonly organazationService: OrganazationService) { }
 

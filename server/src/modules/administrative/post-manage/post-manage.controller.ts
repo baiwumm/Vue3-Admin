@@ -2,12 +2,26 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-06 17:47:34
+ * @LastEditTime: 2024-08-07 10:02:27
  * @Description: PostManageController
  */
-import { Body, Controller, Delete, Get, Param, ParseUUIDPipe, Patch, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
+
+import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { PostParamsDto } from './dto/params-post.dto';
 import { ResponsePostDto, ResponseSavePostDto } from './dto/response-post.dto';
@@ -22,6 +36,7 @@ import { PostManageService } from './post-manage.service';
 })
 @ApiBearerAuth()
 @Controller('administrative/post-manage')
+@UseInterceptors(LoggerInterceptor)
 export class PostManageController {
   constructor(private readonly postManageService: PostManageService) { }
 

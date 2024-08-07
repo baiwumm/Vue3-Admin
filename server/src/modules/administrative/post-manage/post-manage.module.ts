@@ -8,12 +8,13 @@
 import { Module } from '@nestjs/common';
 
 import { PrismaModule } from '@/modules/prisma/prisma.module';
+import { OperationLogModule } from '@/modules/system-manage/operation-log/operation-log.module';
 
 import { PostManageController } from './post-manage.controller';
 import { PostManageService } from './post-manage.service';
 
 @Module({
-  imports: [PrismaModule],
+  imports: [PrismaModule, OperationLogModule],
   controllers: [PostManageController],
   providers: [PostManageService],
   exports: [PostManageService],
