@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:14:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 09:51:02
+ * @LastEditTime: 2024-08-07 10:29:46
  * @Description: UserManageController
  */
 
@@ -38,13 +38,13 @@ import { UserManageService } from './user-manage.service';
 @ApiBearerAuth()
 @Controller('system/user-manage')
 @UseInterceptors(LoggerInterceptor)
+@UseGuards(AuthGuard('jwt'))
 export class UserManageController {
   constructor(private readonly userManageService: UserManageService) { }
 
   /**
    * @description: 查询用户列表
    */
-  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOkResponse({ type: ResponseUserDto })
   @ApiOperation({ summary: '获取用户管理列表' })
@@ -55,7 +55,6 @@ export class UserManageController {
   /**
    * @description: 创建用户
    */
-  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOkResponse({ type: ResponseUserDto })
   @ApiOperation({ summary: '创建用户' })
@@ -66,7 +65,6 @@ export class UserManageController {
   /**
    * @description: 查询用户详情
    */
-  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOkResponse({ type: ResponseSaveUserDto })
   @ApiOperation({ summary: '查询用户详情' })
@@ -77,7 +75,6 @@ export class UserManageController {
   /**
    * @description: 更新用户
    */
-  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   @ApiOkResponse({ type: SaveUserDto })
   @ApiOperation({ summary: '更新用户' })
@@ -88,7 +85,6 @@ export class UserManageController {
   /**
    * @description: 删除用户
    */
-  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOkResponse({ type: ResponseSaveUserDto })
   @ApiOperation({ summary: '删除用户' })

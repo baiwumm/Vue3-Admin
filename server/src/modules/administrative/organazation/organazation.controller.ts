@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 10:01:45
+ * @LastEditTime: 2024-08-07 10:31:04
  * @Description: OrganazationController
  */
 import {
@@ -37,13 +37,13 @@ import { OrganazationService } from './organazation.service';
 @ApiBearerAuth()
 @Controller('administrative/organazation')
 @UseInterceptors(LoggerInterceptor)
+@UseGuards(AuthGuard('jwt'))
 export class OrganazationController {
   constructor(private readonly organazationService: OrganazationService) { }
 
   /**
    * @description: 查询组织列表
    */
-  @UseGuards(AuthGuard('jwt'))
   @Get()
   @ApiOkResponse({ type: ResponseOrganizationDto })
   @ApiOperation({ summary: '获取组织管理列表' })
@@ -54,7 +54,6 @@ export class OrganazationController {
   /**
    * @description: 创建组织
    */
-  @UseGuards(AuthGuard('jwt'))
   @Post()
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '创建组织' })
@@ -65,7 +64,6 @@ export class OrganazationController {
   /**
    * @description: 查询组织详情
    */
-  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '查询组织详情' })
@@ -76,7 +74,6 @@ export class OrganazationController {
   /**
    * @description: 更新组织
    */
-  @UseGuards(AuthGuard('jwt'))
   @Patch(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '更新组织' })
@@ -87,7 +84,6 @@ export class OrganazationController {
   /**
    * @description: 删除组织
    */
-  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '删除组织' })
