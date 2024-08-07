@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-09 15:26:41
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-31 15:37:57
+ * @LastEditTime: 2024-08-07 09:58:31
  * @Description: 全局入口文件
  */
 import { NestFactory } from '@nestjs/core';
@@ -19,6 +19,12 @@ import { ValidationPipe } from '@/pipe/validation.pipe'; // 参数校验
 import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.use(express.json()); // 用于解析 JSON 格式的请求体
+  app.use(express.urlencoded({ extended: true })); // 用于解析 URL 编码格式的请求体
+
+  // 设置信任代理
+  app.set('trust proxy', true);
 
   // 错误异常捕获 和 过滤处理
   app.useGlobalFilters(new AllExceptionsFilter());
