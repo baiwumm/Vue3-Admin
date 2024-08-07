@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-05 14:08:47
+ * @LastEditTime: 2024-08-07 15:52:56
  * @Description: AuthService
  */
 import { Injectable } from '@nestjs/common';
@@ -84,7 +84,7 @@ export class AuthService {
   }
 
   /**
-   * @description: 生成双 token
+   * @description: 生成 token
    */
   async generateTokens(userInfo: Api.SystemManage.User) {
     const payload: Api.Common.TokenPayload = { userName: userInfo.userName, sub: userInfo.id };

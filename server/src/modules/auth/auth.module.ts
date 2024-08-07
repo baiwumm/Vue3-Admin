@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:04:27
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 10:00:33
+ * @LastEditTime: 2024-08-07 15:53:11
  * @Description: AuthModule
  */
 import { Module } from '@nestjs/common';
@@ -21,7 +21,6 @@ import { JwtStrategy } from './jwt.strategy';
     PrismaModule,
     PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
-      // 这里不设置 token 过期时间，过期时间在 redis 里面设置
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '15m' }, // 这里设置访问 token 的过期时间
     }),
