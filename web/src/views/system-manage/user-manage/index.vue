@@ -50,7 +50,14 @@
 import { ref } from "vue";
 import { getUserList, delUser } from "@/service/api";
 import { $t } from "@/locales";
-import { Button, Popconfirm, Tag, Space, Tooltip } from "ant-design-vue";
+import {
+  Button,
+  Popconfirm,
+  Tag,
+  Space,
+  Tooltip,
+  Avatar,
+} from "ant-design-vue";
 import SvgIcon from "@/components/custom/svg-icon.vue";
 import {
   useTable,
@@ -108,6 +115,13 @@ const {
       dataIndex: "cnName",
       title: $t("page.systemManage.userManage.cnName"),
       align: "center",
+    },
+    {
+      key: "avatar",
+      dataIndex: "avatar",
+      title: $t("page.systemManage.userManage.avatar"),
+      align: "center",
+      customRender: ({ text }) => <Avatar src={text} />,
     },
     {
       key: "orgId",

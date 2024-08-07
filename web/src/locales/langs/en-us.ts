@@ -250,6 +250,7 @@ const local: App.I18n.Schema = {
         settingPassword: 'Setting Password',
         password: 'Password',
         confirmPassword: 'Comfirm Password',
+        avatar: 'Avatar',
         sexMap: {
           male: 'Male',
           female: 'Female'

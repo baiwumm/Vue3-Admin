@@ -451,6 +451,7 @@ declare namespace App {
             settingPassword: string;
             password: string;
             confirmPassword: string;
+            avatar: string;
             sexMap: {
               male: string;
               female: string;

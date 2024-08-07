@@ -250,6 +250,7 @@ const local: App.I18n.Schema = {
         settingPassword: '设置密码',
         password: '密码',
         confirmPassword: '确认密码',
+        avatar: '头像',
         sexMap: {
           male: '男',
           female: '女'
