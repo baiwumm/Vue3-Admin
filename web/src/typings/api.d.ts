@@ -1,10 +1,4 @@
-/**
- * Namespace Api
- *
- * All backend api type
- */
 declare namespace Api {
-  import { SEX, STATUS } from '@/enum'
   namespace Common {
     /**
     * @description: 请求分页参数
@@ -106,8 +100,8 @@ declare namespace Api {
       avatar: string; // 头像
       phone: string; // 电话号码
       email: string; // 邮箱
-      sex: SEX; // 性别
-      status: STATUS; // 状态
+      sex: import('@/enum').SEX; // 性别
+      status: import('@/enum').STATUS; // 状态
       token?: string; // token
       tags: string[]; // 标签
       city: string[]; // 城市
@@ -132,6 +126,24 @@ declare namespace Api {
       & Partial<Api.Common.ColumnId> & {
         confirmPassword?: string;
       };
+
+    /**
+     * @description: 操作日志
+     */
+    type OperationLog = Common.ColumnId & Pick<Common.CommonRecord, 'createdAt'> & {
+      userId: string; // 关联用户 id
+      user: UserManage;
+      ip: string; // ip
+      action: string; // 请求动作
+      method: import('@/enum').METHOD; // 请求方法
+      params: Record<string, any>; // 请求参数
+      os: string; // 操作系统
+      browser: string; // 浏览器
+    }
+    /**
+     * @description: 查询参数
+     */
+    type OperationLogSearchParams = Partial<Pick<OperationLog, 'userId' | 'method'>> & Api.Common.SearchTime & Api.Common.PaginatingParams;
   }
 
   /**

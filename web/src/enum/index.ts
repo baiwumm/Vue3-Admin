@@ -28,3 +28,13 @@ export enum SEX {
   FEMALE = 'FEMALE',
   MALE = 'MALE',
 }
+
+/**
+ * @description: 请求方法
+ */
+export enum METHOD {
+  GET = 'GET',
+  POST = 'POST',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
+}
