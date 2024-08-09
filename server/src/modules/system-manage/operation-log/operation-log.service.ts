@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-06 11:06:21
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-09 09:14:10
+ * @LastEditTime: 2024-08-09 17:44:01
  * @Description: OperationLogService - 操作日志
  */
 import { Inject, Injectable, Scope } from '@nestjs/common';
@@ -10,6 +10,7 @@ import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import UAParser from 'ua-parser-js';
 
+import { RESPONSE_MSG } from '@/enums';
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { responseMessage } from '@/utils';
 
@@ -94,5 +95,23 @@ export class OperationLogService {
     return responseMessage({
       records: result,
     });
+  }
+
+  /**
+   * @description: 删除日志
+   */
+  async remove(ids: string[]) {
+    try {
+      const result = await this.prisma.log.deleteMany({
+        where: {
+          id: {
+            in: ids,
+          },
+        },
+      });
+      return responseMessage<Api.SystemManage.Log>(result);
+    } catch (error) {
+      return responseMessage(error, RESPONSE_MSG.ERROR, -1);
+    }
   }
 }

@@ -54,3 +54,30 @@ export class ResponseLogDto extends ResponseDto {
   })
   data: Api.SystemManage.Log[];
 }
+
+/**
+ * @description: 删除日志数据 Dto
+ */
+export class ResponseDelLogDto extends ResponseDto {
+  @ApiProperty({
+    type: Array,
+    description: '响应体',
+    default: [
+      {
+        id: '625a53f9-e947-49cc-8e7c-441c3487957a',
+        userId: 'dddd7ba9-c1d4-4a6b-b946-f05e2f79880f',
+        ip: '::1',
+        action: '/system/user-manage?current=1&size=10',
+        method: 'GET',
+        params: {
+          size: '10',
+          current: '1',
+        },
+        os: 'Windows 10',
+        browser: 'Chrome',
+        createdAt: '2024-08-07T09:40:02.491Z',
+      },
+    ],
+  })
+  data: Api.SystemManage.Log[];
+}
