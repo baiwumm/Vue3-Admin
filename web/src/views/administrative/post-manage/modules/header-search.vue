@@ -32,11 +32,6 @@ const { formRef, validate, resetFields } = useAntdForm();
 
 const model = defineModel<Api.Administrative.PostManageSearchParams>("model", {
   required: true,
-  set(value) {
-    console.log("value", value);
-    console.log("createdAt", createdAt);
-    return value;
-  },
 });
 
 async function reset() {
