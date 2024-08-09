@@ -139,7 +139,17 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.system-manage_user-manage',
           icon: 'ri:user-settings-line'
         }
-      }
+      },
+      {
+        name: 'system-manage_operation-log',
+        path: '/system-manage/operation-log',
+        component: 'view.system-manage_operation-log',
+        meta: {
+          title: 'system-manage_operation-log',
+          i18nKey: 'route.system-manage_operation-log',
+          icon: 'ri:draft-line'
+        }
+      },
     ]
   },
   {

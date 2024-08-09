@@ -28,6 +28,7 @@ declare module "@elegant-router/types" {
     "iframe-page": "/iframe-page/:url";
     "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?";
     "system-manage": "/system-manage";
+    "system-manage_operation-log": "/system-manage/operation-log";
     "system-manage_user-manage": "/system-manage/user-manage";
     "user-center": "/user-center";
   };
@@ -96,6 +97,7 @@ declare module "@elegant-router/types" {
     | "administrative_organization"
     | "administrative_post-manage"
     | "home"
+    | "system-manage_operation-log"
     | "system-manage_user-manage"
     | "user-center"
   >;
