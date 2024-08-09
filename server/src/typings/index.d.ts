@@ -1,5 +1,4 @@
 declare namespace Api {
-  import { SEX, STATUS } from '@/enums';
   namespace Common {
     /**
      * @description: 全局响应体
@@ -80,8 +79,8 @@ declare namespace Api {
       email: string; // 电子邮箱
       phone: string; // 手机号
       avatar: string; // 头像
-      sex: SEX; // 性别
-      status: STATUS; // 状态
+      sex: import('@prisma/client').Sex; // 性别
+      status: import('@prisma/client').Status; // 状态
       token?: string; // token
       tags: string[]; // 标签
       city: string[]; // 城市
@@ -94,5 +93,17 @@ declare namespace Api {
       lastIp?: string; // 最后一次登录 ip
       lastLoginAt?: Date; // 最后登录时间
     }>;
+    /**
+     * @description: 操作日志
+     */
+    type Log = Pick<Common.CommonRecord, id | 'createdAt'> & {
+      userId: string; // 操作人
+      ip: string;
+      method: import('@prisma/client').Method; // 请求方法
+      action: string; // 操作方法
+      params: string; // 请求参数
+      os: string; // 操作系统
+      browser: string; // 浏览器
+    };
   }
 }
