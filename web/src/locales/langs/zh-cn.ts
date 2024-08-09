@@ -158,7 +158,8 @@ const local: App.I18n.Schema = {
     administrative_organization: '组织管理',
     'administrative_post-manage': '岗位管理',
     'system-manage': '系统管理',
-    'system-manage_user-manage': '用户管理'
+    'system-manage_user-manage': '用户管理',
+    'system-manage_operation-log': '操作日志',
   },
   page: {
     login: {
@@ -255,6 +256,14 @@ const local: App.I18n.Schema = {
           male: '男',
           female: '女'
         }
+      },
+      operationLog: {
+        userId: '用户',
+        ip: 'IP',
+        action: '请求接口',
+        method: '请求方法',
+        os: '操作系统',
+        browser: '浏览器'
       }
     }
   },

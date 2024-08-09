@@ -456,6 +456,14 @@ declare namespace App {
               male: string;
               female: string;
             }
+          },
+          operationLog: {
+            userId: string;
+            ip: string;
+            action: string;
+            method: string;
+            os: string;
+            browser: string;
           }
         }
       };

@@ -158,7 +158,8 @@ const local: App.I18n.Schema = {
     administrative_organization: 'Organization',
     'administrative_post-manage': 'Post Manage',
     'system-manage': 'System Manage',
-    'system-manage_user-manage': 'User Manage'
+    'system-manage_user-manage': 'User Manage',
+    'system-manage_operation-log': 'Operation Log',
   },
   page: {
     login: {
@@ -255,6 +256,14 @@ const local: App.I18n.Schema = {
           male: 'Male',
           female: 'Female'
         }
+      },
+      operationLog: {
+        userId: 'User',
+        ip: 'IP',
+        action: 'Action',
+        method: 'Method',
+        os: 'OS',
+        browser: 'Brower'
       }
     }
   },
