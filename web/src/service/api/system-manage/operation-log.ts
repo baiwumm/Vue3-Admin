@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-08 09:48:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-08 14:41:50
+ * @LastEditTime: 2024-08-09 18:17:50
  * @Description: 操作日志管理模块接口
  */
 import { request } from "@/service/request";
@@ -17,4 +17,15 @@ export const getOperationLogList = (params?: Api.SystemManage.OperationLogSearch
   request<Api.Common.PaginatingQueryRecord<Api.SystemManage.OperationLog>>({
     url: baseURL,
     params,
+  });
+
+/**
+* @description: 删除操作日志
+* @param {Api.SystemManage.OperationLogDelParams} body
+*/
+export const delOperationLog = (body: Api.SystemManage.OperationLogDelParams) =>
+  request<Api.SystemManage.OperationLog>({
+    url: baseURL,
+    method: "delete",
+    data: body
   });

@@ -33,11 +33,11 @@ declare namespace Api {
      * @description: 公共字段
      */
     type ColumnId = {
-      id: number; // 主键
+      id: string; // 主键
     }
     type ColumnFields = {
       createdAt: string; // 创建时间
-      updatedAt: string; // 更新时间
+      updatedAt?: string; // 更新时间
     } & ColumnId;
     /** common record */
     type CommonRecord<T = any> = ColumnFields & T;
@@ -130,7 +130,7 @@ declare namespace Api {
     /**
      * @description: 操作日志
      */
-    type OperationLog = Common.ColumnId & Pick<Common.CommonRecord, 'createdAt'> & {
+    type OperationLog = Common.CommonRecord<{
       userId: string; // 关联用户 id
       user: UserManage;
       ip: string; // ip
@@ -139,11 +139,15 @@ declare namespace Api {
       params: Record<string, any>; // 请求参数
       os: string; // 操作系统
       browser: string; // 浏览器
-    }
+    }>
     /**
      * @description: 查询参数
      */
     type OperationLogSearchParams = Partial<Pick<OperationLog, 'userId' | 'method'>> & Api.Common.SearchTime & Api.Common.PaginatingParams;
+    /**
+     * @description: 删除参数
+     */
+    type OperationLogDelParams = { ids: string[] }
   }
 
   /**

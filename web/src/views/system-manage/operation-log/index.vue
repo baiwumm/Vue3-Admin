@@ -52,10 +52,10 @@ import {
   useTableOperate,
   useTableScroll,
 } from "@/hooks/common/table";
-import { getOperationLogList } from "@/service/api";
+import { getOperationLogList, delOperationLog } from "@/service/api";
 import { $t } from "@/locales";
 import HeaderSearch from "./modules/header-search.vue";
-import { Tag, Space, Avatar } from "ant-design-vue";
+import { Tag, Space, Avatar, Popconfirm, Button } from "ant-design-vue";
 import { METHOD } from "@/enum";
 import dayjs from "dayjs";
 import { broswerIconMap, osIconMap } from "@/constants";
@@ -164,8 +164,41 @@ const {
       width: 160,
       customRender: ({ text }) => dayjs(text).format("YYYY-MM-DD HH:mm:ss"),
     },
+    {
+      key: "operate",
+      title: $t("common.operate"),
+      align: "center",
+      width: 130,
+      fixed: "right",
+      customRender: ({ record }) => (
+        <div class="flex-center gap-8px">
+          <Popconfirm
+            title={$t("common.confirmDelete")}
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button danger size="small">
+              {$t("common.delete")}
+            </Button>
+          </Popconfirm>
+        </div>
+      ),
+    },
   ],
 });
 
-const { checkedRowKeys } = useTableOperate(data, getData);
+const { checkedRowKeys, onDeleted } = useTableOperate(data, getData);
+
+/**
+ * @description: 删除操作日志
+ */
+const handleDelete = (id: string) => {
+  return new Promise(async (resolve) => {
+    await delOperationLog({ ids: [id] }).then(({ error }) => {
+      if (!error) {
+        onDeleted();
+      }
+      resolve(true);
+    });
+  });
+};
 </script>
