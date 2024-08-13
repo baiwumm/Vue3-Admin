@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-30 14:52:07
+ * @LastEditTime: 2024-08-13 13:58:51
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -40,7 +40,7 @@ export class UserManageService {
       where['status'] = { equals: status };
     }
 
-    const result = await this.prisma.user.findMany({
+    const records = await this.prisma.user.findMany({
       skip,
       take,
       where,
@@ -72,8 +72,13 @@ export class UserManageService {
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
+    // 总条数
+    const total = await this.prisma.user.count({ where });
     return responseMessage({
-      records: result,
+      records,
+      total,
+      current: Number(current),
+      size: take,
     });
   }
 
