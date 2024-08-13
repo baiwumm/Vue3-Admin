@@ -63,7 +63,7 @@ async function search() {
               v-model:value="model.status"
               allowClear
               :options="StatueOptions"
-              :placeholder="$t('form.enter') + $t('form.status')"
+              :placeholder="$t('form.select') + $t('form.status')"
             />
           </AFormItem>
         </ACol>
