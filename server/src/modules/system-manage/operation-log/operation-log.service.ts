@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-06 11:06:21
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-09 17:44:01
+ * @LastEditTime: 2024-08-13 13:56:10
  * @Description: OperationLogService - 操作日志
  */
 import { Inject, Injectable, Scope } from '@nestjs/common';
@@ -81,7 +81,7 @@ export class OperationLogService {
         lte: new Date(Number(endTime)),
       };
     }
-    const result = await this.prisma.log.findMany({
+    const records = await this.prisma.log.findMany({
       skip,
       take,
       where,
@@ -92,8 +92,13 @@ export class OperationLogService {
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
+    // 总条数
+    const total = await this.prisma.log.count({ where });
     return responseMessage({
-      records: result,
+      records,
+      total,
+      current: Number(current),
+      size: take,
     });
   }
 
