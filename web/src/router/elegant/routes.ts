@@ -131,6 +131,17 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'system-manage_operation-log',
+        path: '/system-manage/operation-log',
+        component: 'view.system-manage_operation-log',
+        meta: {
+          title: 'system-manage_operation-log',
+          i18nKey: 'route.system-manage_operation-log',
+          icon: 'ri:draft-line',
+          order: 2,
+        }
+      },
+      {
         name: 'system-manage_user-manage',
         path: '/system-manage/user-manage',
         component: 'view.system-manage_user-manage',
@@ -139,17 +150,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           i18nKey: 'route.system-manage_user-manage',
           icon: 'ri:user-settings-line'
         }
-      },
-      {
-        name: 'system-manage_operation-log',
-        path: '/system-manage/operation-log',
-        component: 'view.system-manage_operation-log',
-        meta: {
-          title: 'system-manage_operation-log',
-          i18nKey: 'route.system-manage_operation-log',
-          icon: 'ri:draft-line'
-        }
-      },
+      }
     ]
   },
   {
