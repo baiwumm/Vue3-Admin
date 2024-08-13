@@ -21,8 +21,9 @@
           :disabled-delete="checkedRowKeys.length === 0"
           :loading="loading"
           :addBtn="false"
-          :batchDeleteBtn="false"
           @refresh="getData"
+          @delete="handleBatchDelete"
+          batchDeleteBtn
         />
       </template>
       <!-- 表格 -->
@@ -31,6 +32,7 @@
         :columns="columns"
         :data-source="data"
         size="small"
+        :row-selection="rowSelection"
         :scroll="scrollConfig"
         :loading="loading"
         row-key="id"
@@ -186,7 +188,8 @@ const {
   ],
 });
 
-const { checkedRowKeys, onDeleted } = useTableOperate(data, getData);
+const { checkedRowKeys, rowSelection, onDeleted, onBatchDeleted } =
+  useTableOperate(data, getData);
 
 /**
  * @description: 删除操作日志
@@ -196,6 +199,20 @@ const handleDelete = (id: string) => {
     await delOperationLog({ ids: [id] }).then(({ error }) => {
       if (!error) {
         onDeleted();
+      }
+      resolve(true);
+    });
+  });
+};
+
+/**
+ * @description: 批量删除日志
+ */
+const handleBatchDelete = () => {
+  return new Promise(async (resolve) => {
+    await delOperationLog({ ids: checkedRowKeys.value }).then(({ error }) => {
+      if (!error) {
+        onBatchDeleted();
       }
       resolve(true);
     });
