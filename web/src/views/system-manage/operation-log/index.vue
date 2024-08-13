@@ -207,7 +207,6 @@ const {
     },
   ],
 });
-console.log("mobilePagination", mobilePagination);
 
 const { checkedRowKeys, rowSelection, onDeleted, onBatchDeleted } =
   useTableOperate(data, getData);
