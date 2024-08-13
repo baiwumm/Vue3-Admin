@@ -32,7 +32,10 @@
         :scroll="scrollConfig"
         :loading="loading"
         row-key="id"
-        :pagination="mobilePagination"
+        :pagination="{
+          ...mobilePagination,
+          showTotal: (total) => `共 ${total} 条数据`,
+        }"
         class="h-full"
       />
       <!-- 操作弹窗 -->
