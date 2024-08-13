@@ -258,7 +258,7 @@ const local: App.I18n.Schema = {
         }
       },
       operationLog: {
-        userId: 'User',
+        userId: 'Operation User',
         ip: 'IP',
         action: 'Action',
         method: 'Method',

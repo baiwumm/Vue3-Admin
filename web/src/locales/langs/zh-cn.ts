@@ -258,7 +258,7 @@ const local: App.I18n.Schema = {
         }
       },
       operationLog: {
-        userId: '用户',
+        userId: '操作用户',
         ip: 'IP',
         action: '请求接口',
         method: '请求方法',
