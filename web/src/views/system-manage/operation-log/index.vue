@@ -8,6 +8,7 @@
       @reset="resetSearchParams"
       @search="getDataByPage"
       :updateSearchParams="updateSearchParams"
+      :userList="userList"
     />
     <ACard
       :title="$t('route.system-manage_operation-log')"
@@ -49,12 +50,17 @@
   </div>
 </template>
 <script setup lang="tsx">
+import { ref, onMounted } from "vue";
 import {
   useTable,
   useTableOperate,
   useTableScroll,
 } from "@/hooks/common/table";
-import { getOperationLogList, delOperationLog } from "@/service/api";
+import {
+  getOperationLogList,
+  delOperationLog,
+  getUserList,
+} from "@/service/api";
 import { $t } from "@/locales";
 import HeaderSearch from "./modules/header-search.vue";
 import { Tag, Space, Avatar, Popconfirm, Button } from "ant-design-vue";
@@ -63,6 +69,17 @@ import dayjs from "dayjs";
 import { broswerIconMap, osIconMap } from "@/constants";
 import SvgIcon from "@/components/custom/svg-icon.vue";
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
+
+/**
+ * @description: 获取用户列表
+ */
+const userList = ref<Api.SystemManage.UserManage[]>([]);
+const fetchUserList = async () => {
+  const { data, error } = await getUserList({ current: 1, size: 999 });
+  if (!error) {
+    userList.value = data.records;
+  }
+};
 
 const {
   columns,
@@ -218,4 +235,11 @@ const handleBatchDelete = () => {
     });
   });
 };
+
+/**
+ * @description: 组件挂载
+ */
+onMounted(() => {
+  fetchUserList();
+});
 </script>

@@ -16,8 +16,9 @@ defineOptions({
 // 父组件传递的值
 type Props = {
   updateSearchParams: (
-    value: Api.SystemManage.OperationLogSearchParams,
+    value: Partial<Api.SystemManage.OperationLogSearchParams>,
   ) => void;
+  userList: Api.SystemManage.UserManage[];
 };
 const props = defineProps<Props>();
 
@@ -64,6 +65,30 @@ async function search() {
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
           <AFormItem
+            :label="$t('page.systemManage.operationLog.userId')"
+            name="userId"
+            class="m-0"
+          >
+            <ASelect
+              v-model:value="model.userId"
+              allowClear
+              :options="userList"
+              :placeholder="
+                $t('form.select') + $t('page.systemManage.operationLog.userId')
+              "
+              :fieldNames="{ value: 'id', label: 'cnName' }"
+            >
+              <template #option="{ cnName, avatar }">
+                <ASpace>
+                  <AAvatar :src="avatar" />
+                  {{ cnName }}
+                </ASpace>
+              </template>
+            </ASelect>
+          </AFormItem>
+        </ACol>
+        <ACol :span="24" :md="12" :lg="6">
+          <AFormItem
             :label="$t('page.systemManage.operationLog.method')"
             name="method"
             class="m-0"
@@ -73,7 +98,7 @@ async function search() {
               allowClear
               :options="MethodOptions"
               :placeholder="
-                $t('form.enter') + $t('page.systemManage.operationLog.method')
+                $t('form.select') + $t('page.systemManage.operationLog.method')
               "
             />
           </AFormItem>
