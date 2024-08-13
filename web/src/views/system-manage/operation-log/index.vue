@@ -37,7 +37,10 @@
         :scroll="scrollConfig"
         :loading="loading"
         row-key="id"
-        :pagination="mobilePagination"
+        :pagination="{
+          ...mobilePagination,
+          showTotal: (total) => `共 ${total} 条数据`,
+        }"
         class="h-full"
       >
         <template #expandedRowRender="{ record }">
@@ -204,6 +207,7 @@ const {
     },
   ],
 });
+console.log("mobilePagination", mobilePagination);
 
 const { checkedRowKeys, rowSelection, onDeleted, onBatchDeleted } =
   useTableOperate(data, getData);
