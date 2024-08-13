@@ -208,7 +208,7 @@ const {
 /**
  * @description: 删除组织
  */
-const handleDelete = (id: number) => {
+const handleDelete = (id: string) => {
   return new Promise(async (resolve) => {
     await delOrganazation({ id }).then(({ error }) => {
       if (!error) {

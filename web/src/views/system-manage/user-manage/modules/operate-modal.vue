@@ -173,10 +173,8 @@ const closeModal = () => {
 };
 
 // 更新 model 的值
-const updateModel = (
-  newValue: Record<keyof Api.SystemManage.SaveUserManage, string>,
-) => {
-  Object.assign(model, newValue);
+const updateModel = (...args: unknown[]) => {
+  Object.assign(model, args);
 };
 
 // 提交数据

@@ -274,7 +274,7 @@ const {
 /**
  * @description: 删除用户
  */
-const handleDelete = (id: number) => {
+const handleDelete = (id: string) => {
   return new Promise(async (resolve) => {
     await delUser({ id }).then(({ error }) => {
       if (!error) {

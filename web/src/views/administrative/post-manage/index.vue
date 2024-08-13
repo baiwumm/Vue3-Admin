@@ -210,7 +210,7 @@ const {
 /**
  * @description: 删除岗位
  */
-const handleDelete = (id: number) => {
+const handleDelete = (id: string) => {
   return new Promise(async (resolve) => {
     await delPost({ id }).then(({ error }) => {
       if (!error) {
