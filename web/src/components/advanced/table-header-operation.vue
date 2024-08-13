@@ -20,7 +20,7 @@ defineProps({
   },
   batchDeleteBtn: {
     type: Boolean,
-    default: true,
+    default: false,
   },
 });
 
