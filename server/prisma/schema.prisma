@@ -95,19 +95,19 @@ model User {
   updatedAt     DateTime        @updatedAt // 更新时间
 }
 
-// 系统管理 - 多语言
-model Language {
+// 系统管理 - 国际化
+model Internalization {
   id            String          @id @default(uuid()) // 主键
   name          String          @unique // 键
   parentId      String?  
-  parent        Language?       @relation(name: "LanguageHierarchy", fields: [parentId], references: [id])
+  parent        Internalization?       @relation(name: "InternalizationHierarchy", fields: [parentId], references: [id])
   zhCN          String?         // 中文
   enUS          String?         // 英文
   jaJP          String?         // 日文
   zhTW          String?         // 繁体中文
   createdAt     DateTime        @default(now()) // 创建时间
   updatedAt     DateTime        @updatedAt // 更新时间
-  children      Language[]      @relation(name: "LanguageHierarchy")
+  children      Internalization[]      @relation(name: "InternalizationHierarchy")
 }
 
 // 系统管理 - 操作日志
