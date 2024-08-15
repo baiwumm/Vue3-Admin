@@ -41,6 +41,11 @@ declare namespace Api {
     } & ColumnId;
     /** common record */
     type CommonRecord<T = any> = ColumnFields & T;
+
+  /**
+   * @description: 国际化语言
+   */ 
+  type Locales = 'zhCN' | 'enUS' | 'jaJP' | 'zhTW';   
   }
 
   /**
@@ -126,6 +131,27 @@ declare namespace Api {
       & Partial<Api.Common.ColumnId> & {
         confirmPassword?: string;
       };
+
+    /**
+     * @description: 国际化
+     */
+    type Internalization = Common.CommonRecord<{
+      name: string; // 国际化字段
+      parentId?: string; // 父级id
+      zhCN?: string; // 中文
+      enUS?: string; // 英文
+      jaJP?: string; // 日文
+      zhTW?: string; // 繁体中文
+      children?: Internalization[];
+    }>
+    /**
+     * @description: 查询参数
+     */
+    type InternalizationSearchParams = Partial<Pick<Internalization, 'name'>> & Api.Common.SearchTime;
+    /**
+     * @description: 创建/更新国际化
+     */
+    type SaveInternalization = Omit<Internalization, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>
 
     /**
      * @description: 操作日志

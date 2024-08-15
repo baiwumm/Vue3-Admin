@@ -131,6 +131,17 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'system-manage_internalization',
+        path: '/system-manage/internalization',
+        component: 'view.system-manage_internalization',
+        meta: {
+          title: 'system-manage_internalization',
+          i18nKey: 'route.system-manage_internalization',
+          icon: 'ri:global-line',
+          order: 2
+        }
+      },
+      {
         name: 'system-manage_operation-log',
         path: '/system-manage/operation-log',
         component: 'view.system-manage_operation-log',
@@ -138,7 +149,7 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'system-manage_operation-log',
           i18nKey: 'route.system-manage_operation-log',
           icon: 'ri:draft-line',
-          order: 2,
+          order: 3
         }
       },
       {
