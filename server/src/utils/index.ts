@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import * as fs from 'fs';
 
-import { RESPONSE_CODE, RESPONSE_MSG } from '@/enums';
+import { LOCALES, RESPONSE_CODE, RESPONSE_MSG } from '@/enums';
 
 /**
  * @description: 统一返回体
@@ -86,4 +86,43 @@ export const omit = <T, TKeys extends keyof T>(obj: T, keys: TKeys[]): Omit<T, T
     },
     { ...obj },
   );
+};
+
+/**
+ * @description: 将树形树形转成层级对象
+ */
+export const convertToLocalization = (
+  data: Api.SystemManage.Internalization[],
+): Record<string, Record<string, any>> => {
+  const result: Record<string, Record<string, any>> = {
+    'zh-CN': {},
+    'en-US': {},
+    'ja-JP': {},
+    'zh-TW': {},
+  };
+
+  function buildNestedObject(item: Api.SystemManage.Internalization, obj: Record<string, any>, lang: string) {
+    if (item[lang]) {
+      if (!obj[item.name]) {
+        obj[item.name] = {};
+      }
+      obj[item.name] = item[lang];
+    }
+    if (item.children) {
+      for (const child of item.children) {
+        buildNestedObject(child, obj[item.name], lang);
+      }
+    }
+  }
+
+  for (const lang of Object.values(LOCALES)) {
+    for (const item of data) {
+      if (!result[lang][item.name]) {
+        result[lang][item.name] = {};
+      }
+      buildNestedObject(item, result[lang], lang.replace('-', ''));
+    }
+  }
+
+  return result;
 };

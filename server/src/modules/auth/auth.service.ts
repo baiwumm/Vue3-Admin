@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 15:52:56
+ * @LastEditTime: 2024-08-15 16:01:24
  * @Description: AuthService
  */
 import { Injectable } from '@nestjs/common';
@@ -10,7 +10,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { omit, responseMessage } from '@/utils';
+import { convertFlatDataToTree, convertToLocalization, omit, responseMessage } from '@/utils';
 
 import { LoginParamsDto } from './dto/params-auth.dto';
 
@@ -126,5 +126,20 @@ export class AuthService {
    */
   async comparePassword(password: string, hashedPassword: string): Promise<boolean> {
     return bcrypt.compare(password, hashedPassword);
+  }
+
+  /**
+   * @description: 获取国际化数据
+   */
+  async getLocales() {
+    // 查询全部数据
+    const sqlData = await this.prisma.internalization.findMany({
+      orderBy: [{ createdAt: 'desc' }],
+    });
+    // 将数据转成树形结构
+    const localesTree = convertFlatDataToTree(sqlData);
+    // 转成层级对象
+    const result = convertToLocalization(localesTree);
+    return responseMessage(result);
   }
 }

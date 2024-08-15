@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 10:00:05
+ * @LastEditTime: 2024-08-15 16:05:10
  * @Description: AuthController
  */
 import { Body, Controller, Get, Ip, Post, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
@@ -17,7 +17,7 @@ import { responseMessage } from '@/utils';
 
 import { AuthService } from './auth.service';
 import { LoginParamsDto } from './dto/params-auth.dto';
-import { VerifyCodeResponseDto } from './dto/response-auth.dto';
+import { LocalesResponseDto, VerifyCodeResponseDto } from './dto/response-auth.dto';
 
 @ApiTags('身份鉴权')
 @Controller('auth')
@@ -81,5 +81,16 @@ export class AuthController {
     session.captchaCode = captcha.text; //使用session保存验证，用于登陆时验证
     res.type('image/svg+xml'); //指定返回的类型
     return res.send(responseMessage(captcha.data)); //给页面返回一张图片
+  }
+
+  /**
+   * @description: 国际化层级数据
+   */
+  @Get('/getLocales')
+  @ApiOkResponse({ type: LocalesResponseDto })
+  @ApiOperation({ summary: '国际化层级数据' })
+  async getLocales() {
+    const response = await this.authService.getLocales();
+    return response;
   }
 }
