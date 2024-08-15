@@ -159,6 +159,7 @@ const local: App.I18n.Schema = {
     'administrative_post-manage': 'Post Manage',
     'system-manage': 'System Manage',
     'system-manage_user-manage': 'User Manage',
+    'system-manage_internalization': 'Internalization',
     'system-manage_operation-log': 'Operation Log',
   },
   page: {
@@ -256,6 +257,15 @@ const local: App.I18n.Schema = {
           male: 'Male',
           female: 'Female'
         }
+      },
+      internalization: {
+        name: 'Internalization Field',
+        zhCN: 'Chinese',
+        enUS: 'English',
+        jaJP: 'Japanese',
+        zhTW: 'Traditional Chinese',
+        addInternalization: 'Add Internalization',
+        editInternalization: 'Edit Internalization',
       },
       operationLog: {
         userId: 'Operation User',

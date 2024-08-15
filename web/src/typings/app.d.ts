@@ -457,6 +457,15 @@ declare namespace App {
               female: string;
             }
           },
+          internalization: {
+            name: string;
+            zhCN: string;
+            enUS: string;
+            jaJP: string;
+            zhTW: string;
+            addInternalization: string;
+            editInternalization: string;
+          }
           operationLog: {
             userId: string;
             ip: string;

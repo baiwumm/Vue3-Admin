@@ -159,6 +159,7 @@ const local: App.I18n.Schema = {
     'administrative_post-manage': '岗位管理',
     'system-manage': '系统管理',
     'system-manage_user-manage': '用户管理',
+    'system-manage_internalization': '国际化',
     'system-manage_operation-log': '操作日志',
   },
   page: {
@@ -256,6 +257,15 @@ const local: App.I18n.Schema = {
           male: '男',
           female: '女'
         }
+      },
+      internalization: {
+        name: '国际化字段',
+        zhCN: '中文',
+        enUS: '英文',
+        jaJP: '日文',
+        zhTW: '繁体中文',
+        addInternalization: '新增国际化',
+        editInternalization: '编辑国际化',
       },
       operationLog: {
         userId: '操作用户',
