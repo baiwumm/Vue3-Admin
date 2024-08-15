@@ -59,3 +59,8 @@ export const osIconMap = (text: string): string | undefined => {
   }
   return undefined
 }
+
+/**
+ * @description: 国际化语言
+ */
+export const InternalizationLanguage: Api.Common.Locales[] = ["zhCN", "enUS", "jaJP", "zhTW"]

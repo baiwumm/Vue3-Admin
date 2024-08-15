@@ -19,3 +19,13 @@ export enum RESPONSE_MSG {
   FAILURE = '请求失败',
   ERROR = '服务器错误',
 }
+
+/**
+ * @description: 国际化语言
+ */
+export enum LOCALES {
+  zhCN = 'zh-CN', // 中文
+  enUS = 'en-US', // 英文
+  jaJP = 'ja-JP', // 日文
+  zhTW = 'zh-TW', // 繁体中文
+}

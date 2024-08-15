@@ -21,7 +21,6 @@ declare namespace Api {
     // 公共列
     type CommonRecord<T = any> = {
       id: string; // 主键
-      sort: number; // 排序
       createdAt: Date; // 创建时间
       updatedAt: Date; // 更新时间
     } & T;
@@ -51,6 +50,7 @@ declare namespace Api {
       parentId: string; // 父级id
       posts: Post[]; // 关联岗位
       description: string; // 组织描述
+      sort: number; // 排序
       children?: Organization[];
     }>;
     /**
@@ -61,6 +61,7 @@ declare namespace Api {
       parentId: string; // 父级id
       organization: Organization; // 所属组织
       description: string; // 岗位描述
+      sort: number; // 排序
       children?: Post[];
     }>;
   }
@@ -92,6 +93,19 @@ declare namespace Api {
       loginCount: number; // 登录次数
       lastIp?: string; // 最后一次登录 ip
       lastLoginAt?: Date; // 最后登录时间
+      sort: number; // 排序
+    }>;
+    /**
+     * @description: 国际化
+     */
+    type Internalization = Common.CommonRecord<{
+      name: string; // 国际化字段
+      parentId: string; // 父级id
+      zhCN: string; // 中文
+      enUS: string; // 英文
+      jaJP: string; // 日文
+      zhTW: string; // 繁体中文
+      children?: Internalization[];
     }>;
     /**
      * @description: 操作日志
