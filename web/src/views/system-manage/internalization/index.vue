@@ -103,21 +103,24 @@ const {
         </Tag>
       ),
     },
-    ...(map(InternalizationLanguage, (language) => ({
-      key: language,
-      dataIndex: language,
-      title: $t(`page.systemManage.internalization.${language}`),
-      align: "center",
-      ellipsis: true,
-      customRender: ({ text }) =>
-        text ? (
-          <Tooltip title={text} placement="topLeft">
-            {text}
-          </Tooltip>
-        ) : (
-          UNIFORM_TEXT.NULL
-        ),
-    })) as AntDesign.TableColumn<
+    ...(map(InternalizationLanguage, (language) => {
+      const key = language.replace("-", "");
+      return {
+        key,
+        dataIndex: key,
+        title: $t(`page.systemManage.internalization.${key}`),
+        align: "center",
+        ellipsis: true,
+        customRender: ({ text }) =>
+          text ? (
+            <Tooltip title={text} placement="topLeft">
+              {text}
+            </Tooltip>
+          ) : (
+            UNIFORM_TEXT.NULL
+          ),
+      };
+    }) as AntDesign.TableColumn<
       AntDesign.TableDataWithIndex<Api.SystemManage.Internalization>
     >[]),
     {

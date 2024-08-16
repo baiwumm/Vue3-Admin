@@ -63,4 +63,4 @@ export const osIconMap = (text: string): string | undefined => {
 /**
  * @description: 国际化语言
  */
-export const InternalizationLanguage: Api.Common.Locales[] = ["zhCN", "enUS", "jaJP", "zhTW"]
+export const InternalizationLanguage: App.I18n.LangType[] = ["zh-CN", "en-US", "ja-JP", "zh-TW"]

@@ -161,17 +161,19 @@ watch(visible, () => {
         />
       </AFormItem>
       <AFormItem
-        :label="$t(`page.systemManage.internalization.${language}`)"
+        :label="
+          $t(`page.systemManage.internalization.${language.replace('-', '')}`)
+        "
         :name="language"
         v-for="language in InternalizationLanguage"
       >
         <AInput
-          v-model:value="model[language]"
+          v-model:value="model[language.replace('-', '')]"
           show-count
           :maxlength="200"
           :placeholder="
             $t('form.enter') +
-            $t(`page.systemManage.internalization.${language}`)
+            $t(`page.systemManage.internalization.${language.replace('-', '')}`)
           "
         />
       </AFormItem>

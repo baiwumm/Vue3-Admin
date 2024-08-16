@@ -46,7 +46,7 @@ function logout() {
         <AMenuItem @click="routerPushByKey('user-center')">
           <div class="flex-center gap-8px">
             <SvgIcon icon="ph:user-circle" class="text-icon" />
-            {{ $t("common.userCenter") }}
+            {{ $t("route.user-center") }}
           </div>
         </AMenuItem>
         <AMenuDivider />
