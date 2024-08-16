@@ -41,11 +41,6 @@ declare namespace Api {
     } & ColumnId;
     /** common record */
     type CommonRecord<T = any> = ColumnFields & T;
-
-  /**
-   * @description: 国际化语言
-   */ 
-  type Locales = 'zhCN' | 'enUS' | 'jaJP' | 'zhTW';   
   }
 
   /**
