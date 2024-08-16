@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import HeaderBanner from './modules/header-banner.vue';
-import CardData from './modules/card-data.vue';
-import LineChart from './modules/line-chart.vue';
-import PieChart from './modules/pie-chart.vue';
-import ProjectNews from './modules/project-news.vue';
-import CreativityBanner from './modules/creativity-banner.vue';
+import HeaderBanner from "./modules/header-banner.vue";
+import CardData from "./modules/card-data.vue";
+import LineChart from "./modules/line-chart.vue";
+import PieChart from "./modules/pie-chart.vue";
+import ProjectNews from "./modules/project-news.vue";
+import CreativityBanner from "./modules/creativity-banner.vue";
 </script>
 
 <template>
@@ -21,10 +21,10 @@ import CreativityBanner from './modules/creativity-banner.vue';
     </ARow>
     <ARow :gutter="[16, 16]">
       <ACol :span="24" :lg="14">
-        <ProjectNews />
+        <CreativityBanner />
       </ACol>
       <ACol :span="24" :lg="10">
-        <CreativityBanner />
+        <ProjectNews />
       </ACol>
     </ARow>
   </ASpace>

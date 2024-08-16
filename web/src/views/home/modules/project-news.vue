@@ -32,34 +32,24 @@ onMounted(() => {
   <ACard
     :title="$t('page.home.projectNews.title')"
     :bordered="false"
-    class="card-wrapper"
+    :loading="loading"
   >
     <template #extra>
       <a class="text-primary" :href="pkg.homepage" target="_blank">{{
         $t("page.home.projectNews.moreNews")
       }}</a>
     </template>
-    <AList :data-source="commitList" :loading="loading">
-      <template #renderItem="{ item }">
-        <AListItem>
-          <AListItemMeta
-            :description="
-              dayjs(item.commit.author.date).format('YYYY-MM-DD HH:mm:ss')
-            "
-          >
-            <template #avatar>
-              <SoybeanAvatar class="size-48px!" />
-            </template>
-            <template #title>
-              <a class="text-primary" :href="item.html_url" target="_blank">{{
-                item.commit.message
-              }}</a>
-            </template>
-          </AListItemMeta>
-        </AListItem>
-      </template>
-    </AList>
+    <ATimeline>
+      <ATimelineItem v-for="item in commitList">
+        <ASpace direction="vertical">
+          <a class="text-primary" :href="item.html_url" target="_blank">{{
+            item.commit.message
+          }}</a>
+          <ATypographyText type="secondary">
+            {{ dayjs(item.commit.author.date).format("YYYY-MM-DD HH:mm:ss") }}
+          </ATypographyText>
+        </ASpace>
+      </ATimelineItem>
+    </ATimeline>
   </ACard>
 </template>
-
-<style scoped></style>
