@@ -66,6 +66,15 @@ declare namespace Api {
       password: string; // 密码
       captchaCode: string; // 验证码
     }
+
+    /**
+     * @description: 获取掘金文章参数
+     */
+    type JuejinParams = {
+      sort_type: number;
+      cursor: string;
+      user_id: string;
+    }
   }
 
   /**

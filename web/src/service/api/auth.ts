@@ -35,3 +35,8 @@ export const fetchLogout = () =>
 * @description: 国际化层级数据
 */
 export const getLocales = () => request({ url: "/auth/getLocales" });
+
+/**
+* @description: 获取掘金文章
+*/
+export const getJuejinList = (params: Api.Auth.JuejinParams) => request({ url: "/auth/juejin", method: "post", data: params });
