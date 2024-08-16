@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 16:05:10
+ * @LastEditTime: 2024-08-16 17:03:29
  * @Description: AuthController
  */
 import { Body, Controller, Get, Ip, Post, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
@@ -91,6 +91,16 @@ export class AuthController {
   @ApiOperation({ summary: '国际化层级数据' })
   async getLocales() {
     const response = await this.authService.getLocales();
+    return response;
+  }
+
+  /**
+   * @description: 获取掘金文章列表
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @Post('/juejin')
+  async juejin(@Body() params: Api.Common.JuejinParams) {
+    const response = await this.authService.juejin(params);
     return response;
   }
 }

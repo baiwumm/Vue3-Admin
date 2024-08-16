@@ -2,12 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 16:01:24
+ * @LastEditTime: 2024-08-16 17:00:49
  * @Description: AuthService
  */
+import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { lastValueFrom, map } from 'rxjs';
 
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { convertFlatDataToTree, convertToLocalization, omit, responseMessage } from '@/utils';
@@ -19,6 +21,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private readonly jwtService: JwtService,
+    private readonly httpService: HttpService,
   ) { }
   /**
    * @description: 用户登录
@@ -141,5 +144,17 @@ export class AuthService {
     // 转成层级对象
     const result = convertToLocalization(localesTree);
     return responseMessage(result);
+  }
+
+  /**
+   * @description: 掘金文章列表
+   */
+  async juejin(params: Api.Common.JuejinParams) {
+    const url = 'https://api.juejin.cn/content_api/v1/article/query_list';
+    const responseData: any = await lastValueFrom(this.httpService.post(url, params).pipe(map((res) => res.data)));
+    return responseMessage({
+      list: responseData.data,
+      total: responseData.count,
+    });
   }
 }

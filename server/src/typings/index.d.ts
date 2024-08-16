@@ -42,6 +42,13 @@ declare namespace Api {
     // 国际化多层级对象
     type NestedObject = Record<string, NestedObject>;
     type LanguageResult = Record<LanguageCode, NestedObject>;
+
+    // 掘金查询参数
+    type JuejinParams = {
+      cursor: string;
+      sort_type: number;
+      user_id: string;
+    };
   }
 
   /**
