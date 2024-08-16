@@ -111,5 +111,5 @@
   "lint-staged": {
     "*": "eslint --fix"
   },
-  "website": "https://antd.soybeanjs.cn"
+  "website": "https://vue3.baiwumm.com"
 }
