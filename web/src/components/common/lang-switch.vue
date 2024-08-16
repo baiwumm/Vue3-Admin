@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { $t } from '@/locales';
+import { computed } from "vue";
+import { $t } from "@/locales";
 
 defineOptions({
-  name: 'LangSwitch'
+  name: "LangSwitch",
 });
 
 interface Props {
@@ -16,23 +16,23 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  showTooltip: true
+  showTooltip: true,
 });
 
 type Emits = {
-  (e: 'changeLang', lang: App.I18n.LangType): void;
+  (e: "changeLang", lang: App.I18n.LangType): void;
 };
 
 const emit = defineEmits<Emits>();
 
 const tooltipContent = computed(() => {
-  if (!props.showTooltip) return '';
+  if (!props.showTooltip) return "";
 
-  return $t('icon.lang');
+  return $t("icon.lang");
 });
 
 function changeLang(lang: App.I18n.LangType) {
-  emit('changeLang', lang);
+  emit("changeLang", lang);
 }
 </script>
 
@@ -43,7 +43,12 @@ function changeLang(lang: App.I18n.LangType) {
     </ButtonIcon>
     <template #overlay>
       <AMenu :selected-keys="[lang]">
-        <AMenuItem v-for="option in langOptions" :key="option.key" @click="changeLang(option.key)">
+        <AMenuItem
+          v-for="option in langOptions"
+          :key="option.key"
+          @click="changeLang(option.key)"
+        >
+          <span>{{ option.icon }}</span>
           {{ option.label }}
         </AMenuItem>
       </AMenu>
