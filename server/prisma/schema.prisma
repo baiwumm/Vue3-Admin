@@ -98,7 +98,7 @@ model User {
 // 系统管理 - 国际化
 model Internalization {
   id            String          @id @default(uuid()) // 主键
-  name          String          @unique // 键
+  name          String          // 键
   parentId      String?  
   parent        Internalization?       @relation(name: "InternalizationHierarchy", fields: [parentId], references: [id])
   zhCN          String?         // 中文
