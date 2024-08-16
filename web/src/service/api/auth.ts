@@ -30,3 +30,8 @@ export const fetchLogout = () =>
     url: "/auth/logout",
     method: "post",
   });
+
+/**
+* @description: 国际化层级数据
+*/
+export const getLocales = () => request({ url: "/auth/getLocales" });
