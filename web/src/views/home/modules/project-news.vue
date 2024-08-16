@@ -15,7 +15,7 @@ let commitList = ref([]);
 const fetchGithubLog = async () => {
   loading.value = true;
   const response = await fetch(
-    "https://api.github.com/repos/baiwumm/Vue3-Admin/commits?page=1&per_page=5",
+    "https://api.github.com/repos/baiwumm/Vue3-Admin/commits?page=1&per_page=10",
   );
   if (response.status === 200) {
     commitList.value = await response.json();
