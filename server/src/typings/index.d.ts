@@ -35,6 +35,13 @@ declare namespace Api {
     type TokenPayload = {
       sub: string;
     } & Pick<SystemManage.User, 'userName'>;
+
+    // 定义语言代码类型
+    type LanguageCode = 'zh-CN' | 'en-US' | 'ja-JP' | 'zh-TW';
+
+    // 国际化多层级对象
+    type NestedObject = Record<string, NestedObject>;
+    type LanguageResult = Record<LanguageCode, NestedObject>;
   }
 
   /**

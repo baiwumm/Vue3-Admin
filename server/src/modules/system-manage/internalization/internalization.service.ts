@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-14 17:49:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 14:49:47
+ * @LastEditTime: 2024-08-15 17:10:19
  * @Description: InternalizationService
  */
 import { Injectable } from '@nestjs/common';
@@ -49,6 +49,18 @@ export class InternalizationService {
    */
   async create(body: SaveInternalizationDto) {
     try {
+      // 条件判断
+      const where = {
+        name: body.name,
+        parentId: body.parentId || null,
+      };
+      // 同一层级不能有重复的key
+      const hasChildren = await this.prisma.internalization.count({
+        where,
+      });
+      if (hasChildren > 0) {
+        return responseMessage(null, '同一层级 name 不能相同', -1);
+      }
       const result = await this.prisma.internalization.create({
         data: body,
       });
@@ -70,6 +82,21 @@ export class InternalizationService {
       // 判断父级不能是子级
       if (id === body.parentId) {
         return responseMessage(null, '父级不能是自己!', -1);
+      }
+      // 条件判断
+      const where = {
+        id: {
+          not: id,
+        },
+        name: body.name,
+        parentId: body.parentId || null,
+      };
+      // 同一层级不能有重复的key
+      const hasChildren = await this.prisma.internalization.count({
+        where,
+      });
+      if (hasChildren > 0) {
+        return responseMessage(null, '同一层级 name 不能相同', -1);
       }
       const result = await this.prisma.internalization.update({
         where: { id },
