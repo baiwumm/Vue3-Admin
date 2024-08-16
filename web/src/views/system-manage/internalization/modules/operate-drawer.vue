@@ -170,7 +170,7 @@ watch(visible, () => {
         <AInput
           v-model:value="model[language.replace('-', '')]"
           show-count
-          :maxlength="200"
+          :maxlength="500"
           :placeholder="
             $t('form.enter') +
             $t(`page.systemManage.internalization.${language.replace('-', '')}`)
