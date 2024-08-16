@@ -1,6 +1,5 @@
 // @unocss-include
 import { getRgbOfColor } from '@sa/utils';
-import { $t } from '@/locales';
 import { localStg } from '@/utils/storage';
 import systemLogo from '@/assets/svg-icon/logo.svg?raw';
 
@@ -34,7 +33,7 @@ export function setupLoading() {
       ${dot}
     </div>
   </div>
-  <h2 class="text-28px font-500 text-#646464">${$t('system.title')}</h2>
+  <h2 class="text-28px font-500 text-#646464">Xmw Admin</h2>
 </div>`;
 
   const app = document.getElementById('app');
