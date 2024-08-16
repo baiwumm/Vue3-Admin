@@ -10,6 +10,7 @@ import { getRouteName } from '@/router/elegant/transform';
 import { useAuthStore } from '@/store/modules/auth';
 import { useRouteStore } from '@/store/modules/route';
 import { localStg } from '@/utils/storage';
+import { isEmpty } from 'lodash-es'
 
 /**
  * create route guard
@@ -119,11 +120,15 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
     }
   }
 
+  //  初始化国际化数据
+  if (isEmpty(authStore.locales)) {
+    await authStore.initLocales();
+  }
+
   // if the route is the constant route but is not the "not-found" route, then it is allowed to access.
   if (to.meta.constant && !isNotFoundRoute) {
     return null;
   }
-
   // the auth route is initialized
   // it is not the "not-found" route, then it is allowed to access
   if (routeStore.isInitAuthRoute && !isNotFoundRoute) {
@@ -144,9 +149,9 @@ async function initRoute(to: RouteLocationNormalized): Promise<RouteLocationRaw 
 
     return null;
   }
-
   // if the auth route is not initialized, then initialize the auth route
   const isLogin = Boolean(localStg.get('token'));
+
   // initialize the auth route requires the user to be logged in, if not, redirect to the login page
   if (!isLogin) {
     const loginRoute: RouteKey = 'login';

@@ -53,11 +53,23 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   const localeOptions: App.I18n.LangOption[] = [
     {
       label: '中文',
-      key: 'zh-CN'
+      key: 'zh-CN',
+      icon: '🇨🇳'
     },
     {
       label: 'English',
-      key: 'en-US'
+      key: 'en-US',
+      icon: '🇺🇸'
+    },
+    {
+      label: '日本語です',
+      key: 'ja-JP',
+      icon: '🇯🇵'
+    },
+    {
+      label: '繁體中文',
+      key: 'zh-TW',
+      icon: '🇭🇰'
     }
   ];
 

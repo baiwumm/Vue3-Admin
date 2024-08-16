@@ -1,12 +1,13 @@
 import { computed, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { defineStore } from 'pinia';
+import { forIn } from 'lodash-es'
 import { useLoading } from '@sa/hooks';
 import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
-import { fetchGetUserInfo, fetchLogin } from '@/service/api';
+import { fetchGetUserInfo, fetchLogin, getLocales } from '@/service/api';
 import { localStg } from '@/utils/storage';
-import { $t } from '@/locales';
+import { $t, i18n } from '@/locales';
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
@@ -27,6 +28,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     buttons: []
   });
 
+  // 多语言数据
+  const locales: Partial<Record<App.I18n.LangType, any>> = reactive({})
+
   /** is super role in static route */
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
@@ -34,7 +38,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
   });
 
-  /** Is login */
+  // 判断是否登录
   const isLogin = computed(() => Boolean(token.value));
 
   /** Reset auth store */
@@ -116,15 +120,30 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
+  /**
+   * @description: 初始化用户信息
+   */
   async function initUserInfo() {
     const hasToken = getToken();
-
     if (hasToken) {
       const pass = await getUserInfo();
 
       if (!pass) {
         resetStore();
       }
+    }
+  }
+
+  /**
+   * @description: 初始化多语言数据
+   */
+  const initLocales = async () => {
+    const { data, error } = await getLocales();
+    if (!error) {
+      Object.assign(locales, data);
+      forIn(data, (value, key) => {
+        i18n.global.setLocaleMessage(key, value)
+      })
     }
   }
 
@@ -136,6 +155,8 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     loginLoading,
     resetStore,
     login,
-    initUserInfo
+    initUserInfo,
+    initLocales,
+    locales
   };
 });
