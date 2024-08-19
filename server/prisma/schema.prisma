@@ -114,7 +114,7 @@ model Menu {
   component     String?          // 组件路径
   meta          Json?            // 路由元信息（JSON 对象）
   sort          Int             // 排序
-  permission    String?         // 权限标识
+  permission    String?         @unique // 权限标识
   createdAt     DateTime        @default(now()) // 创建时间
   updatedAt     DateTime        @updatedAt // 更新时间
   children      Menu[]          @relation(name: "MenuHierarchy")
