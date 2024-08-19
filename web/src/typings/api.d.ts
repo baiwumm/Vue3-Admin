@@ -137,6 +137,28 @@ declare namespace Api {
       };
 
     /**
+     * @description: 菜单管理
+     */
+    type MenuManage = Common.CommonRecord<{
+      title: string; // 菜单名称
+      type: import('@/enum').MENU_TYPE; // 菜单类型
+      parentId?: string; // 父级 id
+      name: string; // 路由名称
+      path: string; // 路由路径
+      component: string; // 组件路径
+      meta: import('vue-router').RouteMeta; // 路由元信息
+      children?: MenuManage[];
+    }>
+    /**
+     * @description: 查询参数
+     */
+    type MenuManageSearchParams = Partial<Pick<MenuManage, 'title' | 'name'>> & Api.Common.SearchTime;
+    /**
+     * @description: 创建/更新用户
+     */
+    type SaveMenuManage = Omit<MenuManage, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
+
+    /**
      * @description: 国际化
      */
     type Internalization = Common.CommonRecord<{
