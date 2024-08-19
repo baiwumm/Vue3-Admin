@@ -142,6 +142,17 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'system-manage_menu-manage',
+        path: '/system-manage/menu-manage',
+        component: 'view.system-manage_menu-manage',
+        meta: {
+          title: 'system-manage_menu-manage',
+          i18nKey: 'route.system-manage_menu-manage',
+          icon: 'ri:route-fill',
+          order: 1
+        }
+      },
+      {
         name: 'system-manage_operation-log',
         path: '/system-manage/operation-log',
         component: 'view.system-manage_operation-log',
