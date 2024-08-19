@@ -25,6 +25,13 @@ enum Sex {
   MALE
 }
 
+// Menu - type
+enum MenuType {
+  DIRECTORY
+  MENU
+  BUTTON
+}
+
 // Log - method
 enum Method {
   GET
@@ -93,6 +100,24 @@ model User {
   lastLoginAt   DateTime?       // 最后登录时间
   createdAt     DateTime        @default(now()) // 创建时间
   updatedAt     DateTime        @updatedAt // 更新时间
+}
+
+// 系统管理 - 菜单管理
+model Menu {
+  id            String          @id @default(uuid()) // 主键
+  title         String          @unique // 菜单名称
+  type          MenuType        @default(MENU) // 菜单类型
+  parentId      String?  
+  parent        Menu?           @relation(name: "MenuHierarchy", fields: [parentId], references: [id])
+  name          String?          @unique // 路由名称
+  path          String?          @unique // 路由地址
+  component     String?          // 组件路径
+  meta          Json?            // 路由元信息（JSON 对象）
+  sort          Int             // 排序
+  permission    String?         // 权限标识
+  createdAt     DateTime        @default(now()) // 创建时间
+  updatedAt     DateTime        @updatedAt // 更新时间
+  children      Menu[]          @relation(name: "MenuHierarchy")
 }
 
 // 系统管理 - 国际化
