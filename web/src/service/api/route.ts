@@ -1,20 +1,23 @@
 import { request } from '../request';
 
-/** get constant routes */
+/**
+ * @description: 获取常量路由
+ */
 export function fetchGetConstantRoutes() {
-  return request<Api.Route.MenuRoute[]>({ url: '/route/getConstantRoutes' });
-}
-
-/** get user routes */
-export function fetchGetUserRoutes() {
-  return request<Api.Route.UserRoute>({ url: '/route/getUserRoutes' });
+  return request<Api.Route.MenuRoute[]>({ url: '/auth/getConstantRoutes' });
 }
 
 /**
- * whether the route is exist
- *
- * @param routeName route name
+ * @description: 获取用户路由
  */
-export function fetchIsRouteExist(routeName: string) {
-  return request<boolean>({ url: '/route/isRouteExist', params: { routeName } });
+export function fetchGetUserRoutes() {
+  return request<Api.Route.UserRoute>({ url: '/auth/getUserRoutes' });
+}
+
+/**
+ * @description: 判断路由是否存在
+ * @param {string} name
+ */
+export function fetchIsRouteExist(name: string) {
+  return request<boolean>({ url: '/auth/isRouteExist', params: { name } });
 }
