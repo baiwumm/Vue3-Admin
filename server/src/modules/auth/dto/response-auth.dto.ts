@@ -2,12 +2,59 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-31 15:09:33
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 16:04:50
+ * @LastEditTime: 2024-08-20 16:21:18
  * @Description: 响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
 
 import { ResponseDto } from '@/dto/response.dto';
+
+/**
+ * @description: 用户登录
+ */
+export class LoginResponseDto extends ResponseDto {
+  @ApiProperty({
+    type: Object,
+    description: '用户信息',
+    default: {
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImxpemhpZW4iLCJzdWIiOiIxNzg1NzM3Yi04ZGFmLTRiYzEtYWU0OS04NzY5YzI1NmMyMDkiLCJpYXQiOjE3MjMxODkyMDEsImV4cCI6MTcyMzQ0ODQwMX0.-J1L-tSrQNO2etsTLg7yLm4s3SYRg0NT7NHqBiqM7m8',
+    },
+  })
+  data: Pick<Api.SystemManage.User, 'token'>;
+}
+
+/**
+ * @description: 获取用户信息
+ */
+export class UserInfoResponseDto extends ResponseDto {
+  @ApiProperty({
+    type: Object,
+    description: '获取用户信息',
+    default: {
+      id: 'dddd7ba9-c1d4-4a6b-b946-f05e2f79880f',
+      userName: 'Admin',
+      cnName: '谢明伟',
+      email: 'baiwumm@foxmail.com',
+      phone: '15920157932',
+      avatar: 'http://localhost:3000/static/image/2024-07/cc9e77ee-cf84-48e8-a9d0-dc3e9d21224c.jpeg',
+      sex: 'MALE',
+      status: 'ACTIVE',
+      sort: 88,
+      tags: ['热血青年', '热爱自由'],
+      city: ['44', '4403', '440305'],
+      address: '粤海街道',
+      orgId: '32cab8f0-13df-4876-83c5-86089390dbb7',
+      postId: '34f2d5e1-7378-46b3-8f0c-56cfdbb8f3eb',
+      loginCount: 90,
+      lastIp: '::1',
+      lastLoginAt: '2024-08-20T07:31:48.356Z',
+      createdAt: '2024-07-30T02:35:25.835Z',
+      updatedAt: '2024-08-20T07:31:48.358Z',
+    },
+  })
+  data: Record<string, any>;
+}
 
 /**
  * @description: 图形验证码
@@ -27,8 +74,8 @@ export class VerifyCodeResponseDto extends ResponseDto {
  */
 export class LocalesResponseDto extends ResponseDto {
   @ApiProperty({
-    type: String,
-    description: '图形验证码',
+    type: Object,
+    description: '国际化层级对象',
     default: {
       'zh-CN': {
         system: {
@@ -57,4 +104,486 @@ export class LocalesResponseDto extends ResponseDto {
     },
   })
   data: Record<string, any>;
+}
+
+/**
+ * @description: 掘金文章列表
+ */
+export class JuejinResponseDto extends ResponseDto {
+  @ApiProperty({
+    type: Object,
+    description: '掘金文章列表',
+    default: {
+      list: [
+        {
+          article_id: '7402248792285675554',
+          article_info: {
+            article_id: '7402248792285675554',
+            user_id: '1917147257534279',
+            category_id: '6809637767543259144',
+            tag_ids: [6809641149037445000],
+            visible_level: 0,
+            link_url: '',
+            cover_image:
+              'https://p3-xtjj-sign.byteimg.com/tos-cn-i-73owjymdk6/16602a5ecc494bc89dc1b07dab500224~tplv-73owjymdk6-jj-mark-v1:0:0:0:0:5o6Y6YeR5oqA5pyv56S-5Yy6IEAg55m96Zu-6Iyr6Iyr5Li2:q75.awebp?rk3s=f64ab15b&x-expires=1724744728&x-signature=NRk%2FVF8kQ6pXTfy6MqqwKHRwja8%3D',
+            is_gfw: 0,
+            title: 'Nest.js 实战 (九)：使用拦截器记录用户 CURD 操作日志',
+            brief_content:
+              '这篇文章介绍了在Nest.js中如何实现记录用户CURD操作的需求。通过创建Prisma模型，添加Log模型，并通过编写LoggerInterceptor拦截器，实现了记录用户操作的功能。',
+            is_english: 0,
+            is_original: 1,
+            user_index: 0,
+            original_type: 0,
+            original_author: '',
+            content: '',
+            ctime: '1723534979',
+            mtime: '1723534990',
+            rtime: '1723534989',
+            draft_id: '7402170596690575375',
+            view_count: 62,
+            collect_count: 1,
+            digg_count: 0,
+            comment_count: 0,
+            hot_index: 3,
+            is_hot: 0,
+            rank_index: 0.00391559,
+            status: 2,
+            verify_status: 1,
+            audit_status: 2,
+            mark_content: '',
+            display_count: 0,
+            is_markdown: 1,
+            app_html_content: '',
+            version: 1,
+            web_html_content: null,
+            meta_info: null,
+            catalog: null,
+            homepage_top_time: -62135596800,
+            homepage_top_status: 0,
+            content_count: 789,
+            read_time: '3分钟',
+            pics_expire_time: 1724744728,
+          },
+          author_user_info: {
+            user_id: '1917147257534279',
+            user_name: '白雾茫茫丶',
+            company: '元宇宙',
+            job_title: '全栈工程师',
+            avatar_large:
+              'https://p26-passport.byteacctimg.com/img/user-avatar/e20ed5698289a9126dc1665ae1dde55e~300x300.image',
+            level: 4,
+            description: '身后没有灯火、身前白雾茫茫',
+            followee_count: 2,
+            follower_count: 133,
+            post_article_count: 60,
+            digg_article_count: 31,
+            got_digg_count: 285,
+            got_view_count: 46356,
+            post_shortmsg_count: 99,
+            digg_shortmsg_count: 2,
+            isfollowed: false,
+            favorable_author: 0,
+            power: 2406,
+            study_point: 0,
+            university: {
+              university_id: '0',
+              name: '',
+              logo: '',
+            },
+            major: {
+              major_id: '0',
+              parent_id: '0',
+              name: '',
+            },
+            student_status: 0,
+            select_event_count: 0,
+            select_online_course_count: 0,
+            identity: 0,
+            is_select_annual: false,
+            select_annual_rank: 0,
+            annual_list_type: 0,
+            extraMap: {},
+            is_logout: 0,
+            annual_info: [],
+            account_amount: 0,
+            user_growth_info: {
+              user_id: 1917147257534279,
+              jpower: 2406,
+              jscore: 1974.8,
+              jpower_level: 4,
+              jscore_level: 5,
+              jscore_title: '先锋掘友',
+              author_achievement_list: [],
+              vip_level: 0,
+              vip_title: '',
+              jscore_next_level_score: 2000,
+              jscore_this_level_mini_score: 500,
+              vip_score: 0,
+            },
+            is_vip: false,
+            become_author_days: 0,
+            collection_set_article_count: 0,
+            recommend_article_count_daily: 0,
+            article_collect_count_daily: 0,
+            user_priv_info: {
+              administrator: 0,
+              builder: 0,
+              favorable_author: 0,
+              book_author: 0,
+              forbidden_words: 0,
+              can_tag_cnt: 0,
+              auto_recommend: 0,
+              signed_author: 0,
+              popular_author: 0,
+              can_add_video: 0,
+            },
+          },
+          category: {
+            category_id: '6809637767543259144',
+            category_name: '前端',
+            category_url: 'frontend',
+            rank: 2,
+            back_ground: 'https://lc-mhke0kuv.cn-n1.lcfile.com/8c95587526f346c0.png',
+            icon: 'https://lc-mhke0kuv.cn-n1.lcfile.com/1c40f5eaba561e32.png',
+            ctime: 1457483942,
+            mtime: 1432503190,
+            show_type: 3,
+            item_type: 2,
+            promote_tag_cap: 4,
+            promote_priority: 2,
+          },
+          tags: [
+            {
+              id: 2547062,
+              tag_id: '6809641149037445133',
+              tag_name: 'NestJS',
+              color: '',
+              icon: 'https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/1544153812581dd3f4c7af78e7b3189d8d05d518ab909.jpg~tplv-t2oaga2asx-image.image',
+              back_ground: '',
+              show_navi: 0,
+              ctime: 1544079631,
+              mtime: 1724135583,
+              id_type: 9,
+              tag_alias: '',
+              post_article_count: 1392,
+              concern_user_count: 5377,
+            },
+          ],
+          user_interact: {
+            id: 7402248792285676000,
+            omitempty: 2,
+            user_id: 0,
+            is_digg: false,
+            is_follow: false,
+            is_collect: false,
+            collect_set_count: 0,
+          },
+          org: {
+            is_followed: false,
+          },
+          req_id: '2024082015452895906A2965644600DEF8',
+          status: {
+            push_status: 0,
+          },
+          theme_list: [],
+          extra: {
+            extra: '',
+          },
+        },
+      ],
+      total: 60,
+    },
+  })
+  data: {
+    list: any[];
+    total: number;
+  };
+}
+
+/**
+ * @description: 获取常量路由
+ */
+export class ConstantRoutesResponseDto extends ResponseDto {
+  @ApiProperty({
+    type: Array,
+    description: '获取常量路由',
+    default: [
+      {
+        name: 'login',
+        path: '/login',
+        component: 'layout.blank$view.login',
+        meta: {
+          order: 0,
+          title: 'login',
+          i18nKey: 'route.login',
+          constant: true,
+          multiTab: false,
+          keepAlive: false,
+          hideInMenu: true,
+        },
+      },
+      {
+        name: '403',
+        path: '/403',
+        component: 'layout.blank$view.403',
+        meta: {
+          order: 0,
+          title: '403',
+          i18nKey: 'route.403',
+          constant: true,
+          multiTab: false,
+          keepAlive: false,
+          hideInMenu: true,
+        },
+      },
+      {
+        name: '404',
+        path: '/404',
+        component: 'view.404',
+        meta: {
+          order: 0,
+          title: '404',
+          i18nKey: 'route.404',
+          constant: true,
+          multiTab: false,
+          keepAlive: false,
+          hideInMenu: true,
+        },
+      },
+      {
+        name: '500',
+        path: '/500',
+        component: 'layout.blank$view.500',
+        meta: {
+          order: 0,
+          title: '500',
+          i18nKey: 'route.500',
+          constant: true,
+          multiTab: false,
+          keepAlive: false,
+          hideInMenu: true,
+        },
+      },
+      {
+        name: 'iframe-page',
+        path: '/iframe-page/:url',
+        component: 'layout.base$view.iframe-page',
+        meta: {
+          order: 0,
+          title: 'iframe-page',
+          i18nKey: 'route.iframe-page',
+          constant: true,
+          multiTab: false,
+          keepAlive: true,
+          hideInMenu: true,
+        },
+      },
+    ],
+  })
+  data: Pick<Api.SystemManage.Menu, 'name' | 'path' | 'component' | 'meta'>[];
+}
+
+/**
+ * @description: 获取用户路由
+ */
+export class UserRoutesResponseDto extends ResponseDto {
+  @ApiProperty({
+    type: Object,
+    description: '获取用户路由',
+    default: {
+      home: 'home',
+      routes: [
+        {
+          id: '8f16a2cd-b613-4419-bfa5-996f16beaa6a',
+          parentId: null,
+          name: 'home',
+          path: '/home',
+          component: 'layout.base$view.home',
+          meta: {
+            icon: 'mdi:monitor-dashboard',
+            order: 1,
+            title: 'home',
+            i18nKey: 'route.home',
+            constant: false,
+            multiTab: false,
+            keepAlive: true,
+            hideInMenu: false,
+          },
+        },
+        {
+          id: '03404a66-50aa-4b21-8c93-9dcddaeffdb7',
+          parentId: null,
+          name: 'administrative',
+          path: '/administrative',
+          component: 'view.administrative',
+          meta: {
+            icon: 'ri:quill-pen-line',
+            order: 2,
+            title: 'administrative',
+            i18nKey: 'route.administrative',
+            constant: false,
+            multiTab: false,
+            keepAlive: true,
+            hideInMenu: false,
+          },
+          children: [
+            {
+              id: 'dea4e038-592f-4532-ac86-c7de25a3416c',
+              parentId: '03404a66-50aa-4b21-8c93-9dcddaeffdb7',
+              name: 'administrative_organization',
+              path: '/administrative/organization',
+              component: 'view.administrative_organization',
+              meta: {
+                icon: 'ri:exchange-2-line',
+                order: 0,
+                title: 'administrative_organization',
+                i18nKey: 'route.administrative_organization',
+                constant: false,
+                multiTab: false,
+                keepAlive: true,
+                hideInMenu: false,
+              },
+            },
+            {
+              id: '5dc9be35-dfad-493e-99c4-fdca4ddff1f5',
+              parentId: '03404a66-50aa-4b21-8c93-9dcddaeffdb7',
+              name: 'administrative_post-manage',
+              path: '/administrative/post-manage',
+              component: 'view.administrative_post-manage',
+              meta: {
+                icon: 'ri:contacts-book-3-line',
+                order: 0,
+                title: 'administrative_post-manage',
+                i18nKey: 'route.administrative_post-manage',
+                constant: false,
+                multiTab: false,
+                keepAlive: false,
+                hideInMenu: false,
+              },
+            },
+          ],
+        },
+        {
+          id: '572c5097-d28f-48b4-899d-3aaf46b8d668',
+          parentId: null,
+          name: 'system-manage',
+          path: '/system-manage',
+          component: 'view.system-manage',
+          meta: {
+            icon: 'ri:settings-2-line',
+            order: 3,
+            title: 'system-manage',
+            i18nKey: 'route.system-manage',
+            constant: false,
+            multiTab: false,
+            keepAlive: false,
+            hideInMenu: false,
+          },
+          children: [
+            {
+              id: '1ee566d9-d5ef-456a-8009-d67bb026b4b0',
+              parentId: '572c5097-d28f-48b4-899d-3aaf46b8d668',
+              name: 'system-manage_user-manage',
+              path: '/system-manage/user-manage',
+              component: 'view.system-manage_user-manage',
+              meta: {
+                icon: 'ri:user-settings-line',
+                order: 0,
+                title: 'system-manage_user-manage',
+                i18nKey: 'route.system-manage_user-manage',
+                constant: false,
+                multiTab: false,
+                keepAlive: false,
+                hideInMenu: false,
+              },
+            },
+            {
+              id: '28a745e9-ff3a-49c2-bebc-e269146652e6',
+              parentId: '572c5097-d28f-48b4-899d-3aaf46b8d668',
+              name: 'system-manage_menu-manage',
+              path: '/system-manage/menu-manage',
+              component: 'view.system-manage_menu-manage',
+              meta: {
+                icon: 'ri:route-fill',
+                order: 0,
+                title: 'system-manage_menu-manage',
+                i18nKey: 'route.system-manage_menu-manage',
+                constant: false,
+                multiTab: false,
+                keepAlive: false,
+                hideInMenu: false,
+              },
+            },
+            {
+              id: 'aaf9caab-e4cc-491c-bf9c-d5fe81b9d867',
+              parentId: '572c5097-d28f-48b4-899d-3aaf46b8d668',
+              name: 'system-manage_internalization',
+              path: '/system-manage/internalization',
+              component: 'view.system-manage_internalization',
+              meta: {
+                icon: 'ri:global-line',
+                order: 0,
+                title: 'system-manage_internalization',
+                i18nKey: 'route.system-manage_internalization',
+                constant: false,
+                multiTab: false,
+                keepAlive: false,
+                hideInMenu: false,
+              },
+            },
+            {
+              id: '596eba6b-6b80-495a-bf9d-f90fdfb9e49d',
+              parentId: '572c5097-d28f-48b4-899d-3aaf46b8d668',
+              name: 'system-manage_operation-log',
+              path: '/system-manage/operation-log',
+              component: 'view.system-manage_operation-log',
+              meta: {
+                icon: 'ri:draft-line',
+                order: 0,
+                title: 'system-manage_operation-log',
+                i18nKey: 'route.system-manage_operation-log',
+                constant: false,
+                multiTab: false,
+                keepAlive: false,
+                hideInMenu: false,
+              },
+            },
+          ],
+        },
+        {
+          id: '4d238c00-d8c0-4ed2-a803-41caf772820e',
+          parentId: null,
+          name: 'about',
+          path: '/about',
+          component: 'layout.base$view.about',
+          meta: {
+            icon: 'fluent:book-information-24-regular',
+            order: 0,
+            title: 'about',
+            i18nKey: 'route.about',
+            constant: false,
+            multiTab: false,
+            keepAlive: false,
+            hideInMenu: false,
+          },
+        },
+      ],
+    },
+  })
+  data: {
+    home: string;
+    routes: Pick<Api.SystemManage.Menu, 'name' | 'path' | 'component' | 'meta'>[];
+  };
+}
+
+/**
+ * @description: 判断路由名称是否存在
+ */
+export class RouteExistResponseDto extends ResponseDto {
+  @ApiProperty({
+    type: Boolean,
+    description: '路由名称是否存在',
+    default: true,
+  })
+  data: boolean;
 }

@@ -2,10 +2,10 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-16 17:03:29
+ * @LastEditTime: 2024-08-20 16:59:38
  * @Description: AuthController
  */
-import { Body, Controller, Get, Ip, Post, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Ip, Post, Query, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 import { Response } from 'express';
@@ -16,8 +16,17 @@ import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 import { responseMessage } from '@/utils';
 
 import { AuthService } from './auth.service';
-import { LoginParamsDto } from './dto/params-auth.dto';
-import { LocalesResponseDto, VerifyCodeResponseDto } from './dto/response-auth.dto';
+import { juejinParamsDto, LoginParamsDto, RouteExistParamsDto } from './dto/params-auth.dto';
+import {
+  ConstantRoutesResponseDto,
+  JuejinResponseDto,
+  LocalesResponseDto,
+  LoginResponseDto,
+  RouteExistResponseDto,
+  UserInfoResponseDto,
+  UserRoutesResponseDto,
+  VerifyCodeResponseDto,
+} from './dto/response-auth.dto';
 
 @ApiTags('身份鉴权')
 @Controller('auth')
@@ -28,6 +37,7 @@ export class AuthController {
    * @description: 用户登录
    */
   @Post('/login')
+  @ApiOkResponse({ type: LoginResponseDto })
   @ApiOperation({ summary: '用户登录' })
   login(@Body() body: LoginParamsDto, @Session() session: Api.Common.SessionInfo, @Ip() ip: string) {
     return this.authService.login(body, session, ip);
@@ -44,6 +54,8 @@ export class AuthController {
   })
   @ApiBearerAuth()
   @Get('/getUserInfo')
+  @ApiOkResponse({ type: UserInfoResponseDto })
+  @ApiOperation({ summary: '获取用户信息' })
   getUserInfo(@Session() session: Api.Common.SessionInfo) {
     return this.authService.getUserInfo(session);
   }
@@ -52,6 +64,12 @@ export class AuthController {
    * @description: 用户注销登录
    */
   @UseGuards(AuthGuard('jwt'))
+  @ApiHeader({
+    name: 'Authorization',
+    required: true,
+    description: 'token令牌',
+  })
+  @ApiBearerAuth()
   @Post('/logout')
   @ApiOkResponse({ type: ResponseDto })
   @ApiOperation({ summary: '注销登录' })
@@ -98,9 +116,64 @@ export class AuthController {
    * @description: 获取掘金文章列表
    */
   @UseGuards(AuthGuard('jwt'))
+  @ApiHeader({
+    name: 'Authorization',
+    required: true,
+    description: 'token令牌',
+  })
+  @ApiBearerAuth()
   @Post('/juejin')
-  async juejin(@Body() params: Api.Common.JuejinParams) {
+  @ApiOkResponse({ type: JuejinResponseDto })
+  @ApiOperation({ summary: '获取掘金文章列表' })
+  async juejin(@Body() params: juejinParamsDto) {
     const response = await this.authService.juejin(params);
+    return response;
+  }
+
+  /**
+   * @description: 获取动态路由表
+   */
+  @Get('/getConstantRoutes')
+  @ApiOkResponse({ type: ConstantRoutesResponseDto })
+  @ApiOperation({ summary: '获取常量路由' })
+  getConstantRoutes() {
+    const response = this.authService.getConstantRoutes();
+    return response;
+  }
+
+  /**
+   * @description: 获取用户路由
+   */
+  // @UseGuards(AuthGuard('jwt'))
+  @ApiHeader({
+    name: 'Authorization',
+    required: true,
+    description: 'token令牌',
+  })
+  @ApiBearerAuth()
+  @Get('/getUserRoutes')
+  @ApiOkResponse({ type: UserRoutesResponseDto })
+  @ApiOperation({ summary: '获取用户路由' })
+  getUserRoutes() {
+    const response = this.authService.getUserRoutes();
+    return response;
+  }
+
+  /**
+   * @description: 判断路由名称是否存在
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @ApiHeader({
+    name: 'Authorization',
+    required: true,
+    description: 'token令牌',
+  })
+  @ApiBearerAuth()
+  @Get('/isRouteExist')
+  @ApiOkResponse({ type: RouteExistResponseDto })
+  @ApiOperation({ summary: '判断路由名称是否存在' })
+  isRouteExist(@Query() params: RouteExistParamsDto) {
+    const response = this.authService.isRouteExist(params.name);
     return response;
   }
 }

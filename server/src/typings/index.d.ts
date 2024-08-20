@@ -43,13 +43,6 @@ declare namespace Api {
     type NestedObject = Record<string, NestedObject>;
     type LanguageResult = Record<LanguageCode, NestedObject>;
 
-    // 掘金查询参数
-    type JuejinParams = {
-      cursor: string;
-      sort_type: number;
-      user_id: string;
-    };
-
     // 路由元信息
     type RouteMeta = {
       /**

@@ -2,19 +2,20 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-16 17:00:49
+ * @LastEditTime: 2024-08-20 17:15:59
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { MenuType } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { lastValueFrom, map } from 'rxjs';
 
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { convertFlatDataToTree, convertToLocalization, omit, responseMessage } from '@/utils';
 
-import { LoginParamsDto } from './dto/params-auth.dto';
+import { juejinParamsDto, LoginParamsDto } from './dto/params-auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -149,12 +150,88 @@ export class AuthService {
   /**
    * @description: 掘金文章列表
    */
-  async juejin(params: Api.Common.JuejinParams) {
+  async juejin(params: juejinParamsDto) {
     const url = 'https://api.juejin.cn/content_api/v1/article/query_list';
     const responseData: any = await lastValueFrom(this.httpService.post(url, params).pipe(map((res) => res.data)));
     return responseMessage({
       list: responseData.data,
       total: responseData.count,
     });
+  }
+
+  /**
+   * @description: 获取动态路由表
+   */
+  async getConstantRoutes() {
+    // 获取菜单列表
+    const result = await this.prisma.menu.findMany({
+      where: {
+        // 过滤出 json 对象只有常量的菜单
+        meta: {
+          path: ['constant'],
+          equals: true,
+        },
+      },
+      select: {
+        name: true,
+        path: true,
+        component: true,
+        meta: true,
+      },
+      orderBy: [
+        { sort: 'asc' }, // 按照sort字段升序
+        { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
+      ],
+    });
+    return responseMessage(result);
+  }
+
+  /**
+   * @description: 获取用户路由
+   */
+  async getUserRoutes() {
+    // 获取菜单列表
+    const result = await this.prisma.menu.findMany({
+      where: {
+        type: {
+          not: MenuType.BUTTON,
+        },
+        // 过滤出 json 对象不是常量的菜单
+        meta: {
+          path: ['constant'],
+          not: true,
+        },
+      },
+      select: {
+        id: true,
+        parentId: true,
+        name: true,
+        path: true,
+        component: true,
+        meta: true,
+      },
+      orderBy: [
+        { sort: 'asc' }, // 按照sort字段升序
+        { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
+      ],
+    });
+    // 转成树形结构
+    const routes = convertFlatDataToTree(result);
+    return responseMessage({
+      home: routes?.[0]?.name || 'home',
+      routes,
+    });
+  }
+
+  /**
+   * @description: 判断路由名称是否存在
+   */
+  async isRouteExist(name: string) {
+    const result = await this.prisma.menu.findUnique({
+      where: {
+        name,
+      },
+    });
+    return responseMessage(result ? true : false);
   }
 }
