@@ -5,6 +5,7 @@ import { PostManageModule } from '@/modules/administrative/post-manage/post-mana
 import { AuthModule } from '@/modules/auth/auth.module'; // 登录授权
 import { FileUploadModule } from '@/modules/file-upload/file-upload.module'; // 文件上传
 import { InternalizationModule } from '@/modules/system-manage/internalization/internalization.module'; // 系统管理 - 国际化
+import { MenuManageModule } from '@/modules/system-manage/menu-manage/menu-manage.module'; // 系统管理 - 菜单管理
 import { OperationLogModule } from '@/modules/system-manage/operation-log/operation-log.module'; // 系统管理 - 操作日志
 import { UserManageModule } from '@/modules/system-manage/user-manage/user-manage.module'; // 系统管理 - 用户管理
 
@@ -17,6 +18,7 @@ import { UserManageModule } from '@/modules/system-manage/user-manage/user-manag
     FileUploadModule,
     OperationLogModule,
     InternalizationModule,
+    MenuManageModule,
   ],
 })
 export class AppModule { }
