@@ -1,4 +1,4 @@
-import { SEX, STATUS, METHOD } from '@/enum';
+import { SEX, STATUS, METHOD, MENU_TYPE } from '@/enum';
 import { LabeledValue } from 'ant-design-vue/es/select';
 import { $t } from "@/locales";
 import { startsWith, keys } from 'lodash-es'
@@ -26,6 +26,15 @@ export const MethodOptions: LabeledValue[] = [
   { label: METHOD.POST, value: METHOD.POST },
   { label: METHOD.PATCH, value: METHOD.PATCH },
   { label: METHOD.DELETE, value: METHOD.DELETE },
+]
+
+/**
+ * @description: 菜单类型
+ */
+export const MenuTypeOptions: LabeledValue[] = [
+  { label: $t("page.systemManage.menuManage.typeMap.directory"), value: MENU_TYPE.DIRECTORY },
+  { label: $t("page.systemManage.menuManage.typeMap.menu"), value: MENU_TYPE.MENU },
+  { label: $t("page.systemManage.menuManage.typeMap.button"), value: MENU_TYPE.BUTTON },
 ]
 
 /**

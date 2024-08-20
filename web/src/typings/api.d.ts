@@ -143,10 +143,12 @@ declare namespace Api {
       title: string; // 菜单名称
       type: import('@/enum').MENU_TYPE; // 菜单类型
       parentId?: string; // 父级 id
-      name: string; // 路由名称
-      path: string; // 路由路径
-      component: string; // 组件路径
-      meta: import('vue-router').RouteMeta; // 路由元信息
+      name?: string; // 路由名称
+      path?: string; // 路由路径
+      component?: string; // 组件路径
+      meta?: import('vue-router').RouteMeta; // 路由元信息
+      permission?: string; // 按钮权限
+      sort: number; // 排序
       children?: MenuManage[];
     }>
     /**
