@@ -6,6 +6,12 @@ defineOptions({
   name: "HeaderSearch",
 });
 
+// 父组件传递的值
+type Props = {
+  locales: (field: string) => string;
+};
+defineProps<Props>();
+
 interface Emits {
   (e: "reset"): void;
   (e: "search"): void;
@@ -43,32 +49,20 @@ async function search() {
     >
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.administrative.organization.name')"
-            name="name"
-            class="m-0"
-          >
+          <AFormItem :label="locales('name')" name="name" class="m-0">
             <AInput
               v-model:value="model.name"
               allowClear
-              :placeholder="
-                $t('form.enter') + $t('page.administrative.organization.name')
-              "
+              :placeholder="$t('form.enter') + locales('name')"
             />
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.administrative.organization.code')"
-            name="code"
-            class="m-0"
-          >
+          <AFormItem :label="locales('code')" name="code" class="m-0">
             <AInput
               v-model:value="model.code"
               allowClear
-              :placeholder="
-                $t('form.enter') + $t('page.administrative.organization.code')
-              "
+              :placeholder="$t('form.enter') + locales('code')"
             />
           </AFormItem>
         </ACol>
@@ -94,5 +88,3 @@ async function search() {
     </AForm>
   </ACard>
 </template>
-
-<style scoped></style>
