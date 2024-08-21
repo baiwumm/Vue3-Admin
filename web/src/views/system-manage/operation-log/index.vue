@@ -148,6 +148,7 @@ const {
       key: "os",
       dataIndex: "os",
       title: locales("os"),
+      width: 120,
       align: "center",
       customRender: ({ text }) => (
         <Space>
@@ -162,6 +163,7 @@ const {
       key: "browser",
       dataIndex: "browser",
       title: locales("browser"),
+      width: 120,
       align: "center",
       customRender: ({ text }) => (
         <Space>

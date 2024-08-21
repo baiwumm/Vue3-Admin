@@ -73,7 +73,7 @@ import HeaderSearch from "./modules/header-search.vue";
 // 编辑的数据
 const editingData = ref<Api.SystemManage.UserManage | null>(null);
 
-const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
+const { tableWrapperRef, scrollConfig } = useTableScroll(1200);
 
 // 国际化
 const locales = (field: string) => $t(`page.systemManage.userManage.${field}`);
@@ -101,6 +101,7 @@ const {
       key: "userName",
       dataIndex: "userName",
       title: locales("userName"),
+      width: 120,
       align: "center",
       fixed: "left",
       customRender: ({ text }) => (
@@ -129,6 +130,7 @@ const {
       key: "orgId",
       dataIndex: "orgId",
       title: locales("orgId"),
+      width: 120,
       align: "center",
       customRender: ({ record }) => (
         <Tag bordered={false}>
@@ -146,6 +148,7 @@ const {
       key: "postId",
       dataIndex: "postId",
       title: locales("postId"),
+      width: 120,
       align: "center",
       customRender: ({ record }) => (
         <Tag bordered={false}>
@@ -195,6 +198,7 @@ const {
       key: "phone",
       dataIndex: "phone",
       title: locales("phone"),
+      width: 100,
       align: "center",
     },
     {
@@ -202,6 +206,7 @@ const {
       dataIndex: "email",
       title: locales("email"),
       align: "center",
+      width: 120,
       ellipsis: true,
       customRender: ({ text }) =>
         text ? (
