@@ -2,6 +2,9 @@
 import { $t } from "@/locales";
 import pkg from "~/package.json";
 
+// 国际化
+const locales = (field: string) => $t(`page.about.${field}`);
+
 interface PkgJson {
   name: string;
   version: string;
@@ -40,16 +43,12 @@ const latestBuildTime = BUILD_TIME;
 
 <template>
   <ASpace direction="vertical" :size="16">
-    <ACard
-      :title="$t('page.about.title')"
-      :bordered="false"
-      class="card-wrapper"
-    >
-      <p>{{ $t("page.about.introduction") }}</p>
+    <ACard :title="locales('title')" :bordered="false" class="card-wrapper">
+      <p>{{ locales("introduction") }}</p>
     </ACard>
     <!-- 项目信息 -->
     <ACard
-      :title="$t('page.about.projectInfo.title')"
+      :title="locales('projectInfo.title')"
       :bordered="false"
       class="card-wrapper"
     >
@@ -59,15 +58,13 @@ const latestBuildTime = BUILD_TIME;
         size="middle"
         :column="{ xs: 1, sm: 2 }"
       >
-        <ADescriptionsItem :label="$t('page.about.projectInfo.version')">
+        <ADescriptionsItem :label="locales('projectInfo.version')">
           <ATag color="blue">{{ pkgJson.version }}</ATag>
         </ADescriptionsItem>
-        <ADescriptionsItem
-          :label="$t('page.about.projectInfo.latestBuildTime')"
-        >
+        <ADescriptionsItem :label="locales('projectInfo.latestBuildTime')">
           <ATag color="blue">{{ latestBuildTime }}</ATag>
         </ADescriptionsItem>
-        <ADescriptionsItem :label="$t('page.about.projectInfo.githubLink')">
+        <ADescriptionsItem :label="locales('projectInfo.githubLink')">
           <a
             class="text-primary"
             :href="pkg.homepage"
@@ -77,7 +74,7 @@ const latestBuildTime = BUILD_TIME;
             {{ $t("system.title") }}
           </a>
         </ADescriptionsItem>
-        <ADescriptionsItem :label="$t('page.about.projectInfo.previewLink')">
+        <ADescriptionsItem :label="locales('projectInfo.previewLink')">
           <a
             class="text-primary"
             :href="pkg.website"
@@ -90,11 +87,7 @@ const latestBuildTime = BUILD_TIME;
       </ADescriptions>
     </ACard>
     <!-- 生产依赖 -->
-    <ACard
-      :title="$t('page.about.prdDep')"
-      :bordered="false"
-      class="card-wrapper"
-    >
+    <ACard :title="locales('prdDep')" :bordered="false" class="card-wrapper">
       <ARow :gutter="[12, 12]">
         <ACol
           :sm="24"
@@ -114,11 +107,7 @@ const latestBuildTime = BUILD_TIME;
       </ARow>
     </ACard>
     <!-- 开发依赖 -->
-    <ACard
-      :title="$t('page.about.devDep')"
-      :bordered="false"
-      class="card-wrapper"
-    >
+    <ACard :title="locales('devDep')" :bordered="false" class="card-wrapper">
       <ARow :gutter="[12, 12]">
         <ACol
           :sm="24"
@@ -139,5 +128,3 @@ const latestBuildTime = BUILD_TIME;
     </ACard>
   </ASpace>
 </template>
-
-<style scoped></style>
