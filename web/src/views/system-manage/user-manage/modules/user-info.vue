@@ -1,6 +1,6 @@
 <template>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.orgId')" name="orgId">
+    <AFormItem :label="locales('orgId')" name="orgId">
       <ATreeSelect
         v-model:value="model.orgId"
         show-search
@@ -27,7 +27,7 @@
     </AFormItem>
   </ACol>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.postId')" name="postId">
+    <AFormItem :label="locales('postId')" name="postId">
       <ATreeSelect
         v-model:value="model.postId"
         show-search
@@ -54,34 +54,27 @@
     </AFormItem>
   </ACol>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.city')" name="city">
+    <AFormItem :label="locales('city')" name="city">
       <ACascader
         v-model:value="model.city"
         :options="regionData"
-        :placeholder="
-          $t('form.select') + $t('page.systemManage.userManage.city')
-        "
+        :placeholder="$t('form.select') + locales('city')"
       />
     </AFormItem>
   </ACol>
   <ACol :span="24">
-    <AFormItem
-      :label="$t('page.systemManage.userManage.address')"
-      name="address"
-    >
+    <AFormItem :label="locales('address')" name="address">
       <ATextarea
         v-model:value="model.address"
         :rows="4"
         :maxlength="200"
         show-count
-        :placeholder="
-          $t('form.enter') + $t('page.systemManage.userManage.address')
-        "
+        :placeholder="$t('form.enter') + locales('address')"
       />
     </AFormItem>
   </ACol>
   <ACol :span="24">
-    <AFormItem :label="$t('page.systemManage.userManage.tags')" name="tags">
+    <AFormItem :label="locales('tags')" name="tags">
       <FigureLabels v-model:value="model.tags" />
     </AFormItem>
   </ACol>
@@ -96,6 +89,7 @@ type Props = {
   model: Api.SystemManage.SaveUserManage;
   organazationList: Api.Administrative.Organization[];
   postList: Api.Administrative.PostManage[];
+  locales: (field: string) => string;
 };
 defineProps<Props>();
 </script>

@@ -1,53 +1,49 @@
 <template>
-  <div
-    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
-  >
+  <PageContainer>
     <!-- 顶部搜索 -->
-    <HeaderSearch
-      v-model:model="searchParams"
-      @reset="resetSearchParams"
-      @search="getDataByPage"
-    />
-    <ACard
-      :title="$t('route.system-manage_user-manage')"
-      :bordered="false"
-      :body-style="{ flex: 1, overflow: 'hidden' }"
-      class="flex-col-stretch sm:flex-1-hidden card-wrapper"
-    >
-      <template #extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          @add="handleAdd"
-          @refresh="getData"
-        />
-      </template>
-      <!-- 表格 -->
-      <ATable
-        ref="tableWrapperRef"
-        :columns="columns"
-        :data-source="data"
-        size="small"
-        :scroll="scrollConfig"
+    <template #header>
+      <HeaderSearch
+        v-model:model="searchParams"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
+        :locales="locales"
+      />
+    </template>
+    <!-- 右侧操作区 -->
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        row-key="id"
-        :pagination="{
-          ...mobilePagination,
-          showTotal: (total) => `共 ${total} 条数据`,
-        }"
-        class="h-full"
+        @add="handleAdd"
+        @refresh="getData"
       />
-      <!-- 操作弹窗 -->
-      <OperateModal
-        v-model:visible="drawerVisible"
-        :operate-type="operateType"
-        :row-data="editingData"
-        @submitted="getDataByPage"
-        :dataSource="data"
-      />
-    </ACard>
-  </div>
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="{
+        ...mobilePagination,
+        showTotal: (total) => `共 ${total} 条数据`,
+      }"
+      class="h-full"
+    />
+    <!-- 操作弹窗 -->
+    <OperateModal
+      v-model:visible="drawerVisible"
+      :operate-type="operateType"
+      :row-data="editingData"
+      @submitted="getDataByPage"
+      :dataSource="data"
+      :locales="locales"
+    />
+  </PageContainer>
 </template>
 <script setup lang="tsx">
 import { ref } from "vue";
@@ -79,6 +75,9 @@ const editingData = ref<Api.SystemManage.UserManage | null>(null);
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
+// 国际化
+const locales = (field: string) => $t(`page.systemManage.userManage.${field}`);
+
 const {
   columns,
   columnChecks,
@@ -101,7 +100,7 @@ const {
     {
       key: "userName",
       dataIndex: "userName",
-      title: $t("page.systemManage.userManage.userName"),
+      title: locales("userName"),
       align: "center",
       fixed: "left",
       customRender: ({ text }) => (
@@ -116,20 +115,20 @@ const {
     {
       key: "cnName",
       dataIndex: "cnName",
-      title: $t("page.systemManage.userManage.cnName"),
+      title: locales("cnName"),
       align: "center",
     },
     {
       key: "avatar",
       dataIndex: "avatar",
-      title: $t("page.systemManage.userManage.avatar"),
+      title: locales("avatar"),
       align: "center",
       customRender: ({ text }) => <Avatar src={text} />,
     },
     {
       key: "orgId",
       dataIndex: "orgId",
-      title: $t("page.systemManage.userManage.orgId"),
+      title: locales("orgId"),
       align: "center",
       customRender: ({ record }) => (
         <Tag bordered={false}>
@@ -146,7 +145,7 @@ const {
     {
       key: "postId",
       dataIndex: "postId",
-      title: $t("page.systemManage.userManage.postId"),
+      title: locales("postId"),
       align: "center",
       customRender: ({ record }) => (
         <Tag bordered={false}>
@@ -160,7 +159,7 @@ const {
     {
       key: "sex",
       dataIndex: "sex",
-      title: $t("page.systemManage.userManage.sex"),
+      title: locales("sex"),
       align: "center",
       customRender: ({ text }) => (
         <Tag
@@ -195,13 +194,13 @@ const {
     {
       key: "phone",
       dataIndex: "phone",
-      title: $t("page.systemManage.userManage.phone"),
+      title: locales("phone"),
       align: "center",
     },
     {
       key: "email",
       dataIndex: "email",
-      title: $t("page.systemManage.userManage.email"),
+      title: locales("email"),
       align: "center",
       ellipsis: true,
       customRender: ({ text }) =>

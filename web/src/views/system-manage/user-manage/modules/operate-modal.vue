@@ -4,7 +4,7 @@ import { $t } from "@/locales";
 import PersonalInfo from "./personal-info.vue"; // 个人信息
 import UserInfo from "./user-info.vue"; // 用户信息
 import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import { STATUS, SEX } from "@/enum";
+import { STATUS, SEX, OPERATION_TYPE } from "@/enum";
 import { getOrganazationList, getPostList } from "@/service/api";
 import { pick, keys, omit, initial } from "lodash-es";
 import StrengthMeter from "@/components/custom/strength-meter.vue";
@@ -54,6 +54,7 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.UserManage | null; // 编辑数据
   dataSource: Api.SystemManage.UserManage[]; // 父级
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -71,13 +72,7 @@ const visible = defineModel<boolean>("visible", {
 const { formRef, validate, resetFields } = useAntdForm();
 
 // 抽屉标题
-const title = computed(() => {
-  const titles: Record<AntDesign.TableOperateType, string> = {
-    add: $t("page.systemManage.userManage.addUser"),
-    edit: $t("page.systemManage.userManage.editUser"),
-  };
-  return titles[props.operateType];
-});
+const title = computed(() => props.locales(`${props.operateType}User`));
 
 const model: Api.SystemManage.SaveUserManage = reactive(createDefaultModel());
 
@@ -141,16 +136,16 @@ const rules = computed<
 // 分部表单子项
 const steps = [
   {
-    title: $t("page.systemManage.userManage.personalInfo"),
+    title: props.locales("personalInfo"),
     content: PersonalInfo,
   },
-  { title: $t("page.systemManage.userManage.userInfo"), content: UserInfo },
+  { title: props.locales("userInfo"), content: UserInfo },
   {
-    title: $t("page.systemManage.userManage.settingAvatar"),
+    title: props.locales("settingAvatar"),
     content: SettingAvatar,
   },
   {
-    title: $t("page.systemManage.userManage.settingPassword"),
+    title: props.locales("settingPassword"),
     content: StrengthMeter,
   },
 ];
@@ -160,7 +155,7 @@ const items = ref<StepsProps["items"]>([]);
 async function handleInitModel() {
   Object.assign(model, createDefaultModel());
   items.value = steps.map((item) => ({ key: item.title, title: item.title }));
-  if (props.operateType === "edit" && props.rowData) {
+  if (props.operateType === OPERATION_TYPE.EDIT && props.rowData) {
     await nextTick();
     Object.assign(model, props.rowData);
     items.value = initial(items.value);
@@ -182,7 +177,7 @@ async function handleSubmit() {
   await validate().then(async () => {
     loading.value = true;
     // 判断是否新增
-    const isAdd = props.operateType === "add";
+    const isAdd = props.operateType === OPERATION_TYPE.ADD;
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
@@ -201,7 +196,7 @@ async function handleSubmit() {
       .then(({ error }) => {
         if (!error) {
           window.$message?.success(
-            $t(isAdd ? "common.addSuccess" : "common.updateSuccess"),
+            $t(`common.${isAdd ? "add" : "update"}Success`),
           );
           closeModal();
           emit("submitted");
@@ -239,6 +234,7 @@ watch(visible, () => {
             :model="model"
             :organazationList="current === 1 ? organazationList : undefined"
             :postList="current === 1 ? postList : undefined"
+            :locales="locales"
             @update:model="updateModel"
           />
         </ARow>

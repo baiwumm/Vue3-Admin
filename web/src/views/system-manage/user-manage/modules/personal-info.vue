@@ -1,55 +1,44 @@
 <template>
   <ACol :span="12">
-    <AFormItem
-      :label="$t('page.systemManage.userManage.userName')"
-      name="userName"
-    >
+    <AFormItem :label="locales('userName')" name="userName">
       <AInput
         v-model:value="model.userName"
         show-count
         :maxlength="20"
-        :placeholder="
-          $t('form.enter') + $t('page.systemManage.userManage.userName')
-        "
+        :placeholder="$t('form.enter') + locales('userName')"
       />
     </AFormItem>
   </ACol>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.cnName')" name="cnName">
+    <AFormItem :label="locales('cnName')" name="cnName">
       <AInput
         v-model:value="model.cnName"
         show-count
         :maxlength="20"
-        :placeholder="
-          $t('form.enter') + $t('page.systemManage.userManage.cnName')
-        "
+        :placeholder="$t('form.enter') + locales('cnName')"
       />
     </AFormItem>
   </ACol>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.phone')" name="phone">
+    <AFormItem :label="locales('phone')" name="phone">
       <AInput
         v-model:value="model.phone"
         show-count
         :maxlength="11"
-        :placeholder="
-          $t('form.enter') + $t('page.systemManage.userManage.phone')
-        "
+        :placeholder="$t('form.enter') + locales('phone')"
       />
     </AFormItem>
   </ACol>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.email')" name="email">
+    <AFormItem :label="locales('email')" name="email">
       <AInput
         v-model:value="model.email"
-        :placeholder="
-          $t('form.enter') + $t('page.systemManage.userManage.email')
-        "
+        :placeholder="$t('form.enter') + locales('email')"
       />
     </AFormItem>
   </ACol>
   <ACol :span="12">
-    <AFormItem :label="$t('page.systemManage.userManage.sex')" name="sex">
+    <AFormItem :label="locales('sex')" name="sex">
       <a-radio-group v-model:value="model.sex" :options="SexOptions" />
     </AFormItem>
   </ACol>
@@ -80,6 +69,7 @@ import { SexOptions, StatueOptions } from "@/constants";
 // 父组件传递的值
 type Props = {
   model: Api.SystemManage.SaveUserManage;
+  locales: (field: string) => string;
 };
 defineProps<Props>();
 </script>
