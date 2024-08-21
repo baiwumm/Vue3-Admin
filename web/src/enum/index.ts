@@ -1,3 +1,7 @@
+
+/**
+ * @description: 仓库状态 id
+ */
 export enum SetupStoreId {
   App = 'app-store',
   Theme = 'theme-store',
