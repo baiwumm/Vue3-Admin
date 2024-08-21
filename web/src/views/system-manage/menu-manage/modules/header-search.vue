@@ -15,6 +15,7 @@ defineOptions({
 // 父组件传递的值
 type Props = {
   updateSearchParams: (value: Api.SystemManage.MenuManageSearchParams) => void;
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -61,32 +62,20 @@ async function search() {
     >
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.systemManage.menuManage.title')"
-            name="title"
-            class="m-0"
-          >
+          <AFormItem :label="locales('title')" name="title" class="m-0">
             <AInput
               v-model:value="model.title"
               allowClear
-              :placeholder="
-                $t('form.enter') + $t('page.systemManage.menuManage.title')
-              "
+              :placeholder="$t('form.enter') + locales('title')"
             />
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.systemManage.menuManage.name')"
-            name="name"
-            class="m-0"
-          >
+          <AFormItem :label="locales('name')" name="name" class="m-0">
             <AInput
               v-model:value="model.name"
               allowClear
-              :placeholder="
-                $t('form.enter') + $t('page.systemManage.menuManage.name')
-              "
+              :placeholder="$t('form.enter') + locales('name')"
             />
           </AFormItem>
         </ACol>
@@ -117,5 +106,3 @@ async function search() {
     </AForm>
   </ACard>
 </template>
-
-<style scoped></style>

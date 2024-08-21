@@ -2,7 +2,7 @@
 import { computed, reactive, watch, ref, nextTick } from "vue";
 import { $t } from "@/locales";
 import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import { MENU_TYPE } from "@/enum";
+import { MENU_TYPE, OPERATION_TYPE } from "@/enum";
 import { MenuTypeOptions } from "@/constants";
 import { SimpleScrollbar } from "@sa/materials";
 import RouteMetaForm from "./route-meta-form.vue";
@@ -21,8 +21,11 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.MenuManage | null; // 编辑数据
   dataSource: Api.SystemManage.MenuManage[]; // 父级
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
+
+const placeholder = (field: string) => $t("form.enter") + props.locales(field);
 
 // 父组件自定义事件
 interface Emits {
@@ -39,13 +42,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => {
-  const titles: Record<AntDesign.TableOperateType, string> = {
-    add: $t("page.systemManage.menuManage.addMenu"),
-    edit: $t("page.systemManage.menuManage.editMenu"),
-  };
-  return titles[props.operateType];
-});
+const title = computed(() => props.locales(`${props.operateType}Menu`));
 
 const model: Api.SystemManage.SaveMenuManage = reactive(createDefaultModel());
 
@@ -94,7 +91,7 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 async function handleInitModel() {
   Object.assign(model, createDefaultModel());
 
-  if (props.operateType === "edit" && props.rowData) {
+  if (props.operateType === OPERATION_TYPE.EDIT && props.rowData) {
     await nextTick();
     Object.assign(model, props.rowData);
   }
@@ -110,7 +107,7 @@ async function handleSubmit() {
   await validate().then(async () => {
     loading.value = true;
     // 判断是否新增
-    const isAdd = props.operateType === "add";
+    const isAdd = props.operateType === OPERATION_TYPE.ADD;
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
@@ -148,13 +145,17 @@ watch(visible, () => {
 watch(
   () => model.name,
   () => {
-    model.path = model.name ? `/${model.name.split("_").join("/")}` : undefined;
-    model.component = model.name ? `view.${model.name}` : undefined;
-    if (model.meta) {
-      model.meta.title = model.name || "";
-    }
-    if (model.meta) {
-      model.meta.i18nKey = model.name ? `route.${model.name}` : undefined;
+    if (props.operateType === OPERATION_TYPE.ADD) {
+      model.path = model.name
+        ? `/${model.name.split("_").join("/")}`
+        : undefined;
+      model.component = model.name ? `view.${model.name}` : undefined;
+      if (model.meta) {
+        model.meta.title = model.name || "";
+      }
+      if (model.meta) {
+        model.meta.i18nKey = model.name ? `route.${model.name}` : undefined;
+      }
     }
   },
 );
@@ -180,10 +181,7 @@ watch(
         >
           <ARow>
             <ACol :lg="12" :xs="24">
-              <AFormItem
-                :label="$t('page.systemManage.menuManage.type')"
-                name="type"
-              >
+              <AFormItem :label="locales('type')" name="type">
                 <ARadioGroup
                   v-model:value="model.type"
                   :options="MenuTypeOptions"
@@ -223,73 +221,46 @@ watch(
               </AFormItem>
             </ACol>
             <ACol :lg="12" :xs="24">
-              <AFormItem
-                :label="$t('page.systemManage.menuManage.title')"
-                name="title"
-              >
+              <AFormItem :label="locales('title')" name="title">
                 <AInput
                   v-model:value="model.title"
-                  :placeholder="
-                    $t('form.enter') + $t('page.systemManage.menuManage.title')
-                  "
+                  :placeholder="placeholder('title')"
                 />
               </AFormItem>
             </ACol>
             <template v-if="model.type !== MENU_TYPE.BUTTON">
               <ACol :lg="12" :xs="24">
-                <AFormItem
-                  :label="$t('page.systemManage.menuManage.name')"
-                  name="name"
-                >
+                <AFormItem :label="locales('name')" name="name">
                   <AInput
                     v-model:value="model.name"
-                    :placeholder="
-                      $t('form.enter') + $t('page.systemManage.menuManage.name')
-                    "
+                    :placeholder="placeholder('name')"
                   />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem
-                  :label="$t('page.systemManage.menuManage.path')"
-                  name="path"
-                >
+                <AFormItem :label="locales('path')" name="path">
                   <AInput
                     v-model:value="model.path"
-                    :placeholder="
-                      $t('form.enter') + $t('page.systemManage.menuManage.path')
-                    "
+                    :placeholder="placeholder('path')"
                   />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem
-                  :label="$t('page.systemManage.menuManage.component')"
-                  name="component"
-                >
+                <AFormItem :label="locales('component')" name="component">
                   <AInput
                     v-model:value="model.component"
-                    :placeholder="
-                      $t('form.enter') +
-                      $t('page.systemManage.menuManage.component')
-                    "
+                    :placeholder="placeholder('component')"
                   />
                 </AFormItem>
               </ACol>
             </template>
             <ACol :lg="12" :xs="24" v-else>
-              <AFormItem
-                :label="$t('page.systemManage.menuManage.permission')"
-                name="permission"
-              >
+              <AFormItem :label="locales('permission')" name="permission">
                 <AInput
                   v-model:value="model.permission"
                   :maxlength="50"
                   show-count
-                  :placeholder="
-                    $t('form.enter') +
-                    $t('page.systemManage.menuManage.permission')
-                  "
+                  :placeholder="placeholder('permission')"
                 />
               </AFormItem>
             </ACol>
@@ -311,11 +282,15 @@ watch(
             <template v-if="model.type !== MENU_TYPE.BUTTON">
               <ACol :span="24">
                 <ADivider orientation="left">{{
-                  $t("page.systemManage.menuManage.routeMeta")
+                  locales("routeMeta")
                 }}</ADivider>
               </ACol>
               <!-- 路由元信息 -->
-              <RouteMetaForm :model="model" />
+              <RouteMetaForm
+                :model="model"
+                :locales="locales"
+                :placeholder="placeholder"
+              />
             </template>
           </ARow>
         </AForm>

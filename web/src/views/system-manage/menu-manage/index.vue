@@ -1,51 +1,47 @@
 <template>
-  <div
-    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
-  >
+  <PageContainer>
     <!-- 顶部搜索 -->
-    <HeaderSearch
-      v-model:model="searchParams"
-      @reset="resetSearchParams"
-      @search="getDataByPage"
-      :updateSearchParams="updateSearchParams"
-    />
-    <ACard
-      :title="$t('route.system-manage_menu-manage')"
-      :bordered="false"
-      :body-style="{ flex: 1, overflow: 'hidden' }"
-      class="flex-col-stretch sm:flex-1-hidden card-wrapper"
-    >
-      <template #extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          @add="handleAdd"
-          @refresh="getData"
-        />
-      </template>
-      <!-- 表格 -->
-      <ATable
-        ref="tableWrapperRef"
-        :columns="columns"
-        :data-source="data"
-        size="small"
-        :scroll="scrollConfig"
+    <template #header>
+      <HeaderSearch
+        v-model:model="searchParams"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
+        :updateSearchParams="updateSearchParams"
+        :locales="locales"
+      />
+    </template>
+    <!-- 右侧操作区 -->
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        row-key="id"
-        :pagination="false"
-        class="h-full"
+        @add="handleAdd"
+        @refresh="getData"
       />
-      <!-- 操作弹窗 -->
-      <OperateModal
-        v-model:visible="drawerVisible"
-        :operate-type="operateType"
-        :row-data="editingData"
-        @submitted="getDataByPage"
-        :dataSource="data"
-      />
-    </ACard>
-  </div>
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="false"
+      class="h-full"
+    />
+    <!-- 操作弹窗 -->
+    <OperateModal
+      v-model:visible="drawerVisible"
+      :operate-type="operateType"
+      :row-data="editingData"
+      @submitted="getDataByPage"
+      :dataSource="data"
+      :locales="locales"
+    />
+  </PageContainer>
 </template>
 <script setup lang="tsx">
 import { ref } from "vue";
@@ -71,6 +67,19 @@ const editingData = ref<Api.SystemManage.MenuManage | null>(null);
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
+// 国际化
+const locales = (field: string) => $t(`page.systemManage.menuManage.${field}`);
+
+// 渲染默认字段
+const renderEllipsis = ({ text }: any) =>
+  text ? (
+    <Tooltip title={text} placement="topLeft">
+      {text}
+    </Tooltip>
+  ) : (
+    UNIFORM_TEXT.NULL
+  );
+
 const {
   columns,
   columnChecks,
@@ -93,7 +102,7 @@ const {
     {
       key: "type",
       dataIndex: "type",
-      title: $t("page.systemManage.menuManage.type"),
+      title: locales("type"),
       align: "center",
       customRender: ({ text }) => {
         const typeColorMap: Record<string, string> = {
@@ -103,7 +112,7 @@ const {
         };
         return (
           <Tag bordered={false} color={typeColorMap[text]}>
-            {$t(`page.systemManage.menuManage.typeMap.${toLower(text)}`)}
+            {locales(`typeMap.${toLower(text)}`)}
           </Tag>
         );
       },
@@ -112,13 +121,13 @@ const {
       key: "title",
       dataIndex: "title",
       align: "center",
-      title: $t("page.systemManage.menuManage.title"),
+      title: locales("title"),
     },
     {
       key: "meta",
       dataIndex: "meta",
       align: "center",
-      title: $t("page.systemManage.menuManage.meta.icon"),
+      title: locales("meta.icon"),
       customRender: ({ record }) => {
         const meta = get(record, "meta");
         return meta?.icon || meta?.localIcon ? (
@@ -139,45 +148,24 @@ const {
       dataIndex: "name",
       align: "center",
       ellipsis: true,
-      title: $t("page.systemManage.menuManage.name"),
-      customRender: ({ text }) =>
-        text ? (
-          <Tooltip title={text} placement="topLeft">
-            {text}
-          </Tooltip>
-        ) : (
-          UNIFORM_TEXT.NULL
-        ),
+      title: locales("name"),
+      customRender: renderEllipsis,
     },
     {
       key: "path",
       dataIndex: "path",
       align: "center",
       ellipsis: true,
-      title: $t("page.systemManage.menuManage.path"),
-      customRender: ({ text }) =>
-        text ? (
-          <Tooltip title={text} placement="topLeft">
-            {text}
-          </Tooltip>
-        ) : (
-          UNIFORM_TEXT.NULL
-        ),
+      title: locales("path"),
+      customRender: renderEllipsis,
     },
     {
       key: "component",
       dataIndex: "component",
       align: "center",
       ellipsis: true,
-      title: $t("page.systemManage.menuManage.component"),
-      customRender: ({ text }) =>
-        text ? (
-          <Tooltip title={text} placement="topLeft">
-            {text}
-          </Tooltip>
-        ) : (
-          UNIFORM_TEXT.NULL
-        ),
+      title: locales("component"),
+      customRender: renderEllipsis,
     },
     {
       key: "sort",
@@ -227,8 +215,6 @@ const {
     },
   ],
 });
-
-console.log("columnChecks", columnChecks);
 
 const {
   drawerVisible,
