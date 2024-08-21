@@ -17,6 +17,7 @@ type Props = {
   updateSearchParams: (
     value: Api.SystemManage.InternalizationSearchParams,
   ) => void;
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -55,7 +56,7 @@ async function search() {
 </script>
 
 <template>
-  <ACard :title="$t('common.search')" :bordered="false" class="card-wrapper">
+  <ACard :title="$t('common.search')" :bordered="false">
     <AForm
       ref="formRef"
       :model="model"
@@ -66,17 +67,11 @@ async function search() {
     >
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.systemManage.internalization.name')"
-            name="name"
-            class="m-0"
-          >
+          <AFormItem :label="locales('name')" name="name" class="m-0">
             <AInput
               v-model:value="model.name"
               allowClear
-              :placeholder="
-                $t('form.enter') + $t('page.systemManage.internalization.name')
-              "
+              :placeholder="$t('form.enter') + locales('name')"
             />
           </AFormItem>
         </ACol>

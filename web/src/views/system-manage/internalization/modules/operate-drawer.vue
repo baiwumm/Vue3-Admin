@@ -5,6 +5,7 @@ import { $t } from "@/locales";
 import { createInternalization, updateInternalization } from "@/service/api";
 import { pick } from "lodash-es";
 import { InternalizationLanguage } from "@/constants";
+import { OPERATION_TYPE } from "@/enum";
 
 defineOptions({
   name: "OperateDrawer",
@@ -18,6 +19,7 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.SaveInternalization | null; // 编辑数据
   dataSource: Api.SystemManage.SaveInternalization[]; // 父级
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -36,13 +38,9 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => {
-  const titles: Record<AntDesign.TableOperateType, string> = {
-    add: $t("page.systemManage.internalization.addInternalization"),
-    edit: $t("page.systemManage.internalization.editInternalization"),
-  };
-  return titles[props.operateType];
-});
+const title = computed(() =>
+  props.locales(`${props.operateType}Internalization`),
+);
 
 const model: Api.SystemManage.SaveInternalization =
   reactive(createDefaultModel());
@@ -85,7 +83,7 @@ async function handleSubmit() {
   await validate().then(async () => {
     loading.value = true;
     // 判断是否新增
-    const isAdd = props.operateType === "add";
+    const isAdd = props.operateType === OPERATION_TYPE.ADD;
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
@@ -147,33 +145,32 @@ watch(visible, () => {
           </template>
         </ATreeSelect>
       </AFormItem>
-      <AFormItem
-        :label="$t('page.systemManage.internalization.name')"
-        name="name"
-      >
+      <AFormItem :label="locales('name')" name="name">
         <AInput
           v-model:value="model.name"
           show-count
           :maxlength="32"
-          :placeholder="
-            $t('form.enter') + $t('page.systemManage.internalization.name')
-          "
+          :placeholder="$t('form.enter') + locales('name')"
         />
       </AFormItem>
       <AFormItem
-        :label="
-          $t(`page.systemManage.internalization.${language.replace('-', '')}`)
-        "
+        :label="locales(`${language.replace('-', '')}`)"
         :name="language"
         v-for="language in InternalizationLanguage"
       >
         <AInput
-          v-model:value="model[language.replace('-', '')]"
+          v-model:value="
+            model[
+              language.replace('-', '') as keyof Pick<
+                Api.SystemManage.Internalization,
+                'zhCN' | 'enUS' | 'jaJP' | 'zhTW'
+              >
+            ]
+          "
           show-count
           :maxlength="500"
           :placeholder="
-            $t('form.enter') +
-            $t(`page.systemManage.internalization.${language.replace('-', '')}`)
+            $t('form.enter') + locales(`${language.replace('-', '')}`)
           "
         />
       </AFormItem>
@@ -188,5 +185,3 @@ watch(visible, () => {
     </template>
   </ADrawer>
 </template>
-
-<style scoped></style>

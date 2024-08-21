@@ -1,51 +1,47 @@
 <template>
-  <div
-    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
-  >
+  <PageContainer>
     <!-- 顶部搜索 -->
-    <HeaderSearch
-      v-model:model="searchParams"
-      @reset="resetSearchParams"
-      @search="getDataByPage"
-      :updateSearchParams="updateSearchParams"
-    />
-    <ACard
-      :title="$t('route.system-manage_internalization')"
-      :bordered="false"
-      :body-style="{ flex: 1, overflow: 'hidden' }"
-      class="flex-col-stretch sm:flex-1-hidden card-wrapper"
-    >
-      <template #extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          @add="handleAdd"
-          @refresh="getData"
-        />
-      </template>
-      <!-- 表格 -->
-      <ATable
-        ref="tableWrapperRef"
-        :columns="columns"
-        :data-source="data"
-        size="small"
-        :scroll="scrollConfig"
+    <template #header>
+      <HeaderSearch
+        v-model:model="searchParams"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
+        :updateSearchParams="updateSearchParams"
+        :locales="locales"
+      />
+    </template>
+    <!-- 右侧操作区 -->
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        row-key="id"
-        :pagination="false"
-        class="h-full"
+        @add="handleAdd"
+        @refresh="getData"
       />
-      <!-- 操作抽屉 -->
-      <OperateDrawer
-        v-model:visible="drawerVisible"
-        :operate-type="operateType"
-        :row-data="editingData"
-        @submitted="getDataByPage"
-        :dataSource="data"
-      />
-    </ACard>
-  </div>
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="false"
+      class="h-full"
+    />
+    <!-- 操作抽屉 -->
+    <OperateDrawer
+      v-model:visible="drawerVisible"
+      :operate-type="operateType"
+      :row-data="editingData"
+      @submitted="getDataByPage"
+      :dataSource="data"
+      :locales="locales"
+    />
+  </PageContainer>
 </template>
 
 <script setup lang="tsx">
@@ -71,6 +67,10 @@ const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 // 编辑的数据
 const editingData = ref<Api.SystemManage.SaveInternalization | null>(null);
 
+// 国际化
+const locales = (field: string) =>
+  $t(`page.systemManage.internalization.${field}`);
+
 const {
   columns,
   columnChecks,
@@ -92,7 +92,7 @@ const {
     {
       key: "name",
       dataIndex: "name",
-      title: $t("page.systemManage.internalization.name"),
+      title: locales("name"),
       align: "center",
       customRender: ({ text }) => (
         <Tag bordered={false}>
@@ -108,7 +108,7 @@ const {
       return {
         key,
         dataIndex: key,
-        title: $t(`page.systemManage.internalization.${key}`),
+        title: locales(key),
         align: "center",
         ellipsis: true,
         customRender: ({ text }) =>
