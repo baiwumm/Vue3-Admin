@@ -19,6 +19,7 @@ type Props = {
     value: Partial<Api.SystemManage.OperationLogSearchParams>,
   ) => void;
   userList: Api.SystemManage.UserManage[];
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -64,18 +65,12 @@ async function search() {
     >
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.systemManage.operationLog.userId')"
-            name="userId"
-            class="m-0"
-          >
+          <AFormItem :label="locales('userId')" name="userId" class="m-0">
             <ASelect
               v-model:value="model.userId"
               allowClear
               :options="userList"
-              :placeholder="
-                $t('form.select') + $t('page.systemManage.operationLog.userId')
-              "
+              :placeholder="$t('form.select') + locales('userId')"
               :fieldNames="{ value: 'id', label: 'cnName' }"
             >
               <template #option="{ cnName, avatar }">
@@ -88,18 +83,12 @@ async function search() {
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.systemManage.operationLog.method')"
-            name="method"
-            class="m-0"
-          >
+          <AFormItem :label="locales('method')" name="method" class="m-0">
             <ASelect
               v-model:value="model.method"
               allowClear
               :options="MethodOptions"
-              :placeholder="
-                $t('form.select') + $t('page.systemManage.operationLog.method')
-              "
+              :placeholder="$t('form.select') + locales('method')"
             />
           </AFormItem>
         </ACol>
@@ -130,5 +119,3 @@ async function search() {
     </AForm>
   </ACard>
 </template>
-
-<style scoped></style>

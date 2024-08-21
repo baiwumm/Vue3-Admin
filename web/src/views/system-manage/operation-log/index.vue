@@ -1,56 +1,51 @@
 <template>
-  <div
-    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
-  >
+  <PageContainer>
     <!-- 顶部搜索 -->
-    <HeaderSearch
-      v-model:model="searchParams"
-      @reset="resetSearchParams"
-      @search="getDataByPage"
-      :updateSearchParams="updateSearchParams"
-      :userList="userList"
-    />
-    <ACard
-      :title="$t('route.system-manage_operation-log')"
-      :bordered="false"
-      :body-style="{ flex: 1, overflow: 'hidden' }"
-      class="flex-col-stretch sm:flex-1-hidden card-wrapper"
-    >
-      <template #extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          :addBtn="false"
-          @refresh="getData"
-          @delete="handleBatchDelete"
-          batchDeleteBtn
-        />
-      </template>
-      <!-- 表格 -->
-      <ATable
-        ref="tableWrapperRef"
-        :columns="columns"
-        :data-source="data"
-        size="small"
-        :row-selection="rowSelection"
-        :scroll="scrollConfig"
+    <template #header>
+      <HeaderSearch
+        v-model:model="searchParams"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
+        :updateSearchParams="updateSearchParams"
+        :userList="userList"
+        :locales="locales"
+      />
+    </template>
+    <!-- 右侧操作区 -->
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        row-key="id"
-        :pagination="{
-          ...mobilePagination,
-          showTotal: (total) => `共 ${total} 条数据`,
-        }"
-        class="h-full"
-      >
-        <template #expandedRowRender="{ record }">
-          <pre class="json-data">{{
-            JSON.stringify(record.params, null, 2)
-          }}</pre>
-        </template>
-      </ATable>
-    </ACard>
-  </div>
+        :addBtn="false"
+        @refresh="getData"
+        @delete="handleBatchDelete"
+        batchDeleteBtn
+      />
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :row-selection="rowSelection"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="{
+        ...mobilePagination,
+        showTotal: (total) => `共 ${total} 条数据`,
+      }"
+      class="h-full"
+    >
+      <template #expandedRowRender="{ record }">
+        <pre class="json-data">{{
+          JSON.stringify(record.params, null, 2)
+        }}</pre>
+      </template>
+    </ATable>
+  </PageContainer>
 </template>
 <script setup lang="tsx">
 import { ref, onMounted } from "vue";
@@ -71,7 +66,12 @@ import { METHOD } from "@/enum";
 import dayjs from "dayjs";
 import { broswerIconMap, osIconMap } from "@/constants";
 import SvgIcon from "@/components/custom/svg-icon.vue";
+
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
+
+// 国际化
+const locales = (field: string) =>
+  $t(`page.systemManage.operationLog.${field}`);
 
 /**
  * @description: 获取用户列表
@@ -109,7 +109,7 @@ const {
     {
       key: "userId",
       dataIndex: "userId",
-      title: $t("page.systemManage.operationLog.userId"),
+      title: locales("userId"),
       align: "center",
       fixed: "left",
       customRender: ({ record }) => (
@@ -122,14 +122,14 @@ const {
     {
       key: "action",
       dataIndex: "action",
-      title: $t("page.systemManage.operationLog.action"),
+      title: locales("action"),
       align: "center",
       ellipsis: true,
     },
     {
       key: "method",
       dataIndex: "method",
-      title: $t("page.systemManage.operationLog.method"),
+      title: locales("method"),
       align: "center",
       customRender: ({ text }) => {
         const methodColorMap: Record<string, string> = {
@@ -147,7 +147,7 @@ const {
     {
       key: "os",
       dataIndex: "os",
-      title: $t("page.systemManage.operationLog.os"),
+      title: locales("os"),
       align: "center",
       customRender: ({ text }) => (
         <Space>
@@ -161,7 +161,7 @@ const {
     {
       key: "browser",
       dataIndex: "browser",
-      title: $t("page.systemManage.operationLog.browser"),
+      title: locales("browser"),
       align: "center",
       customRender: ({ text }) => (
         <Space>
@@ -175,7 +175,7 @@ const {
     {
       key: "ip",
       dataIndex: "ip",
-      title: $t("page.systemManage.operationLog.ip"),
+      title: locales("ip"),
       align: "center",
     },
     {
