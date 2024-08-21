@@ -4,7 +4,7 @@ import { getColorPalette } from '@sa/color';
 import { getRgbOfColor } from '@sa/utils';
 import { overrideThemeSettings, themeSettings } from '@/theme/settings';
 import { themeVars } from '@/theme/vars';
-import { toggleHtmlClass } from '@/utils/common';
+import { toggleHtmlClass } from '@/utils';
 import { localStg } from '@/utils/storage';
 
 const DARK_CLASS = 'dark';
