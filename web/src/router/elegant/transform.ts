@@ -170,7 +170,7 @@ const routeMap: RouteMap = {
   "administrative_post-manage": "/administrative/post-manage",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
-  "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
+  "login": "/login",
   "system-manage": "/system-manage",
   "system-manage_internalization": "/system-manage/internalization",
   "system-manage_menu-manage": "/system-manage/menu-manage",
