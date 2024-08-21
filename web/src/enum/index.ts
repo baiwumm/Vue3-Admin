@@ -7,6 +7,15 @@ export enum SetupStoreId {
 }
 
 /**
+ * @description: 操作类型
+ */
+export enum OPERATION_TYPE {
+  ADD = 'add',
+  EDIT = 'edit',
+  DELETE = 'delete',
+}
+
+/**
  * @description: 公共文案
  */
 export enum UNIFORM_TEXT {
