@@ -4,6 +4,7 @@ import { useAntdForm, useFormRules } from "@/hooks/common/form";
 import { $t } from "@/locales";
 import { createPost, updatePost } from "@/service/api";
 import { pick } from "lodash-es";
+import { OPERATION_TYPE } from "@/enum";
 
 defineOptions({
   name: "OperateDrawer",
@@ -18,6 +19,7 @@ type Props = {
   rowData?: Api.Administrative.PostManage | null; // 编辑数据
   dataSource: Api.Administrative.PostManage[]; // 父级
   organazationList: Api.Administrative.Organization[]; // 组织树
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -36,13 +38,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => {
-  const titles: Record<AntDesign.TableOperateType, string> = {
-    add: $t("page.administrative.postManage.addPost"),
-    edit: $t("page.administrative.postManage.editPost"),
-  };
-  return titles[props.operateType];
-});
+const title = computed(() => props.locales(`${props.operateType}Post`));
 
 const model: Api.Administrative.SavePostManage = reactive(createDefaultModel());
 
@@ -72,7 +68,7 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 async function handleInitModel() {
   Object.assign(model, createDefaultModel());
 
-  if (props.operateType === "edit" && props.rowData) {
+  if (props.operateType === OPERATION_TYPE.EDIT && props.rowData) {
     await nextTick();
     Object.assign(model, props.rowData);
   }
@@ -88,7 +84,7 @@ async function handleSubmit() {
   await validate().then(async () => {
     loading.value = true;
     // 判断是否新增
-    const isAdd = props.operateType === "add";
+    const isAdd = props.operateType === OPERATION_TYPE.ADD;
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
@@ -97,9 +93,7 @@ async function handleSubmit() {
     await (isAdd ? createPost : updatePost)(params)
       .then(({ error }) => {
         if (!error) {
-          window.$message?.success(
-            $t(isAdd ? "common.addSuccess" : "common.updateSuccess"),
-          );
+          window.$message?.success($t(`common.${props.operateType}Success`));
           closeDrawer();
           emit("submitted");
         }
@@ -150,20 +144,15 @@ watch(visible, () => {
           </template>
         </ATreeSelect>
       </AFormItem>
-      <AFormItem :label="$t('page.administrative.postManage.name')" name="name">
+      <AFormItem :label="locales('name')" name="name">
         <AInput
           v-model:value="model.name"
           show-count
           :maxlength="32"
-          :placeholder="
-            $t('form.enter') + $t('page.administrative.postManage.name')
-          "
+          :placeholder="$t('form.enter') + locales('name')"
         />
       </AFormItem>
-      <AFormItem
-        :label="$t('page.administrative.postManage.orgId')"
-        name="orgId"
-      >
+      <AFormItem :label="locales('orgId')" name="orgId">
         <ATreeSelect
           v-model:value="model.orgId"
           show-search
@@ -201,18 +190,13 @@ watch(visible, () => {
           style="width: 100%"
         />
       </AFormItem>
-      <AFormItem
-        :label="$t('page.administrative.postManage.description')"
-        name="description"
-      >
+      <AFormItem :label="locales('description')" name="description">
         <ATextarea
           v-model:value="model.description"
           show-count
           :maxlength="200"
           :rows="4"
-          :placeholder="
-            $t('form.enter') + $t('page.administrative.postManage.description')
-          "
+          :placeholder="$t('form.enter') + locales('description')"
         />
       </AFormItem>
     </AForm>
@@ -226,5 +210,3 @@ watch(visible, () => {
     </template>
   </ADrawer>
 </template>
-
-<style scoped></style>

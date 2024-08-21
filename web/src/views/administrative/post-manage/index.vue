@@ -1,53 +1,48 @@
 <template>
-  <div
-    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
-  >
-    <!-- 顶部搜索 -->
-    <HeaderSearch
-      v-model:model="searchParams"
-      @reset="resetSearchParams"
-      @search="getDataByPage"
-      :organazationList="organazationList"
-      :updateSearchParams="updateSearchParams"
-    />
-    <ACard
-      :title="$t('route.administrative_post-manage')"
-      :bordered="false"
-      :body-style="{ flex: 1, overflow: 'hidden' }"
-      class="flex-col-stretch sm:flex-1-hidden card-wrapper"
-    >
-      <template #extra>
-        <TableHeaderOperation
-          v-model:columns="columnChecks"
-          :disabled-delete="checkedRowKeys.length === 0"
-          :loading="loading"
-          @add="handleAdd"
-          @refresh="getData"
-        />
-      </template>
-      <!-- 表格 -->
-      <ATable
-        ref="tableWrapperRef"
-        :columns="columns"
-        :data-source="data"
-        size="small"
-        :scroll="scrollConfig"
-        :loading="loading"
-        row-key="id"
-        :pagination="false"
-        class="h-full"
-      />
-      <!-- 操作抽屉 -->
-      <OperateDrawer
-        v-model:visible="drawerVisible"
-        :operate-type="operateType"
-        :row-data="editingData"
-        @submitted="getDataByPage"
-        :dataSource="data"
+  <PageContainer>
+    <template #header>
+      <!-- 顶部搜索 -->
+      <HeaderSearch
+        v-model:model="searchParams"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
         :organazationList="organazationList"
+        :updateSearchParams="updateSearchParams"
+        :locales="locales"
       />
-    </ACard>
-  </div>
+    </template>
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
+        :loading="loading"
+        @add="handleAdd"
+        @refresh="getData"
+      />
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="false"
+      class="h-full"
+    />
+    <!-- 操作抽屉 -->
+    <OperateDrawer
+      v-model:visible="drawerVisible"
+      :operate-type="operateType"
+      :row-data="editingData"
+      @submitted="getDataByPage"
+      :dataSource="data"
+      :organazationList="organazationList"
+      :locales="locales"
+    />
+  </PageContainer>
 </template>
 
 <script setup lang="tsx">
@@ -82,6 +77,10 @@ const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 // 编辑的数据
 const editingData = ref<Api.Administrative.PostManage | null>(null);
 
+// 国际化
+const locales = (field: string) =>
+  $t(`page.administrative.postManage.${field}`);
+
 const {
   columns,
   columnChecks,
@@ -104,7 +103,7 @@ const {
     {
       key: "name",
       dataIndex: "name",
-      title: $t("page.administrative.postManage.name"),
+      title: locales("name"),
       customRender: ({ text }) => (
         <Tag bordered={false}>
           <Space>
@@ -117,7 +116,7 @@ const {
     {
       key: "orgId",
       dataIndex: "orgId",
-      title: $t("page.administrative.postManage.orgId"),
+      title: locales("orgId"),
       align: "center",
       customRender: ({ record }) => {
         const { organization } = record;
@@ -137,7 +136,7 @@ const {
     {
       key: "description",
       dataIndex: "description",
-      title: $t("page.administrative.postManage.description"),
+      title: locales("description"),
       align: "center",
       ellipsis: true,
       customRender: ({ text }) =>

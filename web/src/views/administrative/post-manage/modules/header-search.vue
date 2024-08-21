@@ -18,6 +18,7 @@ type Props = {
   updateSearchParams: (
     value: Api.Administrative.PostManageSearchParams,
   ) => void;
+  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -64,10 +65,7 @@ async function search() {
     >
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.administrative.postManage.orgId')"
-            name="orgId"
-          >
+          <AFormItem :label="locales('orgId')" name="orgId">
             <ATreeSelect
               v-model:value="model.orgId"
               show-search
@@ -94,17 +92,11 @@ async function search() {
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem
-            :label="$t('page.administrative.postManage.name')"
-            name="name"
-            class="m-0"
-          >
+          <AFormItem :label="locales('name')" name="name" class="m-0">
             <AInput
               v-model:value="model.name"
               allowClear
-              :placeholder="
-                $t('form.enter') + $t('page.administrative.postManage.name')
-              "
+              :placeholder="$t('form.enter') + locales('name')"
             />
           </AFormItem>
         </ACol>
@@ -135,5 +127,3 @@ async function search() {
     </AForm>
   </ACard>
 </template>
-
-<style scoped></style>
