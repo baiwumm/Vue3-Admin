@@ -195,9 +195,7 @@ async function handleSubmit() {
     await (isAdd ? createUser : updateUser)(params)
       .then(({ error }) => {
         if (!error) {
-          window.$message?.success(
-            $t(`common.${isAdd ? "add" : "update"}Success`),
-          );
+          window.$message?.success($t(`common.${props.operateType}Success`));
           closeModal();
           emit("submitted");
         }

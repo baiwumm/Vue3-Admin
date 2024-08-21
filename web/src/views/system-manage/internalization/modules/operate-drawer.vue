@@ -92,9 +92,7 @@ async function handleSubmit() {
     await (isAdd ? createInternalization : updateInternalization)(params)
       .then(({ error }) => {
         if (!error) {
-          window.$message?.success(
-            $t(isAdd ? "common.addSuccess" : "common.updateSuccess"),
-          );
+          window.$message?.success($t(`common.${props.operateType}Success`));
           closeDrawer();
           emit("submitted");
         }
