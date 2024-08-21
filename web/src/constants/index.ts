@@ -1,5 +1,6 @@
 import { SEX, STATUS, METHOD, MENU_TYPE } from '@/enum';
-import { LabeledValue } from 'ant-design-vue/es/select';
+import type { LabeledValue } from 'ant-design-vue/es/select';
+import type { RadioGroupProps } from 'ant-design-vue/es/radio'
 import { $t } from "@/locales";
 import { startsWith, keys } from 'lodash-es'
 
@@ -35,6 +36,14 @@ export const MenuTypeOptions: LabeledValue[] = [
   { label: $t("page.systemManage.menuManage.typeMap.directory"), value: MENU_TYPE.DIRECTORY },
   { label: $t("page.systemManage.menuManage.typeMap.menu"), value: MENU_TYPE.MENU },
   { label: $t("page.systemManage.menuManage.typeMap.button"), value: MENU_TYPE.BUTTON },
+]
+
+/**
+ * @description: 是否
+ */
+export const YesOrNoOptions: RadioGroupProps['options'] = [
+  { label: $t("common.yesOrNo.yes"), value: true },
+  { label: $t("common.yesOrNo.no"), value: false },
 ]
 
 /**
