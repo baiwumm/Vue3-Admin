@@ -2,12 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:16:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-30 10:36:08
+ * @LastEditTime: 2024-08-22 15:21:27
  * @Description: 响应体
  */
 
 import { ApiProperty } from '@nestjs/swagger';
-
+import type { User } from '@prisma/client';
 import { ResponseDto } from '@/dto/response.dto';
 
 /**
@@ -45,7 +45,7 @@ export class ResponseUserDto extends ResponseDto {
       ],
     },
   })
-  data: Api.SystemManage.User[];
+  data: User[];
 }
 
 /**
@@ -79,5 +79,5 @@ export class ResponseSaveUserDto extends ResponseDto {
       updatedAt: '2024-07-30T02:35:25.835Z',
     },
   })
-  data: Api.SystemManage.User;
+  data: User;
 }

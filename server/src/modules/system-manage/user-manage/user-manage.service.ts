@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-13 13:58:51
+ * @LastEditTime: 2024-08-22 15:21:07
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
+import type { User } from '@prisma/client';
 
 import { RESPONSE_MSG } from '@/enums';
 import { AuthService } from '@/modules/auth/auth.service';
@@ -108,7 +109,7 @@ export class UserManageService {
           password: hashedPassword,
         } as any,
       });
-      return responseMessage<Api.SystemManage.User>(result);
+      return responseMessage<User>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -123,12 +124,11 @@ export class UserManageService {
    */
   async update(id: string, body: SaveUserDto) {
     try {
-      // 这里不知道为什么 prisma 客户端会报类型错误
       const result = await this.prisma.user.update({
         where: { id },
-        data: body as any,
+        data: body,
       });
-      return responseMessage<Api.SystemManage.User>(result);
+      return responseMessage<User>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -146,7 +146,7 @@ export class UserManageService {
       const result = await this.prisma.user.delete({
         where: { id },
       });
-      return responseMessage<Api.SystemManage.User>(result);
+      return responseMessage<User>(result);
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
     }

@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-20 17:15:59
+ * @LastEditTime: 2024-08-22 15:19:53
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { MenuType } from '@prisma/client';
+import { MenuType, type User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { lastValueFrom, map } from 'rxjs';
 
@@ -72,7 +72,7 @@ export class AuthService {
   /**
    * @description: 验证用户登录
    */
-  async validateUser(params: LoginParamsDto): Promise<Api.SystemManage.User | null> {
+  async validateUser(params: LoginParamsDto): Promise<User | null> {
     // 解构参数
     const { userName, password } = params;
 
@@ -90,7 +90,7 @@ export class AuthService {
   /**
    * @description: 生成 token
    */
-  async generateTokens(userInfo: Api.SystemManage.User) {
+  async generateTokens(userInfo: User) {
     const payload: Api.Common.TokenPayload = { userName: userInfo.userName, sub: userInfo.id };
 
     const token = this.jwtService.sign(payload, {

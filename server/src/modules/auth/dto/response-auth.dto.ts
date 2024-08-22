@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-31 15:09:33
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-20 16:21:18
+ * @LastEditTime: 2024-08-22 15:20:39
  * @Description: 响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
+import type { User } from '@prisma/client';
 
 import { ResponseDto } from '@/dto/response.dto';
 
@@ -21,7 +22,7 @@ export class LoginResponseDto extends ResponseDto {
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImxpemhpZW4iLCJzdWIiOiIxNzg1NzM3Yi04ZGFmLTRiYzEtYWU0OS04NzY5YzI1NmMyMDkiLCJpYXQiOjE3MjMxODkyMDEsImV4cCI6MTcyMzQ0ODQwMX0.-J1L-tSrQNO2etsTLg7yLm4s3SYRg0NT7NHqBiqM7m8',
     },
   })
-  data: Pick<Api.SystemManage.User, 'token'>;
+  data: Pick<User, 'token'>;
 }
 
 /**
