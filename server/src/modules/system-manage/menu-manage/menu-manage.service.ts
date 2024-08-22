@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-19 11:19:36
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-20 14:20:48
+ * @LastEditTime: 2024-08-22 15:23:47
  * @Description: MenuManageService
  */
 import { Injectable } from '@nestjs/common';
-import { MenuType } from '@prisma/client';
+import { type Menu, MenuType } from '@prisma/client';
 
 import { RESPONSE_MSG } from '@/enums';
 import { PrismaService } from '@/modules/prisma/prisma.service';
@@ -99,7 +99,7 @@ export class MenuManageService {
       const result = await this.prisma.menu.create({
         data: body,
       });
-      return responseMessage<Api.SystemManage.Menu>(result);
+      return responseMessage<Menu>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -126,7 +126,7 @@ export class MenuManageService {
         where: { id },
         data: body,
       });
-      return responseMessage<Api.SystemManage.Menu>(result);
+      return responseMessage<Menu>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -153,7 +153,7 @@ export class MenuManageService {
         const result = await this.prisma.menu.delete({
           where: { id },
         });
-        return responseMessage<Api.SystemManage.Menu>(result);
+        return responseMessage<Menu>(result);
       }
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);

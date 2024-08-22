@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-19 16:34:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-19 17:06:05
+ * @LastEditTime: 2024-08-22 15:24:14
  * @Description: 响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
+import type { Menu } from '@prisma/client';
 
 import { ResponseDto } from '@/dto/response.dto';
 
@@ -40,7 +41,7 @@ export class ResponseMenuDto extends ResponseDto {
       ],
     },
   })
-  data: Api.SystemManage.Menu[];
+  data: Menu[];
 }
 
 /**
@@ -70,5 +71,5 @@ export class ResponseSaveMenuDto extends ResponseDto {
       updatedAt: '2024-08-19T09:05:42.591Z',
     },
   })
-  data: Api.SystemManage.Menu;
+  data: Menu;
 }

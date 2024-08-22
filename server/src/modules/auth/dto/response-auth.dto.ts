@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-31 15:09:33
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:20:39
+ * @LastEditTime: 2024-08-22 15:23:14
  * @Description: 响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
-import type { User } from '@prisma/client';
+import type { Menu, User } from '@prisma/client';
 
 import { ResponseDto } from '@/dto/response.dto';
 
@@ -381,7 +381,7 @@ export class ConstantRoutesResponseDto extends ResponseDto {
       },
     ],
   })
-  data: Pick<Api.SystemManage.Menu, 'name' | 'path' | 'component' | 'meta'>[];
+  data: Pick<Menu, 'name' | 'path' | 'component' | 'meta'>[];
 }
 
 /**
@@ -573,7 +573,7 @@ export class UserRoutesResponseDto extends ResponseDto {
   })
   data: {
     home: string;
-    routes: Pick<Api.SystemManage.Menu, 'name' | 'path' | 'component' | 'meta'>[];
+    routes: Pick<Menu, 'name' | 'path' | 'component' | 'meta'>[];
   };
 }
 
