@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-14 17:49:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:26:53
+ * @LastEditTime: 2024-08-22 15:42:04
  * @Description: InternalizationService
  */
 import { Injectable } from '@nestjs/common';
@@ -40,7 +40,7 @@ export class InternalizationService {
       where,
       orderBy: [{ createdAt: 'desc' }],
     });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<Internalization>>({
       records: convertFlatDataToTree(result),
     });
   }

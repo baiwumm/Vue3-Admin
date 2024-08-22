@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-22 10:16:18
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:05:37
+ * @LastEditTime: 2024-08-22 15:40:17
  * @Description: RoleManageService
  */
 import { Injectable } from '@nestjs/common';
@@ -62,7 +62,7 @@ export class RoleManageService {
     });
     // 总条数
     const total = await this.prisma.role.count({ where });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<Role>>({
       records,
       total,
       current: Number(current),

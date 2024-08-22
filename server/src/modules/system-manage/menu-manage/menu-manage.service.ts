@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-19 11:19:36
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:23:47
+ * @LastEditTime: 2024-08-22 15:41:29
  * @Description: MenuManageService
  */
 import { Injectable } from '@nestjs/common';
@@ -47,7 +47,7 @@ export class MenuManageService {
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<Menu>>({
       records: convertFlatDataToTree(result),
     });
   }
@@ -55,7 +55,7 @@ export class MenuManageService {
   /**
    * @description: 保存菜单时的验证
    */
-  async validateSaveMenu(body: SaveMenuDto): Promise<Api.Common.Response | null> {
+  async validateSaveMenu(body: SaveMenuDto): Promise<CommonType.Response | null> {
     // 先验证是否有父级
     if (body.parentId) {
       const menu = await this.prisma.menu.findUnique({

@@ -28,7 +28,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(req: Request, payload: Api.Common.TokenPayload) {
+  async validate(req: Request, payload: CommonType.TokenPayload) {
     // 获取当前 token
     const token = ExtractJwt.fromAuthHeaderAsBearerToken()(req);
     // 缺少令牌

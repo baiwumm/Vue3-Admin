@@ -36,7 +36,7 @@ export class FileUploadController {
     description: '单个文件上传',
     type: FileUploadDto,
   })
-  uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req: Request): Api.Common.Response<Express.Multer.File> {
+  uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req: Request): CommonType.Response<Express.Multer.File> {
     // 获取客户端域名端口
     const hostname = req.headers['x-forwarded-host'] || req.hostname;
     const port = req.headers['x-forwarded-port'] || req.socket.localPort;

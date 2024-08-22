@@ -71,7 +71,7 @@ export class SaveMenuDto {
     },
     required: false,
   })
-  meta?: Api.Common.RouteMeta;
+  meta?: CommonType.RouteMeta;
 
   @ApiProperty({
     type: Number,

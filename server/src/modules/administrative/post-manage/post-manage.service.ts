@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-16 15:40:07
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:17:06
+ * @LastEditTime: 2024-08-22 15:42:55
  * @Description: PostManageService - 岗位管理
  */
 
@@ -51,7 +51,7 @@ export class PostManageService {
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<Post>>({
       records: convertFlatDataToTree(result),
     });
   }
@@ -65,7 +65,7 @@ export class PostManageService {
         id,
       },
     });
-    return responseMessage(result);
+    return responseMessage<Post>(result);
   }
 
   /**

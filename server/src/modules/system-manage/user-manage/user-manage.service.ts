@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:21:07
+ * @LastEditTime: 2024-08-22 15:40:52
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -75,7 +75,7 @@ export class UserManageService {
     });
     // 总条数
     const total = await this.prisma.user.count({ where });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<User>>({
       records,
       total,
       current: Number(current),
@@ -92,7 +92,7 @@ export class UserManageService {
         id,
       },
     });
-    return responseMessage(result);
+    return responseMessage<User>(result);
   }
 
   /**

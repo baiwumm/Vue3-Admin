@@ -11,7 +11,7 @@ export const responseMessage = <T = any>(
   data,
   msg: string = RESPONSE_MSG.SUCCESS,
   code: number = RESPONSE_CODE.SUCCESS,
-): Api.Common.Response<T> => ({ data, msg, code, timestamp: dayjs().valueOf() });
+): CommonType.Response<T> => ({ data, msg, code, timestamp: dayjs().valueOf() });
 
 /**
  * @description: 将扁平数据转换为树形结构
@@ -92,8 +92,8 @@ export const omit = <T, TKeys extends keyof T>(obj: T, keys: TKeys[]): Omit<T, T
 /**
  * @description: 将树形树形转成层级对象
  */
-export const convertToLocalization = (data: Internalization[]): Api.Common.LanguageResult => {
-  const result: Api.Common.LanguageResult = {
+export const convertToLocalization = (data: Internalization[]): CommonType.LanguageResult => {
+  const result: CommonType.LanguageResult = {
     'zh-CN': {},
     'en-US': {},
     'ja-JP': {},

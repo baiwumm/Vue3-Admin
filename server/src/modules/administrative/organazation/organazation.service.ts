@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:14:15
+ * @LastEditTime: 2024-08-22 15:42:28
  * @Description: OrganazationService - 组织管理
  */
 import { Injectable } from '@nestjs/common';
@@ -43,7 +43,7 @@ export class OrganazationService {
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<Organization>>({
       records: convertFlatDataToTree(result),
     });
   }
@@ -57,7 +57,7 @@ export class OrganazationService {
         id,
       },
     });
-    return responseMessage(result);
+    return responseMessage<Organization>(result);
   }
 
   /**

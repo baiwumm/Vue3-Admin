@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-06 11:06:21
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:28:00
+ * @LastEditTime: 2024-08-22 15:36:54
  * @Description: OperationLogService - 操作日志
  */
 import { Inject, Injectable, Scope } from '@nestjs/common';
@@ -21,7 +21,7 @@ import { LogParamsDto } from './dto/params-log.dto';
 export class OperationLogService {
   constructor(
     @Inject(REQUEST)
-    private readonly request: Request & { session: Api.Common.SessionInfo },
+    private readonly request: Request & { session: CommonType.SessionInfo },
     private prisma: PrismaService,
   ) { }
 
@@ -95,7 +95,7 @@ export class OperationLogService {
     });
     // 总条数
     const total = await this.prisma.log.count({ where });
-    return responseMessage({
+    return responseMessage<CommonType.PageResponse<Log>>({
       records,
       total,
       current: Number(current),

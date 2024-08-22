@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:19:53
+ * @LastEditTime: 2024-08-22 15:55:30
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { MenuType, type User } from '@prisma/client';
+import { type Menu, MenuType, type User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { lastValueFrom, map } from 'rxjs';
 
@@ -27,7 +27,7 @@ export class AuthService {
   /**
    * @description: 用户登录
    */
-  async login(params: LoginParamsDto, session: Api.Common.SessionInfo, ip: string) {
+  async login(params: LoginParamsDto, session: CommonType.SessionInfo, ip: string) {
     // 获取验证码
     const { captchaCode } = params;
     // 判断验证码
@@ -59,14 +59,14 @@ export class AuthService {
     session.userInfo = userInfo;
 
     // 验证成功，返回 token
-    return responseMessage(tokens);
+    return responseMessage<Pick<User, 'token'>>(tokens);
   }
 
   /**
    * @description: 获取用户信息
    */
-  getUserInfo(session: Api.Common.SessionInfo) {
-    return responseMessage(omit(session.userInfo, ['password', 'token']));
+  getUserInfo(session: CommonType.SessionInfo) {
+    return responseMessage<User>(omit(session.userInfo, ['password', 'token']));
   }
 
   /**
@@ -90,8 +90,8 @@ export class AuthService {
   /**
    * @description: 生成 token
    */
-  async generateTokens(userInfo: User) {
-    const payload: Api.Common.TokenPayload = { userName: userInfo.userName, sub: userInfo.id };
+  async generateTokens(userInfo: User): Promise<Pick<User, 'token'>> {
+    const payload: CommonType.TokenPayload = { userName: userInfo.userName, sub: userInfo.id };
 
     const token = this.jwtService.sign(payload, {
       expiresIn: '3d', // 设置访问 token 的过期时间为 3 天
@@ -144,7 +144,7 @@ export class AuthService {
     const localesTree = convertFlatDataToTree(sqlData);
     // 转成层级对象
     const result = convertToLocalization(localesTree);
-    return responseMessage(result);
+    return responseMessage<CommonType.LanguageResult>(result);
   }
 
   /**
@@ -183,7 +183,7 @@ export class AuthService {
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
-    return responseMessage(result);
+    return responseMessage<Menu[]>(result);
   }
 
   /**
@@ -232,6 +232,6 @@ export class AuthService {
         name,
       },
     });
-    return responseMessage(result ? true : false);
+    return responseMessage<boolean>(result ? true : false);
   }
 }

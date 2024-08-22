@@ -39,7 +39,7 @@ export class AuthController {
   @Post('/login')
   @ApiOkResponse({ type: LoginResponseDto })
   @ApiOperation({ summary: '用户登录' })
-  login(@Body() body: LoginParamsDto, @Session() session: Api.Common.SessionInfo, @Ip() ip: string) {
+  login(@Body() body: LoginParamsDto, @Session() session: CommonType.SessionInfo, @Ip() ip: string) {
     return this.authService.login(body, session, ip);
   }
 
@@ -56,7 +56,7 @@ export class AuthController {
   @Get('/getUserInfo')
   @ApiOkResponse({ type: UserInfoResponseDto })
   @ApiOperation({ summary: '获取用户信息' })
-  getUserInfo(@Session() session: Api.Common.SessionInfo) {
+  getUserInfo(@Session() session: CommonType.SessionInfo) {
     return this.authService.getUserInfo(session);
   }
 
@@ -73,7 +73,7 @@ export class AuthController {
   @Post('/logout')
   @ApiOkResponse({ type: ResponseDto })
   @ApiOperation({ summary: '注销登录' })
-  async logout(@Session() session: Api.Common.SessionInfo) {
+  async logout(@Session() session: CommonType.SessionInfo) {
     const response = await this.authService.logout(session);
     return response;
   }
@@ -84,7 +84,7 @@ export class AuthController {
   @Get('captcha') //当请求该接口时，返回一张随机图片验证码
   @ApiOkResponse({ type: VerifyCodeResponseDto })
   @ApiOperation({ summary: '获取图形验证码' })
-  async getCaptcha(@Session() session: Api.Common.SessionInfo, @Res() res: Response) {
+  async getCaptcha(@Session() session: CommonType.SessionInfo, @Res() res: Response) {
     const captcha = svgCaptcha.createMathExpr({
       //可配置返回的图片信息
       size: 4, // 验证码长度
