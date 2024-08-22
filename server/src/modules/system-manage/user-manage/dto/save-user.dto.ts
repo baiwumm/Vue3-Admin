@@ -2,16 +2,18 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:57:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-30 11:28:40
+ * @LastEditTime: 2024-08-22 17:18:54
  * @Description: 保存用户数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
 import { Sex, Status } from '@prisma/client';
 import {
+  IsArray,
   IsEmail,
   IsMobilePhone,
   IsNotEmpty,
   IsNumber,
+  IsString,
   IsUUID,
   Length,
   registerDecorator,
@@ -123,6 +125,10 @@ export class SaveUserDto {
     default: ['暴发户', '帅气男孩'],
     isArray: true,
   })
+  @IsString({ each: true, message: '标签是字符串数组' })
+  @IsArray({
+    message: '标签是数组类型',
+  })
   tags: string[];
 
   @ApiProperty({
@@ -130,6 +136,10 @@ export class SaveUserDto {
     description: '城市',
     default: ['44', '4403', '440304'],
     isArray: true,
+  })
+  @IsString({ each: true, message: '城市是字符串数组' })
+  @IsArray({
+    message: '城市是数组类型',
   })
   city: string[];
 
