@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 16:00:29
+ * @LastEditTime: 2024-08-22 17:57:38
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
@@ -242,11 +242,31 @@ export class AuthService {
     // 获取菜单列表
     const result = await this.prisma.menu.findMany({
       where: {
-        // 过滤出 json 对象不是常量的菜单
-        meta: {
-          path: ['constant'],
-          not: true,
-        },
+        OR: [
+          {
+            type: {
+              equals: MenuType.BUTTON,
+            },
+          },
+          {
+            AND: [
+              {
+                // 过滤出 json 对象不是常量的菜单
+                meta: {
+                  path: ['constant'],
+                  not: true,
+                },
+              },
+              {
+                // 过滤出 json 对象隐藏的菜单
+                meta: {
+                  path: ['hideInMenu'],
+                  not: true,
+                },
+              },
+            ],
+          },
+        ],
       },
       orderBy: [
         { sort: 'asc' }, // 按照sort字段升序
