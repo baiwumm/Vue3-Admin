@@ -105,7 +105,7 @@ model User {
 // 系统管理 - 菜单管理
 model Menu {
   id            String          @id @default(uuid()) // 主键
-  title         String          @unique // 菜单名称
+  title         String          // 菜单名称
   type          MenuType        @default(MENU) // 菜单类型
   parentId      String?  
   parent        Menu?           @relation(name: "MenuHierarchy", fields: [parentId], references: [id])
