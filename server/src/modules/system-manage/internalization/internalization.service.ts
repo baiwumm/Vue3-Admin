@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-14 17:49:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 17:10:19
+ * @LastEditTime: 2024-08-22 15:26:53
  * @Description: InternalizationService
  */
 import { Injectable } from '@nestjs/common';
+import type { Internalization } from '@prisma/client';
 
 import { RESPONSE_MSG } from '@/enums';
 import { PrismaService } from '@/modules/prisma/prisma.service';
@@ -64,7 +65,7 @@ export class InternalizationService {
       const result = await this.prisma.internalization.create({
         data: body,
       });
-      return responseMessage<Api.SystemManage.Internalization>(result);
+      return responseMessage<Internalization>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -102,7 +103,7 @@ export class InternalizationService {
         where: { id },
         data: body,
       });
-      return responseMessage<Api.SystemManage.Internalization>(result);
+      return responseMessage<Internalization>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -129,7 +130,7 @@ export class InternalizationService {
         const result = await this.prisma.internalization.delete({
           where: { id },
         });
-        return responseMessage<Api.SystemManage.Internalization>(result);
+        return responseMessage<Internalization>(result);
       }
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);

@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-15 10:02:55
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 10:59:56
+ * @LastEditTime: 2024-08-22 15:26:31
  * @Description: 响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
+import type { Internalization } from '@prisma/client';
 
 import { ResponseDto } from '@/dto/response.dto';
 
@@ -32,7 +33,7 @@ export class ResponseInternalizationDto extends ResponseDto {
       ],
     },
   })
-  data: Api.SystemManage.Internalization[];
+  data: Internalization[];
 }
 
 /**
@@ -54,5 +55,5 @@ export class ResponseSaveInternalizationDto extends ResponseDto {
       updatedAt: '2024-08-15T02:59:31.025Z',
     },
   })
-  data: Api.SystemManage.Internalization;
+  data: Internalization;
 }

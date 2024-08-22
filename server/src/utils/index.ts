@@ -1,3 +1,4 @@
+import type { Internalization } from '@prisma/client';
 import dayjs from 'dayjs';
 import * as fs from 'fs';
 
@@ -91,7 +92,7 @@ export const omit = <T, TKeys extends keyof T>(obj: T, keys: TKeys[]): Omit<T, T
 /**
  * @description: 将树形树形转成层级对象
  */
-export const convertToLocalization = (data: Api.SystemManage.Internalization[]): Api.Common.LanguageResult => {
+export const convertToLocalization = (data: Internalization[]): Api.Common.LanguageResult => {
   const result: Api.Common.LanguageResult = {
     'zh-CN': {},
     'en-US': {},
@@ -99,7 +100,13 @@ export const convertToLocalization = (data: Api.SystemManage.Internalization[]):
     'zh-TW': {},
   };
 
-  function buildNestedObject(item: Api.SystemManage.Internalization, obj: Record<string, any>, lang: string) {
+  function buildNestedObject(
+    item: Internalization & {
+      children?: Internalization[];
+    },
+    obj: Record<string, any>,
+    lang: string,
+  ) {
     if (item.children) {
       obj[item.name] = {};
       for (const child of item.children) {
