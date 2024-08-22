@@ -115,9 +115,32 @@ model Menu {
   meta          Json?            // 路由元信息（JSON 对象）
   sort          Int             // 排序
   permission    String?         @unique // 权限标识
+  permissions   Permission[]    // 与Permission的一对多关系
   createdAt     DateTime        @default(now()) // 创建时间
   updatedAt     DateTime        @updatedAt // 更新时间
   children      Menu[]          @relation(name: "MenuHierarchy")
+}
+
+// 系统管理 - 角色管理
+model Role {
+  id            String          @id @default(uuid()) // 主键
+  name          String          @unique // 角色名称
+  code          String          @unique // 角色编码
+  description   String?         // 角色描述
+  sort          Int             // 排序
+  permissions   Permission[]    // 与Permission的一对多关系
+  createdAt     DateTime        @default(now()) // 创建时间
+  updatedAt     DateTime        @updatedAt // 更新时间
+}
+
+// 系统管理 - 权限管理
+model Permission {
+  id            String          @id @default(uuid()) // 主键
+  roleId        String          // 角色ID
+  menuId        String          // 菜单ID
+  createdAt     DateTime        @default(now()) // 创建时间
+  role          Role            @relation(fields: [roleId], references: [id]) // 与Role的关联
+  menu          Menu            @relation(fields: [menuId], references: [id]) // 与Menu的关联
 }
 
 // 系统管理 - 国际化
