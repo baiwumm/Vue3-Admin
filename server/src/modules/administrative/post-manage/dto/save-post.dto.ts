@@ -55,5 +55,5 @@ export class SavePostDto {
       '前端工程师是互联网时代软件产品研发中不可缺少的一种专业研发角色。从狭义上讲，前端工程师使用 HTML、CSS、JavaScript 等专业技能和工具将产品UI设计稿实现成网站产品，涵盖用户PC端、移动端网页，处理视觉和交互问题。',
     required: false,
   })
-  describe?: string;
+  description?: string;
 }

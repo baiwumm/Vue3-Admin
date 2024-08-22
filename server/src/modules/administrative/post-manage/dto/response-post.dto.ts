@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 16:19:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-17 15:36:35
+ * @LastEditTime: 2024-08-22 15:17:28
  * @Description: 响应体
  */
 import { ApiProperty } from '@nestjs/swagger';
+import type { Post } from '@prisma/client';
 
 import { ResponseDto } from '@/dto/response.dto';
 
@@ -69,7 +70,7 @@ export class ResponsePostDto extends ResponseDto {
       ],
     },
   })
-  data: Api.Administrative.Post[];
+  data: Post[];
 }
 
 /**
@@ -91,5 +92,5 @@ export class ResponseSavePostDto extends ResponseDto {
       updatedAt: '2024-07-17T01:02:27.831Z',
     },
   })
-  data: Api.Administrative.Post;
+  data: Post;
 }

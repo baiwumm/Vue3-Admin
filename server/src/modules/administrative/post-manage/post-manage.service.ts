@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-16 15:40:07
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-17 15:29:38
+ * @LastEditTime: 2024-08-22 15:17:06
  * @Description: PostManageService - 岗位管理
  */
 
 import { Injectable } from '@nestjs/common';
+import type { Post } from '@prisma/client';
 
 import { RESPONSE_MSG } from '@/enums';
 import { PrismaService } from '@/modules/prisma/prisma.service';
@@ -75,7 +76,7 @@ export class PostManageService {
       const result = await this.prisma.post.create({
         data: body,
       });
-      return responseMessage<Api.Administrative.Post>(result);
+      return responseMessage<Post>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -98,7 +99,7 @@ export class PostManageService {
         where: { id },
         data: body,
       });
-      return responseMessage<Api.Administrative.Post>(result);
+      return responseMessage<Post>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
       if (error.code === 'P2002') {
@@ -125,7 +126,7 @@ export class PostManageService {
         const result = await this.prisma.post.delete({
           where: { id },
         });
-        return responseMessage<Api.Administrative.Post>(result);
+        return responseMessage<Post>(result);
       }
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
