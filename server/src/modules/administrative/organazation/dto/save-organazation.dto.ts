@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-07-17 15:21:13
+ * @LastEditTime: 2024-08-22 11:40:09
  * @Description: 保存组织数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -54,5 +54,5 @@ export class SaveOrganazationDto {
     required: false,
     default: '阿里巴巴集团控股有限公司（简称：阿里巴巴集团）是马云带领下的18位创始人于1999年在浙江省杭州市创立的公司。',
   })
-  describe?: string;
+  description?: string;
 }
