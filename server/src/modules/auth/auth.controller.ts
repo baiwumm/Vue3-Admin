@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-20 16:59:38
+ * @LastEditTime: 2024-08-22 16:01:05
  * @Description: AuthController
  */
 import { Body, Controller, Get, Ip, Post, Query, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
@@ -144,7 +144,7 @@ export class AuthController {
   /**
    * @description: 获取用户路由
    */
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   @ApiHeader({
     name: 'Authorization',
     required: true,
@@ -174,6 +174,24 @@ export class AuthController {
   @ApiOperation({ summary: '判断路由名称是否存在' })
   isRouteExist(@Query() params: RouteExistParamsDto) {
     const response = this.authService.isRouteExist(params.name);
+    return response;
+  }
+
+  /**
+   * @description: 获取角色权限路由
+   */
+  @UseGuards(AuthGuard('jwt'))
+  @ApiHeader({
+    name: 'Authorization',
+    required: true,
+    description: 'token令牌',
+  })
+  @ApiBearerAuth()
+  @Get('/getRoleRoutes')
+  @ApiOkResponse({ type: UserRoutesResponseDto })
+  @ApiOperation({ summary: '获取角色权限路由' })
+  getRoleRoutes() {
+    const response = this.authService.getRoleRoutes();
     return response;
   }
 }

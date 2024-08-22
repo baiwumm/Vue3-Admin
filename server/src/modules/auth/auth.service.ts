@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:55:30
+ * @LastEditTime: 2024-08-22 16:00:29
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
@@ -233,5 +233,28 @@ export class AuthService {
       },
     });
     return responseMessage<boolean>(result ? true : false);
+  }
+
+  /**
+   * @description: 获取角色权限路由
+   */
+  async getRoleRoutes() {
+    // 获取菜单列表
+    const result = await this.prisma.menu.findMany({
+      where: {
+        // 过滤出 json 对象不是常量的菜单
+        meta: {
+          path: ['constant'],
+          not: true,
+        },
+      },
+      orderBy: [
+        { sort: 'asc' }, // 按照sort字段升序
+        { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
+      ],
+    });
+    // 转成树形结构
+    const routes = convertFlatDataToTree(result);
+    return responseMessage(routes);
   }
 }
