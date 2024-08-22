@@ -1,4 +1,12 @@
+/*
+ * @Author: 白雾茫茫丶<baiwumm.com>
+ * @Date: 2024-08-07 17:52:40
+ * @LastEditors: 白雾茫茫丶<baiwumm.com>
+ * @LastEditTime: 2024-08-22 15:28:20
+ * @Description: 响应体
+ */
 import { ApiProperty } from '@nestjs/swagger';
+import type { Log } from '@prisma/client';
 
 import { ResponseDto } from '@/dto/response.dto';
 
@@ -52,7 +60,7 @@ export class ResponseLogDto extends ResponseDto {
       ],
     },
   })
-  data: Api.SystemManage.Log[];
+  data: Log[];
 }
 
 /**
@@ -79,5 +87,5 @@ export class ResponseDelLogDto extends ResponseDto {
       },
     ],
   })
-  data: Api.SystemManage.Log[];
+  data: Log[];
 }

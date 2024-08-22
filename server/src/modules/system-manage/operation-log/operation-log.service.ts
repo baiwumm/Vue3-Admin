@@ -2,11 +2,12 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-06 11:06:21
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-13 13:56:10
+ * @LastEditTime: 2024-08-22 15:28:00
  * @Description: OperationLogService - 操作日志
  */
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
+import type { Log } from '@prisma/client';
 import { Request } from 'express';
 import UAParser from 'ua-parser-js';
 
@@ -114,7 +115,7 @@ export class OperationLogService {
           },
         },
       });
-      return responseMessage<Api.SystemManage.Log>(result);
+      return responseMessage<Log>(result);
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
     }
