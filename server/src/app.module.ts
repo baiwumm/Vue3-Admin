@@ -7,6 +7,7 @@ import { FileUploadModule } from '@/modules/file-upload/file-upload.module'; // 
 import { InternalizationModule } from '@/modules/system-manage/internalization/internalization.module'; // 系统管理 - 国际化
 import { MenuManageModule } from '@/modules/system-manage/menu-manage/menu-manage.module'; // 系统管理 - 菜单管理
 import { OperationLogModule } from '@/modules/system-manage/operation-log/operation-log.module'; // 系统管理 - 操作日志
+import { RoleManageModule } from '@/modules/system-manage/role-manage/role-manage.module'; // 系统管理 - 角色管理
 import { UserManageModule } from '@/modules/system-manage/user-manage/user-manage.module'; // 系统管理 - 用户管理
 
 @Module({
@@ -19,6 +20,7 @@ import { UserManageModule } from '@/modules/system-manage/user-manage/user-manag
     OperationLogModule,
     InternalizationModule,
     MenuManageModule,
+    RoleManageModule,
   ],
 })
 export class AppModule { }
