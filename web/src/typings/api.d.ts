@@ -57,7 +57,10 @@ declare namespace Api {
     /**
      * @description: 登录用户信息
      */
-    type UserInfo = Omit<SystemManage.UserManage, 'password' | 'token'>
+    type UserInfo = Omit<SystemManage.UserManage, 'password' | 'token'> & {
+      buttons: string[]; // 按钮权限
+      roles: string[]; // 角色编码
+    }
     /**
      * @description: 登录参数
      */
@@ -115,9 +118,11 @@ declare namespace Api {
       tags: string[]; // 标签
       city: string[]; // 城市
       address?: string; // 详细地址
-      orgId?: string; // 所属组织 id
+      roleId: string; // 所属角色 id
+      role: RoleManage; // 所属角色
+      orgId: string; // 所属组织 id
       organization: Api.Administrative.Organization; // 所属组织
-      postId?: string; // 所属岗位 id
+      postId: string; // 所属岗位 id
       post: Api.Administrative.PostManage; // 所属岗位
       sort: number; // 排序
       loginCount: number; // 登录次数
@@ -131,7 +136,7 @@ declare namespace Api {
     /**
      * @description: 创建/更新用户
      */
-    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields | 'organization' | 'post' | 'loginCount' | 'lastIp' | 'lastLoginAt'>
+    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields | 'organization' | 'post' | 'role' | 'loginCount' | 'lastIp' | 'lastLoginAt'>
       & Partial<Api.Common.ColumnId> & {
         confirmPassword?: string;
       };
@@ -159,6 +164,27 @@ declare namespace Api {
      * @description: 创建/更新用户
      */
     type SaveMenuManage = Omit<MenuManage, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
+
+    /**
+     * @description: 角色管理
+     */
+    type RoleManage = Common.CommonRecord<{
+      name: string; // 角色名称
+      code: string; // 角色编码
+      description?: string; // 角色描述
+      sort: number; // 排序
+      permissions: string[]; // 权限
+    }>
+    /**
+     * @description: 查询参数
+     */
+    type RoleManageSearchParams = Partial<Pick<RoleManage, 'name' | 'code'>> & Api.Common.SearchTime & Api.Common.PaginatingParams;
+    /**
+     * @description: 创建/更新角色
+     */
+    type SaveRoleManage = Omit<RoleManage, keyof Api.Common.ColumnFields | 'permissions'> & Partial<Api.Common.ColumnId> & {
+      menus: string[];
+    };
 
     /**
      * @description: 国际化
