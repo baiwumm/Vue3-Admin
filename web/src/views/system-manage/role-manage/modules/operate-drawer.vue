@@ -1,0 +1,194 @@
+<script setup lang="ts">
+import { computed, nextTick, reactive, watch, ref } from "vue";
+import { useAntdForm, useFormRules } from "@/hooks/common/form";
+import { $t } from "@/locales";
+import { createRole, updateRole } from "@/service/api";
+import { pick } from "lodash-es";
+import { OPERATION_TYPE } from "@/enum";
+import { map, filter, includes } from "lodash-es";
+
+defineOptions({
+  name: "OperateDrawer",
+});
+
+// 是否请求中
+const loading = ref(false);
+// 半勾选节点
+const halfCheckedKeys = ref<string[]>([]);
+
+// 父组件传递的值
+type Props = {
+  operateType: AntDesign.TableOperateType; // 操作类型
+  rowData?: Api.SystemManage.RoleManage | null; // 编辑数据
+  dataSource: Api.SystemManage.RoleManage[]; // 父级
+  locales: (field: string) => string;
+  roleRouteList: Api.SystemManage.MenuManage[];
+};
+const props = defineProps<Props>();
+
+// 父组件自定义事件
+interface Emits {
+  (e: "submitted"): void;
+}
+const emit = defineEmits<Emits>();
+
+// 抽屉显示状态
+const visible = defineModel<boolean>("visible", {
+  default: false,
+});
+
+const { formRef, validate, resetFields } = useAntdForm();
+const { defaultRequiredRule } = useFormRules();
+
+// 抽屉标题
+const title = computed(() => props.locales(`${props.operateType}Role`));
+
+const model: Api.SystemManage.SaveRoleManage = reactive(createDefaultModel());
+
+function createDefaultModel(): Api.SystemManage.SaveRoleManage {
+  return {
+    name: "",
+    code: "",
+    sort: 1,
+    description: "",
+    menus: [],
+  };
+}
+
+// 表单校验的 key
+type RuleKey = Extract<
+  keyof Api.SystemManage.SaveRoleManage,
+  "name" | "code" | "menus" | "sort"
+>;
+
+const rules: Record<RuleKey, App.Global.FormRule> = {
+  name: defaultRequiredRule,
+  code: defaultRequiredRule,
+  menus: { ...defaultRequiredRule, trigger: "change" },
+  sort: defaultRequiredRule,
+};
+
+// 初始化
+async function handleInitModel() {
+  Object.assign(model, createDefaultModel());
+
+  if (props.operateType === OPERATION_TYPE.EDIT && props.rowData) {
+    await nextTick();
+    // 获取全部勾选的节点
+    const checkedKeys = map(props.rowData.permissions, "menuId");
+    // 获取勾选节点的父节点
+    const parentIds = map(map(props.rowData.permissions, "menu"), "parentId");
+    // 过滤掉半勾选的节点
+    const menus = filter(checkedKeys, (item) => !includes(parentIds, item));
+    Object.assign(model, {
+      ...props.rowData,
+      menus,
+    });
+  }
+}
+
+// 关闭抽屉
+function closeDrawer() {
+  visible.value = false;
+}
+
+// 勾选菜单权限回调
+const handleMenuCheck = (_: string[], e) => {
+  halfCheckedKeys.value = e.halfCheckedKeys;
+};
+
+// 提交数据
+async function handleSubmit() {
+  await validate().then(async () => {
+    loading.value = true;
+    // 判断是否新增
+    const isAdd = props.operateType === OPERATION_TYPE.ADD;
+    // 获取参数
+    const params = {
+      id: isAdd ? undefined : model.id,
+      ...pick(model, ["name", "code", "sort", "description"]),
+      menus: [...model.menus, ...halfCheckedKeys.value],
+    };
+    await (isAdd ? createRole : updateRole)(params)
+      .then(({ error }) => {
+        if (!error) {
+          window.$message?.success($t(`common.${props.operateType}Success`));
+          closeDrawer();
+          emit("submitted");
+        }
+      })
+      .finally(() => {
+        loading.value = false;
+      });
+  });
+}
+
+watch(visible, () => {
+  if (visible.value) {
+    handleInitModel();
+    resetFields();
+  }
+});
+</script>
+
+<template>
+  <ADrawer v-model:open="visible" :title="title" :width="360">
+    <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
+      <AFormItem :label="locales('name')" name="name">
+        <AInput
+          v-model:value="model.name"
+          show-count
+          :maxlength="32"
+          :placeholder="$t('form.enter') + locales('name')"
+        />
+      </AFormItem>
+      <AFormItem :label="locales('code')" name="code">
+        <AInput
+          v-model:value="model.code"
+          show-count
+          :maxlength="32"
+          :placeholder="$t('form.enter') + locales('code')"
+        />
+      </AFormItem>
+      <AFormItem
+        :label="$t('form.sort')"
+        name="sort"
+        :tooltip="$t('form.sortTip')"
+      >
+        <AInputNumber
+          v-model:value="model.sort"
+          :min="1"
+          :max="999"
+          :placeholder="$t('form.enter') + $t('form.sort')"
+          style="width: 100%"
+        />
+      </AFormItem>
+      <AFormItem :label="locales('description')" name="description">
+        <ATextarea
+          v-model:value="model.description"
+          show-count
+          :maxlength="200"
+          :rows="4"
+          :placeholder="$t('form.enter') + locales('description')"
+        />
+      </AFormItem>
+      <AFormItem :label="locales('menus')" name="menus">
+        <ATree
+          v-model:checkedKeys="model.menus"
+          :tree-data="roleRouteList"
+          :field-names="{ key: 'id' }"
+          checkable
+          @check="handleMenuCheck"
+        />
+      </AFormItem>
+    </AForm>
+    <template #footer>
+      <ASpace :size="16">
+        <AButton @click="closeDrawer">{{ $t("common.cancel") }}</AButton>
+        <AButton type="primary" :loading="loading" @click="handleSubmit">{{
+          $t("common.confirm")
+        }}</AButton>
+      </ASpace>
+    </template>
+  </ADrawer>
+</template>

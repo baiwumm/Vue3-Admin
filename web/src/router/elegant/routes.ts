@@ -164,6 +164,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'system-manage_role-manage',
+        path: '/system-manage/role-manage',
+        component: 'view.system-manage_role-manage',
+        meta: {
+          title: 'system-manage_role-manage',
+          i18nKey: 'route.system-manage_role-manage'
+        }
+      },
+      {
         name: 'system-manage_user-manage',
         path: '/system-manage/user-manage',
         component: 'view.system-manage_user-manage',

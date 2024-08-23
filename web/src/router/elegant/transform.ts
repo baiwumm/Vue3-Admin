@@ -175,6 +175,7 @@ const routeMap: RouteMap = {
   "system-manage_internalization": "/system-manage/internalization",
   "system-manage_menu-manage": "/system-manage/menu-manage",
   "system-manage_operation-log": "/system-manage/operation-log",
+  "system-manage_role-manage": "/system-manage/role-manage",
   "system-manage_user-manage": "/system-manage/user-manage",
   "user-center": "/user-center"
 };

@@ -27,6 +27,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   "system-manage_internalization": () => import("@/views/system-manage/internalization/index.vue"),
   "system-manage_menu-manage": () => import("@/views/system-manage/menu-manage/index.vue"),
   "system-manage_operation-log": () => import("@/views/system-manage/operation-log/index.vue"),
+  "system-manage_role-manage": () => import("@/views/system-manage/role-manage/index.vue"),
   "system-manage_user-manage": () => import("@/views/system-manage/user-manage/index.vue"),
   "user-center": () => import("@/views/user-center/index.vue"),
 };
