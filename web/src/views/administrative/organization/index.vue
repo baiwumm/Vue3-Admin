@@ -16,6 +16,7 @@
         :loading="loading"
         @add="handleAdd"
         @refresh="getData"
+        :add-btn="hasAuth('administrative:organization:add')"
       />
     </template>
     <!-- 表格 -->
@@ -58,6 +59,10 @@ import dayjs from "dayjs";
 import SvgIcon from "@/components/custom/svg-icon.vue";
 import { UNIFORM_TEXT } from "@/enum";
 import { map } from "lodash-es";
+import { useAuth } from "@/hooks/business/auth";
+
+// 权限钩子函数
+const { hasAuth } = useAuth();
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
@@ -173,22 +178,26 @@ const {
       fixed: "right",
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          <Button
-            type="primary"
-            ghost
-            size="small"
-            onClick={() => edit(record)}
-          >
-            {$t("common.edit")}
-          </Button>
-          <Popconfirm
-            title={$t("common.confirmDelete")}
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button danger size="small">
-              {$t("common.delete")}
+          {hasAuth("administrative:organization:edit") ? (
+            <Button
+              type="primary"
+              ghost
+              size="small"
+              onClick={() => edit(record)}
+            >
+              {$t("common.edit")}
             </Button>
-          </Popconfirm>
+          ) : null}
+          {hasAuth("administrative:organization:delete") ? (
+            <Popconfirm
+              title={$t("common.confirmDelete")}
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <Button danger size="small">
+                {$t("common.delete")}
+              </Button>
+            </Popconfirm>
+          ) : null}
         </div>
       ),
     },

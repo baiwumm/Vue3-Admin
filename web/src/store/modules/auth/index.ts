@@ -21,27 +21,24 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const token = ref(getToken());
 
-  const userInfo: Api.Auth.UserInfo = reactive({
-    userId: '',
-    userName: '',
-    roles: [],
-    buttons: []
-  });
+  const userInfo: Partial<Api.Auth.UserInfo> = reactive({});
 
   // 多语言数据
   const locales: Partial<Record<App.I18n.LangType, any>> = reactive({})
 
-  /** is super role in static route */
+  // 静态路由模式下是否是超级管理员
   const isStaticSuper = computed(() => {
     const { VITE_AUTH_ROUTE_MODE, VITE_STATIC_SUPER_ROLE } = import.meta.env;
 
-    return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles.includes(VITE_STATIC_SUPER_ROLE);
+    return VITE_AUTH_ROUTE_MODE === 'static' && userInfo.roles?.includes(VITE_STATIC_SUPER_ROLE);
   });
 
   // 判断是否登录
   const isLogin = computed(() => Boolean(token.value));
 
-  /** Reset auth store */
+  /**
+   * @description: 重置 auth 仓库
+   */
   async function resetStore() {
     const authStore = useAuthStore();
 
@@ -92,10 +89,10 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
-    // 1. stored in the localStorage, the later requests need it in headers
+    // 先保存 token 到 localStorage，后续请求需要放在 headers 中
     localStg.set('token', loginToken.token);
 
-    // 2. get user info
+    // 获取用户信息
     const pass = await getUserInfo();
 
     if (pass) {
@@ -107,11 +104,14 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
+  /**
+   * @description: 获取登录用户信息
+   */
   async function getUserInfo() {
     const { data: info, error } = await fetchGetUserInfo();
 
     if (!error) {
-      // update store
+      // 更新仓库用户信息
       Object.assign(userInfo, info);
 
       return true;

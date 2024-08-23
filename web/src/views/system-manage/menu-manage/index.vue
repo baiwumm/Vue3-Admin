@@ -18,6 +18,7 @@
         :loading="loading"
         @add="handleAdd"
         @refresh="getData"
+        :add-btn="hasAuth('system-manage:menu-manage:add')"
       />
     </template>
     <!-- 表格 -->
@@ -61,6 +62,10 @@ import SvgIcon from "@/components/custom/svg-icon.vue";
 import { UNIFORM_TEXT } from "@/enum";
 import { get } from "lodash-es";
 import HeaderSearch from "./modules/header-search.vue";
+import { useAuth } from "@/hooks/business/auth";
+
+// 权限钩子函数
+const { hasAuth } = useAuth();
 
 // 编辑的数据
 const editingData = ref<Api.SystemManage.MenuManage | null>(null);
@@ -194,22 +199,26 @@ const {
       fixed: "right",
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          <Button
-            type="primary"
-            ghost
-            size="small"
-            onClick={() => edit(record)}
-          >
-            {$t("common.edit")}
-          </Button>
-          <Popconfirm
-            title={$t("common.confirmDelete")}
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button danger size="small">
-              {$t("common.delete")}
+          {hasAuth("system-manage:menu-manage:edit") ? (
+            <Button
+              type="primary"
+              ghost
+              size="small"
+              onClick={() => edit(record)}
+            >
+              {$t("common.edit")}
             </Button>
-          </Popconfirm>
+          ) : null}
+          {hasAuth("system-manage:menu-manage:delete") ? (
+            <Popconfirm
+              title={$t("common.confirmDelete")}
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <Button danger size="small">
+                {$t("common.delete")}
+              </Button>
+            </Popconfirm>
+          ) : null}
         </div>
       ),
     },

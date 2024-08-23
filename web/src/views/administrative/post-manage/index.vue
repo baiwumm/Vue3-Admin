@@ -18,6 +18,7 @@
         :loading="loading"
         @add="handleAdd"
         @refresh="getData"
+        :add-btn="hasAuth('administrative:post-manage:add')"
       />
     </template>
     <!-- 表格 -->
@@ -60,6 +61,10 @@ import HeaderSearch from "./modules/header-search.vue";
 import dayjs from "dayjs";
 import SvgIcon from "@/components/custom/svg-icon.vue";
 import { UNIFORM_TEXT } from "@/enum";
+import { useAuth } from "@/hooks/business/auth";
+
+// 权限钩子函数
+const { hasAuth } = useAuth();
 
 /**
  * @description: 获取组织树
@@ -175,22 +180,26 @@ const {
       fixed: "right",
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          <Button
-            type="primary"
-            ghost
-            size="small"
-            onClick={() => edit(record)}
-          >
-            {$t("common.edit")}
-          </Button>
-          <Popconfirm
-            title={$t("common.confirmDelete")}
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button danger size="small">
-              {$t("common.delete")}
+          {hasAuth("administrative:post-manage:edit") ? (
+            <Button
+              type="primary"
+              ghost
+              size="small"
+              onClick={() => edit(record)}
+            >
+              {$t("common.edit")}
             </Button>
-          </Popconfirm>
+          ) : null}
+          {hasAuth("administrative:post-manage:delete") ? (
+            <Popconfirm
+              title={$t("common.confirmDelete")}
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <Button danger size="small">
+                {$t("common.delete")}
+              </Button>
+            </Popconfirm>
+          ) : null}
         </div>
       ),
     },

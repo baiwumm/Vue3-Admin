@@ -20,7 +20,7 @@
         :addBtn="false"
         @refresh="getData"
         @delete="handleBatchDelete"
-        batchDeleteBtn
+        :batchDelete-btn="hasAuth('system-manage:operation-log:batch-delete')"
       />
     </template>
     <!-- 表格 -->
@@ -66,6 +66,10 @@ import { METHOD } from "@/enum";
 import dayjs from "dayjs";
 import { broswerIconMap, osIconMap } from "@/constants";
 import SvgIcon from "@/components/custom/svg-icon.vue";
+import { useAuth } from "@/hooks/business/auth";
+
+// 权限钩子函数
+const { hasAuth } = useAuth();
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
@@ -196,14 +200,16 @@ const {
       fixed: "right",
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          <Popconfirm
-            title={$t("common.confirmDelete")}
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button danger size="small">
-              {$t("common.delete")}
-            </Button>
-          </Popconfirm>
+          {hasAuth("system-manage:operation-log:delete") ? (
+            <Popconfirm
+              title={$t("common.confirmDelete")}
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <Button danger size="small">
+                {$t("common.delete")}
+              </Button>
+            </Popconfirm>
+          ) : null}
         </div>
       ),
     },
