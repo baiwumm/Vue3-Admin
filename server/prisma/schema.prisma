@@ -90,6 +90,8 @@ model User {
   tags          String[]        @default([]) // 标签
   city          String[]        @default([]) // 城市
   address       String?         // 详细地址
+  roleId        String          // 关联的角色 id
+  role          Role            @relation(fields: [roleId], references: [id])
   orgId         String          // 关联的组织 id
   organization  Organization    @relation(fields: [orgId], references: [id])
   postId        String          // 关联的岗位 id
@@ -131,6 +133,7 @@ model Role {
   permissions   Permission[]    // 与Permission的一对多关系
   createdAt     DateTime        @default(now()) // 创建时间
   updatedAt     DateTime        @updatedAt // 更新时间
+  users         User[]          // 关联用户
 }
 
 // 系统管理 - 权限管理
