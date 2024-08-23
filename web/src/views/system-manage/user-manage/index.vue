@@ -17,6 +17,7 @@
         :loading="loading"
         @add="handleAdd"
         @refresh="getData"
+        :add-btn="hasAuth('system-manage:user-manage:add')"
       />
     </template>
     <!-- 表格 -->
@@ -69,6 +70,10 @@ import { eq, find, get } from "lodash-es";
 import dayjs from "dayjs";
 import { StatueOptions } from "@/constants";
 import HeaderSearch from "./modules/header-search.vue";
+import { useAuth } from "@/hooks/business/auth";
+
+// 权限钩子函数
+const { hasAuth } = useAuth();
 
 // 编辑的数据
 const editingData = ref<Api.SystemManage.UserManage | null>(null);
@@ -117,14 +122,31 @@ const {
       key: "cnName",
       dataIndex: "cnName",
       title: locales("cnName"),
+      width: 100,
       align: "center",
     },
     {
       key: "avatar",
       dataIndex: "avatar",
       title: locales("avatar"),
+      width: 60,
       align: "center",
       customRender: ({ text }) => <Avatar src={text} />,
+    },
+    {
+      key: "roleId",
+      dataIndex: "roleId",
+      title: locales("roleId"),
+      width: 120,
+      align: "center",
+      customRender: ({ record }) => (
+        <Tag bordered={false}>
+          <Space>
+            <SvgIcon icon="carbon:user-role" class="text-base" />
+            {record.role.name}
+          </Space>
+        </Tag>
+      ),
     },
     {
       key: "orgId",
@@ -163,6 +185,7 @@ const {
       key: "sex",
       dataIndex: "sex",
       title: locales("sex"),
+      width: 80,
       align: "center",
       customRender: ({ text }) => (
         <Tag
@@ -180,6 +203,7 @@ const {
       key: "status",
       dataIndex: "status",
       title: $t("form.status"),
+      width: 80,
       align: "center",
       customRender: ({ text }) => (
         <Tag
@@ -222,6 +246,7 @@ const {
       dataIndex: "sort",
       title: $t("form.sort"),
       align: "center",
+      width: 60,
       customRender: ({ text }) => (
         <Tag bordered={false} color="success">
           {text}
@@ -244,22 +269,26 @@ const {
       fixed: "right",
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          <Button
-            type="primary"
-            ghost
-            size="small"
-            onClick={() => edit(record)}
-          >
-            {$t("common.edit")}
-          </Button>
-          <Popconfirm
-            title={$t("common.confirmDelete")}
-            onConfirm={() => handleDelete(record.id)}
-          >
-            <Button danger size="small">
-              {$t("common.delete")}
+          {hasAuth("system-manage:user-manage:edit") ? (
+            <Button
+              type="primary"
+              ghost
+              size="small"
+              onClick={() => edit(record)}
+            >
+              {$t("common.edit")}
             </Button>
-          </Popconfirm>
+          ) : null}
+          {hasAuth("system-manage:user-manage:delete") ? (
+            <Popconfirm
+              title={$t("common.confirmDelete")}
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <Button danger size="small">
+                {$t("common.delete")}
+              </Button>
+            </Popconfirm>
+          ) : null}
         </div>
       ),
     },

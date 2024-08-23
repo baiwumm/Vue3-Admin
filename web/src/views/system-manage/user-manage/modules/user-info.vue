@@ -1,5 +1,15 @@
 <template>
   <ACol :span="12">
+    <AFormItem :label="locales('roleId')" name="roleId">
+      <ASelect
+        v-model:value="model.roleId"
+        :options="roleList"
+        :field-names="{ value: 'id', label: 'name' }"
+        :placeholder="$t('form.select')"
+      />
+    </AFormItem>
+  </ACol>
+  <ACol :span="12">
     <AFormItem :label="locales('orgId')" name="orgId">
       <ATreeSelect
         v-model:value="model.orgId"
@@ -87,6 +97,7 @@ import FigureLabels from "@/components/custom/figure-labels.vue";
 // 父组件传递的值
 type Props = {
   model: Api.SystemManage.SaveUserManage;
+  roleList: Api.SystemManage.RoleManage[];
   organazationList: Api.Administrative.Organization[];
   postList: Api.Administrative.PostManage[];
   locales: (field: string) => string;

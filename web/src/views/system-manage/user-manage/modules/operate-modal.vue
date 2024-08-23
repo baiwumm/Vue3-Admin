@@ -5,7 +5,7 @@ import PersonalInfo from "./personal-info.vue"; // 个人信息
 import UserInfo from "./user-info.vue"; // 用户信息
 import { useAntdForm, useFormRules } from "@/hooks/common/form";
 import { STATUS, SEX, OPERATION_TYPE } from "@/enum";
-import { getOrganazationList, getPostList } from "@/service/api";
+import { getOrganazationList, getPostList, getRoleList } from "@/service/api";
 import { pick, keys, omit, initial } from "lodash-es";
 import StrengthMeter from "@/components/custom/strength-meter.vue";
 import { createUser, updateUser } from "@/service/api";
@@ -27,6 +27,16 @@ const next = async () => {
 };
 const prev = () => {
   current.value--;
+};
+
+// 获取角色列表
+const roleList = ref<Api.SystemManage.RoleManage[]>([]);
+const fetchRoleList = async () => {
+  const { error, data } = await getRoleList({ current: 1, size: 999 });
+
+  if (!error) {
+    roleList.value = data.records;
+  }
 };
 
 // 获取组织列表
@@ -85,8 +95,9 @@ function createDefaultModel(): Api.SystemManage.SaveUserManage {
     sex: SEX.MALE,
     status: STATUS.ACTIVE,
     sort: 1,
-    orgId: undefined,
-    postId: undefined,
+    roleId: "",
+    orgId: "",
+    postId: "",
     city: [],
     address: undefined,
     tags: [],
@@ -103,6 +114,7 @@ type RuleKey = Extract<
   | "cnName"
   | "phone"
   | "email"
+  | "roleId"
   | "orgId"
   | "postId"
   | "city"
@@ -123,6 +135,7 @@ const rules = computed<
     cnName: defaultRequiredRule,
     phone: formRules.phone,
     email: formRules.email,
+    roleId: defaultRequiredRule,
     orgId: defaultRequiredRule,
     postId: defaultRequiredRule,
     city: defaultRequiredRule,
@@ -210,6 +223,7 @@ watch(visible, () => {
   if (visible.value) {
     handleInitModel();
     resetFields();
+    fetchRoleList();
     fetchOrganazationList();
     fetchPostList();
     current.value = 0;
@@ -230,6 +244,7 @@ watch(visible, () => {
           <component
             :is="steps[current].content"
             :model="model"
+            :roleList="current === 1 ? roleList : undefined"
             :organazationList="current === 1 ? organazationList : undefined"
             :postList="current === 1 ? postList : undefined"
             :locales="locales"
