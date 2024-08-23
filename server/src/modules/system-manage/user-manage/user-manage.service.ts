@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:40:52
+ * @LastEditTime: 2024-08-23 10:42:14
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -58,6 +58,8 @@ export class UserManageService {
         tags: true,
         city: true,
         address: true,
+        roleId: true,
+        role: true,
         orgId: true,
         organization: true,
         postId: true,

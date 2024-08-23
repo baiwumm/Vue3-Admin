@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 17:57:38
+ * @LastEditTime: 2024-08-23 11:34:58
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
@@ -53,6 +53,11 @@ export class AuthService {
         lastIp: ip,
         token: tokens.token,
       },
+      include: {
+        role: true,
+        organization: true,
+        post: true,
+      },
     });
 
     // 存储用户信息到 session
@@ -65,8 +70,38 @@ export class AuthService {
   /**
    * @description: 获取用户信息
    */
-  getUserInfo(session: CommonType.SessionInfo) {
-    return responseMessage<User>(omit(session.userInfo, ['password', 'token']));
+  async getUserInfo(session: CommonType.SessionInfo) {
+    // 获取 session 用户信息
+    const userInfo = omit(session.userInfo, ['password', 'token']);
+    // 获取所有与 roleId 相关的 menuId
+    const menuIds = await this.prisma.permission
+      .findMany({
+        where: {
+          roleId: userInfo.roleId,
+        },
+        select: {
+          menuId: true,
+        },
+      })
+      .then((results) => results.map((result) => result.menuId));
+    // 使用这些 menuId 查询 Menu 模型
+    const permissions = await this.prisma.menu
+      .findMany({
+        where: {
+          type: {
+            equals: MenuType.BUTTON,
+          },
+          id: {
+            in: menuIds,
+          },
+        },
+      })
+      .then((results) => results.map((result) => result.permission));
+    return responseMessage<User>({
+      ...userInfo,
+      buttons: permissions,
+      roles: [userInfo.role.code],
+    });
   }
 
   /**
@@ -189,12 +224,26 @@ export class AuthService {
   /**
    * @description: 获取用户路由
    */
-  async getUserRoutes() {
+  async getUserRoutes(session: CommonType.SessionInfo) {
+    // 获取所有与 roleId 相关的 menuId
+    const menuIds = await this.prisma.permission
+      .findMany({
+        where: {
+          roleId: session.userInfo.roleId,
+        },
+        select: {
+          menuId: true,
+        },
+      })
+      .then((results) => results.map((result) => result.menuId));
     // 获取菜单列表
     const result = await this.prisma.menu.findMany({
       where: {
         type: {
           not: MenuType.BUTTON,
+        },
+        id: {
+          in: menuIds,
         },
         // 过滤出 json 对象不是常量的菜单
         meta: {

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 16:01:05
+ * @LastEditTime: 2024-08-23 11:32:32
  * @Description: AuthController
  */
 import { Body, Controller, Get, Ip, Post, Query, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
@@ -154,8 +154,8 @@ export class AuthController {
   @Get('/getUserRoutes')
   @ApiOkResponse({ type: UserRoutesResponseDto })
   @ApiOperation({ summary: '获取用户路由' })
-  getUserRoutes() {
-    const response = this.authService.getUserRoutes();
+  getUserRoutes(@Session() session: CommonType.SessionInfo) {
+    const response = this.authService.getUserRoutes(session);
     return response;
   }
 

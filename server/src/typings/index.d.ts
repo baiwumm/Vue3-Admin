@@ -21,7 +21,11 @@ declare namespace CommonType {
   // Session 存储信息
   type SessionInfo = {
     captchaCode: string; // 验证码
-    userInfo: import('@prisma/client').User;
+    userInfo: import('@prisma/client').User & {
+      role?: import('@prisma/client').Role;
+      organization?: import('@prisma/client').Organization;
+      post?: import('@prisma/client').Post;
+    };
   };
 
   // token 生成信息
