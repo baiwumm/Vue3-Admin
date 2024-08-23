@@ -36,7 +36,7 @@ export function createRouteGuard(router: Router) {
     const needLogin = !to.meta.constant;
     const routeRoles = to.meta.roles || [];
 
-    const hasRole = authStore.userInfo.roles.some(role => routeRoles.includes(role));
+    const hasRole = authStore.userInfo.roles?.some(role => routeRoles.includes(role));
 
     const hasAuth = authStore.isStaticSuper || !routeRoles.length || hasRole;
 
