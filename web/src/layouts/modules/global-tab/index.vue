@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { nextTick, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
-import { useElementBounding } from '@vueuse/core';
-import { PageTab } from '@sa/materials';
-import BetterScroll from '@/components/custom/better-scroll.vue';
-import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
-import { useTabStore } from '@/store/modules/tab';
-import ContextMenu from './context-menu.vue';
+import { nextTick, ref, watch } from "vue";
+import { useRoute } from "vue-router";
+import { useElementBounding } from "@vueuse/core";
+import { PageTab } from "@sa/materials";
+import BetterScroll from "@/components/custom/better-scroll.vue";
+import { useAppStore } from "@/store/modules/app";
+import { useThemeStore } from "@/store/modules/theme";
+import { useRouteStore } from "@/store/modules/route";
+import { useTabStore } from "@/store/modules/tab";
+import ContextMenu from "./context-menu.vue";
 
 defineOptions({
-  name: 'GlobalTab'
+  name: "GlobalTab",
 });
 
 const route = useRoute();
@@ -21,11 +21,12 @@ const routeStore = useRouteStore();
 const tabStore = useTabStore();
 
 const bsWrapper = ref<HTMLElement>();
-const { width: bsWrapperWidth, left: bsWrapperLeft } = useElementBounding(bsWrapper);
+const { width: bsWrapperWidth, left: bsWrapperLeft } =
+  useElementBounding(bsWrapper);
 const bsScroll = ref<InstanceType<typeof BetterScroll>>();
 const tabRef = ref<HTMLElement>();
 
-const TAB_DATA_ID = 'data-tab-id';
+const TAB_DATA_ID = "data-tab-id";
 
 type TabNamedNodeMap = NamedNodeMap & {
   [TAB_DATA_ID]: Attr;
@@ -63,7 +64,8 @@ function scrollByClientX(clientX: number) {
     const { maxScrollX, x: leftX, scrollBy } = bsScroll.value.instance;
 
     const rightX = maxScrollX - leftX;
-    const update = deltaX > 0 ? Math.max(-deltaX, rightX) : Math.min(-deltaX, -leftX);
+    const update =
+      deltaX > 0 ? Math.max(-deltaX, rightX) : Math.min(-deltaX, -leftX);
 
     scrollBy(update, 0, 300);
   }
@@ -73,7 +75,7 @@ function getContextMenuDisabledKeys(tabId: string) {
   const disabledKeys: App.Global.DropdownKey[] = [];
 
   if (tabStore.isTabRetain(tabId)) {
-    const homeDisable: App.Global.DropdownKey[] = ['closeCurrent', 'closeLeft'];
+    const homeDisable: App.Global.DropdownKey[] = ["closeCurrent", "closeLeft"];
     disabledKeys.push(...homeDisable);
   }
 
@@ -102,13 +104,13 @@ watch(
   () => route.fullPath,
   () => {
     tabStore.addTab(route);
-  }
+  },
 );
 watch(
   () => tabStore.activeTabId,
   () => {
     scrollToActiveTab();
-  }
+  },
 );
 
 // init
@@ -126,7 +128,11 @@ init();
         <div
           ref="tabRef"
           class="h-full flex pr-18px"
-          :class="[themeStore.tab.mode === 'chrome' ? 'items-end' : 'items-center gap-12px']"
+          :class="[
+            themeStore.tab.mode === 'chrome'
+              ? 'items-end'
+              : 'items-center gap-12px',
+          ]"
         >
           <ContextMenu
             v-for="tab in tabStore.tabs"
@@ -157,8 +163,11 @@ init();
         </div>
       </BetterScroll>
     </div>
-    <ReloadButton :loading="!appStore.reloadFlag" @click="refresh" />
-    <FullScreen :full="appStore.fullContent" @click="appStore.toggleFullContent" />
+    <ReloadButton @click="refresh" />
+    <FullScreen
+      :full="appStore.fullContent"
+      @click="appStore.toggleFullContent"
+    />
   </DarkModeContainer>
 </template>
 
