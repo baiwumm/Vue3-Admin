@@ -1,0 +1,107 @@
+<script setup lang="ts">
+import { ref, watch } from "vue";
+import { useAuthStore } from "@/store/modules/auth";
+import { $t } from "@/locales";
+import { codeToText } from "element-china-area-data";
+import { forEach, assign } from "lodash-es";
+import FigureLabels from "@/components/custom/figure-labels.vue";
+import { updateUserTags } from "@/service/api";
+
+defineOptions({
+  name: "PersonalInfo",
+});
+
+type Identity = {
+  icon: string;
+  field: string;
+  value?: string;
+};
+
+const authStore = useAuthStore();
+
+// 获取登录用户信息
+const { avatar, cnName, city, role, organization, post, address, tags } =
+  authStore.userInfo;
+
+// 人物标签
+const userTags = ref<string[]>(tags || []);
+
+// 获取省市区名称
+const getAreaName = () => {
+  let result: string = "";
+  forEach(city, (code: string) => {
+    result += codeToText[code];
+  });
+  return result + address;
+};
+
+// 身份信息
+const identityOptions: Identity[] = [
+  {
+    icon: "carbon:user-role",
+    field: "roleId",
+    value: role?.name,
+  },
+  {
+    icon: organization?.icon || "ri:exchange-2-line",
+    field: "orgId",
+    value: organization?.name,
+  },
+  {
+    icon: "ri:contacts-book-3-line",
+    field: "postId",
+    value: post?.name,
+  },
+  {
+    icon: "ri:map-pin-2-line",
+    field: "address",
+    value: getAreaName(),
+  },
+];
+
+// 更新用户标签
+const fetchUpdateUserTags = async () => {
+  const { error } = await updateUserTags({
+    tags: userTags.value,
+  });
+
+  if (!error) {
+    // 更新仓库信息
+    assign(authStore.userInfo, { tags: userTags.value });
+    window.$message?.success($t(`common.editSuccess`));
+  }
+};
+
+watch(userTags, () => {
+  fetchUpdateUserTags();
+});
+</script>
+
+<template>
+  <ACard>
+    <ASpace direction="vertical" align="center" class="w-full">
+      <AAvatar :size="128" :src="avatar" />
+      <ATypographyTitle :level="3">{{ cnName }}</ATypographyTitle>
+    </ASpace>
+    <ADescriptions :column="1" size="small" bordered>
+      <ADescriptionsItem
+        v-for="{ icon, field, value } in identityOptions"
+        :key="field"
+      >
+        <template #label>
+          <ASpace align="center">
+            <SvgIcon :icon="icon" class="text-base" />
+            {{ $t(`page.systemManage.userManage.${field}`) }}
+          </ASpace>
+        </template>
+        <ATag :bordered="false">
+          <ATypographyText>{{ value }}</ATypographyText>
+        </ATag>
+      </ADescriptionsItem>
+    </ADescriptions>
+    <ADivider orientation="left">{{
+      $t("page.systemManage.userManage.tags")
+    }}</ADivider>
+    <FigureLabels v-model:value="userTags" />
+  </ACard>
+</template>
