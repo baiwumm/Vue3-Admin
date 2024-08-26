@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-22 10:24:29
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:07:31
+ * @LastEditTime: 2024-08-26 09:02:30
  * @Description: RoleManageController
  */
 import {
@@ -12,8 +12,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -65,7 +65,7 @@ export class RoleManageController {
   /**
    * @description: 更新角色
    */
-  @Patch(':id')
+  @Put(':id')
   @ApiOkResponse({ type: SaveRoleDto })
   @ApiOperation({ summary: '更新角色' })
   update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveRoleDto) {

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 10:31:04
+ * @LastEditTime: 2024-08-26 09:00:47
  * @Description: OrganazationController
  */
 import {
@@ -12,8 +12,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -74,7 +74,7 @@ export class OrganazationController {
   /**
    * @description: 更新组织
    */
-  @Patch(':id')
+  @Put(':id')
   @ApiOkResponse({ type: ResponseSaveOrganizationDto })
   @ApiOperation({ summary: '更新组织' })
   update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveOrganazationDto) {

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-15 09:54:56
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 11:05:34
+ * @LastEditTime: 2024-08-26 09:01:57
  * @Description: InternalizationController
  */
 import {
@@ -12,8 +12,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -64,7 +64,7 @@ export class InternalizationController {
   /**
    * @description: 更新国际化
    */
-  @Patch(':id')
+  @Put(':id')
   @ApiOkResponse({ type: ResponseSaveInternalizationDto })
   @ApiOperation({ summary: '更新国际化' })
   update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveInternalizationDto) {

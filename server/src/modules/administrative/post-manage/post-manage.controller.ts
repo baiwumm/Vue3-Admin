@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-10 13:39:42
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 10:30:34
+ * @LastEditTime: 2024-08-26 09:01:14
  * @Description: PostManageController
  */
 import {
@@ -12,8 +12,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -74,7 +74,7 @@ export class PostManageController {
   /**
    * @description: 更新岗位
    */
-  @Patch(':id')
+  @Put(':id')
   @ApiOkResponse({ type: ResponseSavePostDto })
   @ApiOperation({ summary: '更新岗位' })
   update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SavePostDto) {

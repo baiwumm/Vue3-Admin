@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-19 16:29:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-20 15:08:43
+ * @LastEditTime: 2024-08-26 09:02:13
  * @Description: MenuManageController
  */
 import {
@@ -12,8 +12,8 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
-  Patch,
   Post,
+  Put,
   Query,
   UseGuards,
   UseInterceptors,
@@ -64,7 +64,7 @@ export class MenuManageController {
   /**
    * @description: 更新菜单
    */
-  @Patch(':id')
+  @Put(':id')
   @ApiOkResponse({ type: ResponseSaveMenuDto })
   @ApiOperation({ summary: '更新菜单' })
   update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveMenuDto) {
