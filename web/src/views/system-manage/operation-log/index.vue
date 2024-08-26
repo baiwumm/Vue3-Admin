@@ -62,11 +62,11 @@ import {
 import { $t } from "@/locales";
 import HeaderSearch from "./modules/header-search.vue";
 import { Tag, Space, Avatar, Popconfirm, Button } from "ant-design-vue";
-import { METHOD } from "@/enum";
 import dayjs from "dayjs";
-import { broswerIconMap, osIconMap } from "@/constants";
+import { broswerIconMap, osIconMap, MethodOptions } from "@/constants";
 import SvgIcon from "@/components/custom/svg-icon.vue";
 import { useAuth } from "@/hooks/business/auth";
+import { get, find } from "lodash-es";
 
 // 权限钩子函数
 const { hasAuth } = useAuth();
@@ -136,13 +136,9 @@ const {
       title: locales("method"),
       align: "center",
       customRender: ({ text }) => {
-        const methodColorMap: Record<string, string> = {
-          [METHOD.POST]: "green",
-          [METHOD.PATCH]: "purple",
-          [METHOD.DELETE]: "red",
-        };
+        const color = get(find(MethodOptions, ["value", text]), "key");
         return (
-          <Tag bordered={false} color={methodColorMap[text]}>
+          <Tag bordered={false} color={color}>
             {text}
           </Tag>
         );

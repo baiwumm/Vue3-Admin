@@ -87,9 +87,19 @@ async function search() {
             <ASelect
               v-model:value="model.method"
               allowClear
-              :options="MethodOptions"
               :placeholder="$t('form.select') + locales('method')"
-            />
+              option-label-prop="children"
+            >
+              <ASelectOption
+                v-for="{ value, key, label } in MethodOptions"
+                :key="value"
+                :value="value"
+              >
+                <ATag :bordered="false" :color="key">
+                  {{ label }}
+                </ATag>
+              </ASelectOption>
+            </ASelect>
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">

@@ -24,9 +24,10 @@ export const StatueOptions: LabeledValue[] = [
  * @description: 请求方法
  */
 export const MethodOptions: LabeledValue[] = [
-  { label: METHOD.POST, value: METHOD.POST },
-  { label: METHOD.PATCH, value: METHOD.PATCH },
-  { label: METHOD.DELETE, value: METHOD.DELETE },
+  { label: METHOD.POST, value: METHOD.POST, key: 'green' },
+  { label: METHOD.PUT, value: METHOD.PUT, key: 'orange' },
+  { label: METHOD.PATCH, value: METHOD.PATCH, key: 'purple' },
+  { label: METHOD.DELETE, value: METHOD.DELETE, key: 'red' },
 ]
 
 /**
