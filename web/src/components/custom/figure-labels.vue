@@ -1,32 +1,34 @@
 <template>
-  <template v-for="tag in value" :key="tag">
-    <a-tooltip v-if="tag.length > 20" :title="tag">
-      <a-tag closable @close="handleClose(tag)">
-        {{ `${tag.slice(0, 20)}...` }}
+  <a-space :size="[0, 8]" wrap>
+    <template v-for="tag in value" :key="tag">
+      <a-tooltip v-if="tag.length > 20" :title="tag">
+        <a-tag closable @close="handleClose(tag)">
+          {{ `${tag.slice(0, 20)}...` }}
+        </a-tag>
+      </a-tooltip>
+      <a-tag v-else closable @close="handleClose(tag)">
+        {{ tag }}
       </a-tag>
-    </a-tooltip>
-    <a-tag v-else closable @close="handleClose(tag)">
-      {{ tag }}
+    </template>
+    <a-input
+      v-if="state.inputVisible"
+      ref="inputRef"
+      v-model:value="state.inputValue"
+      type="text"
+      size="small"
+      :style="{ width: '78px' }"
+      @blur="handleInputConfirm"
+      @keyup.enter="handleInputConfirm"
+    />
+    <a-tag
+      v-else
+      style="background: #fff; border-style: dashed"
+      @click="showInput"
+    >
+      <plus-outlined />
+      New Tag
     </a-tag>
-  </template>
-  <a-input
-    v-if="state.inputVisible"
-    ref="inputRef"
-    v-model:value="state.inputValue"
-    type="text"
-    size="small"
-    :style="{ width: '78px' }"
-    @blur="handleInputConfirm"
-    @keyup.enter="handleInputConfirm"
-  />
-  <a-tag
-    v-else
-    style="background: #fff; border-style: dashed"
-    @click="showInput"
-  >
-    <plus-outlined />
-    New Tag
-  </a-tag>
+  </a-space>
 </template>
 <script lang="ts" setup>
 import { ref, reactive, nextTick } from "vue";
