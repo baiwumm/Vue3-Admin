@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:14:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 10:29:46
+ * @LastEditTime: 2024-08-26 09:47:44
  * @Description: UserManageController
  */
 
@@ -15,7 +15,9 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Put,
   Query,
+  Session,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
@@ -26,7 +28,7 @@ import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { UserParamsDto } from './dto/params-user.dto';
 import { ResponseSaveUserDto, ResponseUserDto } from './dto/response-user.dto';
-import { SaveUserDto } from './dto/save-user.dto';
+import { SaveUserDto, UpdateUserTagsDto } from './dto/save-user.dto';
 import { UserManageService } from './user-manage.service';
 
 @ApiTags('系统管理-用户管理')
@@ -75,11 +77,15 @@ export class UserManageController {
   /**
    * @description: 更新用户
    */
-  @Patch(':id')
-  @ApiOkResponse({ type: SaveUserDto })
+  @Put(':id')
+  @ApiOkResponse({ type: ResponseUserDto })
   @ApiOperation({ summary: '更新用户' })
-  update(@Param('id', new ParseUUIDPipe()) id: string, @Body() body: SaveUserDto) {
-    return this.userManageService.update(id, body);
+  update(
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body() body: SaveUserDto,
+    @Session() session: CommonType.SessionInfo,
+  ) {
+    return this.userManageService.update(id, body, session);
   }
 
   /**
@@ -90,5 +96,15 @@ export class UserManageController {
   @ApiOperation({ summary: '删除用户' })
   remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.userManageService.remove(id);
+  }
+
+  /**
+   * @description: 更新用户标签
+   */
+  @Patch('/updateUserTags')
+  @ApiOkResponse({ type: ResponseUserDto })
+  @ApiOperation({ summary: '更新用户标签' })
+  updateUserTags(@Session() session: CommonType.SessionInfo, @Body() body: UpdateUserTagsDto) {
+    return this.userManageService.updateUserTags(session, body.tags);
   }
 }

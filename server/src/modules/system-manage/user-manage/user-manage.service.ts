@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-23 10:42:14
+ * @LastEditTime: 2024-08-26 13:40:59
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -11,7 +11,7 @@ import type { User } from '@prisma/client';
 import { RESPONSE_MSG } from '@/enums';
 import { AuthService } from '@/modules/auth/auth.service';
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { responseMessage } from '@/utils';
+import { omit, responseMessage } from '@/utils';
 
 import { UserParamsDto } from './dto/params-user.dto';
 import { SaveUserDto } from './dto/save-user.dto';
@@ -124,12 +124,26 @@ export class UserManageService {
   /**
    * @description: 更新用户
    */
-  async update(id: string, body: SaveUserDto) {
+  async update(id: string, body: SaveUserDto, session: CommonType.SessionInfo) {
     try {
       const result = await this.prisma.user.update({
         where: { id },
         data: body,
       });
+      // 判断是否更新的是当前用户，是则更新 session 信息
+      if (id === session.userInfo.id) {
+        const user = await this.prisma.user.findUnique({
+          where: {
+            id,
+          },
+          include: {
+            role: true,
+            organization: true,
+            post: true,
+          },
+        });
+        Object.assign(session.userInfo, omit(user, ['password', 'token']));
+      }
       return responseMessage<User>(result);
     } catch (error) {
       // 判断是否违反 postgresql 唯一性约束
@@ -148,6 +162,22 @@ export class UserManageService {
       const result = await this.prisma.user.delete({
         where: { id },
       });
+      return responseMessage<User>(result);
+    } catch (error) {
+      return responseMessage(error, RESPONSE_MSG.ERROR, -1);
+    }
+  }
+
+  /**
+   * @description: 更新用户标签
+   */
+  async updateUserTags(session: CommonType.SessionInfo, tags: string[]) {
+    try {
+      const result = await this.prisma.user.update({
+        where: { id: session.userInfo.id },
+        data: { tags },
+      });
+      Object.assign(session.userInfo, { tags });
       return responseMessage<User>(result);
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);

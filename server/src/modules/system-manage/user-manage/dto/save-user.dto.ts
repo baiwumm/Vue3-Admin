@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:57:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 17:18:54
+ * @LastEditTime: 2024-08-23 17:42:33
  * @Description: 保存用户数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -42,6 +42,9 @@ function IsImageUrl(validationOptions?: ValidationOptions) {
   };
 }
 
+/**
+ * @description: 新增/编辑用户 DTO
+ */
 export class SaveUserDto {
   @ApiProperty({
     type: String,
@@ -166,4 +169,21 @@ export class SaveUserDto {
   })
   @IsUUID('all', { message: 'postId 参数不正确' })
   postId: string;
+}
+
+/**
+ * @description: 更新用户 DTo
+ */
+export class UpdateUserTagsDto {
+  @ApiProperty({
+    type: [String],
+    description: '标签',
+    default: ['暴发户', '帅气男孩'],
+    isArray: true,
+  })
+  @IsString({ each: true, message: '标签是字符串数组' })
+  @IsArray({
+    message: '标签是数组类型',
+  })
+  tags: string[];
 }
