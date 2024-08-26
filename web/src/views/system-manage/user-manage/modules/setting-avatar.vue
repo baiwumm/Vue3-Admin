@@ -27,6 +27,11 @@ import type { UploadChangeParam, UploadFile } from "ant-design-vue";
 import { get } from "lodash-es";
 import { $t } from "@/locales";
 
+defineOptions({
+  name: "SettingAvatar",
+  inheritAttrs: false,
+});
+
 // 父组件传递的值
 type Props = {
   model: Api.SystemManage.SaveUserManage;

@@ -83,7 +83,7 @@
       />
     </AFormItem>
   </ACol>
-  <ACol :span="24">
+  <ACol :span="24" v-if="showTag">
     <AFormItem :label="locales('tags')" name="tags">
       <FigureLabels v-model:value="model.tags" />
     </AFormItem>
@@ -94,6 +94,11 @@
 import { regionData } from "element-china-area-data";
 import FigureLabels from "@/components/custom/figure-labels.vue";
 
+defineOptions({
+  name: "UserInfo",
+  inheritAttrs: false,
+});
+
 // 父组件传递的值
 type Props = {
   model: Api.SystemManage.SaveUserManage;
@@ -101,6 +106,7 @@ type Props = {
   organazationList: Api.Administrative.Organization[];
   postList: Api.Administrative.PostManage[];
   locales: (field: string) => string;
+  showTag: boolean;
 };
 defineProps<Props>();
 </script>

@@ -5,16 +5,24 @@ import PersonalInfo from "./personal-info.vue"; // 个人信息
 import UserInfo from "./user-info.vue"; // 用户信息
 import { useAntdForm, useFormRules } from "@/hooks/common/form";
 import { STATUS, SEX, OPERATION_TYPE } from "@/enum";
-import { getOrganazationList, getPostList, getRoleList } from "@/service/api";
+import {
+  getOrganazationList,
+  getPostList,
+  getRoleList,
+  createUser,
+  updateUser,
+} from "@/service/api";
 import { pick, keys, omit, initial } from "lodash-es";
 import StrengthMeter from "@/components/custom/strength-meter.vue";
-import { createUser, updateUser } from "@/service/api";
 import SettingAvatar from "./setting-avatar.vue";
 import type { StepsProps } from "ant-design-vue/es/steps";
+import { useAuthStore } from "@/store/modules/auth";
 
 defineOptions({
   name: "OperateModal",
 });
+
+const authStore = useAuthStore();
 
 const current = ref<number>(0);
 // 是否请求中
@@ -206,11 +214,15 @@ async function handleSubmit() {
       });
     }
     await (isAdd ? createUser : updateUser)(params)
-      .then(({ error }) => {
+      .then(async ({ error }) => {
         if (!error) {
           window.$message?.success($t(`common.${props.operateType}Success`));
           closeModal();
           emit("submitted");
+          // 判断是否跟新的是当前用户，是则重新拉取用户信息
+          if (!isAdd && model.id === authStore.userInfo.id) {
+            await authStore.initUserInfo();
+          }
         }
       })
       .finally(() => {
@@ -237,17 +249,19 @@ watch(visible, () => {
     :width="800"
     @cancel="closeModal"
   >
-    <ASpace direction="vertical" size="middle" :style="{ width: '100%' }">
+    <ASpace direction="vertical" size="middle" class="w-full">
       <ASteps :current="current" :items="items" />
       <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
         <ARow :gutter="16">
           <component
             :is="steps[current].content"
             :model="model"
-            :roleList="current === 1 ? roleList : undefined"
-            :organazationList="current === 1 ? organazationList : undefined"
-            :postList="current === 1 ? postList : undefined"
+            :roleList="roleList"
+            :organazationList="organazationList"
+            :postList="postList"
             :locales="locales"
+            showTag
+            v-bind="$attrs"
             @update:model="updateModel"
           />
         </ARow>

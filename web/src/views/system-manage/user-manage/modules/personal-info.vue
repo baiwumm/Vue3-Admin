@@ -66,6 +66,11 @@
 <script setup lang="ts">
 import { SexOptions, StatueOptions } from "@/constants";
 
+defineOptions({
+  name: "PersonalInfo",
+  inheritAttrs: false,
+});
+
 // 父组件传递的值
 type Props = {
   model: Api.SystemManage.SaveUserManage;
