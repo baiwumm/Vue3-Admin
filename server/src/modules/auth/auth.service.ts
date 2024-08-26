@@ -2,13 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-23 11:34:58
+ * @LastEditTime: 2024-08-26 13:42:39
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { type Menu, MenuType, type User } from '@prisma/client';
+import { type Menu, MenuType, Status, type User } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { lastValueFrom, map } from 'rxjs';
 
@@ -39,6 +39,11 @@ export class AuthService {
 
     if (!user) {
       return responseMessage(null, '用户名或密码错误', -1);
+    }
+
+    // 判断用户是否禁用
+    if (user.status === Status.INACTIVE) {
+      return responseMessage(null, '该用户已被禁用', -1);
     }
 
     // 生成 token
