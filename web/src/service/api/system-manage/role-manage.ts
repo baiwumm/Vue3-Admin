@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-22 16:33:45
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 16:41:05
+ * @LastEditTime: 2024-08-26 09:05:51
  * @Description: 角色管理模块接口
  */
 import { request } from "@/service/request";
@@ -37,7 +37,7 @@ export const createRole = (body: Api.SystemManage.SaveRoleManage) =>
 export const updateRole = ({ id, ...body }: Api.SystemManage.SaveRoleManage) =>
   request<Api.SystemManage.RoleManage>({
     url: `${baseURL}/${id}`,
-    method: "patch",
+    method: "put",
     data: body,
   });
 

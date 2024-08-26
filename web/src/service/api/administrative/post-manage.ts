@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-16 16:28:27
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-06 17:51:10
+ * @LastEditTime: 2024-08-26 09:05:14
  * @Description: 岗位管理模块接口
  */
 
@@ -50,7 +50,7 @@ export const updatePost = ({
 }: Api.Administrative.SavePostManage) =>
   request<Api.Administrative.PostManage>({
     url: `${baseURL}/${id}`,
-    method: "patch",
+    method: "put",
     data: body,
   });
 

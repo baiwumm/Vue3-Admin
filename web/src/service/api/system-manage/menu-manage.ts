@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-19 17:07:29
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-19 17:14:30
+ * @LastEditTime: 2024-08-26 09:05:39
  * @Description: 菜单管理模块接口
  */
 import { request } from "@/service/request";
@@ -42,7 +42,7 @@ export const updateMenu = ({
 }: Api.SystemManage.SaveMenuManage) =>
   request<Api.SystemManage.MenuManage>({
     url: `${baseURL}/${id}`,
-    method: "patch",
+    method: "put",
     data: body,
   });
 

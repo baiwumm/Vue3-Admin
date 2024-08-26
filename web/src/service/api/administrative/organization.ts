@@ -50,7 +50,7 @@ export const updateOrganazation = ({
 }: Api.Administrative.SaveOrganization) =>
   request<Api.Administrative.Organization>({
     url: `${baseURL}/${id}`,
-    method: "patch",
+    method: "put",
     data: body,
   });
 

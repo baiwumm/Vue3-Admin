@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-15 11:06:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 11:15:41
+ * @LastEditTime: 2024-08-26 09:05:30
  * @Description: 国际化模块接口
  */
 import { request } from "@/service/request";
@@ -37,7 +37,7 @@ export const createInternalization = (body: Api.SystemManage.SaveInternalization
 export const updateInternalization = ({ id, ...body }: Api.SystemManage.SaveInternalization) =>
   request<Api.SystemManage.Internalization>({
     url: `${baseURL}/${id}`,
-    method: "patch",
+    method: "put",
     data: body,
   });
 

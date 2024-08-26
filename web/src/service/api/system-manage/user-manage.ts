@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 17:28:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-06 17:51:42
+ * @LastEditTime: 2024-08-23 18:01:08
  * @Description: 用户管理模块接口
  */
 
@@ -42,10 +42,10 @@ export const createUser = (body: Api.SystemManage.SaveUserManage) =>
  * @description: 更新用户
  * @param {Api.SystemManage.SaveUserManage} body
  */
-export const updateUser = ({ id, ...body }: Api.SystemManage.SaveUserManage) =>
+export const updateUser = ({ id, ...body }: Partial<Api.SystemManage.SaveUserManage>) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/${id}`,
-    method: "patch",
+    method: "put",
     data: body,
   });
 
@@ -57,4 +57,15 @@ export const delUser = ({ id }: Api.Common.ColumnId) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/${id}`,
     method: "delete",
+  });
+
+/**
+* @description: 更新用户标签
+* @param {Pick<Api.SystemManage.SaveUserManage,'tags'>} body
+*/
+export const updateUserTags = (body: Pick<Api.SystemManage.SaveUserManage, 'tags'>) =>
+  request<Api.SystemManage.UserManage>({
+    url: `${baseURL}/updateUserTags`,
+    method: "patch",
+    data: body,
   });
