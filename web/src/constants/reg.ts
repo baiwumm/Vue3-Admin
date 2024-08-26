@@ -9,9 +9,9 @@ export const REG_USER_NAME = /^[a-zA-Z0-9_-]{4,16}$/;
 export const REG_PHONE = /^1[3-9]\d{9}$/;
 
 /**
- * @description: 密码
+ * @description: 密码6-18位字符，支持数字、字母和除空格外的特殊字符，且必须同时包含数字和小写字母
  */
-export const REG_PWD = /^\w{6,18}$/;
+export const REG_PWD = /^(?=.*[0-9])(?=.*[a-z])(?![\s]).{6,18}$/;
 
 /**
  * @description: 电子邮箱

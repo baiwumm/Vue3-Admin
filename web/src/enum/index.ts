@@ -61,3 +61,12 @@ export enum MENU_TYPE {
   MENU = 'MENU', // 菜单
   BUTTON = 'BUTTON', // 按钮
 }
+
+/**
+ * @description: 个人中心 - 安全设置
+ */
+export enum PERSONAL_SETTING {
+  BASIC_SETTING = 'basicSetting', // 基本设置
+  SECURITY_SETTING = 'securitySetting', // 安全设置
+  EDIT_PASSWORD = 'editPassword', // 修改密码
+}
