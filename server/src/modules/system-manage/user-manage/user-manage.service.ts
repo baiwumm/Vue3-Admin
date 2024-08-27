@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-26 17:55:50
+ * @LastEditTime: 2024-08-27 14:55:38
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -159,6 +159,15 @@ export class UserManageService {
    */
   async remove(id: string) {
     try {
+      // 限制 admin 账号不能删除
+      const user = await this.prisma.user.findUnique({
+        where: {
+          id,
+        },
+      });
+      if (user.userName.toLowerCase() === 'admin') {
+        return responseMessage(null, 'admin 账号不能删除!', -1);
+      }
       const result = await this.prisma.user.delete({
         where: { id },
       });
