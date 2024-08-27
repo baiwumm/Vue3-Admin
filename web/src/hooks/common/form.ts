@@ -21,6 +21,11 @@ export function useFormRules() {
       message: $t('form.pwd.invalid'),
       trigger: 'change'
     },
+    oldPwd: {
+      pattern: REG_PWD,
+      message: $t('form.oldPwd.invalid'),
+      trigger: 'change'
+    },
     code: {
       pattern: REG_CODE_SIX,
       message: $t('form.code.invalid'),
@@ -37,6 +42,7 @@ export function useFormRules() {
     userName: [createRequiredRule($t('form.userName.required')), patternRules.userName],
     phone: [createRequiredRule($t('form.phone.required')), patternRules.phone],
     pwd: [createRequiredRule($t('form.pwd.required')), patternRules.pwd],
+    oldPwd: [createRequiredRule($t('form.oldPwd.required')), patternRules.oldPwd],
     code: [createRequiredRule($t('form.code.required')), patternRules.code],
     email: [createRequiredRule($t('form.email.required')), patternRules.email]
   } satisfies Record<string, App.Global.FormRule[]>;
