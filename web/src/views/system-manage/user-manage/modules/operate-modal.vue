@@ -103,9 +103,9 @@ function createDefaultModel(): Api.SystemManage.SaveUserManage {
     sex: SEX.MALE,
     status: STATUS.ACTIVE,
     sort: 1,
-    roleId: "",
-    orgId: "",
-    postId: "",
+    roleId: undefined,
+    orgId: undefined,
+    postId: undefined,
     city: [],
     address: undefined,
     tags: [],
@@ -189,7 +189,7 @@ const closeModal = () => {
 };
 
 // 更新 model 的值
-const updateModel = (...args: unknown[]) => {
+const updateModel = (args: Partial<Api.SystemManage.SaveUserManage>) => {
   Object.assign(model, args);
 };
 
