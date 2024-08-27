@@ -5,7 +5,8 @@ import { $t } from "@/locales";
 import { createRole, updateRole } from "@/service/api";
 import { pick } from "lodash-es";
 import { OPERATION_TYPE } from "@/enum";
-import { map, filter, includes } from "lodash-es";
+import { map, filter, includes, difference, flattenDeep } from "lodash-es";
+import type { TreeProps } from "ant-design-vue/es/tree";
 
 defineOptions({
   name: "OperateDrawer",
@@ -80,6 +81,8 @@ async function handleInitModel() {
     const parentIds = map(map(props.rowData.permissions, "menu"), "parentId");
     // 过滤掉半勾选的节点
     const menus = filter(checkedKeys, (item) => !includes(parentIds, item));
+    // 设置半勾选节点
+    halfCheckedKeys.value = difference(checkedKeys, menus);
     Object.assign(model, {
       ...props.rowData,
       menus,
@@ -93,8 +96,8 @@ function closeDrawer() {
 }
 
 // 勾选菜单权限回调
-const handleMenuCheck = (_: string[], e) => {
-  halfCheckedKeys.value = e.halfCheckedKeys;
+const handleMenuCheck: TreeProps["onCheck"] = (_, e) => {
+  halfCheckedKeys.value = (e.halfCheckedKeys || []) as string[];
 };
 
 // 提交数据
@@ -107,7 +110,7 @@ async function handleSubmit() {
     const params = {
       id: isAdd ? undefined : model.id,
       ...pick(model, ["name", "code", "sort", "description"]),
-      menus: [...model.menus, ...halfCheckedKeys.value],
+      menus: flattenDeep([...model.menus, ...halfCheckedKeys.value]),
     };
     await (isAdd ? createRole : updateRole)(params)
       .then(({ error }) => {
