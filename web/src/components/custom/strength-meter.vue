@@ -4,7 +4,7 @@ import { values, keys } from "lodash-es";
 
 // 父组件传递的值
 type Props = {
-  model: Api.SystemManage.SaveUserManage;
+  model: Record<string, string>;
 };
 defineProps<Props>();
 
@@ -39,7 +39,7 @@ const watchStrength = (password: string): number => {
       <AInputPassword
         v-model:value="model.password"
         size="large"
-        :placeholder="$t('page.login.common.passwordPlaceholder')"
+        :placeholder="$t('page.login.passwordPlaceholder')"
       />
     </AFormItem>
   </ACol>
@@ -51,7 +51,7 @@ const watchStrength = (password: string): number => {
       <AInputPassword
         v-model:value="model.confirmPassword"
         size="large"
-        :placeholder="$t('page.login.common.confirmPasswordPlaceholder')"
+        :placeholder="$t('form.confirmPwd.required')"
       />
     </AFormItem>
   </ACol>
