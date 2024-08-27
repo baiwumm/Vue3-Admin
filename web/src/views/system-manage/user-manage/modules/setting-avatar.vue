@@ -6,6 +6,9 @@
         accept="image/png,image/jpeg"
         list-type="picture-card"
         class="avatar-uploader"
+        :headers="{
+          Authorization: `Bearer ${authStore.token}`,
+        }"
         :show-upload-list="false"
         action="/proxy-default/upload/single-file"
         :before-upload="beforeUpload"
@@ -26,6 +29,7 @@ import { message } from "ant-design-vue";
 import type { UploadChangeParam, UploadFile } from "ant-design-vue";
 import { get } from "lodash-es";
 import { $t } from "@/locales";
+import { useAuthStore } from "@/store/modules/auth";
 
 defineOptions({
   name: "SettingAvatar",
@@ -37,6 +41,8 @@ type Props = {
   model: Api.SystemManage.SaveUserManage;
 };
 defineProps<Props>();
+
+const authStore = useAuthStore();
 
 const emit = defineEmits(["update:model"]);
 
@@ -57,6 +63,7 @@ const handleChange = ({ file }: UploadChangeParam) => {
     }
     // 图片上传完成
     if (file.status === "done") {
+      console.log("file", file);
       loading.value = false;
       emit("update:model", {
         avatar: get(file, "response.data.path"),
