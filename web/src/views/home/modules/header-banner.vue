@@ -1,13 +1,17 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { computed, ref, onMounted } from "vue";
 import { $t } from "@/locales";
 import { useAuthStore } from "@/store/modules/auth";
+import { get, toString, isEmpty } from "lodash-es";
+import { timeFix, welcomeWords } from "@/utils";
 
 defineOptions({
   name: "HeaderBanner",
 });
 
 const authStore = useAuthStore();
+
+const weatherInfo = ref({});
 
 interface StatisticData {
   id: number;
@@ -32,6 +36,23 @@ const statisticData = computed<StatisticData[]>(() => [
     value: "12",
   },
 ]);
+
+// 获取实时天气信息
+const fetchWeatherInfo = async () => {
+  // https://www.seniverse.com/
+  const apiKey = "Sdcp14pKMKm0XNAMY"; // 心知天气 密钥
+  const response = await fetch(
+    `https://api.seniverse.com/v3/weather/now.json?key=${apiKey}&location=ip`,
+  );
+  if (toString(response.status) === import.meta.env.VITE_SERVICE_SUCCESS_CODE) {
+    const result = get(await response.json(), "results.[0]");
+    weatherInfo.value = result;
+  }
+};
+
+onMounted(() => {
+  fetchWeatherInfo();
+});
 </script>
 
 <template>
@@ -43,13 +64,13 @@ const statisticData = computed<StatisticData[]>(() => [
           <div class="pl-12px">
             <h3 class="text-18px font-semibold">
               {{
-                $t("page.home.greeting", {
-                  cnName: authStore.userInfo.cnName,
-                })
+                `${timeFix()}，${authStore.userInfo.cnName}，${welcomeWords()}！`
               }}
             </h3>
-            <p class="text-#999 leading-30px">
-              {{ $t("page.home.weatherDesc") }}
+            <p class="text-#999 leading-30px" v-if="!isEmpty(weatherInfo)">
+              {{ get(weatherInfo, "location.name", "") }}，今日天气{{
+                get(weatherInfo, "now.text", "")
+              }}，{{ get(weatherInfo, "now.temperature", 0) }}℃！
             </p>
           </div>
         </div>
