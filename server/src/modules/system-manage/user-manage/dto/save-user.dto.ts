@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:57:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-23 17:42:33
+ * @LastEditTime: 2024-08-26 17:54:09
  * @Description: 保存用户数据 Dto
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -186,4 +186,25 @@ export class UpdateUserTagsDto {
     message: '标签是数组类型',
   })
   tags: string[];
+}
+
+/**
+ * @description: 修改密码 DTO
+ */
+export class ChangePasswordDto {
+  @ApiProperty({
+    type: String,
+    description: '原密码',
+    default: '$2b$10$46pBPB5U2RJr3kGoEdve6uyPQSb6PC0e78VgR4m6Ro4fLj.8ilvry',
+  })
+  @IsNotEmpty({ message: '原密码不能为空' })
+  password: string;
+
+  @ApiProperty({
+    type: String,
+    description: '新密码',
+    default: 'abc123456!!',
+  })
+  @IsNotEmpty({ message: '新密码不能为空' })
+  newPassword: string;
 }

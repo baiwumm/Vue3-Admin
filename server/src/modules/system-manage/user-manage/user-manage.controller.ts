@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 14:14:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-26 09:47:44
+ * @LastEditTime: 2024-08-26 17:55:57
  * @Description: UserManageController
  */
 
@@ -28,7 +28,7 @@ import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { UserParamsDto } from './dto/params-user.dto';
 import { ResponseSaveUserDto, ResponseUserDto } from './dto/response-user.dto';
-import { SaveUserDto, UpdateUserTagsDto } from './dto/save-user.dto';
+import { ChangePasswordDto, SaveUserDto, UpdateUserTagsDto } from './dto/save-user.dto';
 import { UserManageService } from './user-manage.service';
 
 @ApiTags('系统管理-用户管理')
@@ -106,5 +106,15 @@ export class UserManageController {
   @ApiOperation({ summary: '更新用户标签' })
   updateUserTags(@Session() session: CommonType.SessionInfo, @Body() body: UpdateUserTagsDto) {
     return this.userManageService.updateUserTags(session, body.tags);
+  }
+
+  /**
+   * @description: 更改用户密码
+   */
+  @Patch('/changePassword')
+  @ApiOkResponse({ type: ResponseUserDto })
+  @ApiOperation({ summary: '更改用户密码' })
+  changePassword(@Body() body: ChangePasswordDto, @Session() session: CommonType.SessionInfo) {
+    return this.userManageService.changePassword(body, session);
   }
 }

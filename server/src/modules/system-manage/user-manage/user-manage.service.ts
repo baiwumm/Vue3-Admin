@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 11:01:38
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-26 13:40:59
+ * @LastEditTime: 2024-08-26 17:55:50
  * @Description: UserManageService - 用户管理
  */
 import { Injectable } from '@nestjs/common';
@@ -14,7 +14,7 @@ import { PrismaService } from '@/modules/prisma/prisma.service';
 import { omit, responseMessage } from '@/utils';
 
 import { UserParamsDto } from './dto/params-user.dto';
-import { SaveUserDto } from './dto/save-user.dto';
+import { ChangePasswordDto, SaveUserDto } from './dto/save-user.dto';
 
 @Injectable()
 export class UserManageService {
@@ -182,5 +182,30 @@ export class UserManageService {
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
     }
+  }
+
+  /**
+   * @description: 更改用户密码
+   */
+  async changePassword(body: ChangePasswordDto, session: CommonType.SessionInfo) {
+    const id = session.userInfo.id;
+    // 查询当前用户信息
+    const user = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+    // 判断密码是否正确
+    const isMatch = await this.authService.comparePassword(body.password, user.password);
+    if (!isMatch) {
+      return responseMessage(null, '原密码错误!', -1);
+    }
+    // 生成新哈希值
+    const hashedPassword = await this.authService.hashPassword(body.newPassword);
+    const result = await this.prisma.user.update({
+      where: { id },
+      data: { password: hashedPassword },
+    });
+    return responseMessage<User>(result);
   }
 }
