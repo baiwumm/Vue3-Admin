@@ -98,6 +98,11 @@ const rules = computed<
   };
 });
 
+// 更新 model 的值
+const updateModel = (args: Partial<Api.SystemManage.SaveUserManage>) => {
+  Object.assign(model, args);
+};
+
 // 提交数据
 async function handleSubmit(values: Api.SystemManage.SaveUserManage) {
   loading.value = true;
@@ -137,7 +142,7 @@ onMounted(() => {
     <ARow :gutter="16">
       <ADivider orientation="left">{{ locales("settingAvatar") }}</ADivider>
       <!-- 设置头像 -->
-      <SettingAvatar :model="model" />
+      <SettingAvatar :model="model" @update:model="updateModel" />
       <ADivider orientation="left">{{ locales("personalInfo") }}</ADivider>
       <!-- 个人信息 -->
       <PersonalInfo :model="model" :locales="locales" />

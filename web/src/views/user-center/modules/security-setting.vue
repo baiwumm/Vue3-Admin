@@ -25,7 +25,7 @@ const authStore = useAuthStore();
 const { cnName, phone, email } = authStore.userInfo;
 
 // 解构枚举
-const { BASIC_SETTING, EDIT_PASSWORD, SECURITY_SETTING } = PERSONAL_SETTING;
+const { BASIC_SETTING, CHANGE_PASSWORD, SECURITY_SETTING } = PERSONAL_SETTING;
 
 const dataSource: DaraSource[] = [
   {
@@ -40,7 +40,7 @@ const dataSource: DaraSource[] = [
     description: $t(
       `page.userCenter.${SECURITY_SETTING}.account-password-desc`,
     ),
-    key: EDIT_PASSWORD,
+    key: CHANGE_PASSWORD,
   },
   {
     title: $t(`page.userCenter.${SECURITY_SETTING}.security-phone`),

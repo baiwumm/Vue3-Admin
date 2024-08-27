@@ -68,5 +68,5 @@ export enum MENU_TYPE {
 export enum PERSONAL_SETTING {
   BASIC_SETTING = 'basicSetting', // 基本设置
   SECURITY_SETTING = 'securitySetting', // 安全设置
-  EDIT_PASSWORD = 'editPassword', // 修改密码
+  CHANGE_PASSWORD = 'changePassword', // 修改密码
 }
