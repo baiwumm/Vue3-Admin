@@ -136,10 +136,26 @@ declare namespace Api {
     /**
      * @description: 创建/更新用户
      */
-    type SaveUserManage = Omit<UserManage, keyof Api.Common.ColumnFields | 'organization' | 'post' | 'role' | 'loginCount' | 'lastIp' | 'lastLoginAt'>
-      & Partial<Api.Common.ColumnId> & {
+    type SaveUserManage = Pick<UserManage, 'userName' | 'cnName' | 'phone' | 'email' | 'sex' | 'status' | 'sort' | 'city' | 'address' | 'tags' | 'avatar' | 'password'>
+      & Partial<Pick<UserManage, 'roleId' | 'orgId' | 'postId'>> & Partial<Api.Common.ColumnId> & {
         confirmPassword?: string;
       };
+    /**
+     * @description: 修改用户密码
+     */
+    type ChangeUserPassword = {
+      password: string; // 原密码
+      newPassword: string; // 新密码
+    }
+    /**
+     * @description: 修改密码
+     */
+    type EditPassword = {
+      oldPassword: string; // 原密码
+    } & Required<Pick<
+      SaveUserManage,
+      "password" | "confirmPassword"
+    >>
 
     /**
      * @description: 菜单管理

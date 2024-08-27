@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-18 17:28:26
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-23 18:01:08
+ * @LastEditTime: 2024-08-27 09:20:09
  * @Description: 用户管理模块接口
  */
 
@@ -66,6 +66,17 @@ export const delUser = ({ id }: Api.Common.ColumnId) =>
 export const updateUserTags = (body: Pick<Api.SystemManage.SaveUserManage, 'tags'>) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/updateUserTags`,
+    method: "patch",
+    data: body,
+  });
+
+/**
+* @description: 更新用户密码
+* @param {Api.SystemManage.ChangeUserPassword} body
+*/
+export const changePassword = (body: Api.SystemManage.ChangeUserPassword) =>
+  request<Api.SystemManage.UserManage>({
+    url: `${baseURL}/changePassword`,
     method: "patch",
     data: body,
   });
