@@ -21,7 +21,10 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
 
   const token = ref(getToken());
 
-  const userInfo: Partial<Api.Auth.UserInfo> = reactive({});
+  const userInfo: Api.Auth.UserInfo = reactive({
+    buttons: [],
+    roles: [],
+  });
 
   // 多语言数据
   const locales: Partial<Record<App.I18n.LangType, any>> = reactive({})
