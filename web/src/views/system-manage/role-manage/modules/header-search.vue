@@ -14,7 +14,9 @@ defineOptions({
 
 // 父组件传递的值
 type Props = {
-  updateSearchParams: (value: Api.SystemManage.RoleManageSearchParams) => void;
+  updateSearchParams: (
+    value: Partial<Api.SystemManage.RoleManageSearchParams>,
+  ) => void;
   locales: (field: string) => string;
 };
 const props = defineProps<Props>();

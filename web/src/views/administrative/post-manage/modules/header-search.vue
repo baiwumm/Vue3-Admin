@@ -16,7 +16,7 @@ defineOptions({
 type Props = {
   organazationList: Api.Administrative.Organization[]; // 组织树
   updateSearchParams: (
-    value: Api.Administrative.PostManageSearchParams,
+    value: Partial<Api.Administrative.PostManageSearchParams>,
   ) => void;
   locales: (field: string) => string;
 };
