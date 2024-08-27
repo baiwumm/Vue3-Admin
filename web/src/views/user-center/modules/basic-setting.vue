@@ -13,7 +13,7 @@ import {
   getRoleList,
   updateUser,
 } from "@/service/api";
-import { pick } from "lodash-es";
+import { pick, cloneDeep } from "lodash-es";
 
 defineOptions({
   name: "BasicSetting",
@@ -61,7 +61,7 @@ const authStore = useAuthStore();
 const { formRef } = useAntdForm();
 
 const model: Api.SystemManage.SaveUserManage = reactive(
-  authStore.userInfo as Api.SystemManage.SaveUserManage,
+  cloneDeep(authStore.userInfo) as Api.SystemManage.SaveUserManage,
 );
 
 // 表单校验的 key
