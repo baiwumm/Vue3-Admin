@@ -34,7 +34,7 @@ function logout() {
 
 <template>
   <AButton v-if="!authStore.isLogin" @click="loginOrRegister">{{
-    $t("page.login.common.loginOrRegister")
+    $t("page.login.loginNow")
   }}</AButton>
   <ADropdown v-else placement="bottomRight" trigger="click">
     <ButtonIcon>
