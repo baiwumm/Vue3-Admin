@@ -38,16 +38,14 @@ const model: Api.Auth.LoginParams = reactive({
 /**
  * @description: 表单验证
  */
-const rules = computed<Record<keyof Api.Auth.LoginParams, App.Global.FormRule>>(
-  () => {
-    const { formRules, defaultRequiredRule } = useFormRules();
-    return {
-      userName: formRules.userName,
-      password: formRules.pwd,
-      captchaCode: defaultRequiredRule,
-    };
-  },
-);
+const rules = computed(() => {
+  const { formRules, defaultRequiredRule } = useFormRules();
+  return {
+    userName: formRules.userName,
+    password: formRules.pwd,
+    captchaCode: defaultRequiredRule,
+  };
+});
 
 /**
  * @description: 登录回调
@@ -80,7 +78,7 @@ async function handleSubmit() {
     <WaveBg :theme-color="bgThemeColor" />
     <ACard class="relative z-4">
       <div class="w-400px lt-sm:w-300px">
-        <header class="flex justify-center align-center">
+        <header class="flex justify-center items-center">
           <SystemLogo class="text-64px text-primary lt-sm:text-48px" />
           <h3 class="text-28px text-primary font-600 lt-sm:text-22px ml-4">
             {{ $t("system.title") }}
