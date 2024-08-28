@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import HeaderBanner from "./modules/header-banner.vue";
-import CardData from "./modules/card-data.vue";
 import LineChart from "./modules/line-chart.vue";
 import PieChart from "./modules/pie-chart.vue";
 import ProjectNews from "./modules/project-news.vue";
 import CreativityBanner from "./modules/creativity-banner.vue";
+import StatisticChart from "./modules/statistic-card/index.vue";
 </script>
 
 <template>
   <ASpace direction="vertical" :size="16">
+    <!-- 顶部用户信息 -->
     <HeaderBanner />
-    <CardData />
+    <!-- 统计卡片 -->
+    <StatisticChart />
     <ARow :gutter="[16, 16]">
       <ACol :span="24" :lg="14">
         <LineChart />
@@ -29,5 +31,3 @@ import CreativityBanner from "./modules/creativity-banner.vue";
     </ARow>
   </ASpace>
 </template>
-
-<style scoped></style>
