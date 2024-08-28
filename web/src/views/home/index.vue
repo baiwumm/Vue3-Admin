@@ -2,7 +2,7 @@
 import HeaderBanner from "./modules/header-banner.vue";
 import ProjectNews from "./modules/project-news.vue";
 import CreativityBanner from "./modules/creativity-banner.vue";
-import StatisticChart from "./modules/statistic-card/index.vue";
+import StatisticChart from "./modules/statistic-card.vue";
 </script>
 
 <template>
