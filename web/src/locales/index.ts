@@ -1,11 +1,12 @@
 import type { App } from 'vue';
 import { createI18n } from 'vue-i18n';
+
 import { localStg } from '@/utils/storage';
 
 export const i18n = createI18n({
   locale: localStg.get('lang') || 'zh-CN',
   fallbackLocale: 'en',
-  legacy: false
+  legacy: false,
 });
 
 /**
