@@ -1,5 +1,6 @@
-import type { Router } from 'vue-router';
 import type { LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
+import type { Router } from 'vue-router';
+
 import { $t } from '@/locales';
 import { getRoutePath } from '@/router/elegant/transform';
 
@@ -77,7 +78,7 @@ export function getTabByRoute(route: App.Global.TabRoute) {
     fixedIndex: fixedIndexInTab,
     icon,
     localIcon,
-    i18nKey
+    i18nKey,
   };
 
   return tab;
@@ -121,7 +122,7 @@ export function getDefaultHomeTab(router: Router, homeRouteName: LastLevelRouteK
     label: i18nLabel || homeRouteName,
     routeKey: homeRouteName,
     routePath: homeRoutePath,
-    fullPath: homeRoutePath
+    fullPath: homeRoutePath,
   };
 
   const routes = router.getRoutes();
@@ -205,7 +206,7 @@ export function getFixedTabIds(tabs: App.Global.Tab[]) {
 function updateTabsLabel(tabs: App.Global.Tab[]) {
   const updated = tabs.map(tab => ({
     ...tab,
-    label: tab.newLabel || tab.oldLabel || tab.label
+    label: tab.newLabel || tab.oldLabel || tab.label,
   }));
 
   return updated;
@@ -221,7 +222,7 @@ export function updateTabByI18nKey(tab: App.Global.Tab) {
 
   return {
     ...tab,
-    label: i18nKey ? $t(i18nKey) : label
+    label: i18nKey ? $t(i18nKey) : label,
   };
 }
 

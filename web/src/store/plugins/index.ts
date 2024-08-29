@@ -1,5 +1,6 @@
-import type { PiniaPluginContext } from 'pinia';
 import { cloneDeep } from 'lodash-es';
+import type { PiniaPluginContext } from 'pinia';
+
 import { SetupStoreId } from '@/enum';
 
 /**

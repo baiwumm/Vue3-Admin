@@ -1,13 +1,15 @@
+import { useLoading } from '@sa/hooks';
+import { forIn } from 'lodash-es';
+import { defineStore } from 'pinia';
 import { computed, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { defineStore } from 'pinia';
-import { forIn } from 'lodash-es'
-import { useLoading } from '@sa/hooks';
+
 import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
+import { $t, i18n } from '@/locales';
 import { fetchGetUserInfo, fetchLogin, getLocales } from '@/service/api';
 import { localStg } from '@/utils/storage';
-import { $t, i18n } from '@/locales';
+
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { clearAuthStorage, getToken } from './shared';
@@ -27,7 +29,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   });
 
   // 多语言数据
-  const locales: Partial<Record<App.I18n.LangType, any>> = reactive({})
+  const locales: Partial<Record<App.I18n.LangType, any>> = reactive({});
 
   // 静态路由模式下是否是超级管理员
   const isStaticSuper = computed(() => {
@@ -39,9 +41,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   // 判断是否登录
   const isLogin = computed(() => Boolean(token.value));
 
-  /**
-   * @description: 重置 auth 仓库
-   */
+  /** @description: 重置 auth 仓库 */
   async function resetStore() {
     const authStore = useAuthStore();
 
@@ -58,9 +58,9 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
   }
 
   /**
-   * @description: 用户登录
    * @param {Api.Auth.LoginParams} params
-   * @param {*} redirect: 重定向地址
+   * @param {any} redirect: 重定向地址
+   * @description: 用户登录
    */
   const login = async (params: Api.Auth.LoginParams, redirect = true) => {
     startLoading();
@@ -80,7 +80,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
         if (routeStore.isInitAuthRoute) {
           window.$notification?.success({
             message: $t('page.login.loginSuccess'),
-            description: $t('page.login.welcomeBack', { cnName: userInfo.cnName })
+            description: $t('page.login.welcomeBack', { cnName: userInfo.cnName }),
           });
         }
       }
@@ -89,7 +89,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     }
 
     endLoading();
-  }
+  };
 
   async function loginByToken(loginToken: Api.Auth.LoginToken) {
     // 先保存 token 到 localStorage，后续请求需要放在 headers 中
@@ -107,9 +107,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
-  /**
-   * @description: 获取登录用户信息
-   */
+  /** @description: 获取登录用户信息 */
   async function getUserInfo() {
     const { data: info, error } = await fetchGetUserInfo();
 
@@ -123,9 +121,7 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     return false;
   }
 
-  /**
-   * @description: 初始化用户信息
-   */
+  /** @description: 初始化用户信息 */
   async function initUserInfo() {
     const hasToken = getToken();
     if (hasToken) {
@@ -137,18 +133,16 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     }
   }
 
-  /**
-   * @description: 初始化多语言数据
-   */
+  /** @description: 初始化多语言数据 */
   const initLocales = async () => {
     const { data, error } = await getLocales();
     if (!error) {
       Object.assign(locales, data);
       forIn(data, (value, key) => {
-        i18n.global.setLocaleMessage(key, value)
-      })
+        i18n.global.setLocaleMessage(key, value);
+      });
     }
-  }
+  };
 
   return {
     token,
@@ -160,6 +154,6 @@ export const useAuthStore = defineStore(SetupStoreId.Auth, () => {
     login,
     initUserInfo,
     initLocales,
-    locales
+    locales,
   };
 });

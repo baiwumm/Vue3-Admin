@@ -1,12 +1,14 @@
-import { effectScope, nextTick, onScopeDispose, ref, watch } from 'vue';
-import { defineStore } from 'pinia';
-import { breakpointsTailwind, useBreakpoints, useEventListener, useTitle } from '@vueuse/core';
 import { useBoolean } from '@sa/hooks';
+import { breakpointsTailwind, useBreakpoints, useEventListener, useTitle } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import { effectScope, nextTick, onScopeDispose, ref, watch } from 'vue';
+
 import { SetupStoreId } from '@/enum';
-import { router } from '@/router';
 import { $t, setLocale } from '@/locales';
 import { setDayjsLocale } from '@/locales/dayjs';
+import { router } from '@/router';
 import { localStg } from '@/utils/storage';
+
 import { useRouteStore } from '../route';
 import { useTabStore } from '../tab';
 import { useThemeStore } from '../theme';
@@ -25,7 +27,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
   const {
     bool: mixSiderFixed,
     setBool: setMixSiderFixed,
-    toggle: toggleMixSiderFixed
+    toggle: toggleMixSiderFixed,
   } = useBoolean(localStg.get('mixSiderFixed') === 'Y');
 
   /** Is mobile layout */
@@ -54,23 +56,23 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     {
       label: '中文',
       key: 'zh-CN',
-      icon: '🇨🇳'
+      icon: '🇨🇳',
     },
     {
       label: 'English',
       key: 'en-US',
-      icon: '🇺🇸'
+      icon: '🇺🇸',
     },
     {
       label: '日本語です',
       key: 'ja-JP',
-      icon: '🇯🇵'
+      icon: '🇯🇵',
     },
     {
       label: '繁體中文',
       key: 'zh-TW',
-      icon: '🇭🇰'
-    }
+      icon: '🇭🇰',
+    },
   ];
 
   function changeLocale(lang: App.I18n.LangType) {
@@ -102,7 +104,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           // backup theme setting before is mobile
           localStg.set('backupThemeSettingBeforeIsMobile', {
             layout: themeStore.layout.mode,
-            siderCollapse: siderCollapse.value
+            siderCollapse: siderCollapse.value,
           });
 
           themeStore.setThemeLayout('vertical');
@@ -121,7 +123,7 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
           }
         }
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // watch locale
@@ -172,6 +174,6 @@ export const useAppStore = defineStore(SetupStoreId.App, () => {
     toggleSiderCollapse,
     mixSiderFixed,
     setMixSiderFixed,
-    toggleMixSiderFixed
+    toggleMixSiderFixed,
   };
 });

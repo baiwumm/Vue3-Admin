@@ -1,12 +1,14 @@
-import { computed, ref } from 'vue';
-import { defineStore } from 'pinia';
-import { useEventListener } from '@vueuse/core';
 import type { RouteKey } from '@elegant-router/types';
-import { router } from '@/router';
+import { useEventListener } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import { computed, ref } from 'vue';
+
 import { SetupStoreId } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
-import { localStg } from '@/utils/storage';
+import { router } from '@/router';
 import { useRouteStore } from '@/store/modules/route';
+import { localStg } from '@/utils/storage';
+
 import { useThemeStore } from '../theme';
 import {
   extractTabsByAllRoutes,
@@ -20,7 +22,7 @@ import {
   getTabIdByRoute,
   isTabInTabs,
   updateTabByI18nKey,
-  updateTabsByI18nKey
+  updateTabsByI18nKey,
 } from './shared';
 
 export const useTabStore = defineStore(SetupStoreId.Tab, () => {
@@ -291,6 +293,6 @@ export const useTabStore = defineStore(SetupStoreId.Tab, () => {
     isTabRetain,
     updateTabsByLocale,
     getTabIdByRoute,
-    cacheTabs
+    cacheTabs,
   };
 });

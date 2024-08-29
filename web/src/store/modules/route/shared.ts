@@ -1,7 +1,8 @@
-import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from 'vue-router';
 import type { ElegantConstRoute, LastLevelRouteKey, RouteKey, RouteMap } from '@elegant-router/types';
-import { $t } from '@/locales';
+import type { RouteLocationNormalizedLoaded, RouteRecordRaw, _RouteRecordBase } from 'vue-router';
+
 import { useSvgIcon } from '@/hooks/common/icon';
+import { $t } from '@/locales';
 
 /**
  * Filter auth routes by roles
@@ -102,7 +103,7 @@ export function updateLocaleOfGlobalMenus(menus: App.Global.Menu[]) {
     const newMenu: App.Global.Menu = {
       ...menu,
       label: newLabel,
-      title: newLabel
+      title: newLabel,
     };
 
     if (children?.length) {
@@ -135,7 +136,7 @@ function getGlobalMenuByBaseRoute(route: RouteLocationNormalizedLoaded | Elegant
     routeKey: name as RouteKey,
     routePath: path as RouteMap[RouteKey],
     icon: SvgIconVNode({ icon, localIcon, fontSize: 20 }),
-    title: label
+    title: label,
   };
 
   return menu;
@@ -259,7 +260,7 @@ function findMenuPath(targetKey: string, menu: App.Global.Menu): string[] | null
  */
 export function getBreadcrumbsByRoute(
   route: RouteLocationNormalizedLoaded,
-  menus: App.Global.Menu[]
+  menus: App.Global.Menu[],
 ): App.Global.Menu[] {
   const key = route.name as string;
   const activeKey = route.meta?.activeMenu;
