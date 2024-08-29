@@ -228,8 +228,8 @@ declare namespace Api {
     /** @description: 岗位管理 */
     type PostManage = Common.CommonRecord<{
       name: string; // 岗位名称
-      parentId?: string; // 父级 id
-      orgId?: string; // 所属组织 id
+      parentId: string | null; // 父级 id
+      orgId: string | null; // 所属组织 id
       organization: Organization; // 所属组织
       sort: number; // 排序
       description?: string; // 岗位描述

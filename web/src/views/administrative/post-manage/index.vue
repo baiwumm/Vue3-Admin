@@ -1,74 +1,22 @@
-<template>
-  <PageContainer>
-    <template #header>
-      <!-- 顶部搜索 -->
-      <HeaderSearch
-        v-model:model="searchParams"
-        @reset="resetSearchParams"
-        @search="getDataByPage"
-        :organazationList="organazationList"
-        :updateSearchParams="updateSearchParams"
-        :locales="locales"
-      />
-    </template>
-    <template #extra>
-      <TableHeaderOperation
-        v-model:columns="columnChecks"
-        :disabled-delete="checkedRowKeys.length === 0"
-        :loading="loading"
-        @add="handleAdd"
-        @refresh="getData"
-        :add-btn="hasAuth('administrative:post-manage:add')"
-      />
-    </template>
-    <!-- 表格 -->
-    <ATable
-      ref="tableWrapperRef"
-      :columns="columns"
-      :data-source="data"
-      size="small"
-      :scroll="scrollConfig"
-      :loading="loading"
-      row-key="id"
-      :pagination="false"
-      class="h-full"
-    />
-    <!-- 操作抽屉 -->
-    <OperateDrawer
-      v-model:visible="drawerVisible"
-      :operate-type="operateType"
-      :row-data="editingData"
-      @submitted="getDataByPage"
-      :dataSource="data"
-      :organazationList="organazationList"
-      :locales="locales"
-    />
-  </PageContainer>
-</template>
-
 <script setup lang="tsx">
-import { onMounted, ref } from "vue";
-import { $t } from "@/locales";
-import { Button, Popconfirm, Tag, Space, Tooltip } from "ant-design-vue";
-import {
-  useTable,
-  useTableOperate,
-  useTableScroll,
-} from "@/hooks/common/table";
-import { getPostList, delPost, getOrganazationList } from "@/service/api";
-import OperateDrawer from "./modules/operate-drawer.vue";
-import HeaderSearch from "./modules/header-search.vue";
-import dayjs from "dayjs";
-import SvgIcon from "@/components/custom/svg-icon.vue";
-import { UNIFORM_TEXT } from "@/enum";
-import { useAuth } from "@/hooks/business/auth";
+import { Button, Popconfirm, Space, Tag, Tooltip } from 'ant-design-vue';
+import dayjs from 'dayjs';
+import { onMounted, ref } from 'vue';
+
+import SvgIcon from '@/components/custom/svg-icon.vue';
+import { UNIFORM_TEXT } from '@/enum';
+import { useAuth } from '@/hooks/business/auth';
+import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
+import { $t } from '@/locales';
+import { delPost, getOrganazationList, getPostList } from '@/service/api';
+
+import HeaderSearch from './modules/header-search.vue';
+import OperateDrawer from './modules/operate-drawer.vue';
 
 // 权限钩子函数
 const { hasAuth } = useAuth();
 
-/**
- * @description: 获取组织树
- */
+/** @description: 获取组织树 */
 const organazationList = ref<Api.Administrative.Organization[]>([]);
 const fetchOrganazationList = async () => {
   const { data, error } = await getOrganazationList();
@@ -83,8 +31,7 @@ const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 const editingData = ref<Api.Administrative.PostManage | null>(null);
 
 // 国际化
-const locales = (field: string) =>
-  $t(`page.administrative.postManage.${field}`);
+const locales = (field: string) => $t(`page.administrative.postManage.${field}`);
 
 const {
   columns,
@@ -106,9 +53,9 @@ const {
   },
   columns: () => [
     {
-      key: "name",
-      dataIndex: "name",
-      title: locales("name"),
+      key: 'name',
+      dataIndex: 'name',
+      title: locales('name'),
       customRender: ({ text }) => (
         <Tag bordered={false}>
           <Space>
@@ -119,19 +66,16 @@ const {
       ),
     },
     {
-      key: "orgId",
-      dataIndex: "orgId",
-      title: locales("orgId"),
-      align: "center",
+      key: 'orgId',
+      dataIndex: 'orgId',
+      title: locales('orgId'),
+      align: 'center',
       customRender: ({ record }) => {
         const { organization } = record;
         return (
           <Tag bordered={false}>
             <Space>
-              <SvgIcon
-                icon={organization.icon || "ri:exchange-2-line"}
-                class="text-base"
-              />
+              <SvgIcon icon={organization.icon || 'ri:exchange-2-line'} class="text-base" />
               {organization.name}
             </Space>
           </Tag>
@@ -139,10 +83,10 @@ const {
       },
     },
     {
-      key: "description",
-      dataIndex: "description",
-      title: locales("description"),
-      align: "center",
+      key: 'description',
+      dataIndex: 'description',
+      title: locales('description'),
+      align: 'center',
       ellipsis: true,
       customRender: ({ text }) =>
         text ? (
@@ -154,10 +98,10 @@ const {
         ),
     },
     {
-      key: "sort",
-      dataIndex: "sort",
-      title: $t("form.sort"),
-      align: "center",
+      key: 'sort',
+      dataIndex: 'sort',
+      title: $t('form.sort'),
+      align: 'center',
       customRender: ({ text }) => (
         <Tag bordered={false} color="success">
           {text}
@@ -165,38 +109,30 @@ const {
       ),
     },
     {
-      key: "createdAt",
-      dataIndex: "createdAt",
-      title: $t("common.createdAt"),
-      align: "center",
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      title: $t('common.createdAt'),
+      align: 'center',
       width: 160,
-      customRender: ({ text }) => dayjs(text).format("YYYY-MM-DD HH:mm:ss"),
+      customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
-      key: "operate",
-      title: $t("common.operate"),
-      align: "center",
+      key: 'operate',
+      title: $t('common.operate'),
+      align: 'center',
       width: 130,
-      fixed: "right",
+      fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth("administrative:post-manage:edit") ? (
-            <Button
-              type="primary"
-              ghost
-              size="small"
-              onClick={() => edit(record)}
-            >
-              {$t("common.edit")}
+          {hasAuth('administrative:post-manage:edit') ? (
+            <Button type="primary" ghost size="small" onClick={() => edit(record)}>
+              {$t('common.edit')}
             </Button>
           ) : null}
-          {hasAuth("administrative:post-manage:delete") ? (
-            <Popconfirm
-              title={$t("common.confirmDelete")}
-              onConfirm={() => handleDelete(record.id)}
-            >
+          {hasAuth('administrative:post-manage:delete') ? (
+            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t("common.delete")}
+                {$t('common.delete')}
               </Button>
             </Popconfirm>
           ) : null}
@@ -206,41 +142,73 @@ const {
   ],
 });
 
-const {
-  drawerVisible,
-  operateType,
-  handleAdd,
-  handleEdit,
-  checkedRowKeys,
-  onDeleted,
-} = useTableOperate(data, getData);
+const { drawerVisible, operateType, handleAdd, handleEdit, checkedRowKeys, onDeleted } = useTableOperate(data, getData);
 
-/**
- * @description: 删除岗位
- */
-const handleDelete = (id: string) => {
-  return new Promise(async (resolve) => {
-    await delPost({ id }).then(({ error }) => {
-      if (!error) {
-        onDeleted();
-      }
-      resolve(true);
-    });
+/** @description: 删除岗位 */
+const handleDelete = async (id: string) => {
+  return await delPost({ id }).then(({ error }) => {
+    if (!error) {
+      onDeleted();
+    }
   });
 };
 
-/**
- * @description: 编辑岗位
- */
+/** @description: 编辑岗位 */
 const edit = (record: Api.Administrative.PostManage) => {
   editingData.value = record;
   handleEdit(record.id);
 };
 
-/**
- * @description: 组件挂载
- */
+/** @description: 组件挂载 */
 onMounted(() => {
   fetchOrganazationList();
 });
 </script>
+
+<template>
+  <PageContainer>
+    <template #header>
+      <!-- 顶部搜索 -->
+      <HeaderSearch
+        v-model:model="searchParams"
+        :organazation-list="organazationList"
+        :update-search-params="updateSearchParams"
+        :locales="locales"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
+      />
+    </template>
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
+        :loading="loading"
+        :add-btn="hasAuth('administrative:post-manage:add')"
+        @add="handleAdd"
+        @refresh="getData"
+      />
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="false"
+      class="h-full"
+    />
+    <!-- 操作抽屉 -->
+    <OperateDrawer
+      v-model:visible="drawerVisible"
+      :operate-type="operateType"
+      :row-data="editingData"
+      :data-source="data"
+      :organazation-list="organazationList"
+      :locales="locales"
+      @submitted="getDataByPage"
+    />
+  </PageContainer>
+</template>

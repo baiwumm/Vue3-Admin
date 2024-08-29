@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { computed, nextTick, reactive, watch, ref } from "vue";
-import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import { $t } from "@/locales";
-import { createPost, updatePost } from "@/service/api";
-import { pick } from "lodash-es";
-import { OPERATION_TYPE } from "@/enum";
+import { pick } from 'lodash-es';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
+
+import { OPERATION_TYPE } from '@/enum';
+import { useAntdForm, useFormRules } from '@/hooks/common/form';
+import { $t } from '@/locales';
+import { createPost, updatePost } from '@/service/api';
 
 defineOptions({
-  name: "OperateDrawer",
+  name: 'OperateDrawer',
 });
 
 // 是否请求中
@@ -25,12 +26,12 @@ const props = defineProps<Props>();
 
 // 父组件自定义事件
 interface Emits {
-  (e: "submitted"): void;
+  (e: 'submitted'): void;
 }
 const emit = defineEmits<Emits>();
 
 // 抽屉显示状态
-const visible = defineModel<boolean>("visible", {
+const visible = defineModel<boolean>('visible', {
   default: false,
 });
 
@@ -44,19 +45,16 @@ const model: Api.Administrative.SavePostManage = reactive(createDefaultModel());
 
 function createDefaultModel(): Api.Administrative.SavePostManage {
   return {
-    parentId: undefined,
-    name: "",
-    orgId: undefined,
+    parentId: null,
+    name: '',
+    orgId: null,
     sort: 1,
-    description: "",
+    description: '',
   };
 }
 
 // 表单校验的 key
-type RuleKey = Extract<
-  keyof Api.Administrative.SavePostManage,
-  "name" | "orgId" | "sort"
->;
+type RuleKey = Extract<keyof Api.Administrative.SavePostManage, 'name' | 'orgId' | 'sort'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   name: defaultRequiredRule,
@@ -88,14 +86,15 @@ async function handleSubmit() {
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
-      ...pick(model, ["parentId", "name", "orgId", "sort", "description"]),
+      ...pick(model, ['name', 'orgId', 'sort', 'description']),
+      parentId: model.parentId || null,
     };
     await (isAdd ? createPost : updatePost)(params)
       .then(({ error }) => {
         if (!error) {
           window.$message?.success($t(`common.${props.operateType}Success`));
           closeDrawer();
-          emit("submitted");
+          emit('submitted');
         }
       })
       .finally(() => {
@@ -115,30 +114,22 @@ watch(visible, () => {
 <template>
   <ADrawer v-model:open="visible" :title="title" :width="360">
     <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
-      <AFormItem
-        :label="$t('form.parent')"
-        name="parentId"
-        :tooltip="$t('form.parentTip')"
-      >
+      <AFormItem :label="$t('form.parent')" name="parentId" :tooltip="$t('form.parentTip')">
         <ATreeSelect
           v-model:value="model.parentId"
           show-search
-          style="width: 100%"
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
           :placeholder="$t('form.select')"
           allow-clear
           tree-default-expand-all
           :tree-data="dataSource"
           tree-node-filter-prop="name"
-          :fieldNames="{ value: 'id', label: 'name' }"
+          :field-names="{ value: 'id', label: 'name' }"
+          class="w-full"
         >
           <template #title="{ name }">
             <ASpace align="center">
-              <svg-icon
-                icon="ri:contacts-book-3-line"
-                class="inline-block"
-                style="vertical-align: -2px"
-              />
+              <SvgIcon icon="ri:contacts-book-3-line" class="inline-block" :style="{ verticalAlign: '-2px' }" />
               {{ name }}
             </ASpace>
           </template>
@@ -156,38 +147,30 @@ watch(visible, () => {
         <ATreeSelect
           v-model:value="model.orgId"
           show-search
-          style="width: 100%"
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
           :placeholder="$t('form.select')"
           allow-clear
           tree-default-expand-all
           :tree-data="organazationList"
           tree-node-filter-prop="name"
-          :fieldNames="{ value: 'id', label: 'name' }"
+          :field-names="{ value: 'id', label: 'name' }"
+          class="w-full"
         >
           <template #title="{ icon, name }">
             <ASpace align="center">
-              <svg-icon
-                :icon="icon || 'ri:exchange-2-line'"
-                class="inline-block"
-                style="vertical-align: -2px"
-              />
+              <SvgIcon :icon="icon || 'ri:exchange-2-line'" class="inline-block" :style="{ verticalAlign: '-2px' }" />
               {{ name }}
             </ASpace>
           </template>
         </ATreeSelect>
       </AFormItem>
-      <AFormItem
-        :label="$t('form.sort')"
-        name="sort"
-        :tooltip="$t('form.sortTip')"
-      >
+      <AFormItem :label="$t('form.sort')" name="sort" :tooltip="$t('form.sortTip')">
         <AInputNumber
           v-model:value="model.sort"
           :min="1"
           :max="999"
           :placeholder="$t('form.enter') + $t('form.sort')"
-          style="width: 100%"
+          class="w-full"
         />
       </AFormItem>
       <AFormItem :label="locales('description')" name="description">
@@ -202,10 +185,8 @@ watch(visible, () => {
     </AForm>
     <template #footer>
       <ASpace :size="16">
-        <AButton @click="closeDrawer">{{ $t("common.cancel") }}</AButton>
-        <AButton type="primary" :loading="loading" @click="handleSubmit">{{
-          $t("common.confirm")
-        }}</AButton>
+        <AButton @click="closeDrawer">{{ $t('common.cancel') }}</AButton>
+        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t('common.confirm') }}</AButton>
       </ASpace>
     </template>
   </ADrawer>
