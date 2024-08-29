@@ -1,3 +1,25 @@
+<script setup lang="ts">
+import { regionData } from 'element-china-area-data';
+
+import FigureLabels from '@/components/custom/figure-labels.vue';
+
+defineOptions({
+  name: 'UserInfo',
+  inheritAttrs: false,
+});
+
+// 父组件传递的值
+type Props = {
+  model: Api.SystemManage.SaveUserManage;
+  roleList: Api.SystemManage.RoleManage[];
+  organazationList: Api.Administrative.Organization[];
+  postList: Api.Administrative.PostManage[];
+  locales: (field: string) => string;
+  showTag: boolean;
+};
+defineProps<Props>();
+</script>
+
 <template>
   <ACol :span="12">
     <AFormItem :label="locales('roleId')" name="roleId">
@@ -14,22 +36,18 @@
       <ATreeSelect
         v-model:value="model.orgId"
         show-search
-        style="width: 100%"
         :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
         :placeholder="$t('form.select')"
         allow-clear
         tree-default-expand-all
         :tree-data="organazationList"
         tree-node-filter-prop="name"
-        :fieldNames="{ value: 'id', label: 'name' }"
+        :field-names="{ value: 'id', label: 'name' }"
+        class="w-full"
       >
         <template #title="{ icon, name }">
           <ASpace align="center">
-            <svg-icon
-              :icon="icon || 'ri:exchange-2-line'"
-              class="inline-block"
-              style="vertical-align: -2px"
-            />
+            <SvgIcon :icon="icon || 'ri:exchange-2-line'" class="inline-block" :style="{ verticalAlign: '-2px' }" />
             {{ name }}
           </ASpace>
         </template>
@@ -41,21 +59,21 @@
       <ATreeSelect
         v-model:value="model.postId"
         show-search
-        style="width: 100%"
+        sclass="w-full"
         :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
         :placeholder="$t('form.select')"
         allow-clear
         tree-default-expand-all
         :tree-data="postList"
         tree-node-filter-prop="name"
-        :fieldNames="{ value: 'id', label: 'name' }"
+        :field-names="{ value: 'id', label: 'name' }"
       >
         <template #title="{ icon, name }">
           <ASpace align="center">
-            <svg-icon
+            <SvgIcon
               :icon="icon || 'ri:contacts-book-3-line'"
               class="inline-block"
-              style="vertical-align: -2px"
+              :style="{ verticalAlign: '-2px' }"
             />
             {{ name }}
           </ASpace>
@@ -65,11 +83,7 @@
   </ACol>
   <ACol :span="12">
     <AFormItem :label="locales('city')" name="city">
-      <ACascader
-        v-model:value="model.city"
-        :options="regionData"
-        :placeholder="$t('form.select') + locales('city')"
-      />
+      <ACascader v-model:value="model.city" :options="regionData" :placeholder="$t('form.select') + locales('city')" />
     </AFormItem>
   </ACol>
   <ACol :span="24">
@@ -83,30 +97,9 @@
       />
     </AFormItem>
   </ACol>
-  <ACol :span="24" v-if="showTag">
+  <ACol v-if="showTag" :span="24">
     <AFormItem :label="locales('tags')" name="tags">
       <FigureLabels v-model:value="model.tags" />
     </AFormItem>
   </ACol>
 </template>
-
-<script setup lang="ts">
-import { regionData } from "element-china-area-data";
-import FigureLabels from "@/components/custom/figure-labels.vue";
-
-defineOptions({
-  name: "UserInfo",
-  inheritAttrs: false,
-});
-
-// 父组件传递的值
-type Props = {
-  model: Api.SystemManage.SaveUserManage;
-  roleList: Api.SystemManage.RoleManage[];
-  organazationList: Api.Administrative.Organization[];
-  postList: Api.Administrative.PostManage[];
-  locales: (field: string) => string;
-  showTag: boolean;
-};
-defineProps<Props>();
-</script>

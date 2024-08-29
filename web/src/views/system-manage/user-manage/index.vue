@@ -1,76 +1,19 @@
-<template>
-  <PageContainer>
-    <!-- 顶部搜索 -->
-    <template #header>
-      <HeaderSearch
-        v-model:model="searchParams"
-        @reset="resetSearchParams"
-        @search="getDataByPage"
-        :locales="locales"
-      />
-    </template>
-    <!-- 右侧操作区 -->
-    <template #extra>
-      <TableHeaderOperation
-        v-model:columns="columnChecks"
-        :disabled-delete="checkedRowKeys.length === 0"
-        :loading="loading"
-        @add="handleAdd"
-        @refresh="getData"
-        :add-btn="hasAuth('system-manage:user-manage:add')"
-      />
-    </template>
-    <!-- 表格 -->
-    <ATable
-      ref="tableWrapperRef"
-      :columns="columns"
-      :data-source="data"
-      size="small"
-      :scroll="scrollConfig"
-      :loading="loading"
-      row-key="id"
-      :pagination="{
-        ...mobilePagination,
-        showTotal: (total) => `共 ${total} 条数据`,
-      }"
-      class="h-full"
-    />
-    <!-- 操作弹窗 -->
-    <OperateModal
-      v-model:visible="drawerVisible"
-      :operate-type="operateType"
-      :row-data="editingData"
-      @submitted="getDataByPage"
-      :dataSource="data"
-      :locales="locales"
-    />
-  </PageContainer>
-</template>
 <script setup lang="tsx">
-import { ref } from "vue";
-import { getUserList, delUser } from "@/service/api";
-import { $t } from "@/locales";
-import {
-  Button,
-  Popconfirm,
-  Tag,
-  Space,
-  Tooltip,
-  Avatar,
-} from "ant-design-vue";
-import SvgIcon from "@/components/custom/svg-icon.vue";
-import {
-  useTable,
-  useTableOperate,
-  useTableScroll,
-} from "@/hooks/common/table";
-import OperateModal from "./modules/operate-modal.vue";
-import { SEX, UNIFORM_TEXT, STATUS } from "@/enum";
-import { eq, find, get } from "lodash-es";
-import dayjs from "dayjs";
-import { StatueOptions } from "@/constants";
-import HeaderSearch from "./modules/header-search.vue";
-import { useAuth } from "@/hooks/business/auth";
+import { Avatar, Button, Popconfirm, Space, Tag, Tooltip } from 'ant-design-vue';
+import dayjs from 'dayjs';
+import { eq, find, get } from 'lodash-es';
+import { ref } from 'vue';
+
+import SvgIcon from '@/components/custom/svg-icon.vue';
+import { StatueOptions } from '@/constants';
+import { SEX, STATUS, UNIFORM_TEXT } from '@/enum';
+import { useAuth } from '@/hooks/business/auth';
+import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
+import { $t } from '@/locales';
+import { delUser, getUserList } from '@/service/api';
+
+import HeaderSearch from './modules/header-search.vue';
+import OperateModal from './modules/operate-modal.vue';
 
 // 权限钩子函数
 const { hasAuth } = useAuth();
@@ -103,12 +46,12 @@ const {
   },
   columns: () => [
     {
-      key: "userName",
-      dataIndex: "userName",
-      title: locales("userName"),
+      key: 'userName',
+      dataIndex: 'userName',
+      title: locales('userName'),
       width: 120,
-      align: "center",
-      fixed: "left",
+      align: 'center',
+      fixed: 'left',
       customRender: ({ text }) => (
         <Tag bordered={false} color="purple">
           <Space>
@@ -119,26 +62,26 @@ const {
       ),
     },
     {
-      key: "cnName",
-      dataIndex: "cnName",
-      title: locales("cnName"),
+      key: 'cnName',
+      dataIndex: 'cnName',
+      title: locales('cnName'),
       width: 100,
-      align: "center",
+      align: 'center',
     },
     {
-      key: "avatar",
-      dataIndex: "avatar",
-      title: locales("avatar"),
+      key: 'avatar',
+      dataIndex: 'avatar',
+      title: locales('avatar'),
       width: 60,
-      align: "center",
+      align: 'center',
       customRender: ({ text }) => <Avatar src={text} />,
     },
     {
-      key: "roleId",
-      dataIndex: "roleId",
-      title: locales("roleId"),
+      key: 'roleId',
+      dataIndex: 'roleId',
+      title: locales('roleId'),
       width: 120,
-      align: "center",
+      align: 'center',
       customRender: ({ record }) => (
         <Tag bordered={false}>
           <Space>
@@ -149,29 +92,26 @@ const {
       ),
     },
     {
-      key: "orgId",
-      dataIndex: "orgId",
-      title: locales("orgId"),
+      key: 'orgId',
+      dataIndex: 'orgId',
+      title: locales('orgId'),
       width: 120,
-      align: "center",
+      align: 'center',
       customRender: ({ record }) => (
         <Tag bordered={false}>
           <Space>
-            <SvgIcon
-              icon={record.organization.icon || "ri:exchange-2-line"}
-              class="text-base"
-            />
+            <SvgIcon icon={record.organization.icon || 'ri:exchange-2-line'} class="text-base" />
             {record.organization.name}
           </Space>
         </Tag>
       ),
     },
     {
-      key: "postId",
-      dataIndex: "postId",
-      title: locales("postId"),
+      key: 'postId',
+      dataIndex: 'postId',
+      title: locales('postId'),
       width: 120,
-      align: "center",
+      align: 'center',
       customRender: ({ record }) => (
         <Tag bordered={false}>
           <Space>
@@ -182,54 +122,41 @@ const {
       ),
     },
     {
-      key: "sex",
-      dataIndex: "sex",
-      title: locales("sex"),
+      key: 'sex',
+      dataIndex: 'sex',
+      title: locales('sex'),
       width: 80,
-      align: "center",
+      align: 'center',
       customRender: ({ text }) => (
-        <Tag
-          bordered={false}
-          color={eq(text, SEX.MALE) ? "processing" : "magenta"}
-        >
-          <SvgIcon
-            icon={eq(text, SEX.MALE) ? "ri:men-line" : "ri:women-line"}
-            class="text-lg inline-block"
-          />
+        <Tag bordered={false} color={eq(text, SEX.MALE) ? 'processing' : 'magenta'}>
+          <SvgIcon icon={eq(text, SEX.MALE) ? 'ri:men-line' : 'ri:women-line'} class="inline-block text-lg" />
         </Tag>
       ),
     },
     {
-      key: "status",
-      dataIndex: "status",
-      title: $t("form.status"),
+      key: 'status',
+      dataIndex: 'status',
+      title: $t('form.status'),
       width: 80,
-      align: "center",
+      align: 'center',
       customRender: ({ text }) => (
-        <Tag
-          bordered={false}
-          color={eq(text, STATUS.ACTIVE) ? "processing" : "error"}
-        >
-          {get(
-            find(StatueOptions, ["value", text]),
-            "label",
-            UNIFORM_TEXT.NULL,
-          )}
+        <Tag bordered={false} color={eq(text, STATUS.ACTIVE) ? 'processing' : 'error'}>
+          {get(find(StatueOptions, ['value', text]), 'label', UNIFORM_TEXT.NULL)}
         </Tag>
       ),
     },
     {
-      key: "phone",
-      dataIndex: "phone",
-      title: locales("phone"),
+      key: 'phone',
+      dataIndex: 'phone',
+      title: locales('phone'),
       width: 100,
-      align: "center",
+      align: 'center',
     },
     {
-      key: "email",
-      dataIndex: "email",
-      title: locales("email"),
-      align: "center",
+      key: 'email',
+      dataIndex: 'email',
+      title: locales('email'),
+      align: 'center',
       width: 120,
       ellipsis: true,
       customRender: ({ text }) =>
@@ -242,10 +169,10 @@ const {
         ),
     },
     {
-      key: "sort",
-      dataIndex: "sort",
-      title: $t("form.sort"),
-      align: "center",
+      key: 'sort',
+      dataIndex: 'sort',
+      title: $t('form.sort'),
+      align: 'center',
       width: 60,
       customRender: ({ text }) => (
         <Tag bordered={false} color="success">
@@ -254,38 +181,30 @@ const {
       ),
     },
     {
-      key: "createdAt",
-      dataIndex: "createdAt",
-      title: $t("common.createdAt"),
-      align: "center",
+      key: 'createdAt',
+      dataIndex: 'createdAt',
+      title: $t('common.createdAt'),
+      align: 'center',
       width: 160,
-      customRender: ({ text }) => dayjs(text).format("YYYY-MM-DD HH:mm:ss"),
+      customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
-      key: "operate",
-      title: $t("common.operate"),
-      align: "center",
+      key: 'operate',
+      title: $t('common.operate'),
+      align: 'center',
       width: 130,
-      fixed: "right",
+      fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth("system-manage:user-manage:edit") ? (
-            <Button
-              type="primary"
-              ghost
-              size="small"
-              onClick={() => edit(record)}
-            >
-              {$t("common.edit")}
+          {hasAuth('system-manage:user-manage:edit') ? (
+            <Button type="primary" ghost size="small" onClick={() => edit(record)}>
+              {$t('common.edit')}
             </Button>
           ) : null}
-          {hasAuth("system-manage:user-manage:delete") ? (
-            <Popconfirm
-              title={$t("common.confirmDelete")}
-              onConfirm={() => handleDelete(record.id)}
-            >
+          {hasAuth('system-manage:user-manage:delete') ? (
+            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t("common.delete")}
+                {$t('common.delete')}
               </Button>
             </Popconfirm>
           ) : null}
@@ -295,34 +214,67 @@ const {
   ],
 });
 
-const {
-  drawerVisible,
-  operateType,
-  handleAdd,
-  handleEdit,
-  checkedRowKeys,
-  onDeleted,
-} = useTableOperate(data, getData);
+const { drawerVisible, operateType, handleAdd, handleEdit, checkedRowKeys, onDeleted } = useTableOperate(data, getData);
 
-/**
- * @description: 删除用户
- */
-const handleDelete = (id: string) => {
-  return new Promise(async (resolve) => {
-    await delUser({ id }).then(({ error }) => {
-      if (!error) {
-        onDeleted();
-      }
-      resolve(true);
-    });
+/** @description: 删除用户 */
+const handleDelete = async (id: string) =>
+  await delUser({ id }).then(({ error }) => {
+    if (!error) {
+      onDeleted();
+    }
   });
-};
 
-/**
- * @description: 编辑岗位
- */
+/** @description: 编辑岗位 */
 const edit = (record: Api.SystemManage.UserManage) => {
   editingData.value = record;
   handleEdit(record.id);
 };
 </script>
+
+<template>
+  <PageContainer>
+    <!-- 顶部搜索 -->
+    <template #header>
+      <HeaderSearch
+        v-model:model="searchParams"
+        :locales="locales"
+        @reset="resetSearchParams"
+        @search="getDataByPage"
+      />
+    </template>
+    <!-- 右侧操作区 -->
+    <template #extra>
+      <TableHeaderOperation
+        v-model:columns="columnChecks"
+        :disabled-delete="checkedRowKeys.length === 0"
+        :loading="loading"
+        :add-btn="hasAuth('system-manage:user-manage:add')"
+        @add="handleAdd"
+        @refresh="getData"
+      />
+    </template>
+    <!-- 表格 -->
+    <ATable
+      ref="tableWrapperRef"
+      :columns="columns"
+      :data-source="data"
+      size="small"
+      :scroll="scrollConfig"
+      :loading="loading"
+      row-key="id"
+      :pagination="{
+        ...mobilePagination,
+        showTotal: total => `共 ${total} 条数据`,
+      }"
+      class="h-full"
+    />
+    <!-- 操作弹窗 -->
+    <OperateModal
+      v-model:visible="drawerVisible"
+      :operate-type="operateType"
+      :row-data="editingData"
+      :locales="locales"
+      @submitted="getDataByPage"
+    />
+  </PageContainer>
+</template>

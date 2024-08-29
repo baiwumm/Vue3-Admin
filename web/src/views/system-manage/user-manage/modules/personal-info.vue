@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { SexOptions, StatueOptions } from '@/constants';
+
+defineOptions({
+  name: 'PersonalInfo',
+  inheritAttrs: false,
+});
+
+// 父组件传递的值
+type Props = {
+  model: Api.SystemManage.SaveUserManage;
+  locales: (field: string) => string;
+};
+defineProps<Props>();
+</script>
+
 <template>
   <ACol :span="12">
     <AFormItem :label="locales('userName')" name="userName">
@@ -31,50 +47,28 @@
   </ACol>
   <ACol :span="12">
     <AFormItem :label="locales('email')" name="email">
-      <AInput
-        v-model:value="model.email"
-        :placeholder="$t('form.enter') + locales('email')"
-      />
+      <AInput v-model:value="model.email" :placeholder="$t('form.enter') + locales('email')" />
     </AFormItem>
   </ACol>
   <ACol :span="12">
     <AFormItem :label="locales('sex')" name="sex">
-      <a-radio-group v-model:value="model.sex" :options="SexOptions" />
+      <ARadioGroup v-model:value="model.sex" :options="SexOptions" />
     </AFormItem>
   </ACol>
   <ACol :span="12">
     <AFormItem :label="$t('form.status')" name="status">
-      <a-radio-group v-model:value="model.status" :options="StatueOptions" />
+      <ARadioGroup v-model:value="model.status" :options="StatueOptions" />
     </AFormItem>
   </ACol>
   <ACol :span="24">
-    <AFormItem
-      :label="$t('form.sort')"
-      name="sort"
-      :tooltip="$t('form.sortTip')"
-    >
+    <AFormItem :label="$t('form.sort')" name="sort" :tooltip="$t('form.sortTip')">
       <AInputNumber
         v-model:value="model.sort"
         :min="1"
         :max="999"
         :placeholder="$t('form.enter') + $t('form.sort')"
-        style="width: 100%"
+        class="w-full"
       />
     </AFormItem>
   </ACol>
 </template>
-<script setup lang="ts">
-import { SexOptions, StatueOptions } from "@/constants";
-
-defineOptions({
-  name: "PersonalInfo",
-  inheritAttrs: false,
-});
-
-// 父组件传递的值
-type Props = {
-  model: Api.SystemManage.SaveUserManage;
-  locales: (field: string) => string;
-};
-defineProps<Props>();
-</script>
