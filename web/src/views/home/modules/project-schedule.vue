@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from "vue";
-import { random } from "lodash-es";
-import MiniProgress from "./mini-progress.vue";
-import ChartCard from "./chart-card.vue";
-import { useThemeStore } from "@/store/modules/theme";
+import { random } from 'lodash-es';
+import { onMounted, ref, watch } from 'vue';
+
+import { useThemeStore } from '@/store/modules/theme';
+
+import ChartCard from './chart-card.vue';
+import MiniProgress from './mini-progress.vue';
 
 defineOptions({
-  name: "ProjectSchedule",
+  name: 'ProjectSchedule',
 });
 
 const themeStore = useThemeStore();
@@ -27,7 +29,7 @@ const reloadComponent = () => {
     loading.value = false;
     dataSource.value = random(0, 1, true);
     completionRate.value = random(1, 100);
-    componentKey.value++;
+    componentKey.value += 1;
   }, 1200);
 };
 
@@ -44,21 +46,11 @@ watch(
 </script>
 
 <template>
-  <ChartCard
-    title="项目进度"
-    :total="dataSource * 100"
-    :loading="loading"
-    suffix="%"
-    :key="componentKey"
-  >
-    <MiniProgress
-      :data-source="dataSource"
-      :height="60"
-      :color="themeStore.themeColor"
-    />
+  <ChartCard :key="componentKey" title="项目进度" :total="dataSource * 100" :loading="loading" suffix="%">
+    <MiniProgress :data-source="dataSource" :height="60" :color="themeStore.themeColor" />
     <template #extra>
       <ATooltip title="重新加载">
-        <div @click="reloadComponent" class="cursor-pointer">
+        <div class="cursor-pointer" @click="reloadComponent">
           <SvgIcon icon="ri:reset-left-fill" />
         </div>
       </ATooltip>

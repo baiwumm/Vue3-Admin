@@ -1,3 +1,18 @@
+<script setup lang="ts">
+defineOptions({
+  name: 'ChartCard',
+});
+
+type Props = {
+  title: string; // 标题
+  total: number; // 总数
+  loading?: boolean; // 加载状态
+  prefix?: string; // 前缀
+  suffix?: string; // 后缀
+};
+defineProps<Props>();
+</script>
+
 <template>
   <ACard :bordered="false">
     <ASpin :spinning="loading">
@@ -26,17 +41,3 @@
     </ASpin>
   </ACard>
 </template>
-<script setup lang="ts">
-defineOptions({
-  name: "ChartCard",
-});
-
-type Props = {
-  title: string; // 标题
-  total: number; // 总数
-  loading?: boolean; // 加载状态
-  prefix?: string; // 前缀
-  suffix?: string; // 后缀
-};
-defineProps<Props>();
-</script>

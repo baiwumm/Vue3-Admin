@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref, reactive, onMounted } from "vue";
-import { random, assign } from "lodash-es";
-import ChartCard from "./chart-card.vue";
+import { assign, random } from 'lodash-es';
+import { onMounted, reactive, ref } from 'vue';
+
+import ChartCard from './chart-card.vue';
 
 defineOptions({
-  name: "SalesVolume",
+  name: 'SalesVolume',
 });
 
 // 数据加载状态
@@ -42,15 +43,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <ChartCard
-    title="总销售额"
-    :total="state.total"
-    :loading="loading"
-    prefix="¥"
-  >
+  <ChartCard title="总销售额" :total="state.total" :loading="loading" prefix="¥">
     <template #extra>
       <ATooltip title="重新加载">
-        <div @click="reloadComponent" class="cursor-pointer">
+        <div class="cursor-pointer" @click="reloadComponent">
           <SvgIcon icon="ri:reset-left-fill" />
         </div>
       </ATooltip>
@@ -65,24 +61,14 @@ onMounted(() => {
     </template>
     <div class="h-[60px]">
       <ASpace>
-        <CountTo
-          prefix="日同比："
-          :end-value="state.daily"
-          suffix="%"
-          class="text-12px text-black dark:text-white"
-        />
+        <CountTo prefix="日同比：" :end-value="state.daily" suffix="%" class="text-12px text-black dark:text-white" />
         <SvgIcon
           :icon="state.daily >= 0 ? 'ri:arrow-up-fill' : 'ri:arrow-down-fill'"
           :style="{
             color: state.daily >= 0 ? '#3f8600' : '#cf1322',
           }"
         />
-        <CountTo
-          prefix="周同比："
-          :end-value="state.week"
-          suffix="%"
-          class="text-12px text-black dark:text-white"
-        />
+        <CountTo prefix="周同比：" :end-value="state.week" suffix="%" class="text-12px text-black dark:text-white" />
         <SvgIcon
           :icon="state.week >= 0 ? 'ri:arrow-up-fill' : 'ri:arrow-down-fill'"
           :style="{

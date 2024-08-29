@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import HeaderBanner from "./modules/header-banner.vue";
-import ProjectNews from "./modules/project-news.vue";
-import CreativityBanner from "./modules/creativity-banner.vue";
-import StatisticChart from "./modules/statistic-card.vue";
+import CreativityBanner from './modules/creativity-banner.vue';
+import HeaderBanner from './modules/header-banner.vue';
+import ProjectNews from './modules/project-news.vue';
+import StatisticChart from './modules/statistic-card.vue';
 </script>
 
 <template>

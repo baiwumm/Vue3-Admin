@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed, ref, onMounted } from "vue";
-import { $t } from "@/locales";
-import { useAuthStore } from "@/store/modules/auth";
-import { get, toString, isEmpty } from "lodash-es";
-import { timeFix, welcomeWords } from "@/utils";
+import { get, isEmpty, toString } from 'lodash-es';
+import { computed, onMounted, ref } from 'vue';
+
+import { $t } from '@/locales';
+import { useAuthStore } from '@/store/modules/auth';
+import { timeFix, welcomeWords } from '@/utils';
 
 defineOptions({
-  name: "HeaderBanner",
+  name: 'HeaderBanner',
 });
 
 const authStore = useAuthStore();
@@ -22,30 +23,28 @@ interface StatisticData {
 const statisticData = computed<StatisticData[]>(() => [
   {
     id: 0,
-    title: $t("page.home.projectCount"),
-    value: "25",
+    title: $t('page.home.projectCount'),
+    value: '25',
   },
   {
     id: 1,
-    title: $t("page.home.todo"),
-    value: "4/16",
+    title: $t('page.home.todo'),
+    value: '4/16',
   },
   {
     id: 2,
-    title: $t("page.home.message"),
-    value: "12",
+    title: $t('page.home.message'),
+    value: '12',
   },
 ]);
 
 // 获取实时天气信息
 const fetchWeatherInfo = async () => {
   // https://www.seniverse.com/
-  const apiKey = "Sdcp14pKMKm0XNAMY"; // 心知天气 密钥
-  const response = await fetch(
-    `https://api.seniverse.com/v3/weather/now.json?key=${apiKey}&location=ip`,
-  );
+  const apiKey = 'Sdcp14pKMKm0XNAMY'; // 心知天气 密钥
+  const response = await fetch(`https://api.seniverse.com/v3/weather/now.json?key=${apiKey}&location=ip`);
   if (toString(response.status) === import.meta.env.VITE_SERVICE_SUCCESS_CODE) {
-    const result = get(await response.json(), "results.[0]");
+    const result = get(await response.json(), 'results.[0]');
     weatherInfo.value = result;
   }
 };
@@ -63,26 +62,19 @@ onMounted(() => {
           <SoybeanAvatar />
           <div class="pl-12px">
             <h3 class="text-18px font-semibold">
-              {{
-                `${timeFix()}，${authStore.userInfo.cnName}，${welcomeWords()}！`
-              }}
+              {{ `${timeFix()}，${authStore.userInfo.cnName}，${welcomeWords()}！` }}
             </h3>
-            <p class="text-#999 leading-30px" v-if="!isEmpty(weatherInfo)">
-              {{ get(weatherInfo, "location.name", "") }}，今日天气{{
-                get(weatherInfo, "now.text", "")
-              }}，{{ get(weatherInfo, "now.temperature", 0) }}℃！
+            <p v-if="!isEmpty(weatherInfo)" class="text-#999 leading-30px">
+              {{ get(weatherInfo, 'location.name', '') }}，今日天气{{ get(weatherInfo, 'now.text', '') }}，{{
+                get(weatherInfo, 'now.temperature', 0)
+              }}℃！
             </p>
           </div>
         </div>
       </ACol>
       <ACol :span="24" :md="6">
         <ASpace class="w-full justify-end" :size="24">
-          <AStatistic
-            v-for="item in statisticData"
-            :key="item.id"
-            class="whitespace-nowrap"
-            v-bind="item"
-          />
+          <AStatistic v-for="item in statisticData" :key="item.id" class="whitespace-nowrap" v-bind="item" />
         </ASpace>
       </ACol>
     </ARow>

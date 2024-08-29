@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import PageView from "./page-view.vue";
-import PaymentNumber from "./payment-number.vue";
-import SalesVolume from "./sales-volume.vue";
-import ProjectSchedule from "./project-schedule.vue";
+import PageView from './page-view.vue';
+import PaymentNumber from './payment-number.vue';
+import ProjectSchedule from './project-schedule.vue';
+import SalesVolume from './sales-volume.vue';
 
 defineOptions({
-  name: "StatisticChart",
+  name: 'StatisticChart',
 });
 </script>
 

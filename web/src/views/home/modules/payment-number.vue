@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
-import { sum, subtract, last, times, random, round, divide } from "lodash-es";
-import TinyColumn from "./tiny-column.vue";
-import ChartCard from "./chart-card.vue";
-import { useThemeStore } from "@/store/modules/theme";
+import { divide, last, random, round, subtract, sum, times } from 'lodash-es';
+import { computed, onMounted, ref, watch } from 'vue';
+
+import { useThemeStore } from '@/store/modules/theme';
+
+import ChartCard from './chart-card.vue';
+import TinyColumn from './tiny-column.vue';
 
 defineOptions({
-  name: "PaymentNumber",
+  name: 'PaymentNumber',
 });
 
 const themeStore = useThemeStore();
@@ -27,7 +29,7 @@ const reloadComponent = () => {
   setTimeout(() => {
     loading.value = false;
     dataSource.value = times(dataLength, () => random(1000, 10000));
-    componentKey.value++;
+    componentKey.value += 1;
   }, 1200);
 };
 
@@ -53,20 +55,11 @@ watch(
 </script>
 
 <template>
-  <ChartCard
-    title="支付笔数"
-    :total="sum(dataSource)"
-    :loading="loading"
-    :key="componentKey"
-  >
-    <TinyColumn
-      :data-source="dataSource"
-      :height="60"
-      :color="themeStore.themeColor"
-    />
+  <ChartCard :key="componentKey" title="支付笔数" :total="sum(dataSource)" :loading="loading">
+    <TinyColumn :data-source="dataSource" :height="60" :color="themeStore.themeColor" />
     <template #extra>
       <ATooltip title="重新加载">
-        <div @click="reloadComponent" class="cursor-pointer">
+        <div class="cursor-pointer" @click="reloadComponent">
           <SvgIcon icon="ri:reset-left-fill" />
         </div>
       </ATooltip>

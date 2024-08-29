@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue";
-import { sum, subtract, last, times, random } from "lodash-es";
-import TinyArea from "./tiny-area.vue";
-import ChartCard from "./chart-card.vue";
-import { useThemeStore } from "@/store/modules/theme";
+import { last, random, subtract, sum, times } from 'lodash-es';
+import { computed, onMounted, ref, watch } from 'vue';
+
+import { useThemeStore } from '@/store/modules/theme';
+
+import ChartCard from './chart-card.vue';
+import TinyArea from './tiny-area.vue';
 
 defineOptions({
-  name: "PageView",
+  name: 'PageView',
 });
 
 const themeStore = useThemeStore();
@@ -27,7 +29,7 @@ const reloadComponent = () => {
   setTimeout(() => {
     loading.value = false;
     dataSource.value = times(dataLength, () => random(1000, 10000));
-    componentKey.value++;
+    componentKey.value += 1;
   }, 1200);
 };
 
@@ -49,42 +51,21 @@ watch(
 </script>
 
 <template>
-  <ChartCard
-    title="近十日访问量"
-    :total="sum(dataSource)"
-    :loading="loading"
-    :key="componentKey"
-  >
-    <TinyArea
-      :data-source="dataSource"
-      :height="60"
-      :color="themeStore.themeColor"
-    />
+  <ChartCard :key="componentKey" title="近十日访问量" :total="sum(dataSource)" :loading="loading">
+    <TinyArea :data-source="dataSource" :height="60" :color="themeStore.themeColor" />
     <template #extra>
       <ATooltip title="重新加载">
-        <div @click="reloadComponent" class="cursor-pointer">
+        <div class="cursor-pointer" @click="reloadComponent">
           <SvgIcon icon="ri:reset-left-fill" />
         </div>
       </ATooltip>
     </template>
     <template #footer>
       <ASpace>
-        <CountTo
-          prefix="今日访问量："
-          :end-value="lastData"
-          class="text-12px text-black dark:text-white"
-        />
-        <CountTo
-          prefix="日同比："
-          :end-value="Math.abs(subtract(lastData, penultimateData))"
-          class="text-12px"
-        />
+        <CountTo prefix="今日访问量：" :end-value="lastData" class="text-12px text-black dark:text-white" />
+        <CountTo prefix="日同比：" :end-value="Math.abs(subtract(lastData, penultimateData))" class="text-12px" />
         <SvgIcon
-          :icon="
-            lastData > penultimateData
-              ? 'ri:arrow-up-fill'
-              : 'ri:arrow-down-fill'
-          "
+          :icon="lastData > penultimateData ? 'ri:arrow-up-fill' : 'ri:arrow-down-fill'"
           :style="{
             color: lastData > penultimateData ? '#3f8600' : '#cf1322',
           }"
