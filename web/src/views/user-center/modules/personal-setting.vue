@@ -1,13 +1,15 @@
 <script setup lang="ts">
-import { ref } from "vue";
-import BasicSetting from "./basic-setting.vue";
-import { $t } from "@/locales";
-import SecuritySetting from "./security-setting.vue";
-import { PERSONAL_SETTING } from "@/enum";
-import ChangePassword from "./change-password.vue";
+import { ref } from 'vue';
+
+import { PERSONAL_SETTING } from '@/enum';
+import { $t } from '@/locales';
+
+import BasicSetting from './basic-setting.vue';
+import ChangePassword from './change-password.vue';
+import SecuritySetting from './security-setting.vue';
 
 defineOptions({
-  name: "PersonalSetting",
+  name: 'PersonalSetting',
 });
 
 // 解构枚举
@@ -21,27 +23,14 @@ const changeTabs = (key: string | number) => (activeKey.value = key);
 
 <template>
   <ACard>
-    <ATabs
-      v-model:activeKey="activeKey"
-      tab-position="left"
-      @change="changeTabs"
-    >
-      <ATabPane
-        :tab="$t(`page.userCenter.title.${BASIC_SETTING}`)"
-        :key="BASIC_SETTING"
-      >
+    <ATabs v-model:activeKey="activeKey" tab-position="left" @change="changeTabs">
+      <ATabPane :key="BASIC_SETTING" :tab="$t(`page.userCenter.title.${BASIC_SETTING}`)">
         <BasicSetting />
       </ATabPane>
-      <ATabPane
-        :tab="$t(`page.userCenter.title.${SECURITY_SETTING}`)"
-        :key="SECURITY_SETTING"
-      >
-        <SecuritySetting @changeTabs="changeTabs" />
+      <ATabPane :key="SECURITY_SETTING" :tab="$t(`page.userCenter.title.${SECURITY_SETTING}`)">
+        <SecuritySetting @change-tabs="changeTabs" />
       </ATabPane>
-      <ATabPane
-        :tab="$t(`page.userCenter.title.${CHANGE_PASSWORD}`)"
-        :key="CHANGE_PASSWORD"
-      >
+      <ATabPane :key="CHANGE_PASSWORD" :tab="$t(`page.userCenter.title.${CHANGE_PASSWORD}`)">
         <ChangePassword />
       </ATabPane>
     </ATabs>

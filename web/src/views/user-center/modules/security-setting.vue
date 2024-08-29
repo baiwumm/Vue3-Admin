@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/store/modules/auth";
-import { PERSONAL_SETTING } from "@/enum";
-import { $t } from "@/locales";
+import { PERSONAL_SETTING } from '@/enum';
+import { $t } from '@/locales';
+import { useAuthStore } from '@/store/modules/auth';
 
 defineOptions({
-  name: "SecuritySetting",
+  name: 'SecuritySetting',
 });
 
 type DaraSource = {
@@ -15,7 +15,7 @@ type DaraSource = {
 
 // 父组件自定义事件
 interface Emits {
-  (e: "changeTabs", key: string): void;
+  (e: 'changeTabs', key: string): void;
 }
 const emit = defineEmits<Emits>();
 
@@ -30,22 +30,17 @@ const { BASIC_SETTING, CHANGE_PASSWORD, SECURITY_SETTING } = PERSONAL_SETTING;
 const dataSource: DaraSource[] = [
   {
     title: $t(`page.userCenter.${SECURITY_SETTING}.authentication`),
-    description: $t(
-      `page.userCenter.${SECURITY_SETTING}.authentication-information`,
-      { cnName },
-    ),
+    description: $t(`page.userCenter.${SECURITY_SETTING}.authentication-information`, { cnName }),
   },
   {
     title: $t(`page.userCenter.${SECURITY_SETTING}.account-password`),
-    description: $t(
-      `page.userCenter.${SECURITY_SETTING}.account-password-desc`,
-    ),
+    description: $t(`page.userCenter.${SECURITY_SETTING}.account-password-desc`),
     key: CHANGE_PASSWORD,
   },
   {
     title: $t(`page.userCenter.${SECURITY_SETTING}.security-phone`),
     description: $t(`page.userCenter.${SECURITY_SETTING}.security-phone-desc`, {
-      phone: phone.replace(/^(\d{3})\d{4}(\d{4})$/, "$1****$2"),
+      phone: phone.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2'),
     }),
     key: BASIC_SETTING,
   },
@@ -64,18 +59,12 @@ const dataSource: DaraSource[] = [
     <template #renderItem="{ item }">
       <AListItem>
         <template #actions>
-          <AButton
-            type="link"
-            v-if="item.key"
-            @click="emit('changeTabs', item.key)"
-            >{{ $t("common.edit") }}</AButton
-          >
-          <ATag :bordered="false" color="success" v-else>{{
-            $t(`page.userCenter.${SECURITY_SETTING}.authenticated`)
-          }}</ATag>
+          <AButton v-if="item.key" type="link" @click="emit('changeTabs', item.key)">{{ $t('common.edit') }}</AButton>
+          <ATag v-else :bordered="false" color="success">
+            {{ $t(`page.userCenter.${SECURITY_SETTING}.authenticated`) }}
+          </ATag>
         </template>
-        <AListItemMeta :title="item.title" :description="item.description">
-        </AListItemMeta>
+        <AListItemMeta :title="item.title" :description="item.description"></AListItemMeta>
       </AListItem>
     </template>
   </AList>

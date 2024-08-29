@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import PersonalInfo from "./modules/personal-info.vue";
-import PersonalSetting from "./modules/personal-setting.vue";
+import PersonalInfo from './modules/personal-info.vue';
+import PersonalSetting from './modules/personal-setting.vue';
 </script>
 
 <template>
@@ -15,5 +15,3 @@ import PersonalSetting from "./modules/personal-setting.vue";
     </ARow>
   </div>
 </template>
-
-<style scoped></style>

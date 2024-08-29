@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
-import { useAuthStore } from "@/store/modules/auth";
-import { $t } from "@/locales";
-import { codeToText } from "element-china-area-data";
-import { forEach, assign } from "lodash-es";
-import FigureLabels from "@/components/custom/figure-labels.vue";
-import { updateUserTags } from "@/service/api";
+import { codeToText } from 'element-china-area-data';
+import { assign, forEach } from 'lodash-es';
+import { ref, watch } from 'vue';
+
+import FigureLabels from '@/components/custom/figure-labels.vue';
+import { $t } from '@/locales';
+import { updateUserTags } from '@/service/api';
+import { useAuthStore } from '@/store/modules/auth';
 
 defineOptions({
-  name: "PersonalInfo",
+  name: 'PersonalInfo',
 });
 
 type Identity = {
@@ -20,15 +21,14 @@ type Identity = {
 const authStore = useAuthStore();
 
 // 获取登录用户信息
-const { avatar, cnName, city, role, organization, post, address, tags } =
-  authStore.userInfo;
+const { avatar, cnName, city, role, organization, post, address, tags } = authStore.userInfo;
 
 // 人物标签
 const userTags = ref<string[]>(tags || []);
 
 // 获取省市区名称
 const getAreaName = () => {
-  let result: string = "";
+  let result: string = '';
   forEach(city, (code: string) => {
     result += codeToText[code];
   });
@@ -38,23 +38,23 @@ const getAreaName = () => {
 // 身份信息
 const identityOptions: Identity[] = [
   {
-    icon: "carbon:user-role",
-    field: "roleId",
+    icon: 'carbon:user-role',
+    field: 'roleId',
     value: role?.name,
   },
   {
-    icon: organization?.icon || "ri:exchange-2-line",
-    field: "orgId",
+    icon: organization?.icon || 'ri:exchange-2-line',
+    field: 'orgId',
     value: organization?.name,
   },
   {
-    icon: "ri:contacts-book-3-line",
-    field: "postId",
+    icon: 'ri:contacts-book-3-line',
+    field: 'postId',
     value: post?.name,
   },
   {
-    icon: "ri:map-pin-2-line",
-    field: "address",
+    icon: 'ri:map-pin-2-line',
+    field: 'address',
     value: getAreaName(),
   },
 ];
@@ -84,10 +84,7 @@ watch(userTags, () => {
       <ATypographyTitle :level="3">{{ cnName }}</ATypographyTitle>
     </ASpace>
     <ADescriptions :column="1" size="small" bordered>
-      <ADescriptionsItem
-        v-for="{ icon, field, value } in identityOptions"
-        :key="field"
-      >
+      <ADescriptionsItem v-for="{ icon, field, value } in identityOptions" :key="field">
         <template #label>
           <ASpace align="center">
             <SvgIcon :icon="icon" class="text-base" />
@@ -99,9 +96,7 @@ watch(userTags, () => {
         </ATag>
       </ADescriptionsItem>
     </ADescriptions>
-    <ADivider orientation="left">{{
-      $t("page.systemManage.userManage.tags")
-    }}</ADivider>
+    <ADivider orientation="left">{{ $t('page.systemManage.userManage.tags') }}</ADivider>
     <FigureLabels v-model:value="userTags" />
   </ACard>
 </template>

@@ -1,22 +1,18 @@
 <script setup lang="ts">
-import { reactive, computed, ref, onMounted } from "vue";
-import { useAuthStore } from "@/store/modules/auth";
-import { useAppStore } from "@/store/modules/app";
-import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import PersonalInfo from "@/views/system-manage/user-manage/modules/personal-info.vue";
-import UserInfo from "@/views/system-manage/user-manage/modules/user-info.vue";
-import SettingAvatar from "@/views/system-manage/user-manage/modules/setting-avatar.vue";
-import { $t } from "@/locales";
-import {
-  getOrganazationList,
-  getPostList,
-  getRoleList,
-  updateUser,
-} from "@/service/api";
-import { pick, cloneDeep } from "lodash-es";
+import { cloneDeep, pick } from 'lodash-es';
+import { computed, onMounted, reactive, ref } from 'vue';
+
+import { useAntdForm, useFormRules } from '@/hooks/common/form';
+import { $t } from '@/locales';
+import { getOrganazationList, getPostList, getRoleList, updateUser } from '@/service/api';
+import { useAppStore } from '@/store/modules/app';
+import { useAuthStore } from '@/store/modules/auth';
+import PersonalInfo from '@/views/system-manage/user-manage/modules/personal-info.vue';
+import SettingAvatar from '@/views/system-manage/user-manage/modules/setting-avatar.vue';
+import UserInfo from '@/views/system-manage/user-manage/modules/user-info.vue';
 
 defineOptions({
-  name: "BasicSetting",
+  name: 'BasicSetting',
 });
 
 // 是否请求中
@@ -67,21 +63,10 @@ const model: Api.SystemManage.SaveUserManage = reactive(
 // 表单校验的 key
 type RuleKey = Extract<
   keyof Api.SystemManage.SaveUserManage,
-  | "userName"
-  | "cnName"
-  | "phone"
-  | "email"
-  | "roleId"
-  | "orgId"
-  | "postId"
-  | "city"
-  | "tags"
-  | "avatar"
+  'userName' | 'cnName' | 'phone' | 'email' | 'roleId' | 'orgId' | 'postId' | 'city' | 'tags' | 'avatar'
 >;
 
-const rules = computed<
-  Record<RuleKey, App.Global.FormRule | App.Global.FormRule[]>
->(() => {
+const rules = computed<Record<RuleKey, App.Global.FormRule | App.Global.FormRule[]>>(() => {
   const { defaultRequiredRule, formRules } = useFormRules();
 
   return {
@@ -93,7 +78,7 @@ const rules = computed<
     orgId: defaultRequiredRule,
     postId: defaultRequiredRule,
     city: defaultRequiredRule,
-    tags: { ...defaultRequiredRule, trigger: "change" },
+    tags: { ...defaultRequiredRule, trigger: 'change' },
     avatar: defaultRequiredRule,
   };
 });
@@ -108,7 +93,7 @@ async function handleSubmit(values: Api.SystemManage.SaveUserManage) {
   loading.value = true;
   // 获取参数
   const params = {
-    ...pick(authStore.userInfo, ["id", "tags"]),
+    ...pick(authStore.userInfo, ['id', 'tags']),
     ...values,
   };
   await updateUser(params)
@@ -131,35 +116,30 @@ onMounted(() => {
   fetchPostList();
 });
 </script>
+
 <template>
-  <AForm
-    ref="formRef"
-    layout="vertical"
-    :model="model"
-    :rules="rules"
-    @finish="handleSubmit"
-  >
+  <AForm ref="formRef" layout="vertical" :model="model" :rules="rules" @finish="handleSubmit">
     <ARow :gutter="16">
-      <ADivider orientation="left">{{ locales("settingAvatar") }}</ADivider>
+      <ADivider orientation="left">{{ locales('settingAvatar') }}</ADivider>
       <!-- 设置头像 -->
       <SettingAvatar :model="model" @update:model="updateModel" />
-      <ADivider orientation="left">{{ locales("personalInfo") }}</ADivider>
+      <ADivider orientation="left">{{ locales('personalInfo') }}</ADivider>
       <!-- 个人信息 -->
       <PersonalInfo :model="model" :locales="locales" />
-      <ADivider orientation="left">{{ locales("userInfo") }}</ADivider>
+      <ADivider orientation="left">{{ locales('userInfo') }}</ADivider>
       <!-- 用户信息 -->
       <UserInfo
         :model="model"
         :locales="locales"
-        :roleList="roleList"
-        :organazationList="organazationList"
-        :postList="postList"
-        :showTag="false"
+        :role-list="roleList"
+        :organazation-list="organazationList"
+        :post-list="postList"
+        :show-tag="false"
       />
     </ARow>
     <ARow justify="center">
       <AButton type="primary" html-type="submit" :loading="loading">
-        {{ $t("common.commit") }}
+        {{ $t('common.commit') }}
       </AButton>
     </ARow>
   </AForm>
