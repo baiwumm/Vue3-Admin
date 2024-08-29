@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { $t } from "@/locales";
-import { useAntdForm } from "@/hooks/common/form";
+import { useAntdForm } from '@/hooks/common/form';
+import { $t } from '@/locales';
 
 defineOptions({
-  name: "HeaderSearch",
+  name: 'HeaderSearch',
 });
 
 // 父组件传递的值
@@ -13,27 +13,24 @@ type Props = {
 defineProps<Props>();
 
 interface Emits {
-  (e: "reset"): void;
-  (e: "search"): void;
+  (e: 'reset'): void;
+  (e: 'search'): void;
 }
 
 const emit = defineEmits<Emits>();
 
 const { formRef, validate, resetFields } = useAntdForm();
 
-const model = defineModel<Api.Administrative.OrganizationSearchParams>(
-  "model",
-  { required: true },
-);
+const model = defineModel<Api.Administrative.OrganizationSearchParams>('model', { required: true });
 
-async function reset() {
-  await resetFields();
-  emit("reset");
+function reset() {
+  resetFields();
+  emit('reset');
 }
 
 async function search() {
   await validate();
-  emit("search");
+  emit('search');
 }
 </script>
 
@@ -50,20 +47,12 @@ async function search() {
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
           <AFormItem :label="locales('name')" name="name" class="m-0">
-            <AInput
-              v-model:value="model.name"
-              allowClear
-              :placeholder="$t('form.enter') + locales('name')"
-            />
+            <AInput v-model:value="model.name" allow-clear :placeholder="$t('form.enter') + locales('name')" />
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
           <AFormItem :label="locales('code')" name="code" class="m-0">
-            <AInput
-              v-model:value="model.code"
-              allowClear
-              :placeholder="$t('form.enter') + locales('code')"
-            />
+            <AInput v-model:value="model.code" allow-clear :placeholder="$t('form.enter') + locales('code')" />
           </AFormItem>
         </ACol>
         <div class="flex-1">
@@ -73,13 +62,13 @@ async function search() {
                 <template #icon>
                   <icon-ic-round-refresh class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t("common.reset") }}</span>
+                <span class="ml-8px">{{ $t('common.reset') }}</span>
               </AButton>
               <AButton type="primary" ghost @click="search">
                 <template #icon>
                   <icon-ic-round-search class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t("common.search") }}</span>
+                <span class="ml-8px">{{ $t('common.search') }}</span>
               </AButton>
             </div>
           </AFormItem>
