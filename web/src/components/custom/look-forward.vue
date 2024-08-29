@@ -2,7 +2,7 @@
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'LookForward'
+  name: 'LookForward',
 });
 </script>
 

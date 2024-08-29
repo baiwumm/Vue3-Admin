@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { createTextVNode, defineComponent } from 'vue';
 import { App } from 'ant-design-vue';
+import { createTextVNode, defineComponent } from 'vue';
 
 defineOptions({
-  name: 'AppProvider'
+  name: 'AppProvider',
 });
 
 const ContextHolder = defineComponent({
@@ -20,7 +20,7 @@ const ContextHolder = defineComponent({
     register();
 
     return () => createTextVNode();
-  }
+  },
 });
 </script>
 

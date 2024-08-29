@@ -2,7 +2,7 @@
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'FullScreen'
+  name: 'FullScreen',
 });
 
 interface Props {

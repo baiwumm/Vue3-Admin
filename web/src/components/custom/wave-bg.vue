@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
 import { getColorPalette } from '@sa/utils';
+import { computed } from 'vue';
 
 interface Props {
   /** Theme color */

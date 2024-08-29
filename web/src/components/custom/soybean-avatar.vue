@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { useAuthStore } from "@/store/modules/auth";
+import { useAuthStore } from '@/store/modules/auth';
 
 const authStore = useAuthStore();
 
 defineOptions({
-  name: "SoybeanAvatar",
+  name: 'SoybeanAvatar',
 });
 </script>
 

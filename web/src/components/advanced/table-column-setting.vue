@@ -1,13 +1,14 @@
 <script setup lang="ts" generic="T extends Record<string, unknown>, K = never">
 import { VueDraggable } from 'vue-draggable-plus';
+
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'TableColumnSetting'
+  name: 'TableColumnSetting',
 });
 
 const columns = defineModel<AntDesign.TableColumnCheck[]>('columns', {
-  required: true
+  required: true,
 });
 </script>
 

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import zxcvbn from "zxcvbn"; // 密码强度校验
-import { values, keys } from "lodash-es";
+import { keys, values } from 'lodash-es';
+import zxcvbn from 'zxcvbn'; // 密码强度校验
 
 // 父组件传递的值
 type Props = {
@@ -8,20 +8,18 @@ type Props = {
 };
 defineProps<Props>();
 
-/**
- * @description: 密码强度配置项
- */
+/** @description: 密码强度配置项 */
 const strengthMeterOptions: Record<string, string> = {
-  veryWeak: "#e74242",
-  weak: "#EFBD47",
-  general: "#ffa500",
-  strong: "#1bbf1b",
-  veryStrong: "#008000",
+  veryWeak: '#e74242',
+  weak: '#EFBD47',
+  general: '#ffa500',
+  strong: '#1bbf1b',
+  veryStrong: '#008000',
 };
 
 /**
- * @description: 监听密码强度相应变化
  * @param {string} password
+ * @description: 监听密码强度相应变化
  */
 const watchStrength = (password: string): number => {
   const analysisValue = zxcvbn(password);
@@ -32,22 +30,12 @@ const watchStrength = (password: string): number => {
 
 <template>
   <ACol :span="24">
-    <AFormItem
-      name="password"
-      :label="$t('page.systemManage.userManage.password')"
-    >
-      <AInputPassword
-        v-model:value="model.password"
-        size="large"
-        :placeholder="$t('page.login.passwordPlaceholder')"
-      />
+    <AFormItem name="password" :label="$t('page.systemManage.userManage.password')">
+      <AInputPassword v-model:value="model.password" size="large" :placeholder="$t('page.login.passwordPlaceholder')" />
     </AFormItem>
   </ACol>
   <ACol :span="24">
-    <AFormItem
-      name="confirmPassword"
-      :label="$t('page.systemManage.userManage.confirmPassword')"
-    >
+    <AFormItem name="confirmPassword" :label="$t('page.systemManage.userManage.confirmPassword')">
       <AInputPassword
         v-model:value="model.confirmPassword"
         size="large"
@@ -60,16 +48,13 @@ const watchStrength = (password: string): number => {
     <AProgress
       :percent="model.password ? watchStrength(model.password) : 0"
       :steps="5"
-      :strokeColor="values(strengthMeterOptions)"
-      :showInfo="false"
+      :stroke-color="values(strengthMeterOptions)"
+      :show-info="false"
     />
     <ARow justify="space-around">
-      <ACol
-        :span="4"
-        :key="value"
-        v-for="value in keys(strengthMeterOptions)"
-        >{{ $t(`components.strengthMeter.${value}`) }}</ACol
-      >
+      <ACol v-for="value in keys(strengthMeterOptions)" :key="value" :span="4">
+        {{ $t(`components.strengthMeter.${value}`) }}
+      </ACol>
     </ARow>
   </div>
 </template>

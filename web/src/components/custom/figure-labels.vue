@@ -1,38 +1,6 @@
-<template>
-  <a-space :size="[0, 8]" wrap>
-    <template v-for="tag in value" :key="tag">
-      <a-tooltip v-if="tag.length > 20" :title="tag">
-        <a-tag closable @close="handleClose(tag)">
-          {{ `${tag.slice(0, 20)}...` }}
-        </a-tag>
-      </a-tooltip>
-      <a-tag v-else closable @close="handleClose(tag)">
-        {{ tag }}
-      </a-tag>
-    </template>
-    <a-input
-      v-if="state.inputVisible"
-      ref="inputRef"
-      v-model:value="state.inputValue"
-      type="text"
-      size="small"
-      :style="{ width: '78px' }"
-      @blur="handleInputConfirm"
-      @keyup.enter="handleInputConfirm"
-    />
-    <a-tag
-      v-else
-      style="background: #fff; border-style: dashed"
-      @click="showInput"
-    >
-      <plus-outlined />
-      New Tag
-    </a-tag>
-  </a-space>
-</template>
 <script lang="ts" setup>
-import { ref, reactive, nextTick } from "vue";
-import { PlusOutlined } from "@ant-design/icons-vue";
+import { PlusOutlined } from '@ant-design/icons-vue';
+import { nextTick, reactive, ref } from 'vue';
 
 // 父组件传递的值
 type Props = {
@@ -40,17 +8,21 @@ type Props = {
 };
 const props = defineProps<Props>();
 
-const emit = defineEmits(["update:value"]);
+// 父组件自定义事件
+interface Emits {
+  (e: 'update:value', value: string[]): void;
+}
+const emit = defineEmits<Emits>();
 
 const inputRef = ref();
 const state = reactive({
   inputVisible: false,
-  inputValue: "",
+  inputValue: '',
 });
 
 const handleClose = (removedTag: string) => {
   const tags = props.value.filter((tag: string) => tag !== removedTag);
-  emit("update:value", tags);
+  emit('update:value', tags);
 };
 
 const showInput = () => {
@@ -63,13 +35,42 @@ const showInput = () => {
 const handleInputConfirm = () => {
   const inputValue = state.inputValue;
   let tags = props.value;
-  if (inputValue && tags.indexOf(inputValue) === -1) {
+  if (inputValue && !tags.includes(inputValue)) {
     tags = [...tags, inputValue];
   }
   Object.assign(state, {
     inputVisible: false,
-    inputValue: "",
+    inputValue: '',
   });
-  emit("update:value", tags);
+  emit('update:value', tags);
 };
 </script>
+
+<template>
+  <ASpace :size="[0, 8]" wrap>
+    <template v-for="tag in value" :key="tag">
+      <ATooltip v-if="tag.length > 20" :title="tag">
+        <ATag closable @close="handleClose(tag)">
+          {{ `${tag.slice(0, 20)}...` }}
+        </ATag>
+      </ATooltip>
+      <ATag v-else closable @close="handleClose(tag)">
+        {{ tag }}
+      </ATag>
+    </template>
+    <AInput
+      v-if="state.inputVisible"
+      ref="inputRef"
+      v-model:value="state.inputValue"
+      type="text"
+      size="small"
+      :style="{ width: '78px' }"
+      @blur="handleInputConfirm"
+      @keyup.enter="handleInputConfirm"
+    />
+    <ATag v-else class="border-dashed bg-white" @click="showInput">
+      <PlusOutlined />
+      New Tag
+    </ATag>
+  </ASpace>
+</template>

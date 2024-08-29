@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { $t } from '@/locales';
+
 import { useRouterPush } from '@/hooks/common/router';
+import { $t } from '@/locales';
 
 defineOptions({ name: 'ExceptionBase' });
 
@@ -25,7 +26,7 @@ const { routerPushByKey } = useRouterPush();
 const iconMap: Record<ExceptionType, string> = {
   '403': 'no-permission',
   '404': 'not-found',
-  '500': 'service-error'
+  '500': 'service-error',
 };
 
 const icon = computed(() => iconMap[props.type]);

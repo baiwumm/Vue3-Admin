@@ -1,7 +1,11 @@
+<script setup lang="tsx">
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+</script>
+
 <template>
-  <div
-    class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto"
-  >
+  <div class="min-h-500px flex-col-stretch gap-16px overflow-hidden lt-sm:overflow-auto">
     <!-- 头部搜索 -->
     <slot name="header"></slot>
     <ACard
@@ -19,8 +23,3 @@
     </ACard>
   </div>
 </template>
-<script setup lang="tsx">
-import { useRoute } from "vue-router";
-
-const route = useRoute();
-</script>

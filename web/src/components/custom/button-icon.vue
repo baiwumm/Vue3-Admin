@@ -3,7 +3,7 @@ import type { TooltipPlacement } from 'ant-design-vue/es/tooltip';
 import { twMerge } from 'tailwind-merge';
 defineOptions({
   name: 'ButtonIcon',
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 interface Props {
@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<Props>(), {
   icon: '',
   tooltipContent: '',
   tooltipPlacement: 'bottom',
-  triggerParent: false
+  triggerParent: false,
 });
 
 function getPopupContainer(triggerNode: HTMLElement) {
