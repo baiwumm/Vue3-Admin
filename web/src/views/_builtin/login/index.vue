@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { computed, reactive } from "vue";
-import { getColorPalette, mixColor } from "@sa/utils";
-import { $t } from "@/locales";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { useAuthStore } from "@/store/modules/auth";
-import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import CaptchaCode from "./modules/captcha-code.vue";
+import { getColorPalette, mixColor } from '@sa/utils';
+import { computed, reactive } from 'vue';
+
+import { useAntdForm, useFormRules } from '@/hooks/common/form';
+import { $t } from '@/locales';
+import { useAppStore } from '@/store/modules/app';
+import { useAuthStore } from '@/store/modules/auth';
+import { useThemeStore } from '@/store/modules/theme';
+
+import CaptchaCode from './modules/captcha-code.vue';
 
 const authStore = useAuthStore();
 
@@ -15,14 +17,12 @@ const themeStore = useThemeStore();
 
 // 主题色
 const bgThemeColor = computed(() =>
-  themeStore.darkMode
-    ? getColorPalette(themeStore.themeColor, 7)
-    : themeStore.themeColor,
+  themeStore.darkMode ? getColorPalette(themeStore.themeColor, 7) : themeStore.themeColor,
 );
 
 // 背景色
 const bgColor = computed(() => {
-  const COLOR_WHITE = "#ffffff";
+  const COLOR_WHITE = '#ffffff';
   const ratio = themeStore.darkMode ? 0.5 : 0.2;
   return mixColor(COLOR_WHITE, themeStore.themeColor, ratio);
 });
@@ -30,14 +30,12 @@ const bgColor = computed(() => {
 const { formRef, validate } = useAntdForm();
 
 const model: Api.Auth.LoginParams = reactive({
-  userName: "Admin",
-  password: "abc123456",
-  captchaCode: "",
+  userName: 'Admin',
+  password: 'abc123456',
+  captchaCode: '',
 });
 
-/**
- * @description: 表单验证
- */
+/** @description: 表单验证 */
 const rules = computed(() => {
   const { formRules, defaultRequiredRule } = useFormRules();
   return {
@@ -47,9 +45,7 @@ const rules = computed(() => {
   };
 });
 
-/**
- * @description: 登录回调
- */
+/** @description: 登录回调 */
 async function handleSubmit() {
   await validate();
   await authStore.login(model);
@@ -57,11 +53,8 @@ async function handleSubmit() {
 </script>
 
 <template>
-  <div
-    class="relative size-full flex-center"
-    :style="{ backgroundColor: bgColor }"
-  >
-    <div class="absolute right-2 top-2 flex z-2">
+  <div class="relative size-full flex-center" :style="{ backgroundColor: bgColor }">
+    <div class="absolute right-2 top-2 z-2 flex">
       <ThemeSchemaSwitch
         :theme-schema="themeStore.themeScheme"
         :show-tooltip="false"
@@ -78,19 +71,15 @@ async function handleSubmit() {
     <WaveBg :theme-color="bgThemeColor" />
     <ACard class="relative z-4">
       <div class="w-400px lt-sm:w-300px">
-        <header class="flex justify-center items-center">
+        <header class="flex items-center justify-center">
           <SystemLogo class="text-64px text-primary lt-sm:text-48px" />
-          <h3 class="text-28px text-primary font-600 lt-sm:text-22px ml-4">
-            {{ $t("system.title") }}
+          <h3 class="ml-4 text-28px text-primary font-600 lt-sm:text-22px">
+            {{ $t('system.title') }}
           </h3>
         </header>
         <main>
           <div class="animation-slide-in-left pt-24px">
-            <Transition
-              :name="themeStore.page.animateMode"
-              mode="out-in"
-              appear
-            >
+            <Transition :name="themeStore.page.animateMode" mode="out-in" appear>
               <AForm ref="formRef" :model="model" :rules="rules">
                 <AFormItem name="userName">
                   <AInput
@@ -121,7 +110,7 @@ async function handleSubmit() {
                         v-model:value="model.captchaCode"
                         size="large"
                         :placeholder="$t('page.login.codePlaceholder')"
-                        @pressEnter="handleSubmit"
+                        @press-enter="handleSubmit"
                       />
                     </ACol>
                     <ACol flex="132px">
@@ -139,7 +128,7 @@ async function handleSubmit() {
                     :loading="authStore.loginLoading"
                     @click="handleSubmit"
                   >
-                    {{ $t("common.confirm") }}
+                    {{ $t('common.confirm') }}
                   </AButton>
                 </ASpace>
               </AForm>

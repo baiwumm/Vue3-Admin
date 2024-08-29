@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { getCaptcha } from "@/service/api";
+import { onMounted, ref } from 'vue';
+
+import { getCaptcha } from '@/service/api';
 
 // 图形验证码
-const captchaCode = ref("");
+const captchaCode = ref('');
 const captchaLoading = ref(false);
 
 const fetchcaptcha = async () => {
@@ -19,12 +20,9 @@ onMounted(() => {
   fetchcaptcha();
 });
 </script>
+
 <template>
   <ASpin :spinning="captchaLoading">
-    <div
-      v-html="captchaCode"
-      @click="fetchcaptcha"
-      class="cursor-pointer"
-    ></div>
+    <div class="cursor-pointer" @click="fetchcaptcha" v-html="captchaCode"></div>
   </ASpin>
 </template>

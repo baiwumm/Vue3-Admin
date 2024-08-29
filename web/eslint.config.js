@@ -102,6 +102,7 @@ export default defineConfig(
           allowBinding: true,
         },
       ],
+      'vue/no-v-html': 'off',
       'unocss/order-attributify': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
