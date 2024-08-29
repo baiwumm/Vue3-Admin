@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import { computed, reactive, watch, ref, nextTick } from "vue";
-import { $t } from "@/locales";
-import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import { MENU_TYPE, OPERATION_TYPE } from "@/enum";
-import { MenuTypeOptions } from "@/constants";
-import { SimpleScrollbar } from "@sa/materials";
-import RouteMetaForm from "./route-meta-form.vue";
-import { createMenu, updateMenu } from "@/service/api";
-import { pick, assign } from "lodash-es";
+import { SimpleScrollbar } from '@sa/materials';
+import { assign, pick } from 'lodash-es';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
+
+import { MenuTypeOptions, YesOrNoOptions } from '@/constants';
+import { MENU_TYPE, OPERATION_TYPE } from '@/enum';
+import { useAntdForm, useFormRules } from '@/hooks/common/form';
+import { $t } from '@/locales';
+import { createMenu, updateMenu } from '@/service/api';
 
 defineOptions({
-  name: "OperateModal",
+  name: 'OperateModal',
 });
 
 // 是否请求中
@@ -25,16 +25,16 @@ type Props = {
 };
 const props = defineProps<Props>();
 
-const placeholder = (field: string) => $t("form.enter") + props.locales(field);
+const placeholder = (field: string) => $t('form.enter') + props.locales(field);
 
 // 父组件自定义事件
 interface Emits {
-  (e: "submitted"): void;
+  (e: 'submitted'): void;
 }
 const emit = defineEmits<Emits>();
 
 // 抽屉显示状态
-const visible = defineModel<boolean>("visible", {
+const visible = defineModel<boolean>('visible', {
   default: false,
 });
 
@@ -42,20 +42,20 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => props.locales(`${props.operateType}Menu`));
+const modalTitle = computed(() => props.locales(`${props.operateType}Menu`));
 
 const model: Api.SystemManage.SaveMenuManage = reactive(createDefaultModel());
 
 function createDefaultModel(): Api.SystemManage.SaveMenuManage {
   return {
     type: MENU_TYPE.DIRECTORY,
-    parentId: undefined,
-    title: "",
+    parentId: null,
+    title: '',
     name: undefined,
     path: undefined,
     component: undefined,
     meta: {
-      title: "",
+      title: '',
       i18nKey: undefined,
       keepAlive: false,
       constant: false,
@@ -74,7 +74,7 @@ function createDefaultModel(): Api.SystemManage.SaveMenuManage {
 // 表单校验的 key
 type RuleKey = Extract<
   keyof Api.SystemManage.SaveMenuManage,
-  "type" | "title" | "name" | "path" | "component" | "permission" | "sort"
+  'type' | 'title' | 'name' | 'path' | 'component' | 'permission' | 'sort'
 >;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
@@ -111,20 +111,21 @@ async function handleSubmit() {
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
-      ...pick(model, ["parentId", "title", "type", "sort"]),
+      ...pick(model, ['title', 'type', 'sort']),
+      parentId: model.parentId || null,
     };
     // 判断是否是按钮
     if (model.type === MENU_TYPE.BUTTON) {
-      assign(params, pick(model, "permission"));
+      assign(params, pick(model, 'permission'));
     } else {
-      assign(params, pick(model, ["name", "path", "component", "meta"]));
+      assign(params, pick(model, ['name', 'path', 'component', 'meta']));
     }
     await (isAdd ? createMenu : updateMenu)(params)
       .then(({ error }) => {
         if (!error) {
           window.$message?.success($t(`common.${props.operateType}Success`));
           closeModal();
-          emit("submitted");
+          emit('submitted');
         }
       })
       .finally(() => {
@@ -144,12 +145,10 @@ watch(
   () => model.name,
   () => {
     if (props.operateType === OPERATION_TYPE.ADD) {
-      model.path = model.name
-        ? `/${model.name.split("_").join("/")}`
-        : undefined;
+      model.path = model.name ? `/${model.name.split('_').join('/')}` : undefined;
       model.component = model.name ? `view.${model.name}` : undefined;
       if (model.meta) {
-        model.meta.title = model.name || "";
+        model.meta.title = model.name || '';
       }
       if (model.meta) {
         model.meta.i18nKey = model.name ? `route.${model.name}` : undefined;
@@ -158,59 +157,46 @@ watch(
   },
 );
 </script>
+
 <template>
   <AModal
     v-model:open="visible"
-    :title="title"
+    :title="modalTitle"
     :width="800"
+    :confirm-loading="loading"
     @cancel="closeModal"
     @ok="handleSubmit"
-    :confirm-loading="loading"
   >
     <div class="h-480px">
       <SimpleScrollbar>
-        <AForm
-          ref="formRef"
-          :model="model"
-          :rules="rules"
-          :label-col="{ lg: 8, xs: 4 }"
-          label-wrap
-          class="pr-20px"
-        >
+        <AForm ref="formRef" :model="model" :rules="rules" :label-col="{ lg: 8, xs: 4 }" label-wrap class="pr-20px">
           <ARow>
             <ACol :lg="12" :xs="24">
               <AFormItem :label="locales('type')" name="type">
-                <ARadioGroup
-                  v-model:value="model.type"
-                  :options="MenuTypeOptions"
-                />
+                <ARadioGroup v-model:value="model.type" :options="MenuTypeOptions" />
               </AFormItem>
             </ACol>
             <ACol :lg="12" :xs="24">
-              <AFormItem
-                :label="$t('form.parent')"
-                name="parentId"
-                :tooltip="$t('form.parentTip')"
-              >
+              <AFormItem :label="$t('form.parent')" name="parentId" :tooltip="$t('form.parentTip')">
                 <ATreeSelect
                   v-model:value="model.parentId"
                   show-search
-                  style="width: 100%"
                   :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
                   :placeholder="$t('form.select')"
                   allow-clear
                   tree-default-expand-all
                   :tree-data="dataSource"
                   tree-node-filter-prop="name"
-                  :fieldNames="{ value: 'id', label: 'name' }"
+                  :field-names="{ value: 'id', label: 'name' }"
+                  class="w-full"
                 >
                   <template #title="{ title, meta }">
                     <ASpace align="center">
-                      <svg-icon
+                      <SvgIcon
+                        v-if="meta?.icon"
                         :icon="meta?.icon"
                         class="inline-block"
-                        style="vertical-align: -2px"
-                        v-if="meta?.icon"
+                        :style="{ verticalAlign: '-2px' }"
                       />
                       {{ title }}
                     </ASpace>
@@ -220,39 +206,27 @@ watch(
             </ACol>
             <ACol :lg="12" :xs="24">
               <AFormItem :label="locales('title')" name="title">
-                <AInput
-                  v-model:value="model.title"
-                  :placeholder="placeholder('title')"
-                />
+                <AInput v-model:value="model.title" :placeholder="placeholder('title')" />
               </AFormItem>
             </ACol>
             <template v-if="model.type !== MENU_TYPE.BUTTON">
               <ACol :lg="12" :xs="24">
                 <AFormItem :label="locales('name')" name="name">
-                  <AInput
-                    v-model:value="model.name"
-                    :placeholder="placeholder('name')"
-                  />
+                  <AInput v-model:value="model.name" :placeholder="placeholder('name')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
                 <AFormItem :label="locales('path')" name="path">
-                  <AInput
-                    v-model:value="model.path"
-                    :placeholder="placeholder('path')"
-                  />
+                  <AInput v-model:value="model.path" :placeholder="placeholder('path')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
                 <AFormItem :label="locales('component')" name="component">
-                  <AInput
-                    v-model:value="model.component"
-                    :placeholder="placeholder('component')"
-                  />
+                  <AInput v-model:value="model.component" :placeholder="placeholder('component')" />
                 </AFormItem>
               </ACol>
             </template>
-            <ACol :lg="12" :xs="24" v-else>
+            <ACol v-else :lg="12" :xs="24">
               <AFormItem :label="locales('permission')" name="permission">
                 <AInput
                   v-model:value="model.permission"
@@ -263,32 +237,87 @@ watch(
               </AFormItem>
             </ACol>
             <ACol :lg="12" :xs="24">
-              <AFormItem
-                :label="$t('form.sort')"
-                name="sort"
-                :tooltip="$t('form.sortTip')"
-              >
+              <AFormItem :label="$t('form.sort')" name="sort" :tooltip="$t('form.sortTip')">
                 <AInputNumber
                   v-model:value="model.sort"
                   :min="1"
                   :max="999"
                   :placeholder="$t('form.enter') + $t('form.sort')"
-                  style="width: 100%"
+                  class="w-full"
                 />
               </AFormItem>
             </ACol>
             <template v-if="model.type !== MENU_TYPE.BUTTON">
               <ACol :span="24">
-                <ADivider orientation="left">{{
-                  locales("routeMeta")
-                }}</ADivider>
+                <ADivider orientation="left">{{ locales('routeMeta') }}</ADivider>
               </ACol>
               <!-- 路由元信息 -->
-              <RouteMetaForm
-                :model="model"
-                :locales="locales"
-                :placeholder="placeholder"
-              />
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.title')" :name="['meta', 'title']">
+                  <AInput v-model:value="model.meta.title" :placeholder="placeholder('meta.title')" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.i18nKey')" :name="['meta', 'i18nKey']">
+                  <AInput v-model:value="model.meta.i18nKey" :placeholder="placeholder('meta.i18nKey')" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.icon')" :name="['meta', 'icon']">
+                  <AInput v-model:value="model.meta.icon" :placeholder="placeholder('meta.icon')">
+                    <template #suffix>
+                      <SvgIcon v-if="model.meta.icon" :icon="model.meta.icon" class="text-icon" />
+                    </template>
+                  </AInput>
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.href')" :name="['meta', 'href']">
+                  <AInput v-model:value="model.meta.href as string" :placeholder="placeholder('meta.href')" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.keepAlive')" :name="['meta', 'keepAlive']">
+                  <ARadioGroup v-model:value="model.meta.keepAlive" :options="YesOrNoOptions" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.constant')" :name="['meta', 'constant']">
+                  <ARadioGroup v-model:value="model.meta.constant" :options="YesOrNoOptions" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="$t('page.systemManage.menuManage.meta.hideInMenu')" :name="['meta', 'hideInMenu']">
+                  <ARadioGroup v-model:value="model.meta.hideInMenu" :options="YesOrNoOptions" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="$t('page.systemManage.menuManage.meta.multiTab')" :name="['meta', 'multiTab']">
+                  <ARadioGroup v-model:value="model.meta.multiTab" :options="YesOrNoOptions" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.order')" :name="['meta', 'order']">
+                  <AInputNumber
+                    v-model:value="model.meta.order as number"
+                    :min="0"
+                    :max="999"
+                    :placeholder="placeholder('meta.order')"
+                    class="w-full"
+                  />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.fixedIndexInTab')" :name="['meta', 'fixedIndexInTab']">
+                  <AInputNumber
+                    v-model:value="model.meta.fixedIndexInTab as number"
+                    :min="0"
+                    :max="999"
+                    :placeholder="placeholder('meta.fixedIndexInTab')"
+                    class="w-full"
+                  />
+                </AFormItem>
+              </ACol>
             </template>
           </ARow>
         </AForm>
