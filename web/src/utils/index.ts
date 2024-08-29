@@ -1,9 +1,9 @@
-import { sample } from 'lodash-es';
 import dayjs from 'dayjs';
+import { sample } from 'lodash-es';
 
 /**
- * @description: 切换 html 类名
  * @param {string} className
+ * @description: 切换 html 类名
  */
 export function toggleHtmlClass(className: string) {
   function add() {
@@ -16,22 +16,37 @@ export function toggleHtmlClass(className: string) {
 
   return {
     add,
-    remove
+    remove,
   };
 }
 
-/**
- * @description: 获取当前时间
- */
+/** @description: 获取当前时间 */
 export const timeFix = () => {
-  const hour = dayjs().hour()
-  return hour < 9 ? '早上好' : hour <= 11 ? '上午好' : hour <= 13 ? '中午好' : hour < 20 ? '下午好' : '夜深了'
-}
+  const hour = dayjs().hour();
+  let result = '';
+  if (hour < 9) {
+    result = '早上好';
+  } else if (hour <= 11) {
+    result = '上午好';
+  } else if (hour <= 13) {
+    result = '中午好';
+  } else if (hour <= 20) {
+    result = '下午好';
+  } else {
+    result = '夜深了';
+  }
+  return result;
+};
 
-/**
- * @description: 随机欢迎语
- */
+/** @description: 随机欢迎语 */
 export const welcomeWords = () => {
-  const words = ['休息一会儿吧', '准备吃什么呢?', '要不要打一把 LOL', '我猜你可能累了', '认真工作吧', '今天又是充满活力的一天']
-  return sample(words)
-}
+  const words = [
+    '休息一会儿吧',
+    '准备吃什么呢?',
+    '要不要打一把 LOL',
+    '我猜你可能累了',
+    '认真工作吧',
+    '今天又是充满活力的一天',
+  ];
+  return sample(words);
+};
