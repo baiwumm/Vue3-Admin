@@ -6,13 +6,13 @@
  * @Description: 用户管理模块接口
  */
 
-import { request } from "@/service/request";
+import { request } from '@/service/request';
 
-const baseURL = '/system/user-manage'
+const baseURL = '/system/user-manage';
 
 /**
- * @description: 获取用户管理列表
  * @param {Api.SystemManage.UserManageSearchParams} params
+ * @description: 获取用户管理列表
  */
 export const getUserList = (params?: Api.SystemManage.UserManageSearchParams) =>
   request<Api.Common.PaginatingQueryRecord<Api.SystemManage.UserManage>>({
@@ -21,62 +21,62 @@ export const getUserList = (params?: Api.SystemManage.UserManageSearchParams) =>
   });
 
 /**
+ * @param {Pick<Api.Common.CommonRecord, 'id'>} params
  * @description: 查询用户详情
- * @param {Pick<Api.Common.CommonRecord,'id'>} params
  */
-export const getUserDetail = (params: Pick<Api.Common.CommonRecord, "id">) =>
+export const getUserDetail = (params: Pick<Api.Common.CommonRecord, 'id'>) =>
   request<Api.SystemManage.UserManage>({ url: baseURL, params });
 
 /**
- * @description: 创建用户
  * @param {Api.SystemManage.SaveUserManage} body
+ * @description: 创建用户
  */
 export const createUser = (body: Api.SystemManage.SaveUserManage) =>
   request<Api.SystemManage.UserManage>({
     url: baseURL,
-    method: "post",
+    method: 'post',
     data: body,
   });
 
 /**
- * @description: 更新用户
  * @param {Api.SystemManage.SaveUserManage} body
+ * @description: 更新用户
  */
 export const updateUser = ({ id, ...body }: Partial<Api.SystemManage.SaveUserManage>) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/${id}`,
-    method: "put",
+    method: 'put',
     data: body,
   });
 
 /**
- * @description: 删除用户
  * @param {Api.Common.ColumnId} body
+ * @description: 删除用户
  */
 export const delUser = ({ id }: Api.Common.ColumnId) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/${id}`,
-    method: "delete",
+    method: 'delete',
   });
 
 /**
-* @description: 更新用户标签
-* @param {Pick<Api.SystemManage.SaveUserManage,'tags'>} body
-*/
+ * @param {Pick<Api.SystemManage.SaveUserManage, 'tags'>} body
+ * @description: 更新用户标签
+ */
 export const updateUserTags = (body: Pick<Api.SystemManage.SaveUserManage, 'tags'>) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/updateUserTags`,
-    method: "patch",
+    method: 'patch',
     data: body,
   });
 
 /**
-* @description: 更新用户密码
-* @param {Api.SystemManage.ChangeUserPassword} body
-*/
+ * @param {Api.SystemManage.ChangeUserPassword} body
+ * @description: 更新用户密码
+ */
 export const changePassword = (body: Api.SystemManage.ChangeUserPassword) =>
   request<Api.SystemManage.UserManage>({
     url: `${baseURL}/changePassword`,
-    method: "patch",
+    method: 'patch',
     data: body,
   });

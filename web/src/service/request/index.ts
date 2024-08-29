@@ -1,8 +1,10 @@
 import { BACKEND_ERROR_CODE, createFlatRequest, createRequest } from '@sa/axios';
-import { useAuthStore } from '@/store/modules/auth';
-import { localStg } from '@/utils/storage';
-import { getServiceBaseURL } from '@/utils/service';
+
 import { $t } from '@/locales';
+import { useAuthStore } from '@/store/modules/auth';
+import { getServiceBaseURL } from '@/utils/service';
+import { localStg } from '@/utils/storage';
+
 import { showErrorMsg } from './shared';
 import type { RequestInstanceState } from './type';
 
@@ -11,7 +13,7 @@ const { baseURL, otherBaseURL } = getServiceBaseURL(import.meta.env, isHttpProxy
 
 export const request = createFlatRequest<App.Service.Response, RequestInstanceState>(
   {
-    baseURL
+    baseURL,
   },
   {
     async onRequest(config) {
@@ -35,8 +37,8 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
     onError(error) {
       const authStore = useAuthStore();
       // 当请求失败时，可以在这里处理显示错误信息的逻辑
-      let message = error.response?.data?.msg || error.message;
-      let backendErrorCode = error.response?.data?.code;
+      const message = error.response?.data?.msg || error.message;
+      const backendErrorCode = error.response?.data?.code;
 
       function handleLogout() {
         authStore.resetStore();
@@ -67,10 +69,10 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
           },
           onCancel() {
             logoutAndCleanup();
-          }
+          },
         });
 
-        return
+        return;
       }
 
       // 当 token 过期时，刷新 token 并重试请求，所以不需要显示错误信息
@@ -79,13 +81,13 @@ export const request = createFlatRequest<App.Service.Response, RequestInstanceSt
         return;
       }
       showErrorMsg(request.state, message);
-    }
-  }
+    },
+  },
 );
 
 export const demoRequest = createRequest<App.Service.DemoResponse>(
   {
-    baseURL: otherBaseURL.demo
+    baseURL: otherBaseURL.demo,
   },
   {
     async onRequest(config) {
@@ -121,6 +123,6 @@ export const demoRequest = createRequest<App.Service.DemoResponse>(
       }
 
       window.$message?.error(message + 111);
-    }
-  }
+    },
+  },
 );

@@ -5,61 +5,55 @@
  * @LastEditTime: 2024-08-06 17:50:38
  * @Description: 组织管理模块接口
  */
-import { request } from "@/service/request";
+import { request } from '@/service/request';
 
-const baseURL = '/administrative/organazation'
+const baseURL = '/administrative/organazation';
 
 /**
- * @description: 获取组织管理列表
  * @param {Api.Administrative.OrganizationSearchParams} params
+ * @description: 获取组织管理列表
  */
-export const getOrganazationList = (
-  params?: Api.Administrative.OrganizationSearchParams,
-) =>
+export const getOrganazationList = (params?: Api.Administrative.OrganizationSearchParams) =>
   request<Api.Common.PaginatingQueryRecord<Api.Administrative.Organization>>({
     url: baseURL,
     params,
   });
 
 /**
+ * @param {Pick<Api.Common.CommonRecord, 'id'>} params
  * @description: 查询组织详情
- * @param {Pick<Api.Common.CommonRecord,'id'>} params
  */
-export const getOrganazationDetail = (
-  params: Pick<Api.Common.CommonRecord, "id">,
-) => request<Api.Administrative.Organization>({ url: baseURL, params });
+export const getOrganazationDetail = (params: Pick<Api.Common.CommonRecord, 'id'>) =>
+  request<Api.Administrative.Organization>({ url: baseURL, params });
 
 /**
- * @description: 创建组织
  * @param {Api.Administrative.SaveOrganization} body
+ * @description: 创建组织
  */
 export const createOrganazation = (body: Api.Administrative.SaveOrganization) =>
   request<Api.Administrative.Organization>({
     url: baseURL,
-    method: "post",
+    method: 'post',
     data: body,
   });
 
 /**
- * @description: 更新组织
  * @param {Api.Administrative.SaveOrganization} body
+ * @description: 更新组织
  */
-export const updateOrganazation = ({
-  id,
-  ...body
-}: Api.Administrative.SaveOrganization) =>
+export const updateOrganazation = ({ id, ...body }: Api.Administrative.SaveOrganization) =>
   request<Api.Administrative.Organization>({
     url: `${baseURL}/${id}`,
-    method: "put",
+    method: 'put',
     data: body,
   });
 
 /**
- * @description: 删除组织
  * @param {Pick<Api.Common.CommonRecord, 'id'>} body
+ * @description: 删除组织
  */
-export const delOrganazation = ({ id }: Pick<Api.Common.CommonRecord, "id">) =>
+export const delOrganazation = ({ id }: Pick<Api.Common.CommonRecord, 'id'>) =>
   request<Api.Administrative.Organization>({
     url: `${baseURL}/${id}`,
-    method: "delete",
+    method: 'delete',
   });

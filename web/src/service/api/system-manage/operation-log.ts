@@ -5,13 +5,13 @@
  * @LastEditTime: 2024-08-09 18:17:50
  * @Description: 操作日志管理模块接口
  */
-import { request } from "@/service/request";
+import { request } from '@/service/request';
 
-const baseURL = '/system/operation-log'
+const baseURL = '/system/operation-log';
 
 /**
- * @description: 获取操作日志列表
  * @param {Api.SystemManage.OperationLogSearchParams} params
+ * @description: 获取操作日志列表
  */
 export const getOperationLogList = (params?: Api.SystemManage.OperationLogSearchParams) =>
   request<Api.Common.PaginatingQueryRecord<Api.SystemManage.OperationLog>>({
@@ -20,12 +20,12 @@ export const getOperationLogList = (params?: Api.SystemManage.OperationLogSearch
   });
 
 /**
-* @description: 删除操作日志
-* @param {Api.SystemManage.OperationLogDelParams} body
-*/
+ * @param {Api.SystemManage.OperationLogDelParams} body
+ * @description: 删除操作日志
+ */
 export const delOperationLog = (body: Api.SystemManage.OperationLogDelParams) =>
   request<Api.SystemManage.OperationLog>({
     url: baseURL,
-    method: "delete",
-    data: body
+    method: 'delete',
+    data: body,
   });
