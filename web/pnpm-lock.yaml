@@ -138,6 +138,9 @@ importers:
       lint-staged:
         specifier: 15.2.7
         version: 15.2.7
+      prettier:
+        specifier: ^3.3.3
+        version: 3.3.3
       sass:
         specifier: 1.77.6
         version: 1.77.6
@@ -3891,6 +3894,11 @@ packages:
 
   prettier@3.3.2:
     resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+    engines: {node: '>=14'}
+    hasBin: true
+
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -9160,6 +9168,8 @@ snapshots:
   prettier@3.2.5: {}
 
   prettier@3.3.2: {}
+
+  prettier@3.3.3: {}
 
   pretty-ms@9.0.0:
     dependencies:
