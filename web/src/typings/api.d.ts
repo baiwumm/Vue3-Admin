@@ -176,11 +176,11 @@ declare namespace Api {
     /** @description: 国际化 */
     type Internalization = Common.CommonRecord<{
       name: string; // 国际化字段
-      parentId?: string; // 父级id
-      zhCN?: string; // 中文
-      enUS?: string; // 英文
-      jaJP?: string; // 日文
-      zhTW?: string; // 繁体中文
+      parentId: string | null; // 父级id
+      zhCN: string | null; // 中文
+      enUS: string | null; // 英文
+      jaJP: string | null; // 日文
+      zhTW: string | null; // 繁体中文
       children?: Internalization[];
     }>;
     /** @description: 查询参数 */

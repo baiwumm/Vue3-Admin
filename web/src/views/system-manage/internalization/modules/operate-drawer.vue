@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed, nextTick, reactive, watch, ref } from "vue";
-import { useAntdForm, useFormRules } from "@/hooks/common/form";
-import { $t } from "@/locales";
-import { createInternalization, updateInternalization } from "@/service/api";
-import { pick } from "lodash-es";
-import { InternalizationLanguage } from "@/constants";
-import { OPERATION_TYPE } from "@/enum";
+import { pick } from 'lodash-es';
+import { computed, nextTick, reactive, ref, watch } from 'vue';
+
+import { InternalizationLanguage } from '@/constants';
+import { OPERATION_TYPE } from '@/enum';
+import { useAntdForm, useFormRules } from '@/hooks/common/form';
+import { $t } from '@/locales';
+import { createInternalization, updateInternalization } from '@/service/api';
 
 defineOptions({
-  name: "OperateDrawer",
+  name: 'OperateDrawer',
 });
 
 // 是否请求中
@@ -25,12 +26,12 @@ const props = defineProps<Props>();
 
 // 父组件自定义事件
 interface Emits {
-  (e: "submitted"): void;
+  (e: 'submitted'): void;
 }
 const emit = defineEmits<Emits>();
 
 // 抽屉显示状态
-const visible = defineModel<boolean>("visible", {
+const visible = defineModel<boolean>('visible', {
   default: false,
 });
 
@@ -38,26 +39,23 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() =>
-  props.locales(`${props.operateType}Internalization`),
-);
+const title = computed(() => props.locales(`${props.operateType}Internalization`));
 
-const model: Api.SystemManage.SaveInternalization =
-  reactive(createDefaultModel());
+const model: Api.SystemManage.SaveInternalization = reactive(createDefaultModel());
 
 function createDefaultModel(): Api.SystemManage.SaveInternalization {
   return {
-    parentId: undefined,
-    name: "",
-    zhCN: undefined,
-    enUS: undefined,
-    jaJP: undefined,
-    zhTW: undefined,
+    parentId: null,
+    name: '',
+    zhCN: '',
+    enUS: '',
+    jaJP: '',
+    zhTW: '',
   };
 }
 
 // 表单校验的 key
-type RuleKey = Extract<keyof Api.SystemManage.SaveInternalization, "name">;
+type RuleKey = Extract<keyof Api.SystemManage.SaveInternalization, 'name'>;
 
 const rules: Record<RuleKey, App.Global.FormRule> = {
   name: defaultRequiredRule,
@@ -67,7 +65,7 @@ const rules: Record<RuleKey, App.Global.FormRule> = {
 async function handleInitModel() {
   Object.assign(model, createDefaultModel());
 
-  if (props.operateType === "edit" && props.rowData) {
+  if (props.operateType === 'edit' && props.rowData) {
     await nextTick();
     Object.assign(model, props.rowData);
   }
@@ -87,14 +85,15 @@ async function handleSubmit() {
     // 获取参数
     const params = {
       id: isAdd ? undefined : model.id,
-      ...pick(model, ["parentId", "name", "zhCN", "enUS", "jaJP", "zhTW"]),
+      ...pick(model, ['name', 'zhCN', 'enUS', 'jaJP', 'zhTW']),
+      parentId: model.parentId || null,
     };
     await (isAdd ? createInternalization : updateInternalization)(params)
       .then(({ error }) => {
         if (!error) {
           window.$message?.success($t(`common.${props.operateType}Success`));
           closeDrawer();
-          emit("submitted");
+          emit('submitted');
         }
       })
       .finally(() => {
@@ -114,30 +113,22 @@ watch(visible, () => {
 <template>
   <ADrawer v-model:open="visible" :title="title" :width="360">
     <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
-      <AFormItem
-        :label="$t('form.parent')"
-        name="parentId"
-        :tooltip="$t('form.parentTip')"
-      >
+      <AFormItem :label="$t('form.parent')" name="parentId" :tooltip="$t('form.parentTip')">
         <ATreeSelect
           v-model:value="model.parentId"
           show-search
-          style="width: 100%"
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
           :placeholder="$t('form.select')"
           allow-clear
           tree-default-expand-all
           :tree-data="dataSource"
           tree-node-filter-prop="name"
-          :fieldNames="{ value: 'id', label: 'name' }"
+          :field-names="{ value: 'id', label: 'name' }"
+          class="w-full"
         >
           <template #title="{ name }">
             <ASpace align="center">
-              <svg-icon
-                icon="ri:font-size"
-                class="inline-block"
-                style="vertical-align: -2px"
-              />
+              <SvgIcon icon="ri:font-size" class="inline-block" :style="{ verticalAlign: '-2px' }" />
               {{ name }}
             </ASpace>
           </template>
@@ -152,9 +143,10 @@ watch(visible, () => {
         />
       </AFormItem>
       <AFormItem
+        v-for="language in InternalizationLanguage"
+        :key="language"
         :label="locales(`${language.replace('-', '')}`)"
         :name="language"
-        v-for="language in InternalizationLanguage"
       >
         <AInput
           v-model:value="
@@ -167,18 +159,14 @@ watch(visible, () => {
           "
           show-count
           :maxlength="500"
-          :placeholder="
-            $t('form.enter') + locales(`${language.replace('-', '')}`)
-          "
+          :placeholder="$t('form.enter') + locales(`${language.replace('-', '')}`)"
         />
       </AFormItem>
     </AForm>
     <template #footer>
       <ASpace :size="16">
-        <AButton @click="closeDrawer">{{ $t("common.cancel") }}</AButton>
-        <AButton type="primary" :loading="loading" @click="handleSubmit">{{
-          $t("common.confirm")
-        }}</AButton>
+        <AButton @click="closeDrawer">{{ $t('common.cancel') }}</AButton>
+        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t('common.confirm') }}</AButton>
       </ASpace>
     </template>
   </ADrawer>
