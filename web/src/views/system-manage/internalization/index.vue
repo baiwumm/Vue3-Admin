@@ -113,13 +113,12 @@ const {
 const { drawerVisible, operateType, handleAdd, handleEdit, checkedRowKeys, onDeleted } = useTableOperate(data, getData);
 
 /** @description: 删除国际化 */
-const handleDelete = async (id: string) => {
-  return await delInternalization({ id }).then(({ error }) => {
+const handleDelete = async (id: string) =>
+  await delInternalization({ id }).then(({ error }) => {
     if (!error) {
       onDeleted();
     }
   });
-};
 
 /** @description: 编辑国际化 */
 const edit = (record: Api.SystemManage.Internalization) => {

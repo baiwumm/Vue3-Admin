@@ -145,13 +145,12 @@ const {
 const { drawerVisible, operateType, handleAdd, handleEdit, checkedRowKeys, onDeleted } = useTableOperate(data, getData);
 
 /** @description: 删除岗位 */
-const handleDelete = async (id: string) => {
-  return await delPost({ id }).then(({ error }) => {
+const handleDelete = async (id: string) =>
+  await delPost({ id }).then(({ error }) => {
     if (!error) {
       onDeleted();
     }
   });
-};
 
 /** @description: 编辑岗位 */
 const edit = (record: Api.Administrative.PostManage) => {

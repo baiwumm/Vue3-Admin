@@ -1,27 +1,25 @@
 <script setup lang="ts">
+import { withDefaults } from 'vue';
+
 import { $t } from '@/locales';
 
 defineOptions({
   name: 'TableHeaderOperation',
 });
 
-defineProps({
-  disabledDelete: {
-    type: Boolean,
-    default: false,
-  },
-  loading: {
-    type: Boolean,
-    default: false,
-  },
-  addBtn: {
-    type: Boolean,
-    default: true,
-  },
-  batchDeleteBtn: {
-    type: Boolean,
-    default: false,
-  },
+// 定义一个接口来描述 props 的类型
+type Props = {
+  disabledDelete?: boolean;
+  loading?: boolean;
+  addBtn?: boolean;
+  batchDeleteBtn?: boolean;
+};
+
+withDefaults(defineProps<Props>(), {
+  disabledDelete: false,
+  loading: false,
+  addBtn: true,
+  batchDeleteBtn: false,
 });
 
 interface Emits {

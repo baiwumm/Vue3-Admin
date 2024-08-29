@@ -140,13 +140,12 @@ const { columns, columnChecks, data, getData, getDataByPage, loading, searchPara
 const { drawerVisible, operateType, handleAdd, handleEdit, checkedRowKeys, onDeleted } = useTableOperate(data, getData);
 
 /** @description: 删除组织 */
-const handleDelete = async (id: string) => {
-  return await delOrganazation({ id }).then(({ error }) => {
+const handleDelete = async (id: string) =>
+  await delOrganazation({ id }).then(({ error }) => {
     if (!error) {
       onDeleted();
     }
   });
-};
 
 /** @description: 编辑组织 */
 const edit = (record: Api.Administrative.Organization) => {

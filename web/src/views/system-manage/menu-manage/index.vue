@@ -166,13 +166,12 @@ const {
 const { drawerVisible, operateType, handleAdd, handleEdit, checkedRowKeys, onDeleted } = useTableOperate(data, getData);
 
 /** @description: 删除菜单 */
-const handleDelete = async (id: string) => {
-  return await delMenu({ id }).then(({ error }) => {
+const handleDelete = async (id: string) =>
+  await delMenu({ id }).then(({ error }) => {
     if (!error) {
       onDeleted();
     }
   });
-};
 
 /** @description: 编辑菜单 */
 const edit = (record: Api.SystemManage.MenuManage) => {
