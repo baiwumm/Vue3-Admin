@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { ConfigProvider } from 'ant-design-vue';
+import { computed } from 'vue';
+
+import { antdLocales } from './locales/antd';
 import { useAppStore } from './store/modules/app';
 import { useThemeStore } from './store/modules/theme';
-import { antdLocales } from './locales/antd';
 
 defineOptions({
-  name: 'App'
+  name: 'App',
 });
 
 const appStore = useAppStore();
