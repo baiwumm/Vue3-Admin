@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-09 15:26:41
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-07 09:58:31
+ * @LastEditTime: 2024-08-30 09:56:51
  * @Description: 全局入口文件
  */
 import { NestFactory } from '@nestjs/core';
@@ -10,6 +10,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import express from 'express';
 import session from 'express-session';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 import { join } from 'path';
 
 import { AllExceptionsFilter } from '@/filter/all-exception.filter'; // 全局异常过滤器
@@ -22,6 +23,7 @@ async function bootstrap() {
 
   app.use(express.json()); // 用于解析 JSON 格式的请求体
   app.use(express.urlencoded({ extended: true })); // 用于解析 URL 编码格式的请求体
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   // 设置信任代理
   app.set('trust proxy', true);
