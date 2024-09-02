@@ -5,6 +5,7 @@
  * @LastEditTime: 2024-08-30 09:56:51
  * @Description: 全局入口文件
  */
+declare const module: any;
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -23,6 +24,8 @@ async function bootstrap() {
 
   app.use(express.json()); // 用于解析 JSON 格式的请求体
   app.use(express.urlencoded({ extended: true })); // 用于解析 URL 编码格式的请求体
+
+  // 替换日志器
   app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
 
   // 设置信任代理
@@ -34,6 +37,12 @@ async function bootstrap() {
 
   // 全局参数校验
   app.useGlobalPipes(new ValidationPipe());
+
+  // 启动热重载
+  if (module.hot) {
+    module.hot.accept();
+    module.hot.dispose(() => app.close());
+  }
 
   // 配置 session
   app.use(
