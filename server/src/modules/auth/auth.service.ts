@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-26 13:42:39
+ * @LastEditTime: 2024-09-03 17:36:59
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
@@ -308,13 +308,6 @@ export class AuthService {
                 // 过滤出 json 对象不是常量的菜单
                 meta: {
                   path: ['constant'],
-                  not: true,
-                },
-              },
-              {
-                // 过滤出 json 对象隐藏的菜单
-                meta: {
-                  path: ['hideInMenu'],
                   not: true,
                 },
               },
