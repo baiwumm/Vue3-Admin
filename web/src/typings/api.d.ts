@@ -211,6 +211,29 @@ declare namespace Api {
 
   /** @description: 智能行政 */
   namespace Administrative {
+    /** @description: 消息公告 */
+    type Message = Common.CommonRecord<{
+      title: string; // 标题
+      content: string; // 内容
+      status: import('@/enum').STATUS; // 状态
+      pinned: boolean; // 是否置顶
+      userId: string; // 用户 id
+      user: SystemManage.UserManage;
+      messageReads: MessageRead[]; // 已读公告列表
+    }>;
+    /** @description: 消息公告 - 查询参数 */
+    type MessageSearchParams = Partial<Pick<Message, 'userId' | 'title' | 'status'>> &
+      Api.Common.SearchTime &
+      Api.Common.PaginatingParams;
+    /** @description: 创建/更新消息 */
+    type SaveMessage = Pick<Message, 'title' | 'content' | 'status' | 'pinned'> & Partial<Api.Common.ColumnId>;
+    /** @description: 消息公告 - 已读列表 */
+    type MessageRead = Common.CommonRecord<{
+      messageId: string; // 消息 id
+      message: Message; // 消息详情
+      userId: string; // 用户 id
+      user: SystemManage.UserManage;
+    }>;
     /** @description: 组织管理 */
     type Organization = Common.CommonRecord<{
       name: string; // 组织名称

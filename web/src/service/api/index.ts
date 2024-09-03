@@ -1,3 +1,4 @@
+export * from './administrative/message';
 export * from './administrative/organization';
 export * from './administrative/post-manage';
 export * from './auth';
