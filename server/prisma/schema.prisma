@@ -41,6 +41,30 @@ enum Method {
   DELETE
 }
 
+// 智能行政 - 消息公告
+model Message {
+  id            String          @id @default(uuid()) // 主键
+  title         String          // 标题
+  content       String          // 内容
+  status        Status          @default(ACTIVE) // 状态
+  pinned        Boolean         @default(false)
+  userId        String          // 作者 id
+  user          User            @relation(fields: [userId], references: [id])
+  messageReads  MessageRead[]   // 关联已读列表
+  createdAt     DateTime        @default(now()) // 创建时间
+  updatedAt     DateTime        @updatedAt // 更新时间
+}
+
+// 智能行政 - 消息公告 - 已读列表
+model MessageRead {
+  id            String          @id @default(uuid()) // 主键
+  messageId     String          // 消息 id
+  message       Message         @relation(fields: [messageId], references: [id])
+  userId        String          // 用户 id
+  user          User            @relation(fields: [userId], references: [id])
+  createdAt     DateTime        @default(now()) // 创建时间
+}
+
 // 智能行政 - 组织管理
 model Organization {
   id            String          @id @default(uuid()) // 主键
@@ -101,6 +125,8 @@ model User {
   loginCount    Int             @default(0) // 登录次数
   lastIp        String?         // 最后登录ip
   lastLoginAt   DateTime?       // 最后登录时间
+  messages      Message[]       // 该用户发布的消息列表
+  messageReads  MessageRead[]   // 关联已读列表
   createdAt     DateTime        @default(now()) // 创建时间
   updatedAt     DateTime        @updatedAt // 更新时间
 }
