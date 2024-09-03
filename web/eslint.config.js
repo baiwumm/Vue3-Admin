@@ -1,16 +1,11 @@
 import { defineConfig } from '@soybeanjs/eslint-config';
-import typeScriptEslint from '@typescript-eslint/eslint-plugin';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
-import eslintPluginVue from 'eslint-plugin-vue';
 
 export default defineConfig(
   { vue: true, unocss: true },
   {
-    parser: '@typescript-eslint/parser',
     plugins: {
-      '@typescript-eslint/eslint-plugin': typeScriptEslint,
       'simple-import-sort': simpleImportSort,
-      vue: eslintPluginVue,
     },
     rules: {
       // 禁止声明未使用的变量
