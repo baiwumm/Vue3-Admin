@@ -2,13 +2,14 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-12 14:34:56
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-30 09:54:30
+ * @LastEditTime: 2024-09-02 16:12:07
  * @Description: AppModule
  */
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { WinstonModule } from 'nest-winston';
 
 import { LoggerMiddleware } from '@/middleware/logger.middleware'; // 全局日志中间件
+import { MessageModule } from '@/modules/administrative/message/message.module'; // 智能行政 - 消息公告
 import { OrganazationModule } from '@/modules/administrative/organazation/organazation.module'; // 智能行政-组织管理
 import { PostManageModule } from '@/modules/administrative/post-manage/post-manage.module'; // 智能行政-岗位管理
 import { AuthModule } from '@/modules/auth/auth.module'; // 登录授权
@@ -32,6 +33,7 @@ import winstonLogger from './config/winston.config';
     InternalizationModule,
     MenuManageModule,
     RoleManageModule,
+    MessageModule,
     WinstonModule.forRoot({
       transports: winstonLogger.transports,
       format: winstonLogger.format,
