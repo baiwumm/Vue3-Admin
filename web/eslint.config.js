@@ -106,6 +106,8 @@ export default defineConfig(
       'unocss/order-attributify': 'off',
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      'no-use-before-define': 'off',
+      '@typescript-eslint/no-use-before-define': 'off',
     },
   },
 );
