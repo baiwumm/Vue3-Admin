@@ -1,6 +1,7 @@
-import { ref, toValue } from 'vue';
-import type { ComputedRef, Ref } from 'vue';
 import type { FormInstance } from 'ant-design-vue';
+import type { ComputedRef, Ref } from 'vue';
+import { ref, toValue } from 'vue';
+
 import { REG_CODE_SIX, REG_EMAIL, REG_PHONE, REG_PWD, REG_USER_NAME } from '@/constants/reg';
 import { $t } from '@/locales';
 
@@ -9,33 +10,33 @@ export function useFormRules() {
     userName: {
       pattern: REG_USER_NAME,
       message: $t('form.userName.invalid'),
-      trigger: 'change'
+      trigger: 'change',
     },
     phone: {
       pattern: REG_PHONE,
       message: $t('form.phone.invalid'),
-      trigger: 'change'
+      trigger: 'change',
     },
     pwd: {
       pattern: REG_PWD,
       message: $t('form.pwd.invalid'),
-      trigger: 'change'
+      trigger: 'change',
     },
     oldPwd: {
       pattern: REG_PWD,
       message: $t('form.oldPwd.invalid'),
-      trigger: 'change'
+      trigger: 'change',
     },
     code: {
       pattern: REG_CODE_SIX,
       message: $t('form.code.invalid'),
-      trigger: 'change'
+      trigger: 'change',
     },
     email: {
       pattern: REG_EMAIL,
       message: $t('form.email.invalid'),
-      trigger: 'change'
-    }
+      trigger: 'change',
+    },
   } satisfies Record<string, App.Global.FormRule>;
 
   const formRules = {
@@ -44,7 +45,7 @@ export function useFormRules() {
     pwd: [createRequiredRule($t('form.pwd.required')), patternRules.pwd],
     oldPwd: [createRequiredRule($t('form.oldPwd.required')), patternRules.oldPwd],
     code: [createRequiredRule($t('form.code.required')), patternRules.code],
-    email: [createRequiredRule($t('form.email.required')), patternRules.email]
+    email: [createRequiredRule($t('form.email.required')), patternRules.email],
   } satisfies Record<string, App.Global.FormRule[]>;
 
   /** the default required rule */
@@ -53,7 +54,7 @@ export function useFormRules() {
   function createRequiredRule(message: string) {
     return {
       required: true,
-      message
+      message,
     };
   }
 
@@ -69,8 +70,8 @@ export function useFormRules() {
           return Promise.resolve();
         },
         message: $t('form.confirmPwd.invalid'),
-        trigger: 'change'
-      }
+        trigger: 'change',
+      },
     ];
     return confirmPwdRule;
   }
@@ -80,7 +81,7 @@ export function useFormRules() {
     formRules,
     defaultRequiredRule,
     createRequiredRule,
-    createConfirmPwdRule
+    createConfirmPwdRule,
   };
 }
 
@@ -98,6 +99,6 @@ export function useAntdForm() {
   return {
     formRef,
     validate,
-    resetFields
+    resetFields,
   };
 }

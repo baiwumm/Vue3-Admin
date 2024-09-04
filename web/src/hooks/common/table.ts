@@ -1,12 +1,13 @@
-import { computed, effectScope, onScopeDispose, reactive, ref, shallowRef, toValue, watch } from 'vue';
-import type { MaybeRef, Ref } from 'vue';
+import { useBoolean, useHookTable } from '@sa/hooks';
+import { useElementSize } from '@vueuse/core';
 import type { TablePaginationConfig } from 'ant-design-vue';
 import type { TableRowSelection } from 'ant-design-vue/es/table/interface';
 import { cloneDeep } from 'lodash-es';
-import { useElementSize } from '@vueuse/core';
-import { useBoolean, useHookTable } from '@sa/hooks';
-import { useAppStore } from '@/store/modules/app';
+import type { MaybeRef, Ref } from 'vue';
+import { computed, effectScope, onScopeDispose, reactive, ref, shallowRef, toValue, watch } from 'vue';
+
 import { $t } from '@/locales';
+import { useAppStore } from '@/store/modules/app';
 
 type TableData = AntDesign.TableData;
 type GetTableData<A extends AntDesign.TableApiFn> = AntDesign.GetTableData<A>;
@@ -28,7 +29,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
     getData,
     searchParams,
     updateSearchParams,
-    resetSearchParams
+    resetSearchParams,
   } = useHookTable<A, GetTableData<A>, TableColumn<AntDesign.TableDataWithIndex<GetTableData<A>>>>({
     apiFn,
     apiParams,
@@ -39,7 +40,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
       const recordsWithIndex = records.map((item, index) => {
         return {
           ...item,
-          index: (current - 1) * size + index + 1
+          index: (current - 1) * size + index + 1,
         };
       });
 
@@ -47,7 +48,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
         data: recordsWithIndex,
         pageNum: current,
         pageSize: size,
-        total
+        total,
       };
     },
     getColumnChecks: cols => {
@@ -58,7 +59,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
           checks.push({
             key: column.key as string,
             title: column.title as string,
-            checked: true
+            checked: true,
           });
         }
       });
@@ -86,10 +87,10 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
       updatePagination({
         current: pageNum,
         pageSize,
-        total
+        total,
       });
     },
-    immediate
+    immediate,
   });
 
   const pagination: TablePaginationConfig = reactive({
@@ -103,18 +104,18 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
 
       updateSearchParams({
         current,
-        size
+        size,
       });
 
       getData();
-    }
+    },
   });
 
   // this is for mobile, if the system does not support mobile, you can use `pagination` directly
   const mobilePagination = computed(() => {
     const p: TablePaginationConfig = {
       ...pagination,
-      simple: appStore.isMobile
+      simple: appStore.isMobile,
     };
 
     return p;
@@ -131,12 +132,12 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
    */
   async function getDataByPage(pageNum: number = 1) {
     updatePagination({
-      current: pageNum
+      current: pageNum,
     });
 
     updateSearchParams({
       current: pageNum,
-      size: pagination.pageSize!
+      size: pagination.pageSize!,
     });
 
     await getData();
@@ -147,7 +148,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
       () => appStore.locale,
       () => {
         reloadColumns();
-      }
+      },
     );
   });
 
@@ -169,7 +170,7 @@ export function useTable<A extends AntDesign.TableApiFn>(config: AntDesign.AntDe
     getDataByPage,
     searchParams,
     updateSearchParams,
-    resetSearchParams
+    resetSearchParams,
   };
 }
 
@@ -206,7 +207,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
       columnWidth: 48,
       type: 'checkbox',
       selectedRowKeys: checkedRowKeys.value,
-      onChange: onSelectChange
+      onChange: onSelectChange,
     };
   });
 
@@ -238,7 +239,7 @@ export function useTableOperate<T extends TableData = TableData>(data: Ref<T[]>,
     onSelectChange,
     rowSelection,
     onBatchDeleted,
-    onDeleted
+    onDeleted,
   };
 }
 
@@ -249,12 +250,12 @@ export function useTableScroll(scrollX: MaybeRef<number> = 702) {
   const scrollConfig = computed(() => {
     return {
       y: wrapperElHeight.value - 72,
-      x: toValue(scrollX)
+      x: toValue(scrollX),
     };
   });
 
   return {
     tableWrapperRef,
-    scrollConfig
+    scrollConfig,
   };
 }
