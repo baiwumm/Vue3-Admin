@@ -71,6 +71,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'administrative_message-detail',
+        path: '/administrative/message-detail/:id',
+        component: 'view.administrative_message-detail',
+        meta: {
+          title: 'administrative_message-detail',
+          i18nKey: 'route.administrative_message-detail'
+        }
+      },
+      {
         name: 'administrative_organization',
         path: '/administrative/organization',
         component: 'view.administrative_organization',

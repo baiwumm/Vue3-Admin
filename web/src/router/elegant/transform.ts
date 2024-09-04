@@ -167,6 +167,7 @@ const routeMap: RouteMap = {
   "about": "/about",
   "administrative": "/administrative",
   "administrative_message": "/administrative/message",
+  "administrative_message-detail": "/administrative/message-detail/:id",
   "administrative_organization": "/administrative/organization",
   "administrative_post-manage": "/administrative/post-manage",
   "home": "/home",

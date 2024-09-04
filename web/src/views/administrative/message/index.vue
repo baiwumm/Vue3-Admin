@@ -1,21 +1,29 @@
 <script setup lang="tsx">
-import { Avatar, Button, Popconfirm, Space, Switch, Tag } from 'ant-design-vue';
+import { Avatar, AvatarGroup, Button, Popconfirm, Space, Switch, Tag, Tooltip } from 'ant-design-vue';
 import dayjs from 'dayjs';
-import { eq, find, get } from 'lodash-es';
+import { eq, find, get, includes, map } from 'lodash-es';
 import { onMounted, ref } from 'vue';
 
 import { StatueOptions } from '@/constants';
 import { STATUS, UNIFORM_TEXT } from '@/enum';
 import { useAuth } from '@/hooks/business/auth';
+import { useRouterPush } from '@/hooks/common/router';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
 import { $t } from '@/locales';
-import { changePinned, delMessage, getMessageList, getUserList } from '@/service/api';
+import { changePinned, createMessageRead, delMessage, getMessageList, getUserList } from '@/service/api';
+import { useAuthStore } from '@/store/modules/auth';
+import { useThemeStore } from '@/store/modules/theme';
 
 import HeaderSearch from './modules/header-search.vue';
 import OperateModal from './modules/operate-modal.vue';
 
+const authStore = useAuthStore();
+const themeStore = useThemeStore();
+
 // 权限钩子函数
 const { hasAuth } = useAuth();
+
+const { routerPushByKey } = useRouterPush();
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
@@ -40,6 +48,24 @@ const fetchUserList = async () => {
 /** @description: 切换置顶回调 */
 const handleSwitchClick = (id: string) => {
   currentId.value = id;
+};
+
+/** @description: 创建已读信息 */
+const handleCreateMessage = async (record: Api.Administrative.Message) => {
+  const { error } = await createMessageRead({
+    id: record.id,
+  });
+  if (!error) {
+    getData();
+  }
+};
+
+/** @description: 跳转消息公告详情 */
+const handleJumpDetail = async (record: Api.Administrative.Message) => {
+  routerPushByKey('administrative_message-detail', { params: { id: record.id } });
+  if (!includes(map(record.messageReads, 'userId'), authStore.userInfo.id)) {
+    await handleCreateMessage(record);
+  }
 };
 
 const {
@@ -71,6 +97,7 @@ const {
       title: locales('userId'),
       align: 'center',
       fixed: 'left',
+      width: 200,
       customRender: ({ record }) => (
         <Space>
           <Avatar src={record.user.avatar} />
@@ -83,6 +110,25 @@ const {
       dataIndex: 'title',
       title: locales('title'),
       align: 'center',
+      ellipsis: true,
+      customRender: ({ text, record }) => (
+        <Tooltip title={text} placement="topLeft">
+          <a onClick={() => handleJumpDetail(record)}>{text}</a>
+        </Tooltip>
+      ),
+    },
+    {
+      key: 'messageReads',
+      dataIndex: 'messageReads',
+      title: locales('read'),
+      align: 'center',
+      customRender: ({ record }) => (
+        <AvatarGroup maxCount={3} maxStyle={{ backgroundColor: themeStore.themeColor }}>
+          {record.messageReads?.length
+            ? map(record.messageReads, item => <Avatar key={item.id} src={item.user.avatar} />)
+            : UNIFORM_TEXT.NULL}
+        </AvatarGroup>
+      ),
     },
     {
       key: 'status',
