@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CreativityBanner from './modules/creativity-banner.vue';
+import BlogLog from './modules/blog-log.vue';
 import HeaderBanner from './modules/header-banner.vue';
 import ProjectNews from './modules/project-news.vue';
 import StatisticChart from './modules/statistic-card.vue';
@@ -13,7 +13,7 @@ import StatisticChart from './modules/statistic-card.vue';
     <StatisticChart />
     <ARow :gutter="[16, 16]">
       <ACol :span="24" :lg="14">
-        <CreativityBanner />
+        <BlogLog />
       </ACol>
       <ACol :span="24" :lg="10">
         <ProjectNews />
