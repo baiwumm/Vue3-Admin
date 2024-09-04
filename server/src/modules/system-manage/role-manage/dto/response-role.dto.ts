@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-22 10:27:10
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:06:22
+ * @LastEditTime: 2024-09-04 10:54:12
  * @Description: 角色管理
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -138,7 +138,7 @@ export class ResponseSaveRoleDto extends ResponseDto {
  */
 export class ResponseDeleteRoleDto extends ResponseDto {
   @ApiProperty({
-    type: Object,
+    type: [Object, Object],
     description: '响应体',
     default: [
       {

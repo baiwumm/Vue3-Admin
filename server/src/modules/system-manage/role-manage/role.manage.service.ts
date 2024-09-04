@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-22 10:16:18
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:40:17
+ * @LastEditTime: 2024-09-04 10:53:46
  * @Description: RoleManageService
  */
 import { Injectable } from '@nestjs/common';
@@ -140,7 +140,7 @@ export class RoleManageService {
         this.prisma.permission.deleteMany({ where: { roleId: id } }),
         this.prisma.role.delete({ where: { id } }),
       ]);
-      return responseMessage(result);
+      return responseMessage<[{ count: number }, Role]>(result);
     } catch (error) {
       return responseMessage(error, RESPONSE_MSG.ERROR, -1);
     }
