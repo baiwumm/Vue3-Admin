@@ -2,11 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 14:13:35
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-02 16:04:12
+ * @LastEditTime: 2024-09-04 13:57:13
  * @Description: MessageService
  */
 import { Injectable } from '@nestjs/common';
-import type { Message } from '@prisma/client';
+import type { Message, MessageRead } from '@prisma/client';
 
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { responseMessage } from '@/utils';
@@ -52,9 +52,14 @@ export class MessageService {
       where,
       include: {
         user: true,
-        messageReads: true,
+        messageReads: {
+          include: {
+            user: true,
+          },
+        },
       },
       orderBy: [
+        { pinned: 'desc' },
         { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
       ],
     });
@@ -75,6 +80,10 @@ export class MessageService {
     const result = await this.prisma.message.findUnique({
       where: {
         id,
+      },
+      include: {
+        user: true,
+        messageReads: true,
       },
     });
     return responseMessage<Message>(result);
@@ -108,10 +117,14 @@ export class MessageService {
    * @description: 删除消息公告
    */
   async remove(id: string) {
-    const result = await this.prisma.message.delete({
-      where: { id },
-    });
-    return responseMessage<Message>(result);
+    // 开启事务删除
+    const result = await this.prisma.$transaction([
+      this.prisma.messageRead.deleteMany({ where: { messageId: id } }),
+      this.prisma.message.delete({
+        where: { id },
+      }),
+    ]);
+    return responseMessage<[{ count: number }, Message]>(result);
   }
 
   /**
@@ -132,5 +145,30 @@ export class MessageService {
       },
     });
     return responseMessage<Message>(result);
+  }
+
+  /**
+   * @description: 创建已读信息
+   */
+  async createMessageRead(id: string, session: CommonType.SessionInfo) {
+    // 查询当前用户是否已读
+    const read = await this.prisma.messageRead.findFirst({
+      where: {
+        messageId: id,
+        userId: session.userInfo.id,
+      },
+    });
+    // 如果有记录，直接返回
+    if (read) {
+      return responseMessage<null>(read);
+    }
+    // 没有记录则新增一条记录
+    const result = await this.prisma.messageRead.create({
+      data: {
+        messageId: id,
+        userId: session.userInfo.id,
+      },
+    });
+    return responseMessage<MessageRead>(result);
   }
 }

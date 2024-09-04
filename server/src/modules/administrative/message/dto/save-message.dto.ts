@@ -40,3 +40,16 @@ export class SaveMessageDto {
   })
   pinned: boolean;
 }
+
+/**
+ * @description: 创建已读信息
+ */
+export class SaveMessageReadDto {
+  @ApiProperty({
+    type: String,
+    description: '消息 id',
+    default: 'b64c3c94-5312-45f2-aa8f-fca11a04263a',
+  })
+  @IsNotEmpty({ message: '消息 id 必填' })
+  id: string;
+}

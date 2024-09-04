@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 14:24:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-03 16:12:29
+ * @LastEditTime: 2024-09-04 10:08:51
  * @Description: MessageController
  */
 import {
@@ -26,8 +26,8 @@ import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '
 import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { MessageParamsDto } from './dto/params-message.dto';
-import { ResponseMessageDto } from './dto/response-message.dto';
-import { SaveMessageDto } from './dto/save-message.dto';
+import { ResponseMessageDto, ResponseSaveMessageReadDto } from './dto/response-message.dto';
+import { SaveMessageDto, SaveMessageReadDto } from './dto/save-message.dto';
 import { MessageService } from './message.service';
 
 @ApiTags('智能行政-消息公告')
@@ -101,5 +101,15 @@ export class MessageController {
   @ApiOperation({ summary: '修改置顶状态' })
   changePinned(@Param('id', new ParseUUIDPipe()) id: string) {
     return this.messageService.changePinned(id);
+  }
+
+  /**
+   * @description: 创建已读信息
+   */
+  @Post('/createMessageRead')
+  @ApiOkResponse({ type: ResponseSaveMessageReadDto })
+  @ApiOperation({ summary: '创建已读信息' })
+  createMessageRead(@Body() body: SaveMessageReadDto, @Session() session: CommonType.SessionInfo) {
+    return this.messageService.createMessageRead(body.id, session);
   }
 }
