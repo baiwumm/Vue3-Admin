@@ -1,5 +1,6 @@
-import { h } from 'vue';
 import { Button } from 'ant-design-vue';
+import { h } from 'vue';
+
 import { $t } from '../locales';
 
 export function setupAppVersionNotification() {
@@ -30,9 +31,9 @@ export function setupAppVersionNotification() {
             {
               onClick() {
                 window.$notification?.destroy(key);
-              }
+              },
             },
-            () => $t('system.updateCancel')
+            () => $t('system.updateCancel'),
           ),
           h(
             Button,
@@ -40,15 +41,15 @@ export function setupAppVersionNotification() {
               type: 'primary',
               onClick() {
                 location.reload();
-              }
+              },
             },
-            () => $t('system.updateConfirm')
-          )
+            () => $t('system.updateConfirm'),
+          ),
         ]);
       },
       onClose() {
         isShow = false;
-      }
+      },
     });
   });
 }
