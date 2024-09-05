@@ -89,6 +89,7 @@ declare module 'vue' {
     IconLocalLogo: typeof import('~icons/local/logo')['default']
     IconMdiDrag: typeof import('~icons/mdi/drag')['default']
     IconMdiRefresh: typeof import('~icons/mdi/refresh')['default']
+    ImgCorpper: typeof import('./../components/custom/img-corpper.vue')['default']
     LangSwitch: typeof import('./../components/common/lang-switch.vue')['default']
     LookForward: typeof import('./../components/custom/look-forward.vue')['default']
     MenuToggler: typeof import('./../components/common/menu-toggler.vue')['default']
