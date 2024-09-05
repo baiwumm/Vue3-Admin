@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 
-import StrengthMeter from '@/components/custom/strength-meter.vue';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { changePassword, fetchLogout } from '@/service/api';
@@ -37,6 +36,11 @@ const rules = computed<Record<RuleKey, App.Global.FormRule | App.Global.FormRule
   };
 });
 
+// 更新 model 的值
+const updateModel = (args: Partial<Api.SystemManage.SaveUserManage>) => {
+  Object.assign(model, args);
+};
+
 // 提交数据
 async function handleSubmit(values: Api.SystemManage.EditPassword) {
   loading.value = true;
@@ -62,7 +66,7 @@ async function handleSubmit(values: Api.SystemManage.EditPassword) {
         <AInputPassword v-model:value="model.oldPassword" size="large" :placeholder="$t('form.oldPwd.required')" />
       </AFormItem>
     </ACol>
-    <StrengthMeter :model="model" />
+    <StrengthMeter v-model:form-data="model" @update:model="updateModel" />
     <ARow justify="center" class="mt-2">
       <AButton type="primary" html-type="submit" :loading="loading" block>
         {{ $t('common.commit') }}

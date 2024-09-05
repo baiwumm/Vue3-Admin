@@ -8,7 +8,6 @@ import { getOrganazationList, getPostList, getRoleList, updateUser } from '@/ser
 import { useAppStore } from '@/store/modules/app';
 import { useAuthStore } from '@/store/modules/auth';
 import PersonalInfo from '@/views/system-manage/user-manage/modules/personal-info.vue';
-import SettingAvatar from '@/views/system-manage/user-manage/modules/setting-avatar.vue';
 import UserInfo from '@/views/system-manage/user-manage/modules/user-info.vue';
 
 defineOptions({
@@ -122,19 +121,20 @@ onMounted(() => {
     <ARow :gutter="16">
       <ADivider orientation="left">{{ locales('settingAvatar') }}</ADivider>
       <!-- 设置头像 -->
-      <SettingAvatar :model="model" @update:model="updateModel" />
+      <ImgCorpper v-model="model.avatar" />
       <ADivider orientation="left">{{ locales('personalInfo') }}</ADivider>
       <!-- 个人信息 -->
-      <PersonalInfo :model="model" :locales="locales" />
+      <PersonalInfo v-model:form-data="model" :locales="locales" @update:model="updateModel" />
       <ADivider orientation="left">{{ locales('userInfo') }}</ADivider>
       <!-- 用户信息 -->
       <UserInfo
-        :model="model"
+        v-model:form-data="model"
         :locales="locales"
         :role-list="roleList"
         :organazation-list="organazationList"
         :post-list="postList"
         :show-tag="false"
+        @update:model="updateModel"
       />
     </ARow>
     <ARow justify="center">
