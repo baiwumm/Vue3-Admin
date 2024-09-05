@@ -3,6 +3,7 @@ import type { StepsProps } from 'ant-design-vue/es/steps';
 import { initial, keys, omit, pick } from 'lodash-es';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 
+import ImgCorpper from '@/components/custom/img-corpper.vue';
 import StrengthMeter from '@/components/custom/strength-meter.vue';
 import { OPERATION_TYPE, SEX, STATUS } from '@/enum';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
@@ -11,12 +12,10 @@ import { createUser, getOrganazationList, getPostList, getRoleList, updateUser }
 import { useAuthStore } from '@/store/modules/auth';
 
 import PersonalInfo from './personal-info.vue'; // 个人信息
-import SettingAvatar from './setting-avatar.vue';
 import UserInfo from './user-info.vue'; // 用户信息
 
 defineOptions({
   name: 'OperateModal',
-  inheritAttrs: false,
 });
 
 const authStore = useAuthStore();
@@ -156,7 +155,7 @@ const steps = [
   { title: props.locales('userInfo'), content: UserInfo },
   {
     title: props.locales('settingAvatar'),
-    content: SettingAvatar,
+    content: ImgCorpper,
   },
   {
     title: props.locales('settingPassword'),
@@ -241,19 +240,17 @@ watch(visible, () => {
     <ASpace direction="vertical" size="middle" class="w-full">
       <ASteps :current="current" :items="items" />
       <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
-        <ARow :gutter="16">
-          <component
-            :is="steps[current].content"
-            :model="model"
-            :role-list="roleList"
-            :organazation-list="organazationList"
-            :post-list="postList"
-            :locales="locales"
-            show-tag
-            v-bind="$attrs"
-            @update:model="updateModel"
-          />
-        </ARow>
+        <component
+          :is="steps[current].content"
+          v-model:form-data="model"
+          v-model="model.avatar"
+          :locales="locales"
+          :role-list="roleList"
+          :organazation-list="organazationList"
+          :post-list="postList"
+          show-tag
+          @update:model="updateModel"
+        />
       </AForm>
     </ASpace>
     <template #footer>
