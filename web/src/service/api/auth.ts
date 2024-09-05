@@ -30,3 +30,14 @@ export const getLocales = () => request({ url: '/auth/getLocales' });
 /** @description: 获取掘金文章 */
 export const getJuejinList = (params: Api.Auth.JuejinParams) =>
   request({ url: '/auth/juejin', method: 'post', data: params });
+
+/** @description: 上传图片 */
+export const uploadSingleFile = (params: FormData) =>
+  request({
+    url: '/upload/single-file',
+    method: 'post',
+    data: params,
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
