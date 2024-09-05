@@ -77,6 +77,9 @@ importers:
       vue-i18n:
         specifier: 9.13.1
         version: 9.13.1(vue@3.4.31(typescript@5.5.3))
+      vue-img-cutter:
+        specifier: '3'
+        version: 3.0.5(typescript@5.5.3)
       vue-router:
         specifier: 4.4.0
         version: 4.4.0(vue@3.4.31(typescript@5.5.3))
@@ -5079,6 +5082,9 @@ packages:
     engines: {node: '>= 16'}
     peerDependencies:
       vue: ^3.0.0
+
+  vue-img-cutter@3.0.5:
+    resolution: {integrity: sha512-/rqSCvqpSzlsKCgK1alZApdttVZ/zfEtqKTMY6ualCysr1WDm3yBEpyqxEIfY/znO9mnoUc1UnKkdTsyEgyd9A==}
 
   vue-router@4.4.0:
     resolution: {integrity: sha512-HB+t2p611aIZraV2aPSRNXf0Z/oLZFrlygJm+sZbdJaW6lcFqEDQwnzUBXn+DApw+/QzDU/I9TeWx9izEjTmsA==}
@@ -10704,6 +10710,14 @@ snapshots:
       '@intlify/shared': 9.13.1
       '@vue/devtools-api': 6.6.3
       vue: 3.4.31(typescript@5.5.3)
+
+  vue-img-cutter@3.0.5(typescript@5.5.3):
+    dependencies:
+      core-js: 3.37.1
+      vue: 3.4.31(typescript@5.5.3)
+      vue-i18n: 9.13.1(vue@3.4.31(typescript@5.5.3))
+    transitivePeerDependencies:
+      - typescript
 
   vue-router@4.4.0(vue@3.4.31(typescript@5.5.3)):
     dependencies:
