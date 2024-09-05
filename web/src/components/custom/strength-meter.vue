@@ -1,12 +1,34 @@
 <script setup lang="ts">
 import { keys, values } from 'lodash-es';
+import { computed } from 'vue';
 import zxcvbn from 'zxcvbn'; // 密码强度校验
+
+defineOptions({
+  name: 'StrengthMeter',
+});
 
 // 父组件传递的值
 type Props = {
-  model: Record<string, string>;
+  formData: Record<string, string>;
 };
-defineProps<Props>();
+const props = defineProps<Props>();
+
+// 父组件自定义事件
+interface Emits {
+  (e: 'update:model', value: Record<string, string>): void;
+}
+const emit = defineEmits<Emits>();
+
+const model = computed(() => {
+  return new Proxy(props.formData, {
+    set(_, prop, newValue) {
+      emit('update:model', {
+        [prop]: newValue,
+      });
+      return true;
+    },
+  });
+});
 
 /** @description: 密码强度配置项 */
 const strengthMeterOptions: Record<string, string> = {
