@@ -8,6 +8,8 @@ import { $t } from '@/locales';
 import { updateUserTags } from '@/service/api';
 import { useAuthStore } from '@/store/modules/auth';
 
+import PublishMessage from './publish-message.vue';
+
 defineOptions({
   name: 'PersonalInfo',
 });
@@ -78,25 +80,29 @@ watch(userTags, () => {
 </script>
 
 <template>
-  <ACard>
-    <ASpace direction="vertical" align="center" class="w-full">
-      <AAvatar :size="128" :src="avatar" />
-      <ATypographyTitle :level="3">{{ cnName }}</ATypographyTitle>
-    </ASpace>
-    <ADescriptions :column="1" size="small" bordered>
-      <ADescriptionsItem v-for="{ icon, field, value } in identityOptions" :key="field">
-        <template #label>
-          <ASpace align="center">
-            <SvgIcon :icon="icon" class="text-base" />
-            {{ $t(`page.systemManage.userManage.${field}`) }}
-          </ASpace>
-        </template>
-        <ATag :bordered="false">
-          <ATypographyText>{{ value }}</ATypographyText>
-        </ATag>
-      </ADescriptionsItem>
-    </ADescriptions>
-    <ADivider orientation="left">{{ $t('page.systemManage.userManage.tags') }}</ADivider>
-    <FigureLabels v-model:value="userTags" />
-  </ACard>
+  <ASpace direction="vertical" class="w-full" :size="16">
+    <ACard>
+      <ASpace direction="vertical" align="center" class="w-full">
+        <AAvatar :size="128" :src="avatar" />
+        <ATypographyTitle :level="3">{{ cnName }}</ATypographyTitle>
+      </ASpace>
+      <ADescriptions :column="1" size="small" bordered>
+        <ADescriptionsItem v-for="{ icon, field, value } in identityOptions" :key="field">
+          <template #label>
+            <ASpace align="center">
+              <SvgIcon :icon="icon" class="text-base" />
+              {{ $t(`page.systemManage.userManage.${field}`) }}
+            </ASpace>
+          </template>
+          <ATag :bordered="false">
+            <ATypographyText>{{ value }}</ATypographyText>
+          </ATag>
+        </ADescriptionsItem>
+      </ADescriptions>
+      <ADivider orientation="left">{{ $t('page.systemManage.userManage.tags') }}</ADivider>
+      <FigureLabels v-model:value="userTags" />
+    </ACard>
+    <!-- 发布文章列表 -->
+    <PublishMessage />
+  </ASpace>
 </template>
