@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 16:17:02
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-04 10:03:24
+ * @LastEditTime: 2024-09-06 18:03:54
  * @Description: 消息公告模块接口
  */
 import { request } from '@/service/request';
@@ -77,3 +77,10 @@ export const createMessageRead = (body: Api.Common.ColumnId) =>
     method: 'post',
     data: body,
   });
+
+/** @description: 查询未读消息条数 */
+export const getUnreadMessageCount = () => request<number>({ url: `${baseURL}/unread/count` });
+
+/** @description: 查询未读消息列表 */
+export const getUnreadMessageList = (params: Api.Common.PaginatingParams) =>
+  request<Api.Administrative.Message[]>({ url: `${baseURL}/unread/list`, params });
