@@ -1,18 +1,21 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useFullscreen } from '@vueuse/core';
+import { computed } from 'vue';
+
 import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
-import HorizontalMenu from '../global-menu/base-menu.vue';
-import GlobalLogo from '../global-logo/index.vue';
-import GlobalBreadcrumb from '../global-breadcrumb/index.vue';
+import { useThemeStore } from '@/store/modules/theme';
+
 import { useMixMenuContext } from '../../context';
+import GlobalBreadcrumb from '../global-breadcrumb/index.vue';
+import GlobalLogo from '../global-logo/index.vue';
+import HorizontalMenu from '../global-menu/base-menu.vue';
+import NotificationButton from './components/notification-button.vue';
 import ThemeButton from './components/theme-button.vue';
 import UserAvatar from './components/user-avatar.vue';
 
 defineOptions({
-  name: 'GlobalHeader'
+  name: 'GlobalHeader',
 });
 
 interface Props {
@@ -62,6 +65,8 @@ const headerMenus = computed(() => {
         @switch="themeStore.toggleThemeScheme"
       />
       <ThemeButton />
+      <!-- 消息通知 -->
+      <NotificationButton />
       <UserAvatar />
     </div>
   </DarkModeContainer>
