@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 14:24:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-04 10:08:51
+ * @LastEditTime: 2024-09-06 18:01:06
  * @Description: MessageController
  */
 import {
@@ -23,10 +23,16 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
 
+import { PaginatingDTO } from '@/dto/params.dto';
 import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { MessageParamsDto } from './dto/params-message.dto';
-import { ResponseMessageDto, ResponseSaveMessageReadDto } from './dto/response-message.dto';
+import {
+  ResponseMessageDto,
+  ResponseSaveMessageReadDto,
+  UnReadMessageCountDto,
+  UnReadMessageDto,
+} from './dto/response-message.dto';
 import { SaveMessageDto, SaveMessageReadDto } from './dto/save-message.dto';
 import { MessageService } from './message.service';
 
@@ -111,5 +117,25 @@ export class MessageController {
   @ApiOperation({ summary: '创建已读信息' })
   createMessageRead(@Body() body: SaveMessageReadDto, @Session() session: CommonType.SessionInfo) {
     return this.messageService.createMessageRead(body.id, session);
+  }
+
+  /**
+   * @description: 查询未读消息条数
+   */
+  @Get('/unread/count')
+  @ApiOkResponse({ type: UnReadMessageCountDto })
+  @ApiOperation({ summary: '查询未读消息条数' })
+  unreadMessageCount(@Session() session: CommonType.SessionInfo) {
+    return this.messageService.unreadMessageCount(session);
+  }
+
+  /**
+   * @description: 查询未读消息列表
+   */
+  @Get('/unread/list')
+  @ApiOkResponse({ type: UnReadMessageDto })
+  @ApiOperation({ summary: '查询未读消息列表' })
+  getUnreadMessageList(@Query() params: PaginatingDTO, @Session() session: CommonType.SessionInfo) {
+    return this.messageService.getUnreadMessageList(params, session);
   }
 }

@@ -2,12 +2,13 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 14:13:35
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-04 13:57:13
+ * @LastEditTime: 2024-09-06 18:01:25
  * @Description: MessageService
  */
 import { Injectable } from '@nestjs/common';
 import type { Message, MessageRead } from '@prisma/client';
 
+import { PaginatingDTO } from '@/dto/params.dto';
 import { PrismaService } from '@/modules/prisma/prisma.service';
 import { responseMessage } from '@/utils';
 
@@ -170,5 +171,58 @@ export class MessageService {
       },
     });
     return responseMessage<MessageRead>(result);
+  }
+
+  /**
+   * @description: 查询未读消息条数
+   */
+  async unreadMessageCount(session: CommonType.SessionInfo) {
+    // 查询未读消息条数
+    const result = await this.prisma.message.count({
+      where: {
+        NOT: {
+          messageReads: {
+            some: {
+              userId: session.userInfo.id,
+            },
+          },
+        },
+      },
+    });
+    return responseMessage<number>(result);
+  }
+
+  /**
+   * @description: 查询未读消息列表
+   */
+  async getUnreadMessageList({ current, size }: PaginatingDTO, session: CommonType.SessionInfo) {
+    // 分页处理，这里获取到的分页是字符串，需要转换成整数
+    const take = Number(size);
+    const skip = (Number(current) - 1) * take;
+    // 查询未读消息条数
+    const result = await this.prisma.message.findMany({
+      skip,
+      take,
+      where: {
+        messageReads: {
+          none: {
+            userId: session.userInfo.id,
+          },
+        },
+      },
+      include: {
+        user: true,
+        messageReads: {
+          include: {
+            user: true,
+          },
+        },
+      },
+      orderBy: [
+        { pinned: 'desc' },
+        { createdAt: 'desc' }, // 如果sort相同，再按照createdAt字段降序
+      ],
+    });
+    return responseMessage<Message[]>(result);
   }
 }
