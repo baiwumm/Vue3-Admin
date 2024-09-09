@@ -56,6 +56,9 @@ importers:
       element-china-area-data:
         specifier: ^6.1.0
         version: 6.1.0
+      event-source-polyfill:
+        specifier: ^1.0.31
+        version: 1.0.31
       lodash-es:
         specifier: 4.17.21
         version: 4.17.21
@@ -2465,6 +2468,9 @@ packages:
 
   event-emitter@0.3.5:
     resolution: {integrity: sha512-D9rRn9y7kLPnJ+hMq7S/nhvoKwwvVJahBi2BPmx3bvbsEdK3W9ii8cBSGjP+72/LnM4n6fo3+dkCX5FeTQruXA==}
+
+  event-source-polyfill@1.0.31:
+    resolution: {integrity: sha512-4IJSItgS/41IxN5UVAVuAyczwZF7ZIEsM1XAoUzIHA6A+xzusEZUutdXz2Nr+MQPLxfTiCvqE79/C8HT8fKFvA==}
 
   eventemitter3@5.0.1:
     resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
@@ -7832,6 +7838,8 @@ snapshots:
     dependencies:
       d: 1.0.2
       es5-ext: 0.10.64
+
+  event-source-polyfill@1.0.31: {}
 
   eventemitter3@5.0.1: {}
 
