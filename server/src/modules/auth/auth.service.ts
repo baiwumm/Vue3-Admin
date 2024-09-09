@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 09:59:05
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-03 17:36:59
+ * @LastEditTime: 2024-09-09 17:23:59
  * @Description: AuthService
  */
 import { HttpService } from '@nestjs/axios';
@@ -263,6 +263,7 @@ export class AuthService {
         path: true,
         component: true,
         meta: true,
+        props: true,
       },
       orderBy: [
         { sort: 'asc' }, // 按照sort字段升序
