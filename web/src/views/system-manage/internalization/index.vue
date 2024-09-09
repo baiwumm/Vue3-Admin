@@ -40,6 +40,7 @@ const {
   apiFn: getInternalizationList,
   apiParams: {
     name: undefined,
+    zhCN: undefined,
     startTime: undefined,
     endTime: undefined,
   },

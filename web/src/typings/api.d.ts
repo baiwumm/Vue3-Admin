@@ -189,7 +189,7 @@ declare namespace Api {
       children?: Internalization[];
     }>;
     /** @description: 查询参数 */
-    type InternalizationSearchParams = Partial<Pick<Internalization, 'name'>> & Api.Common.SearchTime;
+    type InternalizationSearchParams = Partial<Pick<Internalization, 'name' | 'zhCN'>> & Api.Common.SearchTime;
     /** @description: 创建/更新国际化 */
     type SaveInternalization = Omit<Internalization, keyof Api.Common.ColumnFields> & Partial<Api.Common.ColumnId>;
 

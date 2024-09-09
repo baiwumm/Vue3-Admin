@@ -68,6 +68,11 @@ async function search() {
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
+          <AFormItem :label="locales('zhCN')" name="zhCN" class="m-0">
+            <AInput v-model:value="model.zhCN" allow-clear :placeholder="$t('form.enter') + locales('zhCN')" />
+          </AFormItem>
+        </ACol>
+        <ACol :span="24" :md="12" :lg="6">
           <AFormItem :label="$t('common.createdAt')" class="m-0">
             <ARangePicker v-model:value="createdAt" />
           </AFormItem>
