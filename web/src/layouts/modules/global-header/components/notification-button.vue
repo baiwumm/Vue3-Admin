@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { assign } from 'lodash-es';
 import { onMounted, reactive, ref, watch } from 'vue';
 
 import { useRouterPush } from '@/hooks/common/router';
 import { createMessageRead, getUnreadMessageCount, getUnreadMessageList } from '@/service/api';
+
+// 使用 relativeTime 插件
+dayjs.extend(relativeTime);
 
 defineOptions({
   name: 'NotificationButton',
@@ -29,7 +34,7 @@ const fetchUnReadMessageCount = async () => {
 };
 
 // 获取未读列表
-const fetchUnreadMessageList = async (current?: number = 1, size?: number = 5) => {
+const fetchUnreadMessageList = async (current: number = 1, size: number = 5) => {
   messageListLoading.value = true;
   const { data, error } = await getUnreadMessageList({ current, size });
   if (!error) {
@@ -88,7 +93,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <APopover :overlay-style="{ width: '400px' }" @open-change="openChange">
+  <APopover :overlay-style="{ width: '400px' }" placement="bottomRight" @open-change="openChange">
     <ABadge :count="unReadMessageCount" :offset="[-14, 10]">
       <ASpin :spinning="countLoading">
         <ButtonIcon icon="ri:notification-line" />
@@ -103,12 +108,18 @@ onMounted(() => {
       >
         <template #renderItem="{ item }">
           <AListItem>
-            <AListItemMeta :description="item.user.cnName">
+            <AListItemMeta>
               <template #title>
                 <a @click="handleJumpDetail(item.id)">{{ item.title }}</a>
               </template>
               <template #avatar>
                 <AAvatar :src="item.user.avatar" />
+              </template>
+              <template #description>
+                <ARow justify="space-between">
+                  <ACol>{{ item.user.cnName }}</ACol>
+                  <ACol>{{ dayjs(item.createdAt).fromNow() }}</ACol>
+                </ARow>
               </template>
             </AListItemMeta>
           </AListItem>
