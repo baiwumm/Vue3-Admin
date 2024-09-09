@@ -142,6 +142,7 @@ model Menu {
   path          String?          @unique // 路由地址
   component     String?          // 组件路径
   meta          Json?            // 路由元信息（JSON 对象）
+  props         Json?            // Iframe 页面参数（JSON 对象）
   sort          Int             // 排序
   permission    String?         @unique // 权限标识
   permissions   Permission[]    // 与Permission的一对多关系
