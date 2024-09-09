@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 14:24:39
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-06 18:01:06
+ * @LastEditTime: 2024-09-09 10:08:37
  * @Description: MessageController
  */
 import {
@@ -17,13 +17,18 @@ import {
   Put,
   Query,
   Session,
+  Sse,
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
+import type { Message } from '@prisma/client';
+import { Observable } from 'rxjs';
 
 import { PaginatingDTO } from '@/dto/params.dto';
+import { EVENTBUS_TYPE } from '@/enums';
 import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
 
 import { MessageParamsDto } from './dto/params-message.dto';
@@ -47,7 +52,10 @@ import { MessageService } from './message.service';
 @UseInterceptors(LoggerInterceptor)
 @UseGuards(AuthGuard('jwt'))
 export class MessageController {
-  constructor(private readonly messageService: MessageService) { }
+  constructor(
+    private readonly messageService: MessageService,
+    private eventEmitter: EventEmitter2,
+  ) { }
 
   /**
    * @description: 查询消息公告列表
@@ -75,8 +83,24 @@ export class MessageController {
   @Post()
   @ApiOkResponse({ type: ResponseMessageDto })
   @ApiOperation({ summary: '创建消息公告' })
-  create(@Body() body: SaveMessageDto, @Session() session: CommonType.SessionInfo) {
-    return this.messageService.create(body, session);
+  async create(@Body() body: SaveMessageDto, @Session() session: CommonType.SessionInfo) {
+    const result = await this.messageService.create(body, session);
+    // 消息创建成功后，发送一个消息
+    this.eventEmitter.emit(EVENTBUS_TYPE.MESSAGE_CREATE, result.data);
+    return result;
+  }
+
+  /**
+   * @description: 服务端推送事件
+   */
+  @Sse('sse/event')
+  sse(): Observable<MessageEvent> {
+    return new Observable<any>((observer) => {
+      // 监听事件
+      this.eventEmitter.on(EVENTBUS_TYPE.MESSAGE_CREATE, (data: Message) => {
+        observer.next({ data });
+      });
+    });
   }
 
   /**

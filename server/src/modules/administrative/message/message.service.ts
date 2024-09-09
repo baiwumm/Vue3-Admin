@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-09-02 14:13:35
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-06 18:01:25
+ * @LastEditTime: 2024-09-09 11:14:21
  * @Description: MessageService
  */
 import { Injectable } from '@nestjs/common';
@@ -98,6 +98,10 @@ export class MessageService {
       data: {
         ...body,
         userId: session.userInfo.id,
+      },
+      include: {
+        user: true,
+        messageReads: true,
       },
     });
     return responseMessage<Message>(result);

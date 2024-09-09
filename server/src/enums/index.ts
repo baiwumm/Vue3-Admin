@@ -29,3 +29,10 @@ export enum LOCALES {
   jaJP = 'ja-JP', // 日文
   zhTW = 'zh-TW', // 繁体中文
 }
+
+/**
+ * @description: 服务器推送事件
+ */
+export enum EVENTBUS_TYPE {
+  MESSAGE_CREATE = 'message_create', // 消息创建
+}

@@ -2,10 +2,11 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-12 14:34:56
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-02 16:12:07
+ * @LastEditTime: 2024-09-09 09:57:27
  * @Description: AppModule
  */
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { WinstonModule } from 'nest-winston';
 
 import { LoggerMiddleware } from '@/middleware/logger.middleware'; // 全局日志中间件
@@ -40,6 +41,8 @@ import winstonLogger from './config/winston.config';
       defaultMeta: winstonLogger.defaultMeta,
       exitOnError: false, // 防止意外退出
     }),
+    // 发布-订阅模块
+    EventEmitterModule.forRoot(),
   ],
 })
 export class AppModule implements NestModule {
