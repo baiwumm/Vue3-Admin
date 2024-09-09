@@ -2,7 +2,7 @@
 import { $t } from '@/locales';
 
 defineOptions({
-  name: 'GlobalLogo'
+  name: 'GlobalLogo',
 });
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  showTitle: true
+  showTitle: true,
 });
 </script>
 

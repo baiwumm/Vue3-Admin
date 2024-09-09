@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import type { Trigger } from 'ant-design-vue/es/dropdown/props';
+import { computed } from 'vue';
+
 import { $t } from '@/locales';
 import { useTabStore } from '@/store/modules/tab';
 
 defineOptions({
-  name: 'ContextMenu'
+  name: 'ContextMenu',
 });
 
 interface Props {
@@ -18,7 +19,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   trigger: () => ['contextmenu'],
   excludeKeys: () => [],
-  disabledKeys: () => []
+  disabledKeys: () => [],
 });
 
 const { removeTab, clearTabs, clearLeftTabs, clearRightTabs } = useTabStore();
@@ -35,28 +36,28 @@ const options = computed(() => {
     {
       key: 'closeCurrent',
       label: $t('dropdown.closeCurrent'),
-      icon: 'ant-design:close-outlined'
+      icon: 'ant-design:close-outlined',
     },
     {
       key: 'closeOther',
       label: $t('dropdown.closeOther'),
-      icon: 'ant-design:column-width-outlined'
+      icon: 'ant-design:column-width-outlined',
     },
     {
       key: 'closeLeft',
       label: $t('dropdown.closeLeft'),
-      icon: 'mdi:format-horizontal-align-left'
+      icon: 'mdi:format-horizontal-align-left',
     },
     {
       key: 'closeRight',
       label: $t('dropdown.closeRight'),
-      icon: 'mdi:format-horizontal-align-right'
+      icon: 'mdi:format-horizontal-align-right',
     },
     {
       key: 'closeAll',
       label: $t('dropdown.closeAll'),
-      icon: 'ant-design:line-outlined'
-    }
+      icon: 'ant-design:line-outlined',
+    },
   ];
   const { excludeKeys, disabledKeys } = props;
 
@@ -88,7 +89,7 @@ const dropdownAction: Record<App.Global.DropdownKey, () => void> = {
   },
   closeAll() {
     clearTabs();
-  }
+  },
 };
 </script>
 

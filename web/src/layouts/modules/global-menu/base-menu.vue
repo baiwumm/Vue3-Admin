@@ -1,17 +1,18 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import { useRoute } from "vue-router";
-import type { MenuInfo, MenuMode } from "ant-design-vue/es/menu/src/interface";
-import { SimpleScrollbar } from "@sa/materials";
-import { transformColorWithOpacity } from "@sa/utils";
-import type { RouteKey } from "@elegant-router/types";
-import { useAppStore } from "@/store/modules/app";
-import { useThemeStore } from "@/store/modules/theme";
-import { useRouteStore } from "@/store/modules/route";
-import { useRouterPush } from "@/hooks/common/router";
+import type { RouteKey } from '@elegant-router/types';
+import { SimpleScrollbar } from '@sa/materials';
+import { transformColorWithOpacity } from '@sa/utils';
+import type { MenuInfo, MenuMode } from 'ant-design-vue/es/menu/src/interface';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
+
+import { useRouterPush } from '@/hooks/common/router';
+import { useAppStore } from '@/store/modules/app';
+import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
-  name: "BaseMenu",
+  name: 'BaseMenu',
 });
 
 interface Props {
@@ -21,7 +22,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  mode: "inline",
+  mode: 'inline',
 });
 
 const route = useRoute();
@@ -30,17 +31,13 @@ const themeStore = useThemeStore();
 const routeStore = useRouteStore();
 const { routerPushByKey } = useRouterPush();
 
-const menuTheme = computed(() => (props.darkTheme ? "dark" : "light"));
+const menuTheme = computed(() => (props.darkTheme ? 'dark' : 'light'));
 
-const isHorizontal = computed(() => props.mode === "horizontal");
+const isHorizontal = computed(() => props.mode === 'horizontal');
 
-const siderCollapse = computed(
-  () => themeStore.layout.mode === "vertical" && appStore.siderCollapse,
-);
+const siderCollapse = computed(() => themeStore.layout.mode === 'vertical' && appStore.siderCollapse);
 
-const inlineCollapsed = computed(() =>
-  props.mode === "inline" ? siderCollapse.value : undefined,
-);
+const inlineCollapsed = computed(() => (props.mode === 'inline' ? siderCollapse.value : undefined));
 
 const selectedKeys = computed(() => {
   const { hideInMenu, activeMenu } = route.meta;
@@ -66,8 +63,8 @@ const headerHeight = computed(() => `${themeStore.header.height}px`);
 const selectedBgColor = computed(() => {
   const { darkMode, themeColor } = themeStore;
 
-  const light = transformColorWithOpacity(themeColor, 0.1, "#ffffff");
-  const dark = transformColorWithOpacity(themeColor, 0.3, "#000000");
+  const light = transformColorWithOpacity(themeColor, 0.1, '#ffffff');
+  const dark = transformColorWithOpacity(themeColor, 0.3, '#000000');
 
   return darkMode ? dark : light;
 });

@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
-import { $t } from '@/locales';
+
 import LayoutModeCard from '../components/layout-mode-card.vue';
 
 defineOptions({
-  name: 'LayoutMode'
+  name: 'LayoutMode',
 });
 
 const appStore = useAppStore();

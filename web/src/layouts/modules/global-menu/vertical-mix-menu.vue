@@ -1,16 +1,18 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useBoolean } from '@sa/hooks';
+import { computed } from 'vue';
+
+import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
 import { useAppStore } from '@/store/modules/app';
 import { useThemeStore } from '@/store/modules/theme';
-import { useRouterPush } from '@/hooks/common/router';
+
 import { useMixMenuContext } from '../../context';
-import FirstLevelMenu from './first-level-menu.vue';
 import BaseMenu from './base-menu.vue';
+import FirstLevelMenu from './first-level-menu.vue';
 
 defineOptions({
-  name: 'VerticalMixMenu'
+  name: 'VerticalMixMenu',
 });
 
 const appStore = useAppStore();

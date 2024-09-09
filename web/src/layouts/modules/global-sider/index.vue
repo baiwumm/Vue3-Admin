@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import { useAppStore } from '@/store/modules/app';
-import { useThemeStore } from '@/store/modules/theme';
 import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
+
 import GlobalLogo from '../global-logo/index.vue';
 import VerticalMenu from '../global-menu/base-menu.vue';
-import VerticalMixMenu from '../global-menu/vertical-mix-menu.vue';
 import HorizontalMixMenu from '../global-menu/horizontal-mix-menu.vue';
+import VerticalMixMenu from '../global-menu/vertical-mix-menu.vue';
 
 defineOptions({
-  name: 'GlobalSider'
+  name: 'GlobalSider',
 });
 
 const appStore = useAppStore();

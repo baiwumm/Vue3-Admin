@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { computed } from 'vue';
-import { createReusableTemplate } from '@vueuse/core';
 import { SimpleScrollbar } from '@sa/materials';
 import { transformColorWithOpacity } from '@sa/utils';
+import { createReusableTemplate } from '@vueuse/core';
+import { computed } from 'vue';
+
 import { useAppStore } from '@/store/modules/app';
 import { useRouteStore } from '@/store/modules/route';
 import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
-  name: 'FirstLevelMenu'
+  name: 'FirstLevelMenu',
 });
 
 interface Props {
@@ -62,7 +63,7 @@ function handleClickMixMenu(menu: App.Global.Menu) {
       :class="{
         'text-primary selected-mix-menu': active,
         'text-white:65 hover:text-white': inverted,
-        '!text-white !bg-primary': active && inverted
+        '!text-white !bg-primary': active && inverted,
       }"
     >
       <component :is="icon" :class="[isMini ? 'text-icon-small' : 'text-icon-large']" />

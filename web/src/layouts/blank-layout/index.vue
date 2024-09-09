@@ -2,7 +2,7 @@
 import GlobalContent from '../modules/global-content/index.vue';
 
 defineOptions({
-  name: 'BlankLayout'
+  name: 'BlankLayout',
 });
 </script>
 

@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { SimpleScrollbar } from '@sa/materials';
-import { useAppStore } from '@/store/modules/app';
+
 import { $t } from '@/locales';
+import { useAppStore } from '@/store/modules/app';
+
+import ConfigOperation from './modules/config-operation.vue';
 import DarkMode from './modules/dark-mode.vue';
 import LayoutMode from './modules/layout-mode.vue';
-import ThemeColor from './modules/theme-color.vue';
 import PageFun from './modules/page-fun.vue';
-import ConfigOperation from './modules/config-operation.vue';
+import ThemeColor from './modules/theme-color.vue';
 
 defineOptions({
-  name: 'ThemeDrawer'
+  name: 'ThemeDrawer',
 });
 
 const appStore = useAppStore();

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useRouterPush } from '@/hooks/common/router';
+
 import { useMixMenuContext } from '../../context';
 import FirstLevelMenu from './first-level-menu.vue';
 
 defineOptions({
-  name: 'HorizontalMixMenu'
+  name: 'HorizontalMixMenu',
 });
 
 const { activeFirstLevelMenuKey, setActiveFirstLevelMenuKey } = useMixMenuContext();

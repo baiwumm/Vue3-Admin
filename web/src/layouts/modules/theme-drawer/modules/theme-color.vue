@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ColorPicker } from '@sa/materials';
-import { useThemeStore } from '@/store/modules/theme';
+
 import { $t } from '@/locales';
+import { useThemeStore } from '@/store/modules/theme';
+
 import SettingItem from '../components/setting-item.vue';
 
 defineOptions({
-  name: 'ThemeColor'
+  name: 'ThemeColor',
 });
 
 const themeStore = useThemeStore();

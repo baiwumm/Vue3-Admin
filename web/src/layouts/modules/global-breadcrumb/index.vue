@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { useAttrs } from 'vue';
-import { createReusableTemplate } from '@vueuse/core';
 import type { RouteKey } from '@elegant-router/types';
-import { useThemeStore } from '@/store/modules/theme';
-import { useRouteStore } from '@/store/modules/route';
+import { createReusableTemplate } from '@vueuse/core';
+import { useAttrs } from 'vue';
+
 import { useRouterPush } from '@/hooks/common/router';
+import { useRouteStore } from '@/store/modules/route';
+import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
   name: 'GlobalBreadcrumb',
-  inheritAttrs: false
+  inheritAttrs: false,
 });
 
 const attrs = useAttrs();

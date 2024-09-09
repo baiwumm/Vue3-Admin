@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
 import Clipboard from 'clipboard';
+import { onMounted, ref } from 'vue';
+
 import { $t } from '@/locales';
 import { useThemeStore } from '@/store/modules/theme';
 
 defineOptions({
-  name: 'ConfigOperation'
+  name: 'ConfigOperation',
 });
 
 const themeStore = useThemeStore();
@@ -16,7 +17,7 @@ function initClipboard() {
   if (!domRef.value) return;
 
   const clipboard = new Clipboard(domRef.value, {
-    text: () => getClipboardText()
+    text: () => getClipboardText(),
   });
 
   clipboard.on('success', () => {
