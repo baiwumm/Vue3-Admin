@@ -146,16 +146,19 @@ declare namespace Api {
       path?: string; // 路由路径
       component?: string; // 组件路径
       meta?: import('vue-router').RouteMeta; // 路由元信息
+      props?: {
+        url: string;
+      }; // IframePage 参数
       permission?: string; // 按钮权限
       sort: number; // 排序
       children?: MenuManage[];
     }>;
     /** @description: 查询参数 */
     type MenuManageSearchParams = Partial<Pick<MenuManage, 'title' | 'name'>> & Api.Common.SearchTime;
-    /** @description: 创建/更新用户 */
-    type SaveMenuManage = Omit<MenuManage, keyof Api.Common.ColumnFields | 'meta' | 'children'> &
+    /** @description: 创建/更新菜单 */
+    type SaveMenuManage = Omit<MenuManage, keyof Api.Common.ColumnFields | 'meta' | 'props' | 'children'> &
       Partial<Api.Common.ColumnId> &
-      Required<Pick<MenuManage, 'meta'>>;
+      Required<Pick<MenuManage, 'meta' | 'props'>>;
 
     /** @description: 角色管理 */
     type RoleManage = Common.CommonRecord<{

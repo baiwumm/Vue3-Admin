@@ -60,11 +60,15 @@ function createDefaultModel(): Api.SystemManage.SaveMenuManage {
       keepAlive: false,
       constant: false,
       icon: undefined,
+      localIcon: undefined,
       order: 0,
       href: undefined,
       hideInMenu: false,
       multiTab: false,
       fixedIndexInTab: undefined,
+    },
+    props: {
+      url: '',
     },
     permission: undefined,
     sort: 1,
@@ -93,7 +97,10 @@ async function handleInitModel() {
 
   if (props.operateType === OPERATION_TYPE.EDIT && props.rowData) {
     await nextTick();
-    Object.assign(model, props.rowData);
+    Object.assign(model, {
+      ...props.rowData,
+      props: props.rowData?.props || {},
+    });
   }
 }
 
@@ -118,7 +125,7 @@ async function handleSubmit() {
     if (model.type === MENU_TYPE.BUTTON) {
       assign(params, pick(model, 'permission'));
     } else {
-      assign(params, pick(model, ['name', 'path', 'component', 'meta']));
+      assign(params, pick(model, ['name', 'path', 'component', 'meta', 'props']));
     }
     await (isAdd ? createMenu : updateMenu)(params)
       .then(({ error }) => {
@@ -272,8 +279,28 @@ watch(
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.localIcon')" :name="['meta', 'localIcon']">
+                  <AInput v-model:value="model.meta.localIcon" :placeholder="placeholder('meta.localIcon')">
+                    <template #suffix>
+                      <SvgIcon v-if="model.meta.localIcon" :local-icon="model.meta.localIcon" class="text-icon" />
+                    </template>
+                  </AInput>
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
                 <AFormItem :label="locales('meta.href')" :name="['meta', 'href']">
                   <AInput v-model:value="model.meta.href as string" :placeholder="placeholder('meta.href')" />
+                </AFormItem>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('meta.order')" :name="['meta', 'order']">
+                  <AInputNumber
+                    v-model:value="model.meta.order as number"
+                    :min="0"
+                    :max="999"
+                    :placeholder="placeholder('meta.order')"
+                    class="w-full"
+                  />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
@@ -297,17 +324,6 @@ watch(
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.order')" :name="['meta', 'order']">
-                  <AInputNumber
-                    v-model:value="model.meta.order as number"
-                    :min="0"
-                    :max="999"
-                    :placeholder="placeholder('meta.order')"
-                    class="w-full"
-                  />
-                </AFormItem>
-              </ACol>
-              <ACol :lg="12" :xs="24">
                 <AFormItem :label="locales('meta.fixedIndexInTab')" :name="['meta', 'fixedIndexInTab']">
                   <AInputNumber
                     v-model:value="model.meta.fixedIndexInTab as number"
@@ -316,6 +332,16 @@ watch(
                     :placeholder="placeholder('meta.fixedIndexInTab')"
                     class="w-full"
                   />
+                </AFormItem>
+              </ACol>
+            </template>
+            <template v-if="model.type === MENU_TYPE.MENU">
+              <ACol :span="24">
+                <ADivider orientation="left">{{ locales('iframeParams') }}</ADivider>
+              </ACol>
+              <ACol :lg="12" :xs="24">
+                <AFormItem :label="locales('props.url')" :name="['props', 'url']">
+                  <AInput v-model:value="model.props.url as string" :placeholder="placeholder('props.url')" />
                 </AFormItem>
               </ACol>
             </template>
