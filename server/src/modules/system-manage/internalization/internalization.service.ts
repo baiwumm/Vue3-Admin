@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-14 17:49:44
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:42:04
+ * @LastEditTime: 2024-09-09 18:08:59
  * @Description: InternalizationService
  */
 import { Injectable } from '@nestjs/common';
@@ -22,12 +22,16 @@ export class InternalizationService {
   /**
    * @description: 查询国际化列表
    */
-  async findAll({ name, startTime, endTime }: InternalizationParamsDto) {
+  async findAll({ name, zhCN, startTime, endTime }: InternalizationParamsDto) {
     // 条件判断
     const where = {}; // 查询参数
     // 模糊查询
     if (name) {
       where['name'] = { contains: name, mode: 'insensitive' };
+    }
+
+    if (zhCN) {
+      where['zhCN'] = { contains: zhCN, mode: 'insensitive' };
     }
 
     if (startTime && endTime) {

@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-14 17:52:40
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-15 09:52:31
+ * @LastEditTime: 2024-09-09 18:08:26
  * @Description: 请求参数 DTO
  */
 import { ApiProperty } from '@nestjs/swagger';
@@ -16,6 +16,14 @@ export class InternalizationParamsDto {
     default: 'menu',
   })
   name?: string;
+
+  @ApiProperty({
+    type: String,
+    description: '中文',
+    required: false,
+    default: '首页',
+  })
+  zhCN?: string;
 
   @ApiProperty({
     type: Number,
