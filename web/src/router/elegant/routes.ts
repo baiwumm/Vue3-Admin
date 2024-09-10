@@ -102,6 +102,26 @@ export const generatedRoutes: GeneratedRoute[] = [
     ]
   },
   {
+    name: 'features',
+    path: '/features',
+    component: 'layout.base',
+    meta: {
+      title: 'features',
+      i18nKey: 'route.features'
+    },
+    children: [
+      {
+        name: 'features_captcha',
+        path: '/features/captcha',
+        component: 'view.features_captcha',
+        meta: {
+          title: 'features_captcha',
+          i18nKey: 'route.features_captcha'
+        }
+      }
+    ]
+  },
+  {
     name: 'home',
     path: '/home',
     component: 'layout.base$view.home',

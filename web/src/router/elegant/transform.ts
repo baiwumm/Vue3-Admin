@@ -170,6 +170,8 @@ const routeMap: RouteMap = {
   "administrative_message-detail": "/administrative/message-detail/:id",
   "administrative_organization": "/administrative/organization",
   "administrative_post-manage": "/administrative/post-manage",
+  "features": "/features",
+  "features_captcha": "/features/captcha",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
   "login": "/login",

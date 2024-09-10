@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { sample } from 'lodash-es';
+import { random, sample } from 'lodash-es';
 
 /**
  * @param {string} className
@@ -50,3 +50,15 @@ export const welcomeWords = () => {
   ];
   return sample(words);
 };
+
+/** @description: 生成随机颜色 */
+export const randomColor = (min = 0, max = 255) => {
+  // 生成三个介于 0 到 255 之间的随机数作为 RGB 的值
+  const r = random(min, max);
+  const g = random(min, max);
+  const b = random(min, max);
+  return `rgb(${r},${g},${b})`;
+};
+
+/** @description: 验证码字符 */
+export const codeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
