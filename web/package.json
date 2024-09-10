@@ -39,7 +39,6 @@
     "dev:prod": "vite --mode prod",
     "gen-route": "sa gen-route",
     "lint": "eslint . --fix",
-    "prepare": "simple-git-hooks",
     "preview": "vite preview",
     "release": "sa release",
     "typecheck": "vue-tsc --noEmit --skipLibCheck",
@@ -97,7 +96,6 @@
     "lint-staged": "15.2.7",
     "prettier": "^3.3.3",
     "sass": "1.77.6",
-    "simple-git-hooks": "2.11.1",
     "tsx": "4.16.2",
     "typescript": "5.5.3",
     "unplugin-icons": "0.19.0",
@@ -108,10 +106,6 @@
     "vite-plugin-vue-devtools": "7.3.5",
     "vue-eslint-parser": "9.4.3",
     "vue-tsc": "2.0.26"
-  },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm sa git-commit-verify",
-    "pre-commit": "pnpm typecheck && pnpm lint-staged"
   },
   "lint-staged": {
     "*": "eslint --fix"

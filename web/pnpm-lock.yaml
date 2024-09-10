@@ -156,9 +156,6 @@ importers:
       sass:
         specifier: 1.77.6
         version: 1.77.6
-      simple-git-hooks:
-        specifier: 2.11.1
-        version: 2.11.1
       tsx:
         specifier: 4.16.2
         version: 4.16.2
@@ -4431,10 +4428,6 @@ packages:
   sigstore@1.9.0:
     resolution: {integrity: sha512-0Zjz0oe37d08VeOtBIuB6cRriqXse2e8w+7yIy2XSXjshRKxbc2KkhXjL229jXSxEm7UbcjS76wcJDGQddVI9A==}
     engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0}
-    hasBin: true
-
-  simple-git-hooks@2.11.1:
-    resolution: {integrity: sha512-tgqwPUMDcNDhuf1Xf6KTUsyeqGdgKMhzaH4PAZZuzguOgTl5uuyeYe/8mWgAr6IBxB5V06uqEf6Dy37gIWDtDg==}
     hasBin: true
 
   simplebar-core@1.2.6:
@@ -9973,8 +9966,6 @@ snapshots:
       make-fetch-happen: 11.1.1
     transitivePeerDependencies:
       - supports-color
-
-  simple-git-hooks@2.11.1: {}
 
   simplebar-core@1.2.6:
     dependencies:
