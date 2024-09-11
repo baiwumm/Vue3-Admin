@@ -31,7 +31,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 /** @description: 绘制画布 */
 const drawCanvas = () => {
-  const canvas = document.getElementById('s-canvas') as HTMLCanvasElement;
+  const canvas = document.getElementById('genera-verify') as HTMLCanvasElement;
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
   ctx.textBaseline = 'bottom';
   // 绘制背景
@@ -96,5 +96,5 @@ watch(
 </script>
 
 <template>
-  <canvas id="s-canvas" :width="contentWidth" :height="contentHeight" />
+  <canvas id="genera-verify" :width="contentWidth" :height="contentHeight" />
 </template>
