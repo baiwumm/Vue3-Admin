@@ -17,6 +17,8 @@ type Props = {
   backgroundColorMax?: number; // 验证码图片背景色最大值
   contentWidth?: number; // 容器宽度
   contentHeight?: number; // 容器高度
+  disturbLine?: number; // 干扰线数量，0为不绘制
+  disturbPoint?: number; // 干扰点数量，0为不绘制
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -27,6 +29,8 @@ const props = withDefaults(defineProps<Props>(), {
   backgroundColorMax: 229,
   contentWidth: 116,
   contentHeight: 38,
+  disturbLine: 4,
+  disturbPoint: 30,
 });
 
 /** @description: 绘制画布 */
@@ -47,7 +51,7 @@ const drawCanvas = () => {
 
 /** @description: 绘制文字 */
 const drawText = (ctx: CanvasRenderingContext2D, txt: string, i: number) => {
-  ctx.fillStyle = randomColor(0, 255); // 随机生成字体颜色
+  ctx.fillStyle = randomColor(); // 随机生成字体颜色
   ctx.font = `${random(props.fontSizeMin, props.fontSizeMax)}px SimHei`; // 随机生成字体大小
   const x = (i + 1) * (props.contentWidth / (props.identifyCode.length + 1));
   const y = random(props.fontSizeMax, props.contentHeight - 5);
@@ -64,7 +68,7 @@ const drawText = (ctx: CanvasRenderingContext2D, txt: string, i: number) => {
 /** @description: 绘制干扰线 */
 const drawLine = (ctx: CanvasRenderingContext2D) => {
   // 绘制干扰线
-  for (let i = 0; i < 4; i += 1) {
+  for (let i = 0; i < props.disturbLine; i += 1) {
     ctx.strokeStyle = randomColor(100, 200);
     ctx.beginPath();
     ctx.moveTo(random(0, props.contentWidth), random(0, props.contentHeight));
@@ -75,8 +79,8 @@ const drawLine = (ctx: CanvasRenderingContext2D) => {
 
 /** @description: 绘制干扰点 */
 const drawDot = (ctx: CanvasRenderingContext2D) => {
-  for (let i = 0; i < 30; i += 1) {
-    ctx.fillStyle = randomColor(0, 255);
+  for (let i = 0; i < props.disturbPoint; i += 1) {
+    ctx.fillStyle = randomColor();
     ctx.beginPath();
     ctx.arc(random(0, props.contentWidth), random(0, props.contentHeight), 1, 0, 2 * Math.PI);
     ctx.fill();

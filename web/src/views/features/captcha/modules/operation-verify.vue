@@ -16,6 +16,8 @@ type Props = {
   arith?: 0 | 1 | 2 | 3; // 算法选择，支持加、减、乘。设置为1至3分别代表加减乘，0为随机切换。
   width?: number; // 容器宽度
   height?: number; // 容器高度
+  disturbLine?: number; // 干扰线数量，0为不绘制
+  disturbPoint?: number; // 干扰点数量，0为不绘制
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,12 +25,14 @@ const props = withDefaults(defineProps<Props>(), {
   arith: 0,
   width: 320,
   height: 60,
+  disturbLine: 4,
+  disturbPoint: 30,
 });
 
 /** @description: 绘制干扰线 */
 const drawLine = (ctx: CanvasRenderingContext2D) => {
   // 绘制干扰线
-  for (let i = 0; i < 4; i += 1) {
+  for (let i = 0; i < props.disturbLine; i += 1) {
     ctx.strokeStyle = randomColor(100, 200);
     ctx.beginPath();
     ctx.moveTo(random(0, props.width), random(0, props.height));
@@ -39,8 +43,8 @@ const drawLine = (ctx: CanvasRenderingContext2D) => {
 
 /** @description: 绘制干扰点 */
 const drawDot = (ctx: CanvasRenderingContext2D) => {
-  for (let i = 0; i < 30; i += 1) {
-    ctx.fillStyle = randomColor(0, 255);
+  for (let i = 0; i < props.disturbPoint; i += 1) {
+    ctx.fillStyle = randomColor();
     ctx.beginPath();
     ctx.arc(random(0, props.width), random(0, props.height), 1, 0, 2 * Math.PI);
     ctx.fill();

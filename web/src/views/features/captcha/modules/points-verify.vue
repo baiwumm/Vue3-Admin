@@ -20,6 +20,7 @@ type State = {
   text: string;
   result: boolean;
   showTip: boolean;
+  loading: boolean;
 };
 
 // 定义一个接口来描述 props 的类型
@@ -33,6 +34,9 @@ type Props = {
   disturbPoint?: number; // 干扰点数量，0为不绘制
   fontSizeMin?: number; // 字体最小值
   fontSizeMax?: number; // 字体最大值
+  range?: number; // 校验的容错范围，数值越大，越容易校验通过
+  successText?: string; // 校验通过显示的文字
+  errorText?: string; // 校验失败显示的文字
 };
 
 const props = withDefaults(defineProps<Props>(), {
@@ -45,6 +49,9 @@ const props = withDefaults(defineProps<Props>(), {
   disturbPoint: 0,
   fontSizeMin: 25,
   fontSizeMax: 35,
+  range: 40,
+  successText: '验证通过',
+  errorText: '验证失败',
 });
 
 // 父组件自定义事件
@@ -63,6 +70,7 @@ const initState = () => ({
   text: '刷新中...', // 按钮显示的文字
   result: false, // 校验结果
   showTip: false, // 是否显示结果提示
+  loading: false, // 是否加载中
 });
 
 const state = reactive<State>(initState());
@@ -104,7 +112,7 @@ const canvasClick = (e: MouseEvent) => {
       if (!result) {
         // 验证失败
         assign(state, {
-          text: '验证失败',
+          text: props.errorText,
           result: false,
           showTip: true,
         });
@@ -115,7 +123,7 @@ const canvasClick = (e: MouseEvent) => {
       } else {
         // 验证成功
         assign(state, {
-          text: '验证成功',
+          text: props.successText,
           result: true,
           showTip: true,
         });
@@ -200,7 +208,7 @@ const getMousePos = (e: MouseEvent): Point => {
 
 // 判断点选结果
 const comparePoints = (canvasPoints: State['canvasPoints'], checkPoints: Point[]) => {
-  function isWithinRange(point: Point, points: Point[], range = 40) {
+  function isWithinRange(point: Point, points: Point[], range = props.range) {
     return some(points, point2 => {
       const dx = Math.abs(point.x - point2.x);
       const dy = Math.abs(point.y - point2.y);
@@ -221,9 +229,11 @@ function refresh() {
     // 获取随机一张图片
     img.src = sample(props.imgs) as string;
     // 加载完成开始绘制
-    img.onload = () => {
-      nextTick(() => {
+    state.loading = true;
+    img.onload = async () => {
+      await nextTick(() => {
         state.canvasPoints = drawImg(img);
+        state.loading = false;
       });
     };
   } else {
@@ -238,33 +248,35 @@ onMounted(() => {
 
 <template>
   <div class="points-verify relative mx-auto my-0" :style="{ width: `${width}px` }">
-    <div
-      class="verify-img-panel relative rounded"
-      :style="{
-        width: width,
-        height: height,
-        backgroundSize: width + ' ' + height,
-      }"
-    >
-      <canvas
-        ref="canvas"
-        :width="width"
-        :height="height"
-        @click="state.result ? undefined : canvasClick($event)"
-      ></canvas>
-
+    <ASpin :spinning="state.loading">
       <div
-        v-for="(point, index) in state.checkPoints"
-        :key="index"
-        class="point-area absolute z-50"
+        class="verify-img-panel relative rounded"
         :style="{
-          top: `${point.y}px`,
-          left: `${point.x}px`,
+          width: width,
+          height: height,
+          backgroundSize: width + ' ' + height,
         }"
       >
-        <AButton type="primary" shape="circle">{{ index + 1 }}</AButton>
+        <canvas
+          ref="canvas"
+          :width="width"
+          :height="height"
+          @click="state.result ? undefined : canvasClick($event)"
+        ></canvas>
+
+        <div
+          v-for="(point, index) in state.checkPoints"
+          :key="index"
+          class="point-area absolute z-50"
+          :style="{
+            top: `${point.y}px`,
+            left: `${point.x}px`,
+          }"
+        >
+          <AButton type="primary" shape="circle">{{ index + 1 }}</AButton>
+        </div>
       </div>
-    </div>
+    </ASpin>
     <!-- 画布下方提示 -->
     <AAlert :message="state.text" :type="state.showTip ? (state.result ? 'success' : 'error') : 'info'">
       <template #action>
