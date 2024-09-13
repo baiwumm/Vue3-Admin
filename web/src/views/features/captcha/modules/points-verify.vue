@@ -139,8 +139,38 @@ const drawImg = (img?: HTMLImageElement) => {
   const ctx = canvas.value?.getContext('2d') as CanvasRenderingContext2D;
 
   if (img) {
+    // 确保图片不变形
+    const canvasWidth = props.width;
+    const canvasHeight = props.height;
+    const imgWidth = img.width;
+    const imgHeight = img.height;
+
+    // 计算宽高比
+    const imageAspectRatio = imgWidth / imgHeight;
+    const canvasAspectRatio = canvasWidth / canvasHeight;
+
+    let sx = 0;
+    let sy = 0;
+    let sw = imgWidth;
+    let sh = imgHeight;
+    const dx = 0;
+    const dy = 0;
+    const dw = canvasWidth;
+    const dh = canvasHeight;
+
+    // 如果图片的宽高比大于画布的宽高比，则需要裁剪宽度
+    if (imageAspectRatio > canvasAspectRatio) {
+      sw = imgHeight * canvasAspectRatio;
+      sx = (imgWidth - sw) / 2;
+    } else {
+      // 否则需要裁剪高度
+      sh = imgWidth / canvasAspectRatio;
+      sy = (imgHeight - sh) / 2;
+    }
     // 绘制图片
-    ctx.drawImage(img, 0, 0, props.width, props.height);
+    // ctx.drawImage(img, 0, 0, props.width, props.height);
+    // 使用计算后的尺寸和位置绘制图片
+    ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
   } else {
     // 绘制背景
     ctx.fillStyle = randomColor();
@@ -248,42 +278,44 @@ onMounted(() => {
 
 <template>
   <div class="points-verify relative mx-auto my-0" :style="{ width: `${width}px` }">
-    <ASpin :spinning="state.loading">
-      <div
-        class="verify-img-panel relative rounded"
-        :style="{
-          width: width,
-          height: height,
-          backgroundSize: width + ' ' + height,
-        }"
-      >
-        <canvas
-          ref="canvas"
-          :width="width"
-          :height="height"
-          @click="state.result ? undefined : canvasClick($event)"
-        ></canvas>
-
+    <ASpace direction="vertical" :size="20">
+      <ASpin :spinning="state.loading">
         <div
-          v-for="(point, index) in state.checkPoints"
-          :key="index"
-          class="point-area absolute z-50"
+          class="verify-img-panel relative rounded"
           :style="{
-            top: `${point.y}px`,
-            left: `${point.x}px`,
+            width: width,
+            height: height,
+            backgroundSize: width + ' ' + height,
           }"
         >
-          <AButton type="primary" shape="circle">{{ index + 1 }}</AButton>
+          <canvas
+            ref="canvas"
+            :width="width"
+            :height="height"
+            @click="state.result ? undefined : canvasClick($event)"
+          ></canvas>
+
+          <div
+            v-for="(point, index) in state.checkPoints"
+            :key="index"
+            class="point-area absolute z-50"
+            :style="{
+              top: `${point.y}px`,
+              left: `${point.x}px`,
+            }"
+          >
+            <AButton type="primary" shape="circle">{{ index + 1 }}</AButton>
+          </div>
         </div>
-      </div>
-    </ASpin>
-    <!-- 画布下方提示 -->
-    <AAlert :message="state.text" :type="state.showTip ? (state.result ? 'success' : 'error') : 'info'">
-      <template #action>
-        <div class="white z-10 cursor-pointer text-20px text-slate-500" @click="refresh">
-          <SvgIcon icon="ri:reset-left-fill" />
-        </div>
-      </template>
-    </AAlert>
+      </ASpin>
+      <!-- 画布下方提示 -->
+      <AAlert :message="state.text" :type="state.showTip ? (state.result ? 'success' : 'error') : 'info'">
+        <template #action>
+          <div class="white z-10 cursor-pointer text-20px text-slate-500" @click="refresh">
+            <SvgIcon icon="ri:reset-left-fill" />
+          </div>
+        </template>
+      </AAlert>
+    </ASpace>
   </div>
 </template>

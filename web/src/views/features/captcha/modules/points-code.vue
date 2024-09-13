@@ -25,5 +25,5 @@ const pointsPassing = (flag: boolean) => {
 </script>
 
 <template>
-  <PointsVerify :imgs="imgs" :width="312" :height="312" @callback="pointsPassing" />
+  <PointsVerify :imgs="imgs" :width="300" :height="200" @callback="pointsPassing" />
 </template>

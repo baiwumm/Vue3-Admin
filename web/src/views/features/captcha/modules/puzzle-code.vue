@@ -22,7 +22,16 @@ const onSuccess = () => {
 
 <template>
   <div class="puzzle-vcode-container">
-    <Vcode show type="inside" :imgs="imgs" class-name="puzzle-vcode" @success="onSuccess" />
+    <Vcode
+      show
+      type="inside"
+      :imgs="imgs"
+      :slider-size="40"
+      :canvas-width="300"
+      :canvas-height="200"
+      class-name="puzzle-vcode"
+      @success="onSuccess"
+    />
   </div>
 </template>
 
