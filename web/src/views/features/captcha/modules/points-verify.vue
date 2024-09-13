@@ -281,7 +281,7 @@ onMounted(() => {
     <ASpace direction="vertical" :size="20">
       <ASpin :spinning="state.loading">
         <div
-          class="verify-img-panel relative rounded"
+          class="verify-img-panel relative overflow-hidden rounded"
           :style="{
             width: width,
             height: height,
@@ -311,7 +311,11 @@ onMounted(() => {
       <!-- 画布下方提示 -->
       <AAlert :message="state.text" :type="state.showTip ? (state.result ? 'success' : 'error') : 'info'">
         <template #action>
-          <div class="white z-10 cursor-pointer text-20px text-slate-500" @click="refresh">
+          <div
+            class="white z-10 cursor-pointer text-20px text-slate-500"
+            :class="{ 'animate-spin': state.loading }"
+            @click="refresh"
+          >
             <SvgIcon icon="ri:reset-left-fill" />
           </div>
         </template>

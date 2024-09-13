@@ -38,6 +38,16 @@ const locales = (field: string) => $t(`page.features.captcha.${field}`);
       <!-- 拼图验证码 -->
       <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('puzzleCode')">
+          <template #extra>
+            <AButton
+              type="link"
+              href="https://github.com/javaLuo/vue-puzzle-vcode"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              vue3-puzzle-vcode
+            </AButton>
+          </template>
           <PuzzleCode :locales="locales" />
         </ACard>
       </ACol>
