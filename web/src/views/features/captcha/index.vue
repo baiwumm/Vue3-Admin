@@ -5,6 +5,7 @@ import GraphicCode from './modules/graphic-code.vue'; // 图形验证码
 import OperationCode from './modules/operation-code.vue'; // 运算验证码
 import PointsCode from './modules/points-code.vue'; // 点选验证码
 import PuzzleCode from './modules/puzzle-code.vue'; // 拼图验证码
+import SlideCode from './modules/slide-code.vue'; // 滑块验证码
 
 // 国际化
 const locales = (field: string) => $t(`page.features.captcha.${field}`);
@@ -26,6 +27,12 @@ const locales = (field: string) => $t(`page.features.captcha.${field}`);
       <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('operationCode')">
           <OperationCode :locales="locales" />
+        </ACard>
+      </ACol>
+      <!-- 滑块验证码 -->
+      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+        <ACard :bordered="false" :title="locales('slideCode')">
+          <SlideCode />
         </ACard>
       </ACol>
       <!-- 拼图验证码 -->
