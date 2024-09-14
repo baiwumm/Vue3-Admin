@@ -73,6 +73,7 @@ declare module 'vue' {
     AUpload: typeof import('ant-design-vue/es')['Upload']
     BetterScroll: typeof import('./../components/custom/better-scroll.vue')['default']
     ButtonIcon: typeof import('./../components/custom/button-icon.vue')['default']
+    ColorPicker: typeof import('./../components/custom/color-picker.vue')['default']
     CountTo: typeof import('./../components/custom/count-to.vue')['default']
     DarkModeContainer: typeof import('./../components/common/dark-mode-container.vue')['default']
     ExceptionBase: typeof import('./../components/common/exception-base.vue')['default']

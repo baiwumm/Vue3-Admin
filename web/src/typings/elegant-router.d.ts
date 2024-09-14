@@ -22,6 +22,7 @@ declare module "@elegant-router/types" {
     "500": "/500";
     "about": "/about";
     "administrative": "/administrative";
+    "administrative_framework": "/administrative/framework";
     "administrative_message": "/administrative/message";
     "administrative_message-detail": "/administrative/message-detail/:id";
     "administrative_organization": "/administrative/organization";
@@ -102,6 +103,7 @@ declare module "@elegant-router/types" {
     | "iframe-page"
     | "login"
     | "about"
+    | "administrative_framework"
     | "administrative_message-detail"
     | "administrative_message"
     | "administrative_organization"

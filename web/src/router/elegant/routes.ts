@@ -62,6 +62,15 @@ export const generatedRoutes: GeneratedRoute[] = [
     },
     children: [
       {
+        name: 'administrative_framework',
+        path: '/administrative/framework',
+        component: 'view.administrative_framework',
+        meta: {
+          title: 'administrative_framework',
+          i18nKey: 'route.administrative_framework'
+        }
+      },
+      {
         name: 'administrative_message',
         path: '/administrative/message',
         component: 'view.administrative_message',

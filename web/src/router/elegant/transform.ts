@@ -166,6 +166,7 @@ const routeMap: RouteMap = {
   "500": "/500",
   "about": "/about",
   "administrative": "/administrative",
+  "administrative_framework": "/administrative/framework",
   "administrative_message": "/administrative/message",
   "administrative_message-detail": "/administrative/message-detail/:id",
   "administrative_organization": "/administrative/organization",
