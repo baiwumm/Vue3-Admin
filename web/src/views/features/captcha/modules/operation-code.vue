@@ -33,15 +33,13 @@ const validateGeneraCode = () => {
 
 <template>
   <ARow justify="center" align="middle" :gutter="[10, 10]">
-    <ACol flex="160px">
+    <ASpace direction="vertical" align="center">
       <OperationVerify v-model="result" :width="160" :height="40" class="cursor-pointer" />
-    </ACol>
-    <ACol :style="{ flex: 1 }">
-      <AInputSearch v-model:value="generaCode" :placeholder="$t('form.code.required')" size="large">
+      <AInputSearch v-model:value="generaCode" :placeholder="$t('form.code.required')">
         <template #enterButton>
           <AButton type="primary" @click="validateGeneraCode">{{ locales('verify') }}</AButton>
         </template>
       </AInputSearch>
-    </ACol>
+    </ASpace>
   </ARow>
 </template>

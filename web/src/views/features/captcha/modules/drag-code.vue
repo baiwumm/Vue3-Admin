@@ -30,15 +30,13 @@ const onReset = () => {
 
 <template>
   <ARow justify="center" align="middle" :gutter="[10, 10]">
-    <ACol flex="auto">
-      <DragVerify ref="dragVerify" v-model:is-passing="isPassing" @passcallback="onSuccess">
+    <ASpace direction="vertical">
+      <DragVerify ref="dragVerify" v-model:is-passing="isPassing" :width="300" @passcallback="onSuccess">
         <template #textBefore>
           <SvgIcon :icon="isPassing ? 'ri:lock-unlock-line' : 'ri:lock-line'" />
         </template>
       </DragVerify>
-    </ACol>
-    <ACol flex="100px">
-      <AButton type="primary" @click="onReset">{{ $t('common.reset') }}</AButton>
-    </ACol>
+      <AButton type="primary" block @click="onReset">{{ $t('common.reset') }}</AButton>
+    </ASpace>
   </ARow>
 </template>

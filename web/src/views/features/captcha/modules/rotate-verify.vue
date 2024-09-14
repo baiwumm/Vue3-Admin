@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { assign } from 'lodash-es';
+import dayjs from 'dayjs';
+import { assign, divide, round, subtract } from 'lodash-es';
 import { computed, onMounted, reactive, useTemplateRef } from 'vue';
 
 defineOptions({
@@ -76,6 +77,8 @@ const initState = () => ({
   ranRotate: 0,
   cRotate: 0,
   imgStyle: {},
+  startTime: 0,
+  endTime: 0,
 });
 
 const state = reactive(initState());
@@ -156,6 +159,8 @@ const checkimgLoaded = () => {
 };
 const dragStart = e => {
   if (!state.isPassing) {
+    // 记录开始时间
+    state.startTime = dayjs().valueOf();
     state.isMoving = true;
     state.x = e.pageX || e.touches[0].pageX;
   }
@@ -197,6 +202,7 @@ const dragFinish = () => {
   }
 };
 const passVerify = () => {
+  state.endTime = dayjs().valueOf();
   state.isPassing = true;
   state.isMoving = false;
   progressBar.value.style.background = props.completedBg;
@@ -204,7 +210,7 @@ const passVerify = () => {
   message.value.style.animation = 'slidetounlock2 3s infinite';
   progressBar.value.style.color = '#fff';
   progressBar.value.style.fontSize = props.textSize;
-  emit('success');
+  emit('success', round(divide(subtract(state.endTime, state.startTime), 1000), 2));
 };
 const reset = () => {
   reImg();

@@ -271,6 +271,11 @@ function refresh() {
   }
 }
 
+defineExpose({
+  // 暴露给父组件的方法
+  refresh,
+});
+
 onMounted(() => {
   refresh();
 });

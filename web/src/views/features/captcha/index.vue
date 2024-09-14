@@ -19,31 +19,31 @@ const locales = (field: string) => $t(`page.features.captcha.${field}`);
     </ACard>
     <ARow :gutter="[20, 20]">
       <!-- 图形验证码 -->
-      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+      <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('graphicCode')">
           <GraphicCode :locales="locales" />
         </ACard>
       </ACol>
       <!-- 运算验证码 -->
-      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+      <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('operationCode')">
           <OperationCode :locales="locales" />
         </ACard>
       </ACol>
       <!-- 滑块验证码 -->
-      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+      <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('slideCode')">
           <DragCode />
         </ACard>
       </ACol>
       <!-- 图片旋转验证码 -->
-      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+      <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('rotateCode')">
           <RotateCode />
         </ACard>
       </ACol>
       <!-- 拼图验证码 -->
-      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+      <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('puzzleCode')">
           <template #extra>
             <AButton
@@ -59,7 +59,7 @@ const locales = (field: string) => $t(`page.features.captcha.${field}`);
         </ACard>
       </ACol>
       <!-- 点选验证码 -->
-      <ACol :xs="24" :sm="12" :md="12" :lg="12" :xl="8">
+      <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
         <ACard :bordered="false" :title="locales('pointsCode')">
           <PointsCode :locales="locales" />
         </ACard>

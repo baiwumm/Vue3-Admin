@@ -10,7 +10,7 @@ defineOptions({
   name: 'RotateCode',
 });
 
-// 是否验证成功
+// 组件实例
 const rotateVerify = useTemplateRef<HTMLElement>('rotateVerify');
 
 // 生成图片数组
@@ -25,12 +25,17 @@ const onRest = () => {
     imgSrc.value = sample(imgs);
   }
 };
+
+// 成功回调
+const onSuccess = (seconds: number) => {
+  window.$message?.success($t(`page.features.captcha.slideCodeSuccess`, { seconds }));
+};
 </script>
 
 <template>
   <ARow justify="center">
     <ASpace direction="vertical">
-      <RotateVerify ref="rotateVerify" :width="250" :img-src="imgSrc" />
+      <RotateVerify ref="rotateVerify" :width="250" :img-src="imgSrc" @success="onSuccess" />
       <AButton type="primary" block @click="onRest">{{ $t('common.reset') }}</AButton>
     </ASpace>
   </ARow>

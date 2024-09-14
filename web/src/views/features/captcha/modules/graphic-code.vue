@@ -47,7 +47,7 @@ onMounted(() => {
 
 <template>
   <ARow justify="center" align="middle" :gutter="[10, 10]">
-    <ACol flex="160px">
+    <ASpace direction="vertical" align="center">
       <GeneraVerify
         :identify-code="identifyCode"
         :content-height="40"
@@ -57,13 +57,11 @@ onMounted(() => {
         class="cursor-pointer"
         @click="refreshCode"
       />
-    </ACol>
-    <ACol :style="{ flex: 1 }">
-      <AInputSearch v-model:value="generaCode" :placeholder="$t('form.code.required')" size="large">
+      <AInputSearch v-model:value="generaCode" :placeholder="$t('form.code.required')">
         <template #enterButton>
           <AButton type="primary" @click="validateGeneraCode">{{ locales('verify') }}</AButton>
         </template>
       </AInputSearch>
-    </ACol>
+    </ASpace>
   </ARow>
 </template>
