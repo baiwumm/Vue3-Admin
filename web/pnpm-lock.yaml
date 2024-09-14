@@ -35,6 +35,9 @@ importers:
       '@sa/utils':
         specifier: workspace:*
         version: link:packages/utils
+      '@simonwep/pickr':
+        specifier: 1.9.1
+        version: 1.9.1
       '@vueuse/core':
         specifier: 10.11.0
         version: 10.11.0(vue@3.5.4(typescript@5.5.3))
@@ -89,6 +92,9 @@ importers:
       vue3-puzzle-vcode:
         specifier: ^1.1.7
         version: 1.1.7
+      vue3-tree-org:
+        specifier: ^4.2.2
+        version: 4.2.2(vue@3.5.4(typescript@5.5.3))
       zxcvbn:
         specifier: ^4.4.2
         version: 4.4.2
@@ -5140,6 +5146,11 @@ packages:
 
   vue3-puzzle-vcode@1.1.7:
     resolution: {integrity: sha512-mW780dz7HKjrElnE60CeYSeHGidKBKHoMjTDYfqF21330rTkFOsfDK1FQKZ22MktgMtTEoS/imfpEDlM1cxY/g==}
+
+  vue3-tree-org@4.2.2:
+    resolution: {integrity: sha512-AG2SykyD6dw0jIyqBm8iuF9j9GWli6KrwudxR1RjULCCBTDFsoNm7MmP/weKT7wowN/sPk+e2RsnvEJMw2OJMw==}
+    peerDependencies:
+      vue: ^3.0.0
 
   vue@3.5.4:
     resolution: {integrity: sha512-3yAj2gkmiY+i7+22A1PWM+kjOVXjU74UPINcTiN7grIVPyFFI0lpGwHlV/4xydDmobaBn7/xmi+YG8HeSlCTcg==}
@@ -10805,6 +10816,11 @@ snapshots:
       vue: 3.5.4(typescript@5.5.3)
 
   vue3-puzzle-vcode@1.1.7: {}
+
+  vue3-tree-org@4.2.2(vue@3.5.4(typescript@5.5.3)):
+    dependencies:
+      core-js: 3.37.1
+      vue: 3.5.4(typescript@5.5.3)
 
   vue@3.5.4(typescript@5.5.3):
     dependencies:
