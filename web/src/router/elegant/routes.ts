@@ -127,6 +127,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'features_captcha',
           i18nKey: 'route.features_captcha'
         }
+      },
+      {
+        name: 'features_print',
+        path: '/features/print',
+        component: 'view.features_print',
+        meta: {
+          title: 'features_print',
+          i18nKey: 'route.features_print'
+        }
       }
     ]
   },

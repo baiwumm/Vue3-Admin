@@ -29,6 +29,7 @@ declare module "@elegant-router/types" {
     "administrative_post-manage": "/administrative/post-manage";
     "features": "/features";
     "features_captcha": "/features/captcha";
+    "features_print": "/features/print";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login";
@@ -109,6 +110,7 @@ declare module "@elegant-router/types" {
     | "administrative_organization"
     | "administrative_post-manage"
     | "features_captcha"
+    | "features_print"
     | "home"
     | "system-manage_internalization"
     | "system-manage_menu-manage"

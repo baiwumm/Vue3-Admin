@@ -1,6 +1,7 @@
 import './plugins/assets';
 
 import { createApp } from 'vue';
+import { printPlugin } from 'vue-print-next';
 
 import App from './App.vue';
 import { setupI18n } from './locales';
@@ -22,6 +23,8 @@ async function setupApp() {
   setupStore(app);
 
   await setupRouter(app);
+  // 打印插件
+  app.use(printPlugin);
 
   setupI18n(app);
 
