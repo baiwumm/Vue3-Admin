@@ -129,6 +129,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_gantt',
+        path: '/features/gantt',
+        component: 'view.features_gantt',
+        meta: {
+          title: 'features_gantt',
+          i18nKey: 'route.features_gantt'
+        }
+      },
+      {
         name: 'features_pickr',
         path: '/features/pickr',
         component: 'view.features_pickr',

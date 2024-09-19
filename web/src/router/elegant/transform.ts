@@ -173,6 +173,7 @@ const routeMap: RouteMap = {
   "administrative_post-manage": "/administrative/post-manage",
   "features": "/features",
   "features_captcha": "/features/captcha",
+  "features_gantt": "/features/gantt",
   "features_pickr": "/features/pickr",
   "features_print": "/features/print",
   "home": "/home",
