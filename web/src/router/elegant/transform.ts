@@ -176,6 +176,7 @@ const routeMap: RouteMap = {
   "features_gantt": "/features/gantt",
   "features_pickr": "/features/pickr",
   "features_print": "/features/print",
+  "features_viewer": "/features/viewer",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
   "login": "/login",

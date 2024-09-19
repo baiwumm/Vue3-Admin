@@ -154,6 +154,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'features_print',
           i18nKey: 'route.features_print'
         }
+      },
+      {
+        name: 'features_viewer',
+        path: '/features/viewer',
+        component: 'view.features_viewer',
+        meta: {
+          title: 'features_viewer',
+          i18nKey: 'route.features_viewer'
+        }
       }
     ]
   },

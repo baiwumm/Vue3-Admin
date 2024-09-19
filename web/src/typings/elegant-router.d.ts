@@ -32,6 +32,7 @@ declare module "@elegant-router/types" {
     "features_gantt": "/features/gantt";
     "features_pickr": "/features/pickr";
     "features_print": "/features/print";
+    "features_viewer": "/features/viewer";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login";
@@ -115,6 +116,7 @@ declare module "@elegant-router/types" {
     | "features_gantt"
     | "features_pickr"
     | "features_print"
+    | "features_viewer"
     | "home"
     | "system-manage_internalization"
     | "system-manage_menu-manage"

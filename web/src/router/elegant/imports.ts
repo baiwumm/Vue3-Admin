@@ -30,6 +30,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   features_gantt: () => import("@/views/features/gantt/index.vue"),
   features_pickr: () => import("@/views/features/pickr/index.vue"),
   features_print: () => import("@/views/features/print/index.vue"),
+  features_viewer: () => import("@/views/features/viewer/index.vue"),
   home: () => import("@/views/home/index.vue"),
   "system-manage_internalization": () => import("@/views/system-manage/internalization/index.vue"),
   "system-manage_menu-manage": () => import("@/views/system-manage/menu-manage/index.vue"),
