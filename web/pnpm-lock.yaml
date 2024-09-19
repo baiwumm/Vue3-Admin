@@ -77,6 +77,12 @@ importers:
       tailwind-merge:
         specifier: 2.4.0
         version: 2.4.0
+      v-viewer:
+        specifier: ^3.0.11
+        version: 3.0.11(vue@3.5.4(typescript@5.5.3))
+      viewerjs:
+        specifier: ^1.11.6
+        version: 1.11.6
       vue:
         specifier: 3.5.4
         version: 3.5.4(typescript@5.5.3)
@@ -5008,6 +5014,11 @@ packages:
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
+  v-viewer@3.0.11:
+    resolution: {integrity: sha512-E8LOdAxhzuktt4HB3PswVCccQ1Q1sYHYnLsS6zaJISpb5EvmAFs5sYNfXnDLFxVb5DQ82v4ZlGxkYlseXwWRJw==}
+    peerDependencies:
+      vue: ^3.0.0
+
   validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
 
@@ -5018,6 +5029,9 @@ packages:
   vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+
+  viewerjs@1.11.6:
+    resolution: {integrity: sha512-TlhdSp2oEOLFXvEp4psKaeTjR5zBjTRcM/sHUN8PkV1UWuY8HKC8n7GaVdW5Xqnwdr/F1OmzLik1QwDjI4w/nw==}
 
   vite-hot-client@0.2.3:
     resolution: {integrity: sha512-rOGAV7rUlUHX89fP2p2v0A2WWvV3QMX2UYq0fRqsWSvFvev4atHWqjwGoKaZT1VTKyLGk533ecu3eyd0o59CAg==}
@@ -10676,6 +10690,12 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
+  v-viewer@3.0.11(vue@3.5.4(typescript@5.5.3)):
+    dependencies:
+      lodash: 4.17.21
+      viewerjs: 1.11.6
+      vue: 3.5.4(typescript@5.5.3)
+
   validate-npm-package-license@3.0.4:
     dependencies:
       spdx-correct: 3.2.0
@@ -10684,6 +10704,8 @@ snapshots:
   validate-npm-package-name@5.0.1: {}
 
   vary@1.1.2: {}
+
+  viewerjs@1.11.6: {}
 
   vite-hot-client@0.2.3(vite@5.3.3(@types/node@20.14.10)(sass@1.77.6)):
     dependencies:
