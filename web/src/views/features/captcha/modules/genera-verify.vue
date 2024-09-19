@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { random } from 'lodash-es';
-import { onMounted, watch, withDefaults } from 'vue';
+import { onMounted, watch } from 'vue';
 
 import { randomColor } from '@/utils';
 
