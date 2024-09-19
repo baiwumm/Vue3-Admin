@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import '@simonwep/pickr/dist/themes/classic.min.css';
+import '@simonwep/pickr/dist/themes/monolith.min.css';
+import '@simonwep/pickr/dist/themes/nano.min.css';
 
 import Pickr from '@simonwep/pickr';
 import { onMounted, onUnmounted, ref, useTemplateRef } from 'vue';
@@ -10,6 +12,7 @@ defineOptions({
 
 const props = defineProps<{
   modelValue?: string;
+  theme: Pickr.Theme;
 }>();
 
 // 父组件自定义事件
@@ -29,7 +32,7 @@ onMounted(() => {
   if (colorPickerRef.value) {
     pickr.value = Pickr.create({
       el: colorPickerRef.value,
-      theme: 'classic', // or 'nano' for another style
+      theme: props.theme, // or 'nano' for another style
       swatches: [
         'rgba(244, 67, 54, 1)',
         'rgba(233, 30, 99, 0.95)',

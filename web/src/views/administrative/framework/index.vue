@@ -111,7 +111,7 @@ watch(
           />
         </AFormItem>
         <AFormItem label="文字颜色">
-          <ColorPicker v-model="color" />
+          <ColorPicker v-model="color" theme="classic" />
         </AFormItem>
         <AFormItem label="搜索">
           <AInputSearch
