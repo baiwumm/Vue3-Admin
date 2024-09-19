@@ -25,7 +25,7 @@ const nanoTheme = ref<Pickr.Theme>('nano');
   <div>
     <ACard :title="$t('route.features_pickr')" :border="false">
       <template #extra>
-        <AButton type="link" href="https://github.com/simonwep/pickr" target="_blank" rel="noopener noreferrer">
+        <AButton type="primary" href="https://github.com/simonwep/pickr" target="_blank" rel="noopener noreferrer">
           @simonwep/pickr
         </AButton>
       </template>

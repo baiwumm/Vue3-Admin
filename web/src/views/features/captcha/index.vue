@@ -47,7 +47,7 @@ const locales = (field: string) => $t(`page.features.captcha.${field}`);
         <ACard :bordered="false" :title="locales('puzzleCode')">
           <template #extra>
             <AButton
-              type="link"
+              type="primary"
               href="https://github.com/javaLuo/vue-puzzle-vcode"
               target="_blank"
               rel="noopener noreferrer"

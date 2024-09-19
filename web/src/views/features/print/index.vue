@@ -19,7 +19,7 @@ const printOps: PrintAreaOption = {
     <ACard :bordered="false" :title="$t('route.features_print')">
       <template #extra>
         <AButton
-          type="link"
+          type="primary"
           href="https://github.com/Alessandro-Pang/vue-print-next"
           target="_blank"
           rel="noopener noreferrer"
