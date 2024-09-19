@@ -129,6 +129,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_pickr',
+        path: '/features/pickr',
+        component: 'view.features_pickr',
+        meta: {
+          title: 'features_pickr',
+          i18nKey: 'route.features_pickr'
+        }
+      },
+      {
         name: 'features_print',
         path: '/features/print',
         component: 'view.features_print',
