@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { assign, difference, every, join, map, random, sample, shuffle, some } from 'lodash-es';
-import { defineProps, nextTick, onMounted, reactive, useTemplateRef } from 'vue';
+import { nextTick, onMounted, reactive, useTemplateRef } from 'vue';
 
 import { randomColor } from '@/utils';
 
