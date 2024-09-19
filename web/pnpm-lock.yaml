@@ -56,6 +56,9 @@ importers:
       dayjs:
         specifier: 1.11.11
         version: 1.11.11
+      dhtmlx-gantt:
+        specifier: ^8.0.10
+        version: 8.0.10
       element-china-area-data:
         specifier: ^6.1.0
         version: 6.1.0
@@ -2193,6 +2196,9 @@ packages:
 
   devlop@1.1.0:
     resolution: {integrity: sha512-RWmIqhcFf1lRYBvNmr7qTNuyCt/7/ns2jbpp1+PalgE/rDQcBT0fioSMUpJ93irlUhC5hrg4cYqe6U+0ImW0rA==}
+
+  dhtmlx-gantt@8.0.10:
+    resolution: {integrity: sha512-DNfxZw4ctR8zj/N7jHQHtrfsb4i2CRcTBmshFILbpwvui3VyQZqWavWB+CwLxVXjKiO/443yrdqB7K9DOs903Q==}
 
   dir-glob@3.0.1:
     resolution: {integrity: sha512-WkrWp9GR4KXfKGYzOLmTuGVi1UWFfws377n9cc55/tb6DuqyF6pcQ5AbiHEshaDpY9v6oaSr2XCDidGmMwdzIA==}
@@ -7470,6 +7476,8 @@ snapshots:
   devlop@1.1.0:
     dependencies:
       dequal: 2.0.3
+
+  dhtmlx-gantt@8.0.10: {}
 
   dir-glob@3.0.1:
     dependencies:
