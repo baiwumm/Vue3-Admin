@@ -163,6 +163,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'features_viewer',
           i18nKey: 'route.features_viewer'
         }
+      },
+      {
+        name: 'features_vue-directive',
+        path: '/features/vue-directive',
+        component: 'view.features_vue-directive',
+        meta: {
+          title: 'features_vue-directive',
+          i18nKey: 'route.features_vue-directive'
+        }
       }
     ]
   },

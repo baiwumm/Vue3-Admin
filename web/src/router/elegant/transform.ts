@@ -177,6 +177,7 @@ const routeMap: RouteMap = {
   "features_pickr": "/features/pickr",
   "features_print": "/features/print",
   "features_viewer": "/features/viewer",
+  "features_vue-directive": "/features/vue-directive",
   "home": "/home",
   "iframe-page": "/iframe-page/:url",
   "login": "/login",

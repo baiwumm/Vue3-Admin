@@ -33,6 +33,7 @@ declare module "@elegant-router/types" {
     "features_pickr": "/features/pickr";
     "features_print": "/features/print";
     "features_viewer": "/features/viewer";
+    "features_vue-directive": "/features/vue-directive";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login";
@@ -117,6 +118,7 @@ declare module "@elegant-router/types" {
     | "features_pickr"
     | "features_print"
     | "features_viewer"
+    | "features_vue-directive"
     | "home"
     | "system-manage_internalization"
     | "system-manage_menu-manage"
