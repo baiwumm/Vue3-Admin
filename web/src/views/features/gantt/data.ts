@@ -240,4 +240,20 @@ export const ganttTasks: Task[] = [
     parent: '22',
     open: true,
   },
+  {
+    id: 28,
+    text: '自定义 Vue 指令',
+    start_date: new Date('2024-09-21 00:00'),
+    duration: 1,
+    parent: '22',
+    open: true,
+  },
+  {
+    id: 29,
+    text: '懒加载',
+    start_date: new Date('2024-09-22 00:00'),
+    duration: 1,
+    parent: '22',
+    open: true,
+  },
 ];

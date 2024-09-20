@@ -138,6 +138,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_lazyload',
+        path: '/features/lazyload',
+        component: 'view.features_lazyload',
+        meta: {
+          title: 'features_lazyload',
+          i18nKey: 'route.features_lazyload'
+        }
+      },
+      {
         name: 'features_pickr',
         path: '/features/pickr',
         component: 'view.features_pickr',
