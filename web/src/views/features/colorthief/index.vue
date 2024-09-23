@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import ColorThief from 'colorthief';
 import { map, sampleSize } from 'lodash-es';
-import type { ShallowRef } from 'vue';
 import { ref, useTemplateRef } from 'vue';
 
 // 图片数组
@@ -11,7 +10,7 @@ const hoverIndex = ref(-1);
 
 const colorThief = new ColorThief();
 
-const colorThiefRef = useTemplateRef('colorThiefRef') as ShallowRef<HTMLElement>;
+const colorThiefRef = useTemplateRef<HTMLElement>('colorThiefRef');
 
 // 鼠标悬停回调
 const onMouseOver = (event: MouseEvent, i: number) => {
@@ -19,17 +18,21 @@ const onMouseOver = (event: MouseEvent, i: number) => {
   const img = event.target as HTMLImageElement;
   let colors = colorThief.getPalette(img, 3);
   colors = map(colors, c => `rgb(${c[0]}, ${c[1]}, ${c[2]})`);
-  colorThiefRef.value.style.setProperty('--c1', colors[0]);
-  colorThiefRef.value.style.setProperty('--c2', colors[1]);
-  colorThiefRef.value.style.setProperty('--c3', colors[2]);
+  if (colorThiefRef.value) {
+    colorThiefRef.value.style.setProperty('--c1', colors[0]);
+    colorThiefRef.value.style.setProperty('--c2', colors[1]);
+    colorThiefRef.value.style.setProperty('--c3', colors[2]);
+  }
 };
 
 // 鼠标移出回调
 const onMouseOut = () => {
   hoverIndex.value = -1;
-  colorThiefRef.value.style.setProperty('--c1', '#fff');
-  colorThiefRef.value.style.setProperty('--c2', '#fff');
-  colorThiefRef.value.style.setProperty('--c3', '#fff');
+  if (colorThiefRef.value) {
+    colorThiefRef.value.style.setProperty('--c1', '#fff');
+    colorThiefRef.value.style.setProperty('--c2', '#fff');
+    colorThiefRef.value.style.setProperty('--c3', '#fff');
+  }
 };
 </script>
 
