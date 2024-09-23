@@ -129,6 +129,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_colorthief',
+        path: '/features/colorthief',
+        component: 'view.features_colorthief',
+        meta: {
+          title: 'features_colorthief',
+          i18nKey: 'route.features_colorthief'
+        }
+      },
+      {
         name: 'features_gantt',
         path: '/features/gantt',
         component: 'view.features_gantt',
