@@ -264,4 +264,12 @@ export const ganttTasks: Task[] = [
     parent: '22',
     open: true,
   },
+  {
+    id: 31,
+    text: '系统级取色器',
+    start_date: new Date('2024-09-24 00:00'),
+    duration: 1,
+    parent: '22',
+    open: true,
+  },
 ];

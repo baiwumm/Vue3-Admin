@@ -174,6 +174,7 @@ const routeMap: RouteMap = {
   "features": "/features",
   "features_captcha": "/features/captcha",
   "features_colorthief": "/features/colorthief",
+  "features_eye-dropper": "/features/eye-dropper",
   "features_gantt": "/features/gantt",
   "features_lazyload": "/features/lazyload",
   "features_pickr": "/features/pickr",

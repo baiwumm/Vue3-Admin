@@ -138,6 +138,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_eye-dropper',
+        path: '/features/eye-dropper',
+        component: 'view.features_eye-dropper',
+        meta: {
+          title: 'features_eye-dropper',
+          i18nKey: 'route.features_eye-dropper'
+        }
+      },
+      {
         name: 'features_gantt',
         path: '/features/gantt',
         component: 'view.features_gantt',
