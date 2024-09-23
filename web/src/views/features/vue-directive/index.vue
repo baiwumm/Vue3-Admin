@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
 
 const successText = ref('你太棒啦！');
@@ -9,6 +10,7 @@ const successText = ref('你太棒啦！');
 const text = ref(import.meta.env.VITE_APP_TITLE);
 // 输入规则
 const inputValue = ref<string>('');
+const { routerPushByKey } = useRouterPush();
 
 // 长按指令回调
 const initLongpress = () => {
@@ -31,7 +33,7 @@ const initThrollte = () => {
     <ACard :bordered="false" :body-style="{ padding: 0 }">
       <APageHeader :title="$t('route.features_vue-directive')" />
     </ACard>
-    <div class="grid gap-4" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }">
+    <div class="grid gap-4" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))' }">
       <ACard title="复制指令 v-copy" :bordered="false">
         <AInputSearch v-model:value="text">
           <template #enterButton>
@@ -58,6 +60,9 @@ const initThrollte = () => {
       </ACard>
       <ACard title="水波纹指令 v-ripple" :bordered="false">
         <AButton v-ripple type="primary" block>水波纹指令</AButton>
+      </ACard>
+      <ACard title="懒加载指令 v-lazyLoad" :bordered="false">
+        <AButton type="primary" block @click="routerPushByKey('features_lazyload')">懒加载指令</AButton>
       </ACard>
     </div>
   </ASpace>
