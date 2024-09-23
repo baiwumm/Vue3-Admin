@@ -60,6 +60,7 @@
     "@wangeditor/editor-for-vue": "^5.1.12",
     "ant-design-vue": "4.2.3",
     "clipboard": "2.0.11",
+    "colorthief": "^2.4.0",
     "dayjs": "1.11.11",
     "dhtmlx-gantt": "^8.0.10",
     "element-china-area-data": "^6.1.0",
