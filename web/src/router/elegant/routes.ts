@@ -199,6 +199,15 @@ export const generatedRoutes: GeneratedRoute[] = [
           title: 'features_vue-directive',
           i18nKey: 'route.features_vue-directive'
         }
+      },
+      {
+        name: 'features_vue-office',
+        path: '/features/vue-office',
+        component: 'view.features_vue-office',
+        meta: {
+          title: 'features_vue-office',
+          i18nKey: 'route.features_vue-office'
+        }
       }
     ]
   },

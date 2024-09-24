@@ -37,6 +37,7 @@ declare module "@elegant-router/types" {
     "features_print": "/features/print";
     "features_viewer": "/features/viewer";
     "features_vue-directive": "/features/vue-directive";
+    "features_vue-office": "/features/vue-office";
     "home": "/home";
     "iframe-page": "/iframe-page/:url";
     "login": "/login";
@@ -125,6 +126,7 @@ declare module "@elegant-router/types" {
     | "features_print"
     | "features_viewer"
     | "features_vue-directive"
+    | "features_vue-office"
     | "home"
     | "system-manage_internalization"
     | "system-manage_menu-manage"
