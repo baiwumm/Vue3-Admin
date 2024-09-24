@@ -38,6 +38,15 @@ importers:
       '@simonwep/pickr':
         specifier: 1.9.1
         version: 1.9.1
+      '@vue-office/docx':
+        specifier: ^1.6.2
+        version: 1.6.2(vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)))(vue@3.5.4(typescript@5.5.3))
+      '@vue-office/excel':
+        specifier: ^1.7.11
+        version: 1.7.11(vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)))(vue@3.5.4(typescript@5.5.3))
+      '@vue-office/pdf':
+        specifier: ^2.0.2
+        version: 2.0.2(vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)))(vue@3.5.4(typescript@5.5.3))
       '@vueuse/core':
         specifier: 10.11.0
         version: 10.11.0(vue@3.5.4(typescript@5.5.3))
@@ -89,6 +98,9 @@ importers:
       vue:
         specifier: 3.5.4
         version: 3.5.4(typescript@5.5.3)
+      vue-demi:
+        specifier: 0.14.6
+        version: 0.14.6(vue@3.5.4(typescript@5.5.3))
       vue-draggable-plus:
         specifier: 0.5.0
         version: 0.5.0(@types/sortablejs@1.15.8)
@@ -1371,6 +1383,36 @@ packages:
 
   '@volar/typescript@2.4.0-alpha.15':
     resolution: {integrity: sha512-U3StRBbDuxV6Woa4hvGS4kz3XcOzrWUKgFdEFN+ba1x3eaYg7+ytau8ul05xgA+UNGLXXsKur7fTUhDFyISk0w==}
+
+  '@vue-office/docx@1.6.2':
+    resolution: {integrity: sha512-OHAoUHeY8nHjhWvwDhlPx+/rmRkxmqLpvPgtfCEOZ4H1c1LCdJ6eDbdV3152ww8dcdZ7fgGQu3fmSSaI7JwdpQ==}
+    peerDependencies:
+      '@vue/composition-api': ^1.7.1
+      vue: ^2.0.0 || >=3.0.0
+      vue-demi: ^0.14.6
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
+  '@vue-office/excel@1.7.11':
+    resolution: {integrity: sha512-LF3R9IV573Sf4qTu6Ik5Ee8UMfkrsZQ6HEQE25/2m1c0CMcHX6KanIy6Cz0b0Q+FrLH3TjIsLTm6oPcqAbDGSA==}
+    peerDependencies:
+      '@vue/composition-api': ^1.7.1
+      vue: ^2.0.0 || >=3.0.0
+      vue-demi: ^0.14.6
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
+  '@vue-office/pdf@2.0.2':
+    resolution: {integrity: sha512-bQFqGxSOnKbvCS7OoJniYoTz1VIm1XOrRD27Msorxny9NFJ8RsQK1A4uhlnISJRFMaUwp1qlcVE9jMAhsiIyjg==}
+    peerDependencies:
+      '@vue/composition-api': ^1.7.1
+      vue: ^2.0.0 || >=3.0.0
+      vue-demi: ^0.14.6
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
 
   '@vue/babel-helper-vue-transform-on@1.2.2':
     resolution: {integrity: sha512-nOttamHUR3YzdEqdM/XXDyCSdxMA9VizUKoroLX6yTyRtggzQMHXcmwh8a7ZErcJttIBIc9s68a1B8GZ+Dmvsw==}
@@ -5279,6 +5321,17 @@ packages:
       '@vue/composition-api':
         optional: true
 
+  vue-demi@0.14.6:
+    resolution: {integrity: sha512-8QA7wrYSHKaYgUxDA5ZC24w+eHm3sYCbp0EzcDwKqN3p6HqtTCGR/GVsPyZW92unff4UlcSh++lmqDWN3ZIq4w==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-demi@0.14.8:
     resolution: {integrity: sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==}
     engines: {node: '>=12'}
@@ -6688,6 +6741,21 @@ snapshots:
       '@volar/language-core': 2.4.0-alpha.15
       path-browserify: 1.0.1
       vscode-uri: 3.0.8
+
+  '@vue-office/docx@1.6.2(vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)))(vue@3.5.4(typescript@5.5.3))':
+    dependencies:
+      vue: 3.5.4(typescript@5.5.3)
+      vue-demi: 0.14.6(vue@3.5.4(typescript@5.5.3))
+
+  '@vue-office/excel@1.7.11(vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)))(vue@3.5.4(typescript@5.5.3))':
+    dependencies:
+      vue: 3.5.4(typescript@5.5.3)
+      vue-demi: 0.14.6(vue@3.5.4(typescript@5.5.3))
+
+  '@vue-office/pdf@2.0.2(vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)))(vue@3.5.4(typescript@5.5.3))':
+    dependencies:
+      vue: 3.5.4(typescript@5.5.3)
+      vue-demi: 0.14.6(vue@3.5.4(typescript@5.5.3))
 
   '@vue/babel-helper-vue-transform-on@1.2.2': {}
 
@@ -9907,7 +9975,7 @@ snapshots:
     dependencies:
       '@vue/devtools-api': 6.6.3
       vue: 3.5.4(typescript@5.5.3)
-      vue-demi: 0.14.8(vue@3.5.4(typescript@5.5.3))
+      vue-demi: 0.14.6(vue@3.5.4(typescript@5.5.3))
     optionalDependencies:
       typescript: 5.5.3
 
@@ -11146,6 +11214,10 @@ snapshots:
   vscode-uri@3.0.8: {}
 
   vue-demi@0.13.11(vue@3.5.4(typescript@5.5.3)):
+    dependencies:
+      vue: 3.5.4(typescript@5.5.3)
+
+  vue-demi@0.14.6(vue@3.5.4(typescript@5.5.3)):
     dependencies:
       vue: 3.5.4(typescript@5.5.3)
 
