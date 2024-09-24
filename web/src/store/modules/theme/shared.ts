@@ -1,7 +1,8 @@
-import { theme as antdTheme } from 'ant-design-vue';
-import type { ConfigProviderProps } from 'ant-design-vue';
 import { getColorPalette } from '@sa/color';
 import { getRgbOfColor } from '@sa/utils';
+import type { ConfigProviderProps } from 'ant-design-vue';
+import { theme as antdTheme } from 'ant-design-vue';
+
 import { overrideThemeSettings, themeSettings } from '@/theme/settings';
 import { themeVars } from '@/theme/vars';
 import { toggleHtmlClass } from '@/utils';
@@ -11,14 +12,6 @@ const DARK_CLASS = 'dark';
 
 /** Init theme settings */
 export function initThemeSettings() {
-  const isProd = import.meta.env.PROD;
-
-  // if it is development mode, the theme settings will not be cached, by update `themeSettings` in `src/theme/settings.ts` to update theme settings
-  if (!isProd) return themeSettings;
-
-  // if it is production mode, the theme settings will be cached in localStorage
-  // if want to update theme settings when publish new version, please update `overrideThemeSettings` in `src/theme/settings.ts`
-
   const settings = localStg.get('themeSettings') || themeSettings;
 
   const isOverride = localStg.get('overrideThemeFlag') === BUILD_TIME;
@@ -47,13 +40,13 @@ export function createThemeToken(colors: App.Theme.ThemeColor, recommended = fal
       container: 'rgb(255, 255, 255)',
       layout: 'rgb(247, 250, 252)',
       inverted: 'rgb(0, 20, 40)',
-      base_text: 'rgb(31, 31, 31)'
+      base_text: 'rgb(31, 31, 31)',
     },
     boxShadow: {
       header: '0 1px 2px rgb(0, 21, 41, 0.08)',
       sider: '2px 0 8px 0 rgb(29, 35, 41, 0.05)',
-      tab: '0 1px 2px rgb(0, 21, 41, 0.08)'
-    }
+      tab: '0 1px 2px rgb(0, 21, 41, 0.08)',
+    },
   };
 
   const darkThemeTokens: App.Theme.ThemeToken = {
@@ -61,16 +54,16 @@ export function createThemeToken(colors: App.Theme.ThemeColor, recommended = fal
       ...themeTokens.colors,
       container: 'rgb(28, 28, 28)',
       layout: 'rgb(18, 18, 18)',
-      base_text: 'rgb(224, 224, 224)'
+      base_text: 'rgb(224, 224, 224)',
     },
     boxShadow: {
-      ...themeTokens.boxShadow
-    }
+      ...themeTokens.boxShadow,
+    },
   };
 
   return {
     themeTokens,
-    darkThemeTokens
+    darkThemeTokens,
   };
 }
 
@@ -214,17 +207,17 @@ export function getAntdTheme(colors: App.Theme.ThemeColor, darkMode: boolean) {
       colorInfo: info,
       colorSuccess: success,
       colorWarning: warning,
-      colorError: error
+      colorError: error,
     },
     algorithm: [darkMode ? darkAlgorithm : defaultAlgorithm],
     components: {
       Button: {
-        controlHeightSM: 28
+        controlHeightSM: 28,
       },
       Menu: {
-        colorSubItemBg: 'transparent'
-      }
-    }
+        colorSubItemBg: 'transparent',
+      },
+    },
   };
 
   return theme;

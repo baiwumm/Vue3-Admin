@@ -1,17 +1,19 @@
-import { computed, effectScope, onScopeDispose, ref, toRefs, watch } from 'vue';
-import type { Ref } from 'vue';
-import { defineStore } from 'pinia';
-import { useEventListener, usePreferredColorScheme } from '@vueuse/core';
 import { getPaletteColorByNumber } from '@sa/color';
+import { useEventListener, usePreferredColorScheme } from '@vueuse/core';
+import { defineStore } from 'pinia';
+import type { Ref } from 'vue';
+import { computed, effectScope, onScopeDispose, ref, toRefs, watch } from 'vue';
+
 import { SetupStoreId } from '@/enum';
 import { localStg } from '@/utils/storage';
+
 import {
   addThemeVarsToHtml,
   createThemeToken,
   getAntdTheme,
   initThemeSettings,
   toggleCssDarkMode,
-  toggleGrayscaleMode
+  toggleGrayscaleMode,
 } from './shared';
 
 /** Theme store */
@@ -35,7 +37,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     const colors: App.Theme.ThemeColor = {
       primary: themeColor,
       ...otherColor,
-      info: isInfoFollowPrimary ? themeColor : otherColor.info
+      info: isInfoFollowPrimary ? themeColor : otherColor.info,
     };
     return colors;
   });
@@ -131,10 +133,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
 
   /** Cache theme settings */
   function cacheThemeSettings() {
-    const isProd = import.meta.env.PROD;
-
-    if (!isProd) return;
-
     localStg.set('themeSettings', settings.value);
   }
 
@@ -151,7 +149,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       val => {
         toggleCssDarkMode(val);
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     watch(
@@ -159,7 +157,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
       val => {
         toggleGrayscaleMode(val);
       },
-      { immediate: true }
+      { immediate: true },
     );
 
     // themeColors change, update css vars and storage theme color
@@ -169,7 +167,7 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
         setupThemeVarsToHtml();
         localStg.set('themeColor', val.primary);
       },
-      { immediate: true }
+      { immediate: true },
     );
   });
 
@@ -189,6 +187,6 @@ export const useThemeStore = defineStore(SetupStoreId.Theme, () => {
     toggleThemeScheme,
     setThemeScheme,
     updateThemeColors,
-    setThemeLayout
+    setThemeLayout,
   };
 });
