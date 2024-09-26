@@ -29,6 +29,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   features_captcha: () => import("@/views/features/captcha/index.vue"),
   features_colorthief: () => import("@/views/features/colorthief/index.vue"),
   "features_eye-dropper": () => import("@/views/features/eye-dropper/index.vue"),
+  features_flow: () => import("@/views/features/flow/index.vue"),
   features_gantt: () => import("@/views/features/gantt/index.vue"),
   features_lazyload: () => import("@/views/features/lazyload/index.vue"),
   features_pickr: () => import("@/views/features/pickr/index.vue"),
