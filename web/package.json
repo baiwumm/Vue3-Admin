@@ -85,6 +85,7 @@
     "vue-img-cutter": "3",
     "vue-print-next": "^1.0.8",
     "vue-router": "4.4.0",
+    "vue-waterfall-plugin-next": "^2.6.0",
     "vue3-puzzle-vcode": "^1.1.7",
     "vue3-tree-org": "^4.2.2",
     "zxcvbn": "^4.4.2"
