@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import 'vue-waterfall-plugin-next/dist/style.css';
 
-import { random, sample, times } from 'lodash-es';
+import { random, times } from 'lodash-es';
 import type { ShallowRef } from 'vue';
 import { reactive, ref, useTemplateRef } from 'vue';
 import { LazyImg, Waterfall } from 'vue-waterfall-plugin-next';
 
 import errorImg from '@/assets/common/error.png';
 import loadingImg from '@/assets/common/loading.png';
+import { getRandomImg } from '@/utils';
 
 const waterFallRef = useTemplateRef('waterFallRef') as ShallowRef<HTMLElement>;
 
@@ -21,10 +22,7 @@ const generateUniqueID = () => {
   return `${timestamp}-${randomness}`;
 };
 
-// 生成图片数组
-const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
-
-const getList = (pageSize = 10) => times(pageSize, () => ({ id: generateUniqueID(), url: sample(imgs) }));
+const getList = (pageSize = 10) => times(pageSize, () => ({ id: generateUniqueID(), url: getRandomImg() }));
 
 const list = ref(getList(50));
 

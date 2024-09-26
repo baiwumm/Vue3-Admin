@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import ColorThief from 'colorthief';
-import { map, sampleSize } from 'lodash-es';
+import { map } from 'lodash-es';
 import { ref, useTemplateRef } from 'vue';
 
+import { getRandomImg } from '@/utils';
+
 // 图片数组
-const imgs = sampleSize(Object.keys(import.meta.glob('@/assets/img/*.jpg')), 8);
+const imgs = getRandomImg(8);
 
 const hoverIndex = ref(-1);
 

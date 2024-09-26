@@ -2,6 +2,8 @@
 import { useTemplateRef } from 'vue';
 import Vcode from 'vue3-puzzle-vcode';
 
+import { getRandomImg } from '@/utils';
+
 defineOptions({
   name: 'PuzzleCode',
 });
@@ -11,9 +13,6 @@ type Props = {
   locales: (field: string) => string;
 };
 const props = defineProps<Props>();
-
-// 生成图片数组
-const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
 
 // 组件实例
 const puzzleVcode = useTemplateRef<HTMLElement>('puzzleVcode');
@@ -38,7 +37,7 @@ const onSuccess = () => {
         ref="puzzleVcode"
         show
         type="inside"
-        :imgs="imgs"
+        :imgs="getRandomImg(20)"
         :slider-size="40"
         :canvas-width="300"
         :canvas-height="230"

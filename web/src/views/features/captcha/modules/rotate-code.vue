@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { sample } from 'lodash-es';
 import { ref, useTemplateRef } from 'vue';
 
 import { $t } from '@/locales';
+import { getRandomImg } from '@/utils';
 
 import RotateVerify from './rotate-verify.vue';
 
@@ -13,16 +13,13 @@ defineOptions({
 // 组件实例
 const rotateVerify = useTemplateRef<HTMLElement>('rotateVerify');
 
-// 生成图片数组
-const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
-
-const imgSrc = ref(sample(imgs));
+const imgSrc = ref(getRandomImg());
 
 // 重置
 const onRest = () => {
   if (rotateVerify.value) {
     rotateVerify.value.reset();
-    imgSrc.value = sample(imgs);
+    imgSrc.value = getRandomImg();
   }
 };
 

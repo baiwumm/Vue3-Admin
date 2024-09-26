@@ -4,11 +4,11 @@ import 'viewerjs/dist/viewer.css';
 import { directive as viewer } from 'v-viewer';
 
 import { $t } from '@/locales';
+import { getRandomImg } from '@/utils';
+
 const vViewer = viewer({
   debug: true,
 });
-// 图片数组
-const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
 </script>
 
 <template>
@@ -21,7 +21,7 @@ const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
       </template>
       <div v-viewer class="grid gap-4" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }">
         <img
-          v-for="img in imgs"
+          v-for="img in getRandomImg(20)"
           :key="img"
           :src="img"
           class="h-[250px] w-full cursor-pointer place-items-center rounded-md object-cover"

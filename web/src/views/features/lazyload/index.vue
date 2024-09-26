@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import { sample } from 'lodash-es';
-
-// 图片数组
-const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
+import { getRandomImg } from '@/utils';
 
 const onCallback = (el: HTMLElement) => {
   el.style.opacity = '1';
@@ -21,7 +18,7 @@ const onCallback = (el: HTMLElement) => {
       <div v-for="i in 50" :key="i" class="lazy-img-cpntainer">
         <img
           v-lazyLoad="{
-            src: sample(imgs),
+            src: getRandomImg(),
             callback: onCallback,
           }"
           class="lazy-img h-[250px] w-full cursor-pointer place-items-center rounded-md object-cover"

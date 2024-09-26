@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useTemplateRef } from 'vue';
 
+import { getRandomImg } from '@/utils';
+
 import PointsVerify from './points-verify.vue'; // 点选验证码
 
 defineOptions({
@@ -12,9 +14,6 @@ type Props = {
   locales: (field: string) => string;
 };
 const props = defineProps<Props>();
-
-// 生成图片数组
-const imgs = Object.keys(import.meta.glob('@/assets/img/*.jpg'));
 
 // 组件实例
 const pointsVerify = useTemplateRef<HTMLElement>('pointsVerify');
@@ -39,7 +38,7 @@ const pointsPassing = (flag: boolean) => {
 <template>
   <ARow justify="center">
     <ASpace direction="vertical">
-      <PointsVerify ref="pointsVerify" :imgs="imgs" :width="300" :height="230" @callback="pointsPassing" />
+      <PointsVerify ref="pointsVerify" :imgs="getRandomImg(20)" :width="300" :height="230" @callback="pointsPassing" />
       <AButton type="primary" block @click="onRest">{{ $t('common.reset') }}</AButton>
     </ASpace>
   </ARow>
