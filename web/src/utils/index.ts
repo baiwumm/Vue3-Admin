@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { random, sample } from 'lodash-es';
+import { random, sample, sampleSize } from 'lodash-es';
 
 /**
  * @param {string} className
@@ -62,3 +62,15 @@ export const randomColor = (min = 0, max = 255) => {
 
 /** @description: 验证码字符 */
 export const codeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+/**
+ * @param {number} size 随机获取几张图片数组，默认获取随机一张图片
+ * @description: 获取 /assets/img 路径下随机图片
+ */
+export const getRandomImg = (size = 1) => {
+  // 匹配该目录下所有的图片
+  const images = Object.keys(import.meta.glob(['@/assets/img/*.jpg', '@/assets/img/*.jpeg', '@/assets/img/*.png']));
+  // 获取图片集合
+  const result = sampleSize(images, size);
+  return result.length === 1 ? result[0] : result;
+};
