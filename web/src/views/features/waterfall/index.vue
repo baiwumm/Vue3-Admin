@@ -90,27 +90,7 @@ const handleLoadMore = () => {
   <div class="h-screen flex overflow-hidden">
     <div ref="waterFallRef" class="flex-auto overflow-y-auto">
       <ASpin :spinning="loading">
-        <Waterfall
-          :list="list"
-          :row-key="options.rowKey"
-          :width="options.width"
-          :breakpoints="options.breakpoints"
-          :gutter="options.gutter"
-          :has-around-gutter="options.hasAroundGutter"
-          :pos-duration="options.posDuration"
-          :animation-prefix="options.animationPrefix"
-          :animation-effect="options.animationEffect"
-          :animation-duration="options.animationDuration"
-          :animation-delay="options.animationDelay"
-          :animation-cancel="options.animationCancel"
-          :background-color="options.backgroundColor"
-          :load-props="options.loadProps"
-          :lazyload="options.lazyload"
-          :cross-origin="options.crossOrigin"
-          :delay="options.delay"
-          :align="options.align"
-          @after-render="afterRender"
-        >
+        <Waterfall :list="list" v-bind="options" @after-render="afterRender">
           <!-- 新版插槽数据获取 -->
           <template #default="{ item }">
             <div class="card-container relative">
