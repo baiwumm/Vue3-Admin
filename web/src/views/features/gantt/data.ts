@@ -296,4 +296,12 @@ export const ganttTasks: Task[] = [
     parent: '22',
     open: true,
   },
+  {
+    id: 35,
+    text: 'Swiper',
+    start_date: new Date('2024-09-29 00:00'),
+    duration: 1,
+    parent: '22',
+    open: true,
+  },
 ];

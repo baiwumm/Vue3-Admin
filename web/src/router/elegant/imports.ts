@@ -34,6 +34,7 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   features_lazyload: () => import("@/views/features/lazyload/index.vue"),
   features_pickr: () => import("@/views/features/pickr/index.vue"),
   features_print: () => import("@/views/features/print/index.vue"),
+  features_swiper: () => import("@/views/features/swiper/index.vue"),
   features_viewer: () => import("@/views/features/viewer/index.vue"),
   "features_vue-directive": () => import("@/views/features/vue-directive/index.vue"),
   "features_vue-office": () => import("@/views/features/vue-office/index.vue"),

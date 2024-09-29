@@ -180,6 +180,7 @@ const routeMap: RouteMap = {
   "features_lazyload": "/features/lazyload",
   "features_pickr": "/features/pickr",
   "features_print": "/features/print",
+  "features_swiper": "/features/swiper",
   "features_viewer": "/features/viewer",
   "features_vue-directive": "/features/vue-directive",
   "features_vue-office": "/features/vue-office",

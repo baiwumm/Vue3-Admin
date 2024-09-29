@@ -36,6 +36,7 @@ declare module "@elegant-router/types" {
     "features_lazyload": "/features/lazyload";
     "features_pickr": "/features/pickr";
     "features_print": "/features/print";
+    "features_swiper": "/features/swiper";
     "features_viewer": "/features/viewer";
     "features_vue-directive": "/features/vue-directive";
     "features_vue-office": "/features/vue-office";
@@ -127,6 +128,7 @@ declare module "@elegant-router/types" {
     | "features_lazyload"
     | "features_pickr"
     | "features_print"
+    | "features_swiper"
     | "features_viewer"
     | "features_vue-directive"
     | "features_vue-office"

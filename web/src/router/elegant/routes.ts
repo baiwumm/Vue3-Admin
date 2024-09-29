@@ -192,6 +192,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_swiper',
+        path: '/features/swiper',
+        component: 'view.features_swiper',
+        meta: {
+          title: 'features_swiper',
+          i18nKey: 'route.features_swiper'
+        }
+      },
+      {
         name: 'features_viewer',
         path: '/features/viewer',
         component: 'view.features_viewer',
