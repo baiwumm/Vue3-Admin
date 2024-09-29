@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { random, sample, sampleSize } from 'lodash-es';
+import { isInteger, random, sample, sampleSize } from 'lodash-es';
 
 /**
  * @param {string} className
@@ -68,6 +68,9 @@ export const codeChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01
  * @description: 获取 /assets/img 路径下随机图片
  */
 export const getRandomImg = (size = 1) => {
+  if (!isInteger(size) || size < 1) {
+    return window.$message?.warning('参数必须是一个正整数!');
+  }
   // 匹配该目录下所有的图片
   const images = Object.keys(import.meta.glob(['@/assets/img/*.jpg', '@/assets/img/*.jpeg', '@/assets/img/*.png']));
   // 获取图片集合
