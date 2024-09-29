@@ -3,6 +3,7 @@ import ColorThief from 'colorthief';
 import { map } from 'lodash-es';
 import { ref, useTemplateRef } from 'vue';
 
+import { $t } from '@/locales';
 import { getRandomImg } from '@/utils';
 
 // 图片数组
@@ -42,7 +43,7 @@ const onMouseOut = () => {
   <ASpace direction="vertical" size="middle">
     <ACard :bordered="false" :body-style="{ padding: 0 }">
       <APageHeader :title="$t('route.features_colorthief')">
-        核心是使用色彩聚合算法提取图片主色调生成渐变背景。
+        {{ $t('page.features.colorthief.subTitle') }}
       </APageHeader>
     </ACard>
     <div

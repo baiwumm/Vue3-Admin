@@ -12,6 +12,9 @@ const printOps: PrintAreaOption = {
   // 打印忽略 img
   noPrintSelector: ['img'],
 };
+
+// 国际化
+const locales = (field: string) => $t(`page.features.print.${field}`);
 </script>
 
 <template>
@@ -28,10 +31,10 @@ const printOps: PrintAreaOption = {
         </AButton>
       </template>
       <ASpace>
-        <AButton v-print type="primary">全屏打印</AButton>
-        <AButton v-print="'#print-el'" type="primary">指令打印</AButton>
-        <AButton type="primary" @click="handleBasicPrint">方法打印</AButton>
-        <AButton v-print="printOps" type="primary">打印忽略 img 标签</AButton>
+        <AButton v-print type="primary">{{ locales('fullScreen') }}</AButton>
+        <AButton v-print="'#print-el'" type="primary">{{ locales('instruction') }}</AButton>
+        <AButton type="primary" @click="handleBasicPrint">{{ locales('method') }}</AButton>
+        <AButton v-print="printOps" type="primary">{{ locales('ingoreImg') }}</AButton>
       </ASpace>
     </ACard>
   </div>

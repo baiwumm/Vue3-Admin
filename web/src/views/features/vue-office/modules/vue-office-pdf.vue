@@ -41,7 +41,7 @@ const beforeUpload = (file: UploadProps['fileList'][number]) => {
   <ASpin :spinning="loading">
     <ASpace direction="vertical" size="middle" class="w-full">
       <AUpload accept=".pdf" :max-count="1" :before-upload="beforeUpload">
-        <AButton>上传本地文件</AButton>
+        <AButton>{{ $t('page.features.vue-office.upload') }}</AButton>
       </AUpload>
       <VueOfficePdf :src="src" @rendered="renderedHandler" @error="errorHandler" />
     </ASpace>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { $t } from '@/locales';
 import { useThemeStore } from '@/store/modules/theme';
 
 const themeStore = useThemeStore();
@@ -8,7 +9,7 @@ const themeStore = useThemeStore();
 const color = ref(themeStore.themeColor);
 const handleEyeDropper = async () => {
   if (!('EyeDropper' in window)) {
-    window.$message?.error('你的浏览器不支持EyeDropper');
+    window.$message?.error($t('page.features.eye-dropper.support'));
     return;
   }
   const eyeDropper = new EyeDropper();
@@ -16,7 +17,7 @@ const handleEyeDropper = async () => {
     const result = await eyeDropper.open();
     color.value = result.sRGBHex;
   } catch {
-    window.$message?.warning('用户取消取色！');
+    window.$message?.warning($t('page.features.eye-dropper.cancel'));
   }
 };
 </script>
@@ -25,12 +26,12 @@ const handleEyeDropper = async () => {
   <ASpace direction="vertical" size="middle">
     <ACard :bordered="false" :body-style="{ padding: 0 }">
       <APageHeader :title="$t('route.features_eye-dropper')">
-        可将取色器移动到浏览器窗口中任意位置，即可获取到颜色值。
+        {{ $t('page.features.eye-dropper.subTitle') }}
       </APageHeader>
     </ACard>
     <ABadgeRibbon :color="color" :text="color">
       <ACard :bordered="false">
-        <AButton type="primary" @click="handleEyeDropper">打开取色器</AButton>
+        <AButton type="primary" @click="handleEyeDropper">{{ $t('page.features.eye-dropper.open') }}</AButton>
       </ACard>
     </ABadgeRibbon>
   </ASpace>

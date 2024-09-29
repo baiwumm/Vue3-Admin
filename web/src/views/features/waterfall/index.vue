@@ -101,9 +101,9 @@ const handleLoadMore = () => {
         <ARow v-if="!loading" justify="center" class="mt-4">
           <!-- 加载更多 -->
           <AButton v-if="list.length < 100" type="primary" :loading="moreLoading" @click="handleLoadMore">
-            加载更多
+            {{ $t('page.features.waterfall.more') }}
           </AButton>
-          <p v-else>客官,已经到底了</p>
+          <p v-else>{{ $t('page.features.waterfall.noMore') }}</p>
         </ARow>
         <!-- 回到顶部 -->
         <ABackTop :target="() => waterFallRef" />

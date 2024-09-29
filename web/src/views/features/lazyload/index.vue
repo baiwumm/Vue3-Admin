@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { $t } from '@/locales';
 import { getRandomImg } from '@/utils';
 
 const onCallback = (el: HTMLElement) => {
@@ -11,7 +12,7 @@ const onCallback = (el: HTMLElement) => {
   <ASpace direction="vertical" size="middle">
     <ACard :bordered="false" :body-style="{ padding: 0 }">
       <APageHeader :title="$t('route.features_lazyload')">
-        图片懒加载核心就是判断当前图片是否到了可视区域，基于 IntersectionObserver API来实现了图片的懒加载
+        {{ $t('page.features.lazyload.subTitle') }}
       </APageHeader>
     </ACard>
     <div class="grid gap-4" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }">
