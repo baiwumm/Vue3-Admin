@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-09 15:26:41
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-30 09:56:51
+ * @LastEditTime: 2024-09-29 17:59:18
  * @Description: 全局入口文件
  */
 declare const module: any;
@@ -16,6 +16,7 @@ import { join } from 'path';
 
 import { AllExceptionsFilter } from '@/filter/all-exception.filter'; // 全局异常过滤器
 import { HttpExceptionsFilter } from '@/filter/http-exception.filter'; // http 异常过滤器
+import { requestMiddleware } from '@/middleware/request.middleware'; // 全局请求拦截中间件
 import { ValidationPipe } from '@/pipe/validation.pipe'; // 参数校验
 
 import { AppModule } from './app.module';
@@ -37,6 +38,9 @@ async function bootstrap() {
 
   // 全局参数校验
   app.useGlobalPipes(new ValidationPipe());
+
+  // 全局请求拦截中间件
+  // app.use(requestMiddleware);
 
   // 启动热重载
   if (module.hot) {
