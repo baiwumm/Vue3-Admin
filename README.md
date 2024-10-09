@@ -1,4 +1,4 @@
-<p align="center"><img width="100" src="./web//src//assets//svg-icon/logo.svg" alt="Vue3 Admin"></p>
+<p align="center"><img width="100" src="./web/public/logo.png" alt="Vue3 Admin"></p>
 <h1 align="center">Vue3 Admin</h1>
 <p align="center">前端的全栈之路</p>
 
@@ -132,6 +132,11 @@ pnpm build
 | ![](./web/src/assets/demo/11.jpg) | ![](./web/src/assets/demo/12.jpg) |
 | ![](./web/src/assets/demo/13.jpg) | ![](./web/src/assets/demo/14.jpg) |
 | ![](./web/src/assets/demo/15.jpg) | ![](./web/src/assets/demo/16.jpg) |
+
+## 🍄 总结
+1. 本项目没有经过严格的测试，有可能存在一定的 `Bug`。
+2. 本项目仅供学习交流使用，请勿用于商业用途。
+3. 欢迎提交 `Issues` 和 `PR`，一起完善本项目。
 
 ## ⭐ Star History
 
