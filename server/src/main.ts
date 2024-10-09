@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-09 15:26:41
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-09-29 17:59:18
+ * @LastEditTime: 2024-10-09 10:44:10
  * @Description: 全局入口文件
  */
 declare const module: any;
@@ -63,8 +63,8 @@ async function bootstrap() {
 
   // 构建swagger文档
   const options = new DocumentBuilder()
-    .setTitle('vue3-admin')
-    .setDescription('Background system based on Nest.js + Vue3 full stack development')
+    .setTitle('Vue3 Admin 接口文档')
+    .setDescription('真正的大师永远怀着一颗学徒的心！')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, options);
