@@ -72,7 +72,11 @@ export const getRandomImg = (size = 1) => {
     return window.$message?.warning('参数必须是一个正整数!');
   }
   // 匹配该目录下所有的图片
-  const images = Object.keys(import.meta.glob(['@/assets/img/*.jpg', '@/assets/img/*.jpeg', '@/assets/img/*.png']));
+  const images: string[] = [];
+  for (let i = 1; i <= 20; i += 1) {
+    const img = new URL(`../assets/img/${i}.jpg`, import.meta.url).href;
+    images.push(img);
+  }
   // 获取图片集合
   const result = sampleSize(images, size);
   return result.length === 1 ? result[0] : result;
