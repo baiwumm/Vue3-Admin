@@ -71,6 +71,8 @@ const fetchUpdateUserTags = async () => {
     // 更新仓库信息
     assign(authStore.userInfo, { tags: userTags.value });
     window.$message?.success($t(`common.editSuccess`));
+  } else {
+    userTags.value.pop();
   }
 };
 
