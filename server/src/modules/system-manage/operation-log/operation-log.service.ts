@@ -2,7 +2,7 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-06 11:06:21
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-22 15:36:54
+ * @LastEditTime: 2024-10-09 10:54:52
  * @Description: OperationLogService - 操作日志
  */
 import { Inject, Injectable, Scope } from '@nestjs/common';
@@ -13,7 +13,7 @@ import UAParser from 'ua-parser-js';
 
 import { RESPONSE_MSG } from '@/enums';
 import { PrismaService } from '@/modules/prisma/prisma.service';
-import { responseMessage } from '@/utils';
+import { getRealIp, responseMessage } from '@/utils';
 
 import { LogParamsDto } from './dto/params-log.dto';
 
@@ -29,7 +29,7 @@ export class OperationLogService {
    * @description: 录入日志
    */
   async logAction() {
-    const { originalUrl, method, headers, ip, body, query } = this.request;
+    const { originalUrl, method, headers, body, query } = this.request;
     const userAgent = headers['user-agent'];
     const parser = new UAParser(userAgent);
     let { userInfo } = this.request.session;
@@ -46,7 +46,7 @@ export class OperationLogService {
         userId: userInfo.id,
         action: originalUrl,
         method: method.toUpperCase(),
-        ip,
+        ip: getRealIp(this.request),
         params: { ...body, ...query },
         os: Object.values(parser.getOS()).join(' '),
         browser: parser.getBrowser().name,

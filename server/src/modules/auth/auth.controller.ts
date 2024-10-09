@@ -2,18 +2,18 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-07-11 10:01:43
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-08-23 11:32:32
+ * @LastEditTime: 2024-10-09 11:01:22
  * @Description: AuthController
  */
-import { Body, Controller, Get, Ip, Post, Query, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, Req, Res, Session, UseGuards, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiHeader, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger'; // swagger 接口文档
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import svgCaptcha from 'svg-captcha';
 
 import { ResponseDto } from '@/dto/response.dto';
 import { LoggerInterceptor } from '@/interceptor/logger.interceptor';
-import { responseMessage } from '@/utils';
+import { getRealIp, responseMessage } from '@/utils';
 
 import { AuthService } from './auth.service';
 import { juejinParamsDto, LoginParamsDto, RouteExistParamsDto } from './dto/params-auth.dto';
@@ -39,8 +39,8 @@ export class AuthController {
   @Post('/login')
   @ApiOkResponse({ type: LoginResponseDto })
   @ApiOperation({ summary: '用户登录' })
-  login(@Body() body: LoginParamsDto, @Session() session: CommonType.SessionInfo, @Ip() ip: string) {
-    return this.authService.login(body, session, ip);
+  login(@Body() body: LoginParamsDto, @Session() session: CommonType.SessionInfo, @Req() req: Request) {
+    return this.authService.login(body, session, getRealIp(req));
   }
 
   /**

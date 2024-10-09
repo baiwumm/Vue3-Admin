@@ -1,5 +1,6 @@
 import type { Internalization } from '@prisma/client';
 import dayjs from 'dayjs';
+import { Request } from 'express';
 import * as fs from 'fs';
 
 import { LOCALES, RESPONSE_CODE, RESPONSE_MSG } from '@/enums';
@@ -124,4 +125,13 @@ export const convertToLocalization = (data: Internalization[]): CommonType.Langu
   }
 
   return result;
+};
+
+/**
+ * @description: 获取客户端真实 IP
+ * @param {Request} req
+ */
+export const getRealIp = (req: Request): string => {
+  const result = req.headers['x-forwarded-for'] || req.headers['x-real-ip'] || req.socket.remoteAddress || req.ip;
+  return Array.isArray(result) ? result[0] : result;
 };
