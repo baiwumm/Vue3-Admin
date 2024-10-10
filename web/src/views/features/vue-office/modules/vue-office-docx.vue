@@ -5,17 +5,14 @@ import VueOfficeDocx from '@vue-office/docx';
 import type { UploadProps } from 'ant-design-vue';
 import { ref } from 'vue';
 
+import DocxFile from '@/assets/office/test.docx?url';
+
 defineOptions({
   name: 'VueOfficeDocx',
 });
 
-// 获取文件地址
-const getFileUrl = (file: string) => {
-  return new URL(file, import.meta.url).href;
-};
-
 const loading = ref(true);
-const src = ref(getFileUrl('../../../../assets/office/test.docx'));
+const src = ref(DocxFile);
 
 // 渲染完成
 const renderedHandler = () => {

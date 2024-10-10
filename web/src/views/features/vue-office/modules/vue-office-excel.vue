@@ -5,17 +5,14 @@ import VueOfficeExcel from '@vue-office/excel';
 import type { UploadProps } from 'ant-design-vue';
 import { reactive, ref } from 'vue';
 
+import XlsxFile from '@/assets/office/test.xlsx?url';
+
 defineOptions({
   name: 'VueOfficeExcel',
 });
 
-// 获取文件地址
-const getFileUrl = (file: string) => {
-  return new URL(file, import.meta.url).href;
-};
-
 const loading = ref(true);
-const src = ref(getFileUrl('../../../../assets/office/test.xlsx'));
+const src = ref(XlsxFile);
 const options = reactive({
   xls: false, // 预览xlsx文件设为false；预览xls文件设为true
   minColLength: 0, // excel最少渲染多少列，如果想实现xlsx文件内容有几列，就渲染几列，可以将此值设置为0.

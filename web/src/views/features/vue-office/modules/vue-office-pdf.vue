@@ -3,17 +3,14 @@ import VueOfficePdf from '@vue-office/pdf';
 import type { UploadProps } from 'ant-design-vue';
 import { ref } from 'vue';
 
+import PdfFile from '@/assets/office/test.pdf?url';
+
 defineOptions({
   name: 'VueOfficePdf',
 });
 
-// 获取文件地址
-const getFileUrl = (file: string) => {
-  return new URL(file, import.meta.url).href;
-};
-
 const loading = ref(true);
-const src = ref(getFileUrl('../../../../assets/office/test.pdf'));
+const src = ref(PdfFile);
 
 // 渲染完成
 const renderedHandler = () => {
