@@ -51,7 +51,7 @@ export const BroswerIconMap: Record<string, string> = {
 export const OsIconMap = (text: string): string | undefined => {
   const iconMap: Record<string, string> = {
     Windows: 'logos:microsoft-windows-icon',
-    macOS: 'logos:apple',
+    'Mac OS': 'logos:apple',
     Linux: 'logos:linux-tux',
     Android: 'logos:android-icon',
     iOS: 'logos:apple',
