@@ -37,9 +37,13 @@
 - [PostgreSQL](https://www.postgresql.org/) (推荐最新版本)
 
 ## 🌴 项目运行
+1. 安装 [PostgreSQL](https://www.postgresql.org/) 数据库，并导入 `/postgreSQL` 中的文件，修改 `/server/env` 文件中的数据库配置，这一步要保证成功，不然后端服务起不来
+```powershell
+DATABASE_URL="postgresql://postgres:123456@localhost:5432/vue3-admin?schema=public"
+```
 
-1. 拉取项目代码
-```bash
+2. 拉取项目代码
+```powershell
 git clone https://github.com/baiwumm/Vue3-Admin.git
 cd Vue3-Admin
 // 进入前端
@@ -48,22 +52,22 @@ cd web
 cd server
 ```
 
-2. 安装依赖
-```
+3. 安装依赖
+```powershell
 npm install -g pnpm
 pnpm install
 ```
 
-- 开发模式运行
-```
+4. 开发模式运行
+```powershell
 // 前端启动
 pnpm dev
 // 后端启动：开发模式
 pnpm start:dev
 ```
 
-- 编译项目
-```
+5. 编译项目
+```powershell
 pnpm build
 ```
 
