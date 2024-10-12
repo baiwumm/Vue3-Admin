@@ -1,6 +1,6 @@
 import type { RadioGroupProps } from 'ant-design-vue/es/radio';
 import type { LabeledValue } from 'ant-design-vue/es/select';
-import { keys, startsWith } from 'lodash-es';
+import { keys, startsWith, toLower } from 'lodash-es';
 
 import { MENU_TYPE, METHOD, SEX, STATUS } from '@/enum';
 import { $t } from '@/locales';
@@ -39,12 +39,23 @@ export const YesOrNoOptions: RadioGroupProps['options'] = [
 ];
 
 /** @description: 浏览器图标映射 */
-export const BroswerIconMap: Record<string, string> = {
-  Chrome: 'logos:chrome',
-  Firefox: 'logos:firefox',
-  Safari: 'logos:safari',
-  Opera: 'logos:opera',
-  Edge: 'logos:microsoft-edge',
+export const BroswerIconMap = (text: string): string | undefined => {
+  const iconMap: Record<string, string> = {
+    Chrome: 'logos:chrome',
+    Firefox: 'logos:firefox',
+    Safari: 'logos:safari',
+    Opera: 'logos:opera',
+    Edge: 'logos:microsoft-edge',
+    WebKit: 'logos:webkit',
+    Android: 'logos:android-icon',
+  };
+  for (let i = 0; i < keys(iconMap).length; i += 1) {
+    const item = keys(iconMap)[i];
+    if (startsWith(toLower(text), toLower(item))) {
+      return iconMap[item];
+    }
+  }
+  return undefined;
 };
 
 /** @description: 操作系统图标映射 */
@@ -59,7 +70,7 @@ export const OsIconMap = (text: string): string | undefined => {
   };
   for (let i = 0; i < keys(iconMap).length; i += 1) {
     const item = keys(iconMap)[i];
-    if (startsWith(text, item)) {
+    if (startsWith(toLower(text), toLower(item))) {
       return iconMap[item];
     }
   }
