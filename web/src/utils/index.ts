@@ -81,3 +81,20 @@ export const getRandomImg = (size = 1) => {
   const result = sampleSize(images, size);
   return result.length === 1 ? result[0] : result;
 };
+
+/**
+ * @param {number} count
+ * @description: 生成随机的汉字数组
+ */
+export const generateRandomHanziArray = (count = 1) => {
+  const minCode = 0x4e00; // 汉字 Unicode 范围的最小值
+  const maxCode = 0x9fff; // 汉字 Unicode 范围的最大值
+
+  const hanziArray = [];
+  for (let i = 0; i < count; i += 1) {
+    const randomCode = random(minCode, maxCode);
+    hanziArray.push(String.fromCodePoint(randomCode));
+  }
+
+  return hanziArray;
+};

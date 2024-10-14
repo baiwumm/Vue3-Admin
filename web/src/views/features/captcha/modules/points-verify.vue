@@ -2,7 +2,7 @@
 import { assign, difference, every, join, map, random, sample, shuffle, some } from 'lodash-es';
 import { nextTick, onMounted, reactive, useTemplateRef } from 'vue';
 
-import { randomColor } from '@/utils';
+import { generateRandomHanziArray, randomColor } from '@/utils';
 
 defineOptions({
   name: 'PointsVerify',
@@ -45,8 +45,8 @@ const props = withDefaults(defineProps<Props>(), {
   defaultNum: 4,
   checkNum: 3,
   imgs: () => [],
-  disturbLine: 0,
-  disturbPoint: 0,
+  disturbLine: 5,
+  disturbPoint: 20,
   fontSizeMin: 25,
   fontSizeMax: 35,
   range: 40,
@@ -187,8 +187,7 @@ const drawImg = (img?: HTMLImageElement) => {
     drawPoint(ctx);
   }
 
-  const fontStr =
-    '天地玄黄宇宙洪荒日月盈昃辰宿列张寒来暑往秋收冬藏闰余成岁律吕调阳云腾致雨露结为霜金生丽水玉出昆冈剑号巨阙珠称夜光果珍李柰菜重芥姜海咸河淡鳞潜羽翔龙师火帝鸟官人皇始制文字乃服衣裳推位让国有虞陶唐吊民伐罪周发殷汤坐朝问道垂拱平章爱育黎首臣伏戎羌遐迩体率宾归王'; // 不重复的汉字
+  const fontStr = generateRandomHanziArray(props.defaultNum); // 不重复的汉字
 
   // 需要绘制的文字
   const fontChars: string[] = [];
@@ -196,7 +195,7 @@ const drawImg = (img?: HTMLImageElement) => {
   // 开始绘制文字
   for (let i = 1; i <= props.defaultNum; i += 1) {
     // 加入不重复的文字
-    fontChars[i - 1] = sample(difference(fontStr.split(''), fontChars)) as string;
+    fontChars[i - 1] = sample(difference(fontStr, fontChars)) as string;
 
     ctx.font = `${random(props.fontSizeMin, props.fontSizeMax)}px SimHei`; // 随机生成字体大小
     ctx.fillStyle = randomColor();
@@ -238,14 +237,12 @@ const getMousePos = (e: MouseEvent): Point => {
 
 // 判断点选结果
 const comparePoints = (canvasPoints: State['canvasPoints'], checkPoints: Point[]) => {
-  function isWithinRange(point: Point, points: Point[], range = props.range) {
-    return some(points, point2 => {
-      const dx = Math.abs(point.x - point2.x);
-      const dy = Math.abs(point.y - point2.y);
-      return dx <= range && dy <= range;
-    });
+  function isWithinRange(point: Point, checkPoint: Point, range = props.range) {
+    const dx = Math.abs(point.x - checkPoint.x);
+    const dy = Math.abs(point.y - checkPoint.y);
+    return dx <= range && dy <= range;
   }
-  return every(canvasPoints, point => isWithinRange(point, checkPoints));
+  return every(canvasPoints, (point, index) => isWithinRange(point, checkPoints[index]));
 };
 
 // 刷新状态
