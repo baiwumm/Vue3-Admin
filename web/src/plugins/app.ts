@@ -22,6 +22,7 @@ export function setupAppVersionNotification() {
     const key = `open${Date.now()}`;
 
     window.$notification?.open({
+      key,
       message: $t('system.updateTitle'),
       description: $t('system.updateContent'),
       btn() {
@@ -30,7 +31,7 @@ export function setupAppVersionNotification() {
             Button,
             {
               onClick() {
-                window.$notification?.destroy(key);
+                window.$notification?.destroy();
               },
             },
             () => $t('system.updateCancel'),
