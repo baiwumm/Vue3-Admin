@@ -47,6 +47,11 @@ async function search() {
       startTime: dayjs(createdAt.value[0]).startOf('day').valueOf(),
       endTime: dayjs(createdAt.value[1]).endOf('day').valueOf(),
     });
+  } else {
+    props.updateSearchParams({
+      startTime: undefined,
+      endTime: undefined,
+    });
   }
   emit('search');
 }
