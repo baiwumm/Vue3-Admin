@@ -46,7 +46,7 @@ const setTransition = (swiper: SwiperClass, transition: number) => {
     slides-per-view="auto"
     centered-slides
     loop
-    :looped-slides="5"
+    :loop-additional-slides="5"
     autoplay
     navigation
     :modules="[Navigation, Autoplay, Pagination]"
@@ -58,7 +58,7 @@ const setTransition = (swiper: SwiperClass, transition: number) => {
     @set-transition="setTransition"
   >
     <SwiperSlide v-for="i in 8" :key="i" :style="{ width: '600px', height: '450px' }">
-      <img :src="imgs[i - 1]" class="slide-inner h-full w-full object-cover" />
+      <img :src="imgs[i - 1]" class="h-full w-full object-cover" />
     </SwiperSlide>
   </Swiper>
 </template>

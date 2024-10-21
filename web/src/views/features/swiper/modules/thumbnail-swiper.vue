@@ -60,6 +60,8 @@ const setThumbsSwiper = (swiper: SwiperClass) => {
   .swiper-slide {
     height: 100%;
     opacity: 0.4;
+    transition: 0.3s all;
+    cursor: pointer;
   }
   .swiper-slide-thumb-active {
     opacity: 1;
