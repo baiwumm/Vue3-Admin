@@ -92,12 +92,24 @@ const {
       title: locales('os'),
       width: 160,
       align: 'center',
-      customRender: ({ text }) => (
-        <Space>
-          {OsIconMap(text) ? <SvgIcon icon={OsIconMap(text)} class="text-base" /> : null}
-          {text}
-        </Space>
-      ),
+      customRender: ({ text }) => {
+        // 获取图标
+        const icon = OsIconMap(text);
+        // 判断是否加载本地图标
+        const isLocal = icon?.startsWith('local');
+        return (
+          <Space>
+            {icon ? (
+              <SvgIcon
+                icon={isLocal ? undefined : icon}
+                local-icon={isLocal ? icon.split(':')[1] : undefined}
+                class="text-base"
+              />
+            ) : null}
+            {text}
+          </Space>
+        );
+      },
     },
     {
       key: 'browser',
@@ -105,12 +117,24 @@ const {
       title: locales('browser'),
       width: 160,
       align: 'center',
-      customRender: ({ text }) => (
-        <Space>
-          {BroswerIconMap(text) ? <SvgIcon icon={BroswerIconMap(text)} class="text-base" /> : null}
-          {text}
-        </Space>
-      ),
+      customRender: ({ text }) => {
+        // 获取图标
+        const icon = BroswerIconMap(text);
+        // 判断是否加载本地图标
+        const isLocal = icon?.startsWith('local');
+        return (
+          <Space>
+            {icon ? (
+              <SvgIcon
+                icon={isLocal ? undefined : icon}
+                local-icon={isLocal ? icon.split(':')[1] : undefined}
+                class="text-base"
+              />
+            ) : null}
+            {text}
+          </Space>
+        );
+      },
     },
     {
       key: 'ip',
@@ -209,6 +233,7 @@ onMounted(() => {
       :pagination="{
         ...mobilePagination,
         showTotal: total => `共 ${total} 条数据`,
+        showQuickJumper: true,
       }"
       class="h-full"
     >

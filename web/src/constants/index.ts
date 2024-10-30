@@ -1,6 +1,6 @@
 import type { RadioGroupProps } from 'ant-design-vue/es/radio';
 import type { LabeledValue } from 'ant-design-vue/es/select';
-import { keys, startsWith, toLower } from 'lodash-es';
+import { endsWith, keys, startsWith, toLower } from 'lodash-es';
 
 import { MENU_TYPE, METHOD, SEX, STATUS } from '@/enum';
 import { $t } from '@/locales';
@@ -48,10 +48,19 @@ export const BroswerIconMap = (text: string): string | undefined => {
     Edge: 'logos:microsoft-edge',
     WebKit: 'logos:webkit',
     Android: 'logos:android-icon',
+    Quark: 'local:quark',
+    Wechat: 'local:wechat',
+    UC: 'local:uc',
+    Baidu: 'local:baidu',
+    Huawei: 'local:huawei',
+    Vivo: 'local:vivo',
+    QQ: 'local:qq',
+    MIUI: 'local:miui',
+    Sogou: 'local:sogou',
   };
   for (let i = 0; i < keys(iconMap).length; i += 1) {
     const item = keys(iconMap)[i];
-    if (startsWith(toLower(text), toLower(item))) {
+    if (startsWith(toLower(text), toLower(item)) || endsWith(toLower(text), toLower(item))) {
       return iconMap[item];
     }
   }
@@ -67,10 +76,11 @@ export const OsIconMap = (text: string): string | undefined => {
     Android: 'logos:android-icon',
     iOS: 'logos:apple',
     Chrome: 'logos:chrome',
+    Harmony: 'local:harmonyOS',
   };
   for (let i = 0; i < keys(iconMap).length; i += 1) {
     const item = keys(iconMap)[i];
-    if (startsWith(toLower(text), toLower(item))) {
+    if (startsWith(toLower(text), toLower(item)) || endsWith(toLower(text), toLower(item))) {
       return iconMap[item];
     }
   }
