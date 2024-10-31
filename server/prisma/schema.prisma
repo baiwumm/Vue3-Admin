@@ -160,6 +160,9 @@ model Log {
   params        Json            // 请求参数（JSON 对象）
   os            String          // 系统
   browser       String          // 浏览器
+  province      String?         // 所在省份
+  city          String?         // 所在城市
+  adcode        String?         // 城市编码
   createdAt     DateTime        @default(now()) // 创建时间
 }
 
