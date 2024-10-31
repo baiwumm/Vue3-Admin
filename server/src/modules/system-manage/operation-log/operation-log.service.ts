@@ -2,13 +2,15 @@
  * @Author: 白雾茫茫丶<baiwumm.com>
  * @Date: 2024-08-06 11:06:21
  * @LastEditors: 白雾茫茫丶<baiwumm.com>
- * @LastEditTime: 2024-10-09 10:54:52
+ * @LastEditTime: 2024-10-31 09:33:40
  * @Description: OperationLogService - 操作日志
  */
+import { HttpService } from '@nestjs/axios';
 import { Inject, Injectable, Scope } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import type { Log } from '@prisma/client';
 import { Request } from 'express';
+import { lastValueFrom, map } from 'rxjs';
 import UAParser from 'ua-parser-js';
 
 import { RESPONSE_MSG } from '@/enums';
@@ -23,7 +25,33 @@ export class OperationLogService {
     @Inject(REQUEST)
     private readonly request: Request & { session: CommonType.SessionInfo },
     private prisma: PrismaService,
+    private readonly httpService: HttpService,
   ) { }
+
+  /**
+   * @description: 获取用户真实ip
+   * @author: 白雾茫茫丶
+   */
+  async getLocationByIp(ipAddress: string): Promise<any> {
+    try {
+      const response = await lastValueFrom(
+        this.httpService
+          .get(`https://restapi.amap.com/v3/ip?key=${process.env.GAODE_MAP_KEY}&ip=${ipAddress}`)
+          .pipe(map((res) => res.data)),
+      );
+      if (response?.status === '1') {
+        const { province, city, adcode } = response;
+        return {
+          province: Array.isArray(province) ? undefined : province,
+          city: Array.isArray(city) ? undefined : city,
+          adcode: Array.isArray(adcode) ? undefined : adcode,
+        };
+      }
+      return {};
+    } catch (error) {
+      return {};
+    }
+  }
 
   /**
    * @description: 录入日志
@@ -31,8 +59,9 @@ export class OperationLogService {
   async logAction() {
     const { originalUrl, method, headers, body, query } = this.request;
     const userAgent = headers['user-agent'];
-    const parser = new UAParser(userAgent);
     let { userInfo } = this.request.session;
+    // 获取代理 ip
+    const realIp = getRealIp(this.request);
     // 登录接口需要单独处理
     const isLogin = originalUrl === '/auth/login';
     if ((userInfo && method.toUpperCase() !== 'GET') || isLogin) {
@@ -42,15 +71,24 @@ export class OperationLogService {
           where: { userName: body.userName },
         });
       }
+      const parser = new UAParser(userAgent);
+      // 根据 IP 获取地理信息
+      let location = {};
+      if (process.env.GAODE_MAP_KEY) {
+        location = await this.getLocationByIp(realIp);
+      }
       const data: any = {
         userId: userInfo.id,
         action: originalUrl,
         method: method.toUpperCase(),
-        ip: getRealIp(this.request),
+        ip: realIp,
         params: { ...body, ...query },
         os: Object.values(parser.getOS()).join(' '),
         browser: parser.getBrowser().name,
       };
+      if (Object.values(location).filter(Boolean).length > 0) {
+        Object.assign(data, location);
+      }
       // 插入数据到表
       await this.prisma.log.create({
         data,
