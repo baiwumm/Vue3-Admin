@@ -203,6 +203,9 @@ declare namespace Api {
       params: Record<string, any>; // 请求参数
       os: string; // 操作系统
       browser: string; // 浏览器
+      province: string; // 所在省份
+      city: string; // 所在城市
+      adcode: string; // 城市编码
     }>;
     /** @description: 查询参数 */
     type OperationLogSearchParams = Partial<Pick<OperationLog, 'userId' | 'method'>> &

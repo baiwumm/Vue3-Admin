@@ -1,7 +1,7 @@
 <script setup lang="tsx">
 import { Avatar, Button, Popconfirm, Space, Tag } from 'ant-design-vue';
 import dayjs from 'dayjs';
-import { find, get } from 'lodash-es';
+import { compact, find, get, uniq } from 'lodash-es';
 import { onMounted, ref } from 'vue';
 
 import SvgIcon from '@/components/custom/svg-icon.vue';
@@ -137,10 +137,29 @@ const {
       },
     },
     {
+      key: 'city',
+      dataIndex: 'city',
+      title: locales('city'),
+      align: 'center',
+      width: 160,
+      customRender: ({ record }) => {
+        const location = [record.province, record.city];
+        return compact(location).length ? (
+          <Space size={2}>
+            <SvgIcon icon="ri:map-pin-line" class="text-base" />
+            {compact(location).length ? uniq(location).join('-') : '--'}
+          </Space>
+        ) : (
+          '--'
+        );
+      },
+    },
+    {
       key: 'ip',
       dataIndex: 'ip',
       title: locales('ip'),
       align: 'center',
+      width: 120,
     },
     {
       key: 'createdAt',
