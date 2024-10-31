@@ -12,7 +12,7 @@
  Target Server Version : 160003 (160003)
  File Encoding         : 65001
 
- Date: 09/10/2024 09:28:16
+ Date: 31/10/2024 10:16:30
 */
 
 
@@ -465,6 +465,7 @@ INSERT INTO "public"."Internalization" VALUES ('b2ca2e2c-fbd6-4928-97d8-6f63b714
 INSERT INTO "public"."Internalization" VALUES ('e6789b07-1761-4170-9f13-3248d6990037', 'title', 'b2ca2e2c-fbd6-4928-97d8-6f63b7142f4b', '懒加载指令 v-lazyLoad', 'Lazy load instruction v-lazyLoad', 'v-lazyload命令です', '懶加載指令 v-lazyLoad', '2024-09-29 06:57:28.113', '2024-09-29 06:57:28.113');
 INSERT INTO "public"."Internalization" VALUES ('cfcc5d1e-88c7-4ce4-974d-7557465905d2', 'button', 'b2ca2e2c-fbd6-4928-97d8-6f63b7142f4b', '懒加载指令', 'Lazy load instruction', '怠惰ロード命令です', '懶加載指令', '2024-09-29 06:58:04.6', '2024-09-29 06:58:04.6');
 INSERT INTO "public"."Internalization" VALUES ('b17bce54-c43d-4a3e-8156-749f7fdb3740', 'success', '3e2803fa-79b3-4047-ba47-2445bee79d0f', '你太棒啦！', 'You''re awesome!', 'あなたは素晴らしいです!', '你太棒啦！', '2024-09-29 06:59:00.618', '2024-09-29 06:59:00.618');
+INSERT INTO "public"."Internalization" VALUES ('646e3ce8-89f2-4a52-9b47-c187d9523229', 'city', '3f05721e-70cd-4f93-bc94-f6f2951d935f', '所在城市', 'Home city', '所在する都市です', '所在城市', '2024-10-31 02:13:37.339', '2024-10-31 02:13:37.339');
 
 -- ----------------------------
 -- Primary Key structure for table Internalization

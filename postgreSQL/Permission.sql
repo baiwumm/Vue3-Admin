@@ -12,7 +12,7 @@
  Target Server Version : 160003 (160003)
  File Encoding         : 65001
 
- Date: 09/10/2024 09:28:55
+ Date: 31/10/2024 10:17:18
 */
 
 
@@ -185,8 +185,3 @@ INSERT INTO "public"."Permission" VALUES ('3881f6ca-7851-49c1-a968-8fec04bc7e8a'
 INSERT INTO "public"."Permission" VALUES ('b96005cd-8c49-4a40-9190-a929c97a4aaa', '697da404-a1e6-4e8d-996d-7f488cedc250', '596eba6b-6b80-495a-bf9d-f90fdfb9e49d', '2024-09-26 12:11:17.733');
 INSERT INTO "public"."Permission" VALUES ('625f4064-dc25-4fc4-aea3-c134ba20c949', '697da404-a1e6-4e8d-996d-7f488cedc250', '03404a66-50aa-4b21-8c93-9dcddaeffdb7', '2024-09-26 12:11:17.733');
 INSERT INTO "public"."Permission" VALUES ('7939f8bc-9b6a-4783-a260-82e5b0725a10', '697da404-a1e6-4e8d-996d-7f488cedc250', '572c5097-d28f-48b4-899d-3aaf46b8d668', '2024-09-26 12:11:17.733');
-
--- ----------------------------
--- Primary Key structure for table Permission
--- ----------------------------
-ALTER TABLE "public"."Permission" ADD CONSTRAINT "Permission_pkey" PRIMARY KEY ("id");
