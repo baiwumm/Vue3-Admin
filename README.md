@@ -14,9 +14,9 @@
 
 - 🍃 用户名：**Admin**，密码：**abc123456**
 
-- [🪹 github 仓库地址](https://github.com/baiwumm/Vue3-Admin/)
+- [🪹 github 仓库地址](https://github.com/baiwumm/vue3-admin/)
 
-- [🪺 码云仓库地址](https://gitee.com/baiwumm/Vue3-Admin/)
+- [🪺 码云仓库地址](https://gitee.com/baiwumm/vue3-admin/)
 
 - [🍀 Swagger 接口文档](https://vue3.baiwumm.com/docs)
 
@@ -44,8 +44,8 @@ DATABASE_URL="postgresql://postgres:123456@localhost:5432/vue3-admin?schema=publ
 
 2. 拉取项目代码
 ```powershell
-git clone https://github.com/baiwumm/Vue3-Admin.git
-cd Vue3-Admin
+git clone https://github.com/baiwumm/vue3-admin.git
+cd vue3-admin
 // 进入前端
 cd web
 // 进入后端
@@ -140,8 +140,8 @@ pnpm build
 ## 🍄 总结
 1. 本项目没有经过严格的测试，有可能存在一定的 `Bug`。
 2. 本项目仅供学习交流使用，请勿用于商业用途。
-3. 欢迎提交 [Issues](https://github.com/baiwumm/Vue3-Admin/issues) 和 [PR](https://github.com/baiwumm/Vue3-Admin/pulls)，一起完善本项目。
+3. 欢迎提交 [Issues](https://github.com/baiwumm/vue3-admin/issues) 和 [PR](https://github.com/baiwumm/vue3-admin/pulls)，一起完善本项目。
 
 ## ⭐ Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=baiwumm/Vue3-Admin&type=Date)](https://star-history.com/#baiwumm/Vue3-Admin&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=baiwumm/vue3-admin&type=Date)](https://star-history.com/#baiwumm/vue3-admin&Date)

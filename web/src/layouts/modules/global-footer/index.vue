@@ -8,11 +8,11 @@ defineOptions({
   <DarkModeContainer class="h-full flex-center">
     <ASpace direction="vertical" align="center" :size="0">
       <ASpace>
-        <a href="https://github.com/baiwumm/Xmw-Admin" target="_blank" rel="noopener noreferrer">Xmw Admin</a>
-        <a href="https://github.com/baiwumm/Vue3-Admin" target="_blank" rel="noopener noreferrer">
+        <a href="https://github.com/baiwumm/umi-admin" target="_blank" rel="noopener noreferrer">Umi Admin</a>
+        <a href="https://github.com/baiwumm/vue3-admin" target="_blank" rel="noopener noreferrer">
           <SvgIcon icon="ri:github-fill" class="text-base" />
         </a>
-        <a href="https://github.com/baiwumm/Vue2-Admin" target="_blank" rel="noopener noreferrer">Vue2 Admin</a>
+        <a href="https://github.com/baiwumm/vue2-admin" target="_blank" rel="noopener noreferrer">Vue2 Admin</a>
       </ASpace>
       <ASpace>
         Copyright MIT ©
