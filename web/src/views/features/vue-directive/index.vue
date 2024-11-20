@@ -52,9 +52,9 @@ const initThrollte = () => {
           {{ locales('v-debounce.button') }}
         </AButton>
       </ACard>
-      <ACard :title="locales('v-throller.title')" :bordered="false">
+      <ACard :title="locales('v-throllte.title')" :bordered="false">
         <AButton v-throllte="{ callback: initThrollte, time: 1000 }" type="primary" block>
-          {{ locales('v-throller.button') }}
+          {{ locales('v-throllte.button') }}
         </AButton>
       </ACard>
       <ACard :title="locales('v-emoji.title')" :bordered="false">
