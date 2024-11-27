@@ -4,9 +4,11 @@ import { assign } from 'lodash-es';
 import { onMounted, reactive, ref } from 'vue';
 import { useRoute } from 'vue-router';
 
+import { I18nMessage } from '@/constants/i18n';
+import { I18N_COMMON } from '@/enum/i18n';
+import { $t } from '@/locales';
 import { getMessageDetail } from '@/service/api';
 import { useTabStore } from '@/store/modules/tab';
-
 const tabStore = useTabStore();
 
 // 获取动态路由 id
@@ -44,11 +46,11 @@ onMounted(() => {
       <ARow justify="end">
         <ASpace direction="vertical">
           <ASpace>
-            <span>作者：</span>
+            <span>{{ I18nMessage('userId') }}：</span>
             <AAvatar :src="messageInfo.user?.avatar" class="size-36px!" />
             <ATag :bordered="false" color="processing">{{ messageInfo.user?.cnName }}</ATag>
           </ASpace>
-          <ACol>发布时间：{{ dayjs(messageInfo.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</ACol>
+          <ACol>{{ $t(I18N_COMMON.CREATEDAT) }}：{{ dayjs(messageInfo.createdAt).format('YYYY-MM-DD HH:mm:ss') }}</ACol>
         </ASpace>
       </ARow>
       <!-- 主体内容 -->

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, reactive, ref } from 'vue';
 
+import { I18N_COMMON } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { changePassword, fetchLogout } from '@/service/api';
@@ -69,7 +70,7 @@ async function handleSubmit(values: Api.SystemManage.EditPassword) {
     <StrengthMeter v-model:form-data="model" @update:model="updateModel" />
     <ARow justify="center" class="mt-2">
       <AButton type="primary" html-type="submit" :loading="loading" block>
-        {{ $t('common.commit') }}
+        {{ $t(I18N_COMMON.COMMIT) }}
       </AButton>
     </ARow>
   </AForm>

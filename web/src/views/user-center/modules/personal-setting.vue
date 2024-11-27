@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { I18nUserCenter } from '@/constants/i18n';
 import { PERSONAL_SETTING } from '@/enum';
-import { $t } from '@/locales';
 
 import BasicSetting from './basic-setting.vue';
 import ChangePassword from './change-password.vue';
@@ -24,13 +24,13 @@ const changeTabs = (key: string | number) => (activeKey.value = key);
 <template>
   <ACard>
     <ATabs v-model:activeKey="activeKey" tab-position="left" @change="changeTabs">
-      <ATabPane :key="BASIC_SETTING" :tab="$t(`page.userCenter.title.${BASIC_SETTING}`)">
+      <ATabPane :key="BASIC_SETTING" :tab="I18nUserCenter(`title.${BASIC_SETTING}`)">
         <BasicSetting />
       </ATabPane>
-      <ATabPane :key="SECURITY_SETTING" :tab="$t(`page.userCenter.title.${SECURITY_SETTING}`)">
+      <ATabPane :key="SECURITY_SETTING" :tab="I18nUserCenter(`title.${SECURITY_SETTING}`)">
         <SecuritySetting @change-tabs="changeTabs" />
       </ATabPane>
-      <ATabPane :key="CHANGE_PASSWORD" :tab="$t(`page.userCenter.title.${CHANGE_PASSWORD}`)">
+      <ATabPane :key="CHANGE_PASSWORD" :tab="I18nUserCenter(`title.${CHANGE_PASSWORD}`)">
         <ChangePassword />
       </ATabPane>
     </ATabs>

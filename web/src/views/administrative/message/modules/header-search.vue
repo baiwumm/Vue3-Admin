@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { ref } from 'vue';
 
 import { StatueOptions } from '@/constants';
+import { I18nEntry, I18nMessage, I18nSelect } from '@/constants/i18n';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAntdForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -18,7 +20,6 @@ defineOptions({
 type Props = {
   updateSearchParams: (value: Partial<Api.Administrative.MessageSearchParams>) => void;
   userList: Api.SystemManage.UserManage[];
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -58,16 +59,16 @@ async function search() {
 </script>
 
 <template>
-  <ACard :title="$t('common.search')" :bordered="false" class="card-wrapper">
+  <ACard :title="$t(I18N_COMMON.SEARCH)" :bordered="false" class="card-wrapper">
     <AForm ref="formRef" :model="model">
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="locales('userId')" name="userId" class="m-0">
+          <AFormItem :label="I18nMessage('userId')" name="userId" class="m-0">
             <ASelect
               v-model:value="model.userId"
               allow-clear
               :options="userList"
-              :placeholder="$t('form.select') + locales('userId')"
+              :placeholder="I18nSelect(I18nMessage('userId'))"
               :field-names="{ value: 'id', label: 'cnName' }"
             >
               <template #option="{ cnName, avatar }">
@@ -80,22 +81,22 @@ async function search() {
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="locales('title')" name="title" class="m-0">
-            <AInput v-model:value="model.title" allow-clear :placeholder="$t('form.enter') + locales('title')" />
+          <AFormItem :label="I18nMessage('title')" name="title" class="m-0">
+            <AInput v-model:value="model.title" allow-clear :placeholder="I18nEntry(I18nMessage('title'))" />
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="$t('form.status')" name="status" class="m-0">
+          <AFormItem :label="$t(I18N_FORM.STATUS)" name="status" class="m-0">
             <ASelect
               v-model:value="model.status"
               allow-clear
               :options="StatueOptions"
-              :placeholder="$t('form.select') + $t('form.status')"
+              :placeholder="I18nSelect($t(I18N_FORM.STATUS))"
             />
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="$t('common.createdAt')" class="m-0">
+          <AFormItem :label="$t(I18N_COMMON.CREATEDAT)" class="m-0">
             <ARangePicker v-model:value="createdAt" />
           </AFormItem>
         </ACol>
@@ -106,13 +107,13 @@ async function search() {
                 <template #icon>
                   <icon-ic-round-refresh class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t('common.reset') }}</span>
+                <span class="ml-8px">{{ $t(I18N_COMMON.RESET) }}</span>
               </AButton>
               <AButton type="primary" ghost @click="search">
                 <template #icon>
                   <icon-ic-round-search class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t('common.search') }}</span>
+                <span class="ml-8px">{{ $t(I18N_COMMON.SEARCH) }}</span>
               </AButton>
             </div>
           </AFormItem>

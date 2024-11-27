@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { I18nVueDirective } from '@/constants/i18n';
 import { useRouterPush } from '@/hooks/common/router';
 import { $t } from '@/locales';
 
-// 国际化
-const locales = (field: string) => $t(`page.features.vue-directive.${field}`);
-
-const successText = ref(locales('success'));
+const successText = ref(I18nVueDirective('success'));
 
 // 复制文本
 const text = ref(import.meta.env.VITE_APP_TITLE);
@@ -37,38 +35,44 @@ const initThrollte = () => {
       <APageHeader :title="$t('route.features_vue-directive')" />
     </ACard>
     <div class="grid gap-4" :style="{ gridTemplateColumns: 'repeat(auto-fill, minmax(400px, 1fr))' }">
-      <ACard :title="locales('v-copy.title')" :bordered="false">
+      <ACard :title="I18nVueDirective('v-copy.title')" :bordered="false">
         <AInputSearch v-model:value="text">
           <template #enterButton>
-            <AButton v-copy="text" type="primary">{{ locales('v-copy.button') }}</AButton>
+            <AButton v-copy="text" type="primary">{{ I18nVueDirective('v-copy.button') }}</AButton>
           </template>
         </AInputSearch>
       </ACard>
-      <ACard :title="locales('v-longpress.title')" :bordered="false">
-        <AButton v-longpress:[1000]="initLongpress" type="primary" block>{{ locales('v-longpress.button') }}</AButton>
+      <ACard :title="I18nVueDirective('v-longpress.title')" :bordered="false">
+        <AButton v-longpress:[1000]="initLongpress" type="primary" block>
+          {{ I18nVueDirective('v-longpress.button') }}
+        </AButton>
       </ACard>
-      <ACard :title="locales('v-debounce.title')" :bordered="false">
+      <ACard :title="I18nVueDirective('v-debounce.title')" :bordered="false">
         <AButton v-debounce="{ callback: initDebounce, time: 1000 }" type="primary" block>
-          {{ locales('v-debounce.button') }}
+          {{ I18nVueDirective('v-debounce.button') }}
         </AButton>
       </ACard>
-      <ACard :title="locales('v-throllte.title')" :bordered="false">
+      <ACard :title="I18nVueDirective('v-throllte.title')" :bordered="false">
         <AButton v-throllte="{ callback: initThrollte, time: 1000 }" type="primary" block>
-          {{ locales('v-throllte.button') }}
+          {{ I18nVueDirective('v-throllte.button') }}
         </AButton>
       </ACard>
-      <ACard :title="locales('v-emoji.title')" :bordered="false">
-        <AInput v-emoji :placeholder="locales('v-emoji.placeholder')" />
+      <ACard :title="I18nVueDirective('v-emoji.title')" :bordered="false">
+        <AInput v-emoji :placeholder="I18nVueDirective('v-emoji.placeholder')" />
       </ACard>
-      <ACard :title="locales('v-input.title')" :bordered="false">
-        <AInput v-input:decimal_2="inputValue" :placeholder="locales('v-input.placeholder')" data-rule="/[^\d]/" />
+      <ACard :title="I18nVueDirective('v-input.title')" :bordered="false">
+        <AInput
+          v-input:decimal_2="inputValue"
+          :placeholder="I18nVueDirective('v-input.placeholder')"
+          data-rule="/[^\d]/"
+        />
       </ACard>
-      <ACard :title="locales('v-ripple.title')" :bordered="false">
-        <AButton v-ripple type="primary" block>{{ locales('v-ripple.button') }}</AButton>
+      <ACard :title="I18nVueDirective('v-ripple.title')" :bordered="false">
+        <AButton v-ripple type="primary" block>{{ I18nVueDirective('v-ripple.button') }}</AButton>
       </ACard>
-      <ACard :title="locales('v-lazyLoad.title')" :bordered="false">
+      <ACard :title="I18nVueDirective('v-lazyLoad.title')" :bordered="false">
         <AButton type="primary" block @click="routerPushByKey('features_lazyload')">
-          {{ locales('v-lazyLoad.button') }}
+          {{ I18nVueDirective('v-lazyLoad.button') }}
         </AButton>
       </ACard>
     </div>

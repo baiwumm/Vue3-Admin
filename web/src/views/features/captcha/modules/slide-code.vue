@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+import { I18N_COMMON } from '@/enum/i18n';
 import { $t } from '@/locales';
 
 import SlideVerify from './slide-verify.vue'; // 滑块验证码
@@ -23,7 +24,7 @@ const onSuccess = (seconds: number) => {
       <SlideVerify :key="count" @success="onSuccess" />
     </ACol>
     <ACol flex="100px">
-      <AButton type="primary" @click="count++">{{ $t('common.reset') }}</AButton>
+      <AButton type="primary" @click="count++">{{ $t(I18N_COMMON.RESET) }}</AButton>
     </ACol>
   </ARow>
 </template>

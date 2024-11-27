@@ -5,7 +5,10 @@ import { get, toLower } from 'lodash-es';
 import { ref } from 'vue';
 
 import SvgIcon from '@/components/custom/svg-icon.vue';
+import { I18nMenu } from '@/constants/i18n';
 import { MENU_TYPE, UNIFORM_TEXT } from '@/enum';
+import { MENU } from '@/enum/auth';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAuth } from '@/hooks/business/auth';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -21,9 +24,6 @@ const { hasAuth } = useAuth();
 const editingData = ref<Api.SystemManage.MenuManage | null>(null);
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
-
-// 国际化
-const locales = (field: string) => $t(`page.systemManage.menuManage.${field}`);
 
 // 渲染默认字段
 const renderEllipsis = ({ text }: any) =>
@@ -57,7 +57,7 @@ const {
     {
       key: 'type',
       dataIndex: 'type',
-      title: locales('type'),
+      title: I18nMenu('type'),
       align: 'center',
       customRender: ({ text }) => {
         const typeColorMap: Record<string, string> = {
@@ -67,7 +67,7 @@ const {
         };
         return (
           <Tag bordered={false} color={typeColorMap[text]}>
-            {locales(`typeMap.${toLower(text)}`)}
+            {I18nMenu(`typeMap.${toLower(text)}`)}
           </Tag>
         );
       },
@@ -76,13 +76,13 @@ const {
       key: 'title',
       dataIndex: 'title',
       align: 'center',
-      title: locales('title'),
+      title: I18nMenu('title'),
     },
     {
       key: 'meta',
       dataIndex: 'meta',
       align: 'center',
-      title: locales('meta.icon'),
+      title: I18nMenu('meta.icon'),
       customRender: ({ record }) => {
         const meta = get(record, 'meta');
         return meta?.icon || meta?.localIcon ? (
@@ -99,7 +99,7 @@ const {
       dataIndex: 'name',
       align: 'center',
       ellipsis: true,
-      title: locales('name'),
+      title: I18nMenu('name'),
       customRender: renderEllipsis,
     },
     {
@@ -107,7 +107,7 @@ const {
       dataIndex: 'path',
       align: 'center',
       ellipsis: true,
-      title: locales('path'),
+      title: I18nMenu('path'),
       customRender: renderEllipsis,
     },
     {
@@ -115,13 +115,13 @@ const {
       dataIndex: 'component',
       align: 'center',
       ellipsis: true,
-      title: locales('component'),
+      title: I18nMenu('component'),
       customRender: renderEllipsis,
     },
     {
       key: 'sort',
       dataIndex: 'sort',
-      title: $t('form.sort'),
+      title: $t(I18N_FORM.SORT),
       align: 'center',
       customRender: ({ text }) => (
         <Tag bordered={false} color="success">
@@ -132,28 +132,28 @@ const {
     {
       key: 'createdAt',
       dataIndex: 'createdAt',
-      title: $t('common.createdAt'),
+      title: $t(I18N_COMMON.CREATEDAT),
       align: 'center',
       width: 160,
       customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
       key: 'operate',
-      title: $t('common.operate'),
+      title: $t(I18N_COMMON.OPERATE),
       align: 'center',
       width: 130,
       fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth('system-manage:menu-manage:edit') ? (
+          {hasAuth(MENU.EDIT) ? (
             <Button type="primary" ghost size="small" onClick={() => edit(record)}>
-              {$t('common.edit')}
+              {$t(I18N_COMMON.EDIT)}
             </Button>
           ) : null}
-          {hasAuth('system-manage:menu-manage:delete') ? (
-            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
+          {hasAuth(MENU.DELETE) ? (
+            <Popconfirm title={$t(I18N_COMMON.CONFIRM_DELETE)} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t('common.delete')}
+                {$t(I18N_COMMON.DELETE)}
               </Button>
             </Popconfirm>
           ) : null}
@@ -187,7 +187,6 @@ const edit = (record: Api.SystemManage.MenuManage) => {
       <HeaderSearch
         v-model:model="searchParams"
         :update-search-params="updateSearchParams"
-        :locales="locales"
         @reset="resetSearchParams"
         @search="getDataByPage"
       />
@@ -198,7 +197,7 @@ const edit = (record: Api.SystemManage.MenuManage) => {
         v-model:columns="columnChecks"
         :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        :add-btn="hasAuth('system-manage:menu-manage:add')"
+        :add-btn="hasAuth(MENU.ADD)"
         @add="handleAdd"
         @refresh="getData"
       />
@@ -221,7 +220,6 @@ const edit = (record: Api.SystemManage.MenuManage) => {
       :operate-type="operateType"
       :row-data="editingData"
       :data-source="data"
-      :locales="locales"
       @submitted="getDataByPage"
     />
   </PageContainer>

@@ -2,7 +2,9 @@
 import { pick } from 'lodash-es';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 
+import { I18nEntry, I18nOrg, I18nSelect } from '@/constants/i18n';
 import { OPERATION_TYPE } from '@/enum';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { createOrganazation, updateOrganazation } from '@/service/api';
@@ -19,7 +21,6 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.Administrative.Organization | null; // 编辑数据
   dataSource: Api.Administrative.Organization[]; // 父级
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -38,7 +39,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => props.locales(`${props.operateType}Org`));
+const title = computed(() => I18nOrg(`${props.operateType}Org`));
 
 const model: Api.Administrative.SaveOrganization = reactive(createDefaultModel());
 
@@ -114,12 +115,12 @@ watch(visible, () => {
 <template>
   <ADrawer v-model:open="visible" :title="title" :width="360">
     <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
-      <AFormItem :label="$t('form.parent')" name="parentId" :tooltip="$t('form.parentTip')">
+      <AFormItem :label="$t(I18N_FORM.PARENT)" name="parentId" :tooltip="$t(I18N_FORM.PARENT_TIP)">
         <ATreeSelect
           v-model:value="model.parentId"
           show-search
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-          :placeholder="$t('form.select')"
+          :placeholder="I18nSelect()"
           allow-clear
           tree-default-expand-all
           :tree-data="dataSource"
@@ -135,52 +136,42 @@ watch(visible, () => {
           </template>
         </ATreeSelect>
       </AFormItem>
-      <AFormItem :label="locales('name')" name="name">
-        <AInput
-          v-model:value="model.name"
-          show-count
-          :maxlength="32"
-          :placeholder="$t('form.enter') + locales('name')"
-        />
+      <AFormItem :label="I18nOrg('name')" name="name">
+        <AInput v-model:value="model.name" show-count :maxlength="32" :placeholder="I18nEntry(I18nOrg('name'))" />
       </AFormItem>
-      <AFormItem :label="locales('code')" name="code">
-        <AInput
-          v-model:value="model.code"
-          show-count
-          :maxlength="32"
-          :placeholder="$t('form.enter') + locales('code')"
-        />
+      <AFormItem :label="I18nOrg('code')" name="code">
+        <AInput v-model:value="model.code" show-count :maxlength="32" :placeholder="I18nEntry(I18nOrg('code'))" />
       </AFormItem>
-      <AFormItem :label="$t('form.sort')" name="sort" :tooltip="$t('form.sortTip')">
+      <AFormItem :label="$t(I18N_FORM.SORT)" name="sort" :tooltip="$t(I18N_FORM.SORT_TIP)">
         <AInputNumber
           v-model:value="model.sort"
           :min="1"
           :max="999"
-          :placeholder="$t('form.enter') + $t('form.sort')"
+          :placeholder="I18nEntry($t(I18N_FORM.SORT))"
           class="w-full"
         />
       </AFormItem>
-      <AFormItem :label="locales('icon')" name="icon" :tooltip="locales('iconTip')">
-        <AInput v-model:value="model.icon" :placeholder="$t('form.enter') + locales('icon')">
+      <AFormItem :label="I18nOrg('icon')" name="icon" :tooltip="I18nOrg('iconTip')">
+        <AInput v-model:value="model.icon" :placeholder="I18nEntry(I18nOrg('icon'))">
           <template #suffix>
             <SvgIcon v-if="model.icon" :icon="model.icon" class="text-icon" />
           </template>
         </AInput>
       </AFormItem>
-      <AFormItem :label="locales('description')" name="description">
+      <AFormItem :label="I18nOrg('description')" name="description">
         <ATextarea
           v-model:value="model.description"
           show-count
           :maxlength="200"
           :rows="4"
-          :placeholder="$t('form.enter') + locales('description')"
+          :placeholder="I18nEntry(I18nOrg('description'))"
         />
       </AFormItem>
     </AForm>
     <template #footer>
       <ASpace :size="16">
-        <AButton @click="closeDrawer">{{ $t('common.cancel') }}</AButton>
-        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t('common.confirm') }}</AButton>
+        <AButton @click="closeDrawer">{{ $t(I18N_COMMON.CANCEL) }}</AButton>
+        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t(I18N_COMMON.CONFIRM) }}</AButton>
       </ASpace>
     </template>
   </ADrawer>

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { I18nUserCenter } from '@/constants/i18n';
 import { PERSONAL_SETTING } from '@/enum';
 import { $t } from '@/locales';
 import { useAuthStore } from '@/store/modules/auth';
@@ -29,23 +30,23 @@ const { BASIC_SETTING, CHANGE_PASSWORD, SECURITY_SETTING } = PERSONAL_SETTING;
 
 const dataSource: DaraSource[] = [
   {
-    title: $t(`page.userCenter.${SECURITY_SETTING}.authentication`),
+    title: I18nUserCenter(`${SECURITY_SETTING}.authentication`),
     description: $t(`page.userCenter.${SECURITY_SETTING}.authentication-information`, { cnName }),
   },
   {
-    title: $t(`page.userCenter.${SECURITY_SETTING}.account-password`),
-    description: $t(`page.userCenter.${SECURITY_SETTING}.account-password-desc`),
+    title: I18nUserCenter(`${SECURITY_SETTING}.account-password`),
+    description: I18nUserCenter(`${SECURITY_SETTING}.account-password-desc`),
     key: CHANGE_PASSWORD,
   },
   {
-    title: $t(`page.userCenter.${SECURITY_SETTING}.security-phone`),
+    title: I18nUserCenter(`${SECURITY_SETTING}.security-phone`),
     description: $t(`page.userCenter.${SECURITY_SETTING}.security-phone-desc`, {
       phone: phone.replace(/^(\d{3})\d{4}(\d{4})$/, '$1****$2'),
     }),
     key: BASIC_SETTING,
   },
   {
-    title: $t(`page.userCenter.${SECURITY_SETTING}.security-email`),
+    title: I18nUserCenter(`${SECURITY_SETTING}.security-email`),
     description: $t(`page.userCenter.${SECURITY_SETTING}.security-email-desc`, {
       email,
     }),
@@ -61,7 +62,7 @@ const dataSource: DaraSource[] = [
         <template #actions>
           <AButton v-if="item.key" type="link" @click="emit('changeTabs', item.key)">{{ $t('common.edit') }}</AButton>
           <ATag v-else :bordered="false" color="success">
-            {{ $t(`page.userCenter.${SECURITY_SETTING}.authenticated`) }}
+            {{ I18nUserCenter(`${SECURITY_SETTING}.authenticated`) }}
           </ATag>
         </template>
         <AListItemMeta :title="item.title" :description="item.description"></AListItemMeta>

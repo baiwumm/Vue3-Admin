@@ -8,6 +8,7 @@ import { LazyImg, Waterfall } from 'vue-waterfall-plugin-next';
 
 import errorImg from '@/assets/common/error.png';
 import loadingImg from '@/assets/common/loading.png';
+import { I18nWaterfall } from '@/constants/i18n';
 import { getRandomImg } from '@/utils';
 
 const waterFallRef = useTemplateRef('waterFallRef') as ShallowRef<HTMLElement>;
@@ -101,9 +102,9 @@ const handleLoadMore = () => {
         <ARow v-if="!loading" justify="center" class="mt-4">
           <!-- 加载更多 -->
           <AButton v-if="list.length < 100" type="primary" :loading="moreLoading" @click="handleLoadMore">
-            {{ $t('page.features.waterfall.more') }}
+            {{ I18nWaterfall('more') }}
           </AButton>
-          <p v-else>{{ $t('page.features.waterfall.noMore') }}</p>
+          <p v-else>{{ $I18nWaterfall('noMore') }}</p>
         </ARow>
         <!-- 回到顶部 -->
         <ABackTop :target="() => waterFallRef" />

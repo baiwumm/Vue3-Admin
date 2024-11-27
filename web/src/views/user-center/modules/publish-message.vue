@@ -3,9 +3,9 @@ import { eq, find, get } from 'lodash-es';
 import { onMounted, ref, watch } from 'vue';
 
 import { StatueOptions } from '@/constants';
+import { I18nUserCenter } from '@/constants/i18n';
 import { STATUS, UNIFORM_TEXT } from '@/enum';
 import { useRouterPush } from '@/hooks/common/router';
-import { $t } from '@/locales';
 import { getMessageList } from '@/service/api';
 import { useAuthStore } from '@/store/modules/auth';
 
@@ -63,7 +63,7 @@ onMounted(() => {
 
 <template>
   <ACard
-    :title="$t('page.userCenter.title.publishMessage')"
+    :title="I18nUserCenter('title.publishMessage')"
     :bordered="false"
     class="h-full flex-col-stretch card-wrapper"
     :body-style="{ flex: 1, overflow: 'hidden', padding: '10px 0' }"

@@ -2,7 +2,7 @@
 import { get, take, toString } from 'lodash-es';
 import { onMounted, ref, watch } from 'vue';
 
-import { $t } from '@/locales';
+import { I18nHome } from '@/constants/i18n';
 import { getJuejinList } from '@/service/api';
 
 defineOptions({
@@ -51,7 +51,7 @@ onMounted(() => {
 
 <template>
   <ACard
-    :title="$t('page.home.blogLog')"
+    :title="I18nHome('blogLog')"
     :bordered="false"
     class="h-full flex-col-stretch card-wrapper"
     :body-style="{ flex: 1, overflow: 'hidden' }"

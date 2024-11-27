@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { type PrintAreaOption, VuePrintNext, vPrint } from 'vue-print-next';
 
+import { I18nPrint } from '@/constants/i18n';
 import { $t } from '@/locales';
 
 const handleBasicPrint = () => {
@@ -12,9 +13,6 @@ const printOps: PrintAreaOption = {
   // 打印忽略 img
   noPrintSelector: ['img'],
 };
-
-// 国际化
-const locales = (field: string) => $t(`page.features.print.${field}`);
 </script>
 
 <template>
@@ -31,10 +29,10 @@ const locales = (field: string) => $t(`page.features.print.${field}`);
         </AButton>
       </template>
       <ASpace>
-        <AButton v-print type="primary">{{ locales('fullScreen') }}</AButton>
-        <AButton v-print="'#print-el'" type="primary">{{ locales('instruction') }}</AButton>
-        <AButton type="primary" @click="handleBasicPrint">{{ locales('method') }}</AButton>
-        <AButton v-print="printOps" type="primary">{{ locales('ingoreImg') }}</AButton>
+        <AButton v-print type="primary">{{ I18nPrint('fullScreen') }}</AButton>
+        <AButton v-print="'#print-el'" type="primary">{{ I18nPrint('instruction') }}</AButton>
+        <AButton type="primary" @click="handleBasicPrint">{{ I18nPrint('method') }}</AButton>
+        <AButton v-print="printOps" type="primary">{{ I18nPrint('ingoreImg') }}</AButton>
       </ASpace>
     </ACard>
   </div>

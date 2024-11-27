@@ -5,7 +5,10 @@ import { eq, find, get, includes, map } from 'lodash-es';
 import { onMounted, ref } from 'vue';
 
 import { StatueOptions } from '@/constants';
+import { I18nMessage } from '@/constants/i18n';
 import { STATUS, UNIFORM_TEXT } from '@/enum';
+import { MESSAGE } from '@/enum/auth';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAuth } from '@/hooks/business/auth';
 import { useRouterPush } from '@/hooks/common/router';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
@@ -32,9 +35,6 @@ const editingData = ref<Api.Administrative.Message | null>(null);
 
 // 设置当前 id
 const currentId = ref('');
-
-// 国际化
-const locales = (field: string) => $t(`page.administrative.message.${field}`);
 
 /** @description: 获取用户列表 */
 const userList = ref<Api.SystemManage.UserManage[]>([]);
@@ -94,7 +94,7 @@ const {
     {
       key: 'userId',
       dataIndex: 'userId',
-      title: locales('userId'),
+      title: I18nMessage('userId'),
       align: 'center',
       fixed: 'left',
       width: 200,
@@ -108,7 +108,7 @@ const {
     {
       key: 'title',
       dataIndex: 'title',
-      title: locales('title'),
+      title: I18nMessage('title'),
       align: 'center',
       ellipsis: true,
       customRender: ({ text, record }) => (
@@ -120,7 +120,7 @@ const {
     {
       key: 'messageReads',
       dataIndex: 'messageReads',
-      title: locales('read'),
+      title: I18nMessage('read'),
       align: 'center',
       customRender: ({ record }) => (
         <AvatarGroup maxCount={3} maxStyle={{ backgroundColor: themeStore.themeColor }}>
@@ -133,7 +133,7 @@ const {
     {
       key: 'status',
       dataIndex: 'status',
-      title: $t('form.status'),
+      title: $t(I18N_FORM.STATUS),
       width: 80,
       align: 'center',
       customRender: ({ text }) => (
@@ -145,7 +145,7 @@ const {
     {
       key: 'pinned',
       dataIndex: 'pinned',
-      title: locales('pinned'),
+      title: I18nMessage('pinned'),
       width: 100,
       align: 'center',
       customRender: ({ text, record }) => (
@@ -153,13 +153,13 @@ const {
           title="确认执行此操作吗？"
           onConfirm={() => handleChangePinned(record.id)}
           onCancel={() => (currentId.value = '')}
-          ok-text={$t('common.confirm')}
-          cancel-text={$t('common.cancel')}
+          ok-text={$t(I18N_COMMON.CONFIRM)}
+          cancel-text={$t(I18N_COMMON.CANCEL)}
         >
           <Switch
             checked={text}
-            checked-children={$t('common.yesOrNo.yes')}
-            un-checked-children={$t('common.yesOrNo.no')}
+            checked-children={$t(I18N_COMMON.YES)}
+            un-checked-children={$t(I18N_COMMON.NO)}
             loading={currentId.value === record.id}
             onClick={() => handleSwitchClick(record.id)}
           />
@@ -169,28 +169,28 @@ const {
     {
       key: 'createdAt',
       dataIndex: 'createdAt',
-      title: $t('common.createdAt'),
+      title: $t(I18N_COMMON.CREATEDAT),
       align: 'center',
       width: 160,
       customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
       key: 'operate',
-      title: $t('common.operate'),
+      title: $t(I18N_COMMON.OPERATE),
       align: 'center',
       width: 130,
       fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth('administrative:message:edit') ? (
+          {hasAuth(MESSAGE.EDIT) ? (
             <Button type="primary" ghost size="small" onClick={() => edit(record)}>
-              {$t('common.edit')}
+              {$t(I18N_COMMON.EDIT)}
             </Button>
           ) : null}
-          {hasAuth('administrative:message:delete') ? (
-            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
+          {hasAuth(MESSAGE.DELETE) ? (
+            <Popconfirm title={$t(I18N_COMMON.CONFIRM_DELETE)} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t('common.delete')}
+                {$t(I18N_COMMON.DELETE)}
               </Button>
             </Popconfirm>
           ) : null}
@@ -239,7 +239,6 @@ onMounted(() => {
         v-model:model="searchParams"
         :update-search-params="updateSearchParams"
         :user-list="userList"
-        :locales="locales"
         @reset="resetSearchParams"
         @search="getDataByPage"
       />
@@ -250,7 +249,7 @@ onMounted(() => {
         v-model:columns="columnChecks"
         :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        :add-btn="hasAuth('administrative:message:add')"
+        :add-btn="hasAuth(MESSAGE.ADD)"
         @add="handleAdd"
         @refresh="getData"
       />
@@ -275,7 +274,6 @@ onMounted(() => {
       v-model:visible="drawerVisible"
       :operate-type="operateType"
       :row-data="editingData"
-      :locales="locales"
       @submitted="getDataByPage"
     />
   </PageContainer>

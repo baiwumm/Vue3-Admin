@@ -2,7 +2,7 @@
 import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
 
-import { $t } from '@/locales';
+import { I18nHome } from '@/constants/i18n';
 import pkg from '~/package.json';
 
 defineOptions({
@@ -39,10 +39,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <ACard :title="$t('page.home.projectNews.title')" :bordered="false" :loading="loading">
+  <ACard :title="I18nHome('projectNews.title')" :bordered="false" :loading="loading">
     <template #extra>
       <a class="text-primary" :href="pkg.homepage" target="_blank" rel="noopener noreferrer">
-        {{ $t('page.home.projectNews.moreNews') }}
+        {{ I18nHome('projectNews.moreNews') }}
       </a>
     </template>
     <ATimeline>

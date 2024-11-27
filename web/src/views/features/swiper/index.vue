@@ -3,7 +3,7 @@ import 'swiper/css';
 
 import { ref } from 'vue';
 
-import { $t } from '@/locales';
+import { I18nSwiper } from '@/constants/i18n';
 
 import CardsSwiper from './modules/cards-swiper.vue'; // 特效牌
 import CoverflowSwiper from './modules/coverflow-swiper.vue'; // 3d流翻转
@@ -12,9 +12,6 @@ import CubeSwiper from './modules/cube-swiper.vue'; // 方块
 import FlipSwiper from './modules/flip-swiper.vue'; // 翻转
 import ThumbnailSwiper from './modules/thumbnail-swiper.vue'; // 缩略图
 import VisualSwiper from './modules/visual-swiper.vue'; // 横向循环焦点图片展示
-
-// 国际化
-const locales = (field: string) => $t(`page.features.swiper.${field}`);
 
 const creativeEffectOptions = ref([
   {
@@ -89,39 +86,39 @@ const creativeEffectOptions = ref([
   <div>
     <ARow :gutter="[16, 16]">
       <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
-        <ACard :border="false" :title="locales('cube')">
+        <ACard :border="false" :title="I18nSwiper('cube')">
           <CubeSwiper />
         </ACard>
       </ACol>
       <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
-        <ACard :border="false" :title="locales('flip')">
+        <ACard :border="false" :title="I18nSwiper('flip')">
           <FlipSwiper />
         </ACard>
       </ACol>
       <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="8">
-        <ACard :border="false" :title="locales('card')">
+        <ACard :border="false" :title="I18nSwiper('card')">
           <CardsSwiper />
         </ACard>
       </ACol>
       <ACol :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <ACard :border="false" :title="locales('coverFlow')">
+        <ACard :border="false" :title="I18nSwiper('coverFlow')">
           <CoverflowSwiper />
         </ACard>
       </ACol>
       <ACol xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-        <ACard :border="false" :title="locales('thumbnail')">
+        <ACard :border="false" :title="I18nSwiper('thumbnail')">
           <ThumbnailSwiper />
         </ACard>
       </ACol>
       <ACol :span="24">
-        <ACard :border="false" :title="locales('creative')">
+        <ACard :border="false" :title="I18nSwiper('creative')">
           <ACardGrid v-for="(option, i) in creativeEffectOptions" :key="i" :hoverable="false">
             <CreativeSwiper :creative-effect="option" />
           </ACardGrid>
         </ACard>
       </ACol>
       <ACol :span="24">
-        <ACard :border="false" :title="locales('visual')">
+        <ACard :border="false" :title="I18nSwiper('visual')">
           <VisualSwiper />
         </ACard>
       </ACol>

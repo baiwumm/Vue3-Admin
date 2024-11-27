@@ -3,7 +3,9 @@ import { pick } from 'lodash-es';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 
 import { InternalizationLanguage } from '@/constants';
+import { I18nEntry, I18nInternalization, I18nSelect } from '@/constants/i18n';
 import { OPERATION_TYPE } from '@/enum';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { createInternalization, updateInternalization } from '@/service/api';
@@ -20,7 +22,6 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.SaveInternalization | null; // 编辑数据
   dataSource: Api.SystemManage.SaveInternalization[]; // 父级
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -39,7 +40,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => props.locales(`${props.operateType}Internalization`));
+const title = computed(() => I18nInternalization(`${props.operateType}Internalization`));
 
 const model: Api.SystemManage.SaveInternalization = reactive(createDefaultModel());
 
@@ -113,12 +114,12 @@ watch(visible, () => {
 <template>
   <ADrawer v-model:open="visible" :title="title" :width="360">
     <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
-      <AFormItem :label="$t('form.parent')" name="parentId" :tooltip="$t('form.parentTip')">
+      <AFormItem :label="$t(I18N_FORM.PARENT)" name="parentId" :tooltip="$t(I18N_FORM.PARENT_TIP)">
         <ATreeSelect
           v-model:value="model.parentId"
           show-search
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-          :placeholder="$t('form.select')"
+          :placeholder="I18nSelect()"
           allow-clear
           tree-default-expand-all
           :tree-data="dataSource"
@@ -134,18 +135,18 @@ watch(visible, () => {
           </template>
         </ATreeSelect>
       </AFormItem>
-      <AFormItem :label="locales('name')" name="name">
+      <AFormItem :label="I18nInternalization('name')" name="name">
         <AInput
           v-model:value="model.name"
           show-count
           :maxlength="32"
-          :placeholder="$t('form.enter') + locales('name')"
+          :placeholder="I18nEntry(I18nInternalization('name'))"
         />
       </AFormItem>
       <AFormItem
         v-for="language in InternalizationLanguage"
         :key="language"
-        :label="locales(`${language.replace('-', '')}`)"
+        :label="I18nInternalization(`${language.replace('-', '')}`)"
         :name="language"
       >
         <AInput
@@ -159,14 +160,14 @@ watch(visible, () => {
           "
           show-count
           :maxlength="500"
-          :placeholder="$t('form.enter') + locales(`${language.replace('-', '')}`)"
+          :placeholder="I18nEntry(I18nInternalization(`${language.replace('-', '')}`))"
         />
       </AFormItem>
     </AForm>
     <template #footer>
       <ASpace :size="16">
-        <AButton @click="closeDrawer">{{ $t('common.cancel') }}</AButton>
-        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t('common.confirm') }}</AButton>
+        <AButton @click="closeDrawer">{{ $t(I18N_COMMON.CANCEL) }}</AButton>
+        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t(I18N_COMMON.CONFIRM) }}</AButton>
       </ASpace>
     </template>
   </ADrawer>

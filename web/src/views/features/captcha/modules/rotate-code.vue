@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue';
 
+import { I18N_COMMON } from '@/enum/i18n';
 import { $t } from '@/locales';
 import { getRandomImg } from '@/utils';
 
@@ -33,7 +34,7 @@ const onSuccess = (seconds: number) => {
   <ARow justify="center">
     <ASpace direction="vertical">
       <RotateVerify ref="rotateVerify" :width="250" :img-src="imgSrc" @success="onSuccess" />
-      <AButton type="primary" block @click="onRest">{{ $t('common.reset') }}</AButton>
+      <AButton type="primary" block @click="onRest">{{ $t(I18N_COMMON.RESET) }}</AButton>
     </ASpace>
   </ARow>
 </template>

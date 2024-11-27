@@ -5,7 +5,9 @@ import { computed, nextTick, reactive, ref, watch } from 'vue';
 
 import ImgCorpper from '@/components/custom/img-corpper.vue';
 import StrengthMeter from '@/components/custom/strength-meter.vue';
+import { I18nUser } from '@/constants/i18n';
 import { OPERATION_TYPE, SEX, STATUS } from '@/enum';
+import { I18N_COMMON } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { createUser, getOrganazationList, getPostList, getRoleList, updateUser } from '@/service/api';
@@ -69,7 +71,6 @@ const fetchPostList = async () => {
 type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.UserManage | null; // 编辑数据
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -85,7 +86,7 @@ const visible = defineModel<boolean>('visible', {
 });
 
 // 抽屉标题
-const title = computed(() => props.locales(`${props.operateType}User`));
+const title = computed(() => I18nUser(`${props.operateType}User`));
 
 const model: Api.SystemManage.SaveUserManage = reactive(createDefaultModel());
 
@@ -149,16 +150,16 @@ const rules = computed<Record<RuleKey, App.Global.FormRule | App.Global.FormRule
 // 分部表单子项
 const steps = [
   {
-    title: props.locales('personalInfo'),
+    title: I18nUser('personalInfo'),
     content: PersonalInfo,
   },
-  { title: props.locales('userInfo'), content: UserInfo },
+  { title: I18nUser('userInfo'), content: UserInfo },
   {
-    title: props.locales('settingAvatar'),
+    title: I18nUser('settingAvatar'),
     content: ImgCorpper,
   },
   {
-    title: props.locales('settingPassword'),
+    title: I18nUser('settingPassword'),
     content: StrengthMeter,
   },
 ];
@@ -244,7 +245,6 @@ watch(visible, () => {
           :is="steps[current].content"
           v-model:form-data="model"
           v-model="model.avatar"
-          :locales="locales"
           :role-list="roleList"
           :organazation-list="organazationList"
           :post-list="postList"
@@ -255,13 +255,13 @@ watch(visible, () => {
     </ASpace>
     <template #footer>
       <AButton v-if="current > 0" :disable="loading" class="ml-2" @click="prev">
-        {{ $t('common.prevStep') }}
+        {{ $t(I18N_COMMON.PREV) }}
       </AButton>
       <AButton v-if="items && current < items.length - 1" type="primary" :disable="loading" @click="next">
-        {{ $t('common.nextStep') }}
+        {{ $t(I18N_COMMON.NEXT) }}
       </AButton>
       <AButton v-if="items && current === items.length - 1" type="primary" :loading="loading" @click="handleSubmit">
-        {{ $t('common.commit') }}
+        {{ $t(I18N_COMMON.COMMIT) }}
       </AButton>
     </template>
   </AModal>

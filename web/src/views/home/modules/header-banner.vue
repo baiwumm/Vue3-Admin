@@ -2,7 +2,7 @@
 import { get, isEmpty, toString } from 'lodash-es';
 import { computed, onMounted, ref } from 'vue';
 
-import { $t } from '@/locales';
+import { I18nHome } from '@/constants/i18n';
 import { useAuthStore } from '@/store/modules/auth';
 import { timeFix, welcomeWords } from '@/utils';
 
@@ -23,17 +23,17 @@ interface StatisticData {
 const statisticData = computed<StatisticData[]>(() => [
   {
     id: 0,
-    title: $t('page.home.projectCount'),
+    title: I18nHome('projectCount'),
     value: '25',
   },
   {
     id: 1,
-    title: $t('page.home.todo'),
+    title: I18nHome('todo'),
     value: '4/16',
   },
   {
     id: 2,
-    title: $t('page.home.message'),
+    title: I18nHome('message'),
     value: '12',
   },
 ]);

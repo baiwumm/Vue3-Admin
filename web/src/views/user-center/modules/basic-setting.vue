@@ -2,6 +2,7 @@
 import { cloneDeep, pick } from 'lodash-es';
 import { computed, onMounted, reactive, ref } from 'vue';
 
+import { I18nUser } from '@/constants/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { getOrganazationList, getPostList, getRoleList, updateUser } from '@/service/api';
@@ -46,9 +47,6 @@ const fetchPostList = async () => {
     postList.value = data.records;
   }
 };
-
-// 国际化
-const locales = (field: string) => $t(`page.systemManage.userManage.${field}`);
 
 const appStore = useAppStore();
 const authStore = useAuthStore();
@@ -119,17 +117,16 @@ onMounted(() => {
 <template>
   <AForm ref="formRef" layout="vertical" :model="model" :rules="rules" @finish="handleSubmit">
     <ARow :gutter="16">
-      <ADivider orientation="left">{{ locales('settingAvatar') }}</ADivider>
+      <ADivider orientation="left">{{ I18nUser('settingAvatar') }}</ADivider>
       <!-- 设置头像 -->
       <ImgCorpper v-model="model.avatar" />
-      <ADivider orientation="left">{{ locales('personalInfo') }}</ADivider>
+      <ADivider orientation="left">{{ I18nUser('personalInfo') }}</ADivider>
       <!-- 个人信息 -->
-      <PersonalInfo v-model:form-data="model" :locales="locales" @update:model="updateModel" />
-      <ADivider orientation="left">{{ locales('userInfo') }}</ADivider>
+      <PersonalInfo v-model:form-data="model" @update:model="updateModel" />
+      <ADivider orientation="left">{{ I18nUser('userInfo') }}</ADivider>
       <!-- 用户信息 -->
       <UserInfo
         v-model:form-data="model"
-        :locales="locales"
         :role-list="roleList"
         :organazation-list="organazationList"
         :post-list="postList"

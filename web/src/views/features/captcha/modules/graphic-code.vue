@@ -2,6 +2,8 @@
 import { join, random, times, toLower } from 'lodash-es';
 import { onMounted, ref, unref } from 'vue';
 
+import { I18nCaptcha } from '@/constants/i18n';
+import { I18N_FORM } from '@/enum/i18n';
 import { $t } from '@/locales';
 import { codeChars } from '@/utils';
 
@@ -10,12 +12,6 @@ import GeneraVerify from './genera-verify.vue';
 defineOptions({
   name: 'GraphicCode',
 });
-
-// 父组件传递的值
-type Props = {
-  locales: (field: string) => string;
-};
-const props = defineProps<Props>();
 
 const generaCode = ref(''); // 输入的常规验证码
 const identifyCode = ref(''); // 图形验证码的值
@@ -32,11 +28,11 @@ const refreshCode = () => {
 // 验证码校验
 const validateGeneraCode = () => {
   if (!generaCode.value) {
-    window.$message?.warning($t('form.code.required'));
+    window.$message?.warning($t(I18N_FORM.CODE_REQUIRED));
   } else if (toLower(unref(generaCode)) !== toLower(unref(identifyCode))) {
-    window.$message?.error(props.locales('verifyError'));
+    window.$message?.error(I18nCaptcha('verifyError'));
   } else {
-    window.$message?.success(props.locales('verifySuccess'));
+    window.$message?.success(I18nCaptcha('verifySuccess'));
   }
 };
 
@@ -57,9 +53,9 @@ onMounted(() => {
         class="cursor-pointer"
         @click="refreshCode"
       />
-      <AInputSearch v-model:value="generaCode" :placeholder="$t('form.code.required')">
+      <AInputSearch v-model:value="generaCode" :placeholder="$t(I18N_FORM.CODE_REQUIRED)">
         <template #enterButton>
-          <AButton type="primary" @click="validateGeneraCode">{{ locales('verify') }}</AButton>
+          <AButton type="primary" @click="validateGeneraCode">{{ I18nCaptcha('verify') }}</AButton>
         </template>
       </AInputSearch>
     </ASpace>

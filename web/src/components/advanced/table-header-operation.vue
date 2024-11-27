@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import { I18N_COMMON } from '@/enum/i18n';
 import { $t } from '@/locales';
-
 defineOptions({
   name: 'TableHeaderOperation',
 });
@@ -53,15 +53,15 @@ function refresh() {
         <template #icon>
           <icon-ic-round-plus class="align-sub text-icon" />
         </template>
-        <span class="ml-8px">{{ $t('common.add') }}</span>
+        <span class="ml-8px">{{ $t(I18N_COMMON.ADD) }}</span>
       </AButton>
       <template v-if="batchDeleteBtn">
-        <APopconfirm :description="$t('common.confirmDelete')" :disabled="disabledDelete" @confirm="batchDelete">
+        <APopconfirm :description="$t(I18N_COMMON.CONFIRM_DELETE)" :disabled="disabledDelete" @confirm="batchDelete">
           <AButton size="small" danger :disabled="disabledDelete">
             <template #icon>
               <icon-ic-round-delete class="align-sub text-icon" />
             </template>
-            <span class="ml-8px">{{ $t('common.batchDelete') }}</span>
+            <span class="ml-8px">{{ $t(I18N_COMMON.BATCH_DELETE) }}</span>
           </AButton>
         </APopconfirm>
       </template>
@@ -70,7 +70,7 @@ function refresh() {
       <template #icon>
         <icon-mdi-refresh class="align-sub text-icon" :class="{ 'animate-spin': loading }" />
       </template>
-      <span class="ml-8px">{{ $t('common.refresh') }}</span>
+      <span class="ml-8px">{{ $t(I18N_COMMON.REFRESH) }}</span>
     </AButton>
     <TableColumnSetting v-model:columns="columns" />
     <slot name="suffix"></slot>

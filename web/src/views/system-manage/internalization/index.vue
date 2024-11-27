@@ -6,7 +6,10 @@ import { ref } from 'vue';
 
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { InternalizationLanguage } from '@/constants';
+import { I18nInternalization } from '@/constants/i18n';
 import { UNIFORM_TEXT } from '@/enum';
+import { INTERNALIZATION } from '@/enum/auth';
+import { I18N_COMMON } from '@/enum/i18n';
 import { useAuth } from '@/hooks/business/auth';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -22,9 +25,6 @@ const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
 // 编辑的数据
 const editingData = ref<Api.SystemManage.SaveInternalization | null>(null);
-
-// 国际化
-const locales = (field: string) => $t(`page.systemManage.internalization.${field}`);
 
 const {
   columns,
@@ -48,7 +48,7 @@ const {
     {
       key: 'name',
       dataIndex: 'name',
-      title: locales('name'),
+      title: I18nInternalization('name'),
       align: 'center',
       customRender: ({ text }) => (
         <Tag bordered={false}>
@@ -64,7 +64,7 @@ const {
       return {
         key,
         dataIndex: key,
-        title: locales(key),
+        title: I18nInternalization(key),
         align: 'center',
         ellipsis: true,
         customRender: ({ text }) =>
@@ -80,28 +80,28 @@ const {
     {
       key: 'createdAt',
       dataIndex: 'createdAt',
-      title: $t('common.createdAt'),
+      title: $t(I18N_COMMON.CREATEDAT),
       align: 'center',
       width: 160,
       customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
       key: 'operate',
-      title: $t('common.operate'),
+      title: $t(I18N_COMMON.OPERATE),
       align: 'center',
       width: 130,
       fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth('system-manage:internalization:edit') ? (
+          {hasAuth(INTERNALIZATION.EDIT) ? (
             <Button type="primary" ghost size="small" onClick={() => edit(record)}>
-              {$t('common.edit')}
+              {$t(I18N_COMMON.EDIT)}
             </Button>
           ) : null}
-          {hasAuth('system-manage:internalization:delete') ? (
-            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
+          {hasAuth(INTERNALIZATION.DELETE) ? (
+            <Popconfirm title={$t(I18N_COMMON.CONFIRM_DELETE)} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t('common.delete')}
+                {$t(I18N_COMMON.DELETE)}
               </Button>
             </Popconfirm>
           ) : null}
@@ -135,7 +135,6 @@ const edit = (record: Api.SystemManage.Internalization) => {
       <HeaderSearch
         v-model:model="searchParams"
         :update-search-params="updateSearchParams"
-        :locales="locales"
         @reset="resetSearchParams"
         @search="getDataByPage"
       />
@@ -146,7 +145,7 @@ const edit = (record: Api.SystemManage.Internalization) => {
         v-model:columns="columnChecks"
         :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        :add-btn="hasAuth('system-manage:internalization:add')"
+        :add-btn="hasAuth(INTERNALIZATION.ADD)"
         @add="handleAdd"
         @refresh="getData"
       />
@@ -169,7 +168,6 @@ const edit = (record: Api.SystemManage.Internalization) => {
       :operate-type="operateType"
       :row-data="editingData"
       :data-source="data"
-      :locales="locales"
       @submitted="getDataByPage"
     />
   </PageContainer>

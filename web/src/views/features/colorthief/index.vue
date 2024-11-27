@@ -3,6 +3,7 @@ import ColorThief from 'colorthief';
 import { map } from 'lodash-es';
 import { ref, useTemplateRef } from 'vue';
 
+import { I18nColorthief } from '@/constants/i18n';
 import { $t } from '@/locales';
 import { getRandomImg } from '@/utils';
 
@@ -43,7 +44,7 @@ const onMouseOut = () => {
   <ASpace direction="vertical" size="middle">
     <ACard :bordered="false" :body-style="{ padding: 0 }">
       <APageHeader :title="$t('route.features_colorthief')">
-        {{ $t('page.features.colorthief.subTitle') }}
+        {{ I18nColorthief('subTitle') }}
       </APageHeader>
     </ACard>
     <div

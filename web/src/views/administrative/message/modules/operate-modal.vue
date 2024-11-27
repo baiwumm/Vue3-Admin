@@ -4,7 +4,9 @@ import { pick } from 'lodash-es';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 
 import { StatueOptions } from '@/constants';
+import { I18nMessage } from '@/constants/i18n';
 import { OPERATION_TYPE, STATUS } from '@/enum';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { createMessage, updateMessage } from '@/service/api';
@@ -22,11 +24,10 @@ const loading = ref(false);
 type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.Administrative.Message | null; // 编辑数据
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
-const placeholder = (field: string) => $t('form.enter') + props.locales(field);
+const placeholder = (field: string) => $t('form.enter') + I18nMessage(field);
 
 // 父组件自定义事件
 interface Emits {
@@ -43,7 +44,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const modalTitle = computed(() => props.locales(`${props.operateType}Message`));
+const modalTitle = computed(() => I18nMessage(`${props.operateType}Message`));
 
 const model: Api.Administrative.SaveMessage = reactive(createDefaultModel());
 
@@ -126,25 +127,25 @@ watch(visible, () => {
         <AForm ref="formRef" :model="model" :rules="rules" label-wrap class="pr-20px" layout="vertical">
           <ARow>
             <ACol :span="24">
-              <AFormItem :label="locales('title')" name="title">
+              <AFormItem :label="I18nMessage('title')" name="title">
                 <AInput v-model:value="model.title" :placeholder="placeholder('title')" :maxlength="50" show-count />
               </AFormItem>
             </ACol>
             <ACol :span="12">
-              <AFormItem :label="locales('pinned')" name="pinned">
+              <AFormItem :label="I18nMessage('pinned')" name="pinned">
                 <ARadioGroup v-model:value="model.pinned" button-style="solid">
-                  <ARadioButton :value="true">{{ $t('common.yesOrNo.yes') }}</ARadioButton>
-                  <ARadioButton :value="false">{{ $t('common.yesOrNo.no') }}</ARadioButton>
+                  <ARadioButton :value="true">{{ $t(I18N_COMMON.YES) }}</ARadioButton>
+                  <ARadioButton :value="false">{{ $t(I18N_COMMON.NO) }}</ARadioButton>
                 </ARadioGroup>
               </AFormItem>
             </ACol>
             <ACol :span="12">
-              <AFormItem :label="$t('form.status')" name="status">
+              <AFormItem :label="$t(I18N_FORM.STATUS)" name="status">
                 <ARadioGroup v-model:value="model.status" :options="StatueOptions" />
               </AFormItem>
             </ACol>
             <ACol :span="24">
-              <AFormItem :label="locales('content')" name="content">
+              <AFormItem :label="I18nMessage('content')" name="content">
                 <WangeEditor v-model="model.content" :visible="visible" />
               </AFormItem>
             </ACol>

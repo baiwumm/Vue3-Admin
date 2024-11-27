@@ -4,7 +4,10 @@ import dayjs from 'dayjs';
 import { onMounted, ref } from 'vue';
 
 import SvgIcon from '@/components/custom/svg-icon.vue';
+import { I18nRole } from '@/constants/i18n';
 import { UNIFORM_TEXT } from '@/enum';
+import { ROLE } from '@/enum/auth';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAuth } from '@/hooks/business/auth';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -29,9 +32,6 @@ const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
 
 // 编辑的数据
 const editingData = ref<Api.SystemManage.RoleManage | null>(null);
-
-// 国际化
-const locales = (field: string) => $t(`page.systemManage.roleManage.${field}`);
 
 const {
   columns,
@@ -58,7 +58,7 @@ const {
     {
       key: 'name',
       dataIndex: 'name',
-      title: locales('name'),
+      title: I18nRole('name'),
       customRender: ({ text }) => (
         <Tag bordered={false}>
           <Space>
@@ -71,7 +71,7 @@ const {
     {
       key: 'code',
       dataIndex: 'code',
-      title: locales('code'),
+      title: I18nRole('code'),
       align: 'center',
       ellipsis: true,
       customRender: ({ text }) =>
@@ -86,7 +86,7 @@ const {
     {
       key: 'description',
       dataIndex: 'description',
-      title: locales('description'),
+      title: I18nRole('description'),
       align: 'center',
       ellipsis: true,
       customRender: ({ text }) =>
@@ -101,7 +101,7 @@ const {
     {
       key: 'sort',
       dataIndex: 'sort',
-      title: $t('form.sort'),
+      title: $t(I18N_FORM.SORT),
       align: 'center',
       customRender: ({ text }) => (
         <Tag bordered={false} color="success">
@@ -112,28 +112,28 @@ const {
     {
       key: 'createdAt',
       dataIndex: 'createdAt',
-      title: $t('common.createdAt'),
+      title: $t(I18N_COMMON.CREATEDAT),
       align: 'center',
       width: 160,
       customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
       key: 'operate',
-      title: $t('common.operate'),
+      title: $t(I18N_COMMON.OPERATE),
       align: 'center',
       width: 130,
       fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth('system-manage:role-manage:edit') ? (
+          {hasAuth(ROLE.EDIT) ? (
             <Button type="primary" ghost size="small" onClick={() => edit(record)}>
-              {$t('common.edit')}
+              {$t(I18N_COMMON.EDIT)}
             </Button>
           ) : null}
-          {hasAuth('system-manage:role-manage:delete') ? (
-            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
+          {hasAuth(ROLE.DELETE) ? (
+            <Popconfirm title={$t(I18N_COMMON.CONFIRM_DELETE)} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t('common.delete')}
+                {$t(I18N_COMMON.DELETE)}
               </Button>
             </Popconfirm>
           ) : null}
@@ -172,7 +172,6 @@ onMounted(() => {
       <HeaderSearch
         v-model:model="searchParams"
         :update-search-params="updateSearchParams"
-        :locales="locales"
         @reset="resetSearchParams"
         @search="getDataByPage"
       />
@@ -182,7 +181,7 @@ onMounted(() => {
         v-model:columns="columnChecks"
         :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        :add-btn="hasAuth('system-manage:role-manage:add')"
+        :add-btn="hasAuth(ROLE.ADD)"
         @add="handleAdd"
         @refresh="getData"
       />
@@ -208,7 +207,6 @@ onMounted(() => {
       :operate-type="operateType"
       :row-data="editingData"
       :data-source="data"
-      :locales="locales"
       :role-route-list="roleRouteList"
       @submitted="getDataByPage"
     />

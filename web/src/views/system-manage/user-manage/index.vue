@@ -6,7 +6,10 @@ import { ref } from 'vue';
 
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { StatueOptions } from '@/constants';
+import { I18nUser } from '@/constants/i18n';
 import { SEX, STATUS, UNIFORM_TEXT } from '@/enum';
+import { USER } from '@/enum/auth';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAuth } from '@/hooks/business/auth';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -22,9 +25,6 @@ const { hasAuth } = useAuth();
 const editingData = ref<Api.SystemManage.UserManage | null>(null);
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1200);
-
-// 国际化
-const locales = (field: string) => $t(`page.systemManage.userManage.${field}`);
 
 const {
   columns,
@@ -48,7 +48,7 @@ const {
     {
       key: 'userName',
       dataIndex: 'userName',
-      title: locales('userName'),
+      title: I18nUser('userName'),
       width: 120,
       align: 'center',
       fixed: 'left',
@@ -64,14 +64,14 @@ const {
     {
       key: 'cnName',
       dataIndex: 'cnName',
-      title: locales('cnName'),
+      title: I18nUser('cnName'),
       width: 100,
       align: 'center',
     },
     {
       key: 'avatar',
       dataIndex: 'avatar',
-      title: locales('avatar'),
+      title: I18nUser('avatar'),
       width: 60,
       align: 'center',
       customRender: ({ text }) => <Avatar src={text} />,
@@ -79,7 +79,7 @@ const {
     {
       key: 'roleId',
       dataIndex: 'roleId',
-      title: locales('roleId'),
+      title: I18nUser('roleId'),
       width: 120,
       align: 'center',
       customRender: ({ record }) => (
@@ -94,7 +94,7 @@ const {
     {
       key: 'orgId',
       dataIndex: 'orgId',
-      title: locales('orgId'),
+      title: I18nUser('orgId'),
       width: 120,
       align: 'center',
       customRender: ({ record }) => (
@@ -109,7 +109,7 @@ const {
     {
       key: 'postId',
       dataIndex: 'postId',
-      title: locales('postId'),
+      title: I18nUser('postId'),
       width: 120,
       align: 'center',
       customRender: ({ record }) => (
@@ -124,7 +124,7 @@ const {
     {
       key: 'sex',
       dataIndex: 'sex',
-      title: locales('sex'),
+      title: I18nUser('sex'),
       width: 80,
       align: 'center',
       customRender: ({ text }) => (
@@ -136,7 +136,7 @@ const {
     {
       key: 'status',
       dataIndex: 'status',
-      title: $t('form.status'),
+      title: $t(I18N_FORM.STATUS),
       width: 80,
       align: 'center',
       customRender: ({ text }) => (
@@ -148,14 +148,14 @@ const {
     {
       key: 'phone',
       dataIndex: 'phone',
-      title: locales('phone'),
+      title: I18nUser('phone'),
       width: 100,
       align: 'center',
     },
     {
       key: 'email',
       dataIndex: 'email',
-      title: locales('email'),
+      title: I18nUser('email'),
       align: 'center',
       width: 120,
       ellipsis: true,
@@ -171,7 +171,7 @@ const {
     {
       key: 'sort',
       dataIndex: 'sort',
-      title: $t('form.sort'),
+      title: $t(I18N_FORM.SORT),
       align: 'center',
       width: 60,
       customRender: ({ text }) => (
@@ -183,28 +183,28 @@ const {
     {
       key: 'createdAt',
       dataIndex: 'createdAt',
-      title: $t('common.createdAt'),
+      title: $t(I18N_COMMON.CREATEDAT),
       align: 'center',
       width: 160,
       customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
       key: 'operate',
-      title: $t('common.operate'),
+      title: $t(I18N_COMMON.OPERATE),
       align: 'center',
       width: 130,
       fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth('system-manage:user-manage:edit') ? (
+          {hasAuth(USER.EDIT) ? (
             <Button type="primary" ghost size="small" onClick={() => edit(record)}>
-              {$t('common.edit')}
+              {$t(I18N_COMMON.EDIT)}
             </Button>
           ) : null}
-          {hasAuth('system-manage:user-manage:delete') ? (
-            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
+          {hasAuth(USER.DELETE) ? (
+            <Popconfirm title={$t(I18N_COMMON.CONFIRM_DELETE)} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t('common.delete')}
+                {$t(I18N_COMMON.DELETE)}
               </Button>
             </Popconfirm>
           ) : null}
@@ -235,12 +235,7 @@ const edit = (record: Api.SystemManage.UserManage) => {
   <PageContainer>
     <!-- 顶部搜索 -->
     <template #header>
-      <HeaderSearch
-        v-model:model="searchParams"
-        :locales="locales"
-        @reset="resetSearchParams"
-        @search="getDataByPage"
-      />
+      <HeaderSearch v-model:model="searchParams" @reset="resetSearchParams" @search="getDataByPage" />
     </template>
     <!-- 右侧操作区 -->
     <template #extra>
@@ -248,7 +243,7 @@ const edit = (record: Api.SystemManage.UserManage) => {
         v-model:columns="columnChecks"
         :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
-        :add-btn="hasAuth('system-manage:user-manage:add')"
+        :add-btn="hasAuth(USER.ADD)"
         @add="handleAdd"
         @refresh="getData"
       />
@@ -273,7 +268,6 @@ const edit = (record: Api.SystemManage.UserManage) => {
       v-model:visible="drawerVisible"
       :operate-type="operateType"
       :row-data="editingData"
-      :locales="locales"
       @submitted="getDataByPage"
     />
   </PageContainer>

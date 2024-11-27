@@ -3,7 +3,9 @@ import type { TreeProps } from 'ant-design-vue/es/tree';
 import { difference, filter, flattenDeep, includes, map, pick } from 'lodash-es';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 
+import { I18nEntry, I18nRole } from '@/constants/i18n';
 import { OPERATION_TYPE } from '@/enum';
+import { I18N_COMMON, I18N_FORM } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { createRole, updateRole } from '@/service/api';
@@ -22,7 +24,6 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.RoleManage | null; // 编辑数据
   dataSource: Api.SystemManage.RoleManage[]; // 父级
-  locales: (field: string) => string;
   roleRouteList: Api.SystemManage.MenuManage[];
 };
 const props = defineProps<Props>();
@@ -42,7 +43,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const title = computed(() => props.locales(`${props.operateType}Role`));
+const title = computed(() => I18nRole(`${props.operateType}Role`));
 
 const model: Api.SystemManage.SaveRoleManage = reactive(createDefaultModel());
 
@@ -134,41 +135,31 @@ watch(visible, () => {
 <template>
   <ADrawer v-model:open="visible" :title="title" :width="360">
     <AForm ref="formRef" layout="vertical" :model="model" :rules="rules">
-      <AFormItem :label="locales('name')" name="name">
-        <AInput
-          v-model:value="model.name"
-          show-count
-          :maxlength="32"
-          :placeholder="$t('form.enter') + locales('name')"
-        />
+      <AFormItem :label="I18nRole('name')" name="name">
+        <AInput v-model:value="model.name" show-count :maxlength="32" :placeholder="I18nEntry(I18nRole('name'))" />
       </AFormItem>
-      <AFormItem :label="locales('code')" name="code">
-        <AInput
-          v-model:value="model.code"
-          show-count
-          :maxlength="32"
-          :placeholder="$t('form.enter') + locales('code')"
-        />
+      <AFormItem :label="I18nRole('code')" name="code">
+        <AInput v-model:value="model.code" show-count :maxlength="32" :placeholder="I18nEntry(I18nRole('code'))" />
       </AFormItem>
-      <AFormItem :label="$t('form.sort')" name="sort" :tooltip="$t('form.sortTip')">
+      <AFormItem :label="$t(I18N_FORM.SORT)" name="sort" :tooltip="$t(I18N_FORM.SORT_TIP)">
         <AInputNumber
           v-model:value="model.sort"
           :min="1"
           :max="999"
-          :placeholder="$t('form.enter') + $t('form.sort')"
+          :placeholder="I18nEntry($t(I18N_FORM.SORT))"
           class="w-full"
         />
       </AFormItem>
-      <AFormItem :label="locales('description')" name="description">
+      <AFormItem :label="I18nRole('description')" name="description">
         <ATextarea
           v-model:value="model.description"
           show-count
           :maxlength="200"
           :rows="4"
-          :placeholder="$t('form.enter') + locales('description')"
+          :placeholder="I18nEntry(I18nRole('description'))"
         />
       </AFormItem>
-      <AFormItem :label="locales('menus')" name="menus">
+      <AFormItem :label="I18nRole('menus')" name="menus">
         <ATree
           v-model:checkedKeys="model.menus"
           :tree-data="roleRouteList"
@@ -180,8 +171,8 @@ watch(visible, () => {
     </AForm>
     <template #footer>
       <ASpace :size="16">
-        <AButton @click="closeDrawer">{{ $t('common.cancel') }}</AButton>
-        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t('common.confirm') }}</AButton>
+        <AButton @click="closeDrawer">{{ $t(I18N_COMMON.CANCEL) }}</AButton>
+        <AButton type="primary" :loading="loading" @click="handleSubmit">{{ $t(I18N_COMMON.CONFIRM) }}</AButton>
       </ASpace>
     </template>
   </ADrawer>

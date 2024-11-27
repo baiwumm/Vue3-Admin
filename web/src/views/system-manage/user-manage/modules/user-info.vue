@@ -3,6 +3,7 @@ import { regionData } from 'element-china-area-data';
 import { computed } from 'vue';
 
 import FigureLabels from '@/components/custom/figure-labels.vue';
+import { I18nEntry, I18nSelect, I18nUser } from '@/constants/i18n';
 
 defineOptions({
   name: 'UserInfo',
@@ -14,7 +15,6 @@ type Props = {
   roleList: Api.SystemManage.RoleManage[];
   organazationList: Api.Administrative.Organization[];
   postList: Api.Administrative.PostManage[];
-  locales: (field: string) => string;
   showTag: boolean;
 };
 const props = defineProps<Props>();
@@ -40,22 +40,22 @@ const model = computed(() => {
 <template>
   <ARow :gutter="16">
     <ACol :span="12">
-      <AFormItem :label="locales('roleId')" name="roleId">
+      <AFormItem :label="I18nUser('roleId')" name="roleId">
         <ASelect
           v-model:value="model.roleId"
           :options="roleList"
           :field-names="{ value: 'id', label: 'name' }"
-          :placeholder="$t('form.select')"
+          :placeholder="I18nSelect()"
         />
       </AFormItem>
     </ACol>
     <ACol :span="12">
-      <AFormItem :label="locales('orgId')" name="orgId">
+      <AFormItem :label="I18nUser('orgId')" name="orgId">
         <ATreeSelect
           v-model:value="model.orgId"
           show-search
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-          :placeholder="$t('form.select')"
+          :placeholder="I18nSelect()"
           allow-clear
           tree-default-expand-all
           :tree-data="organazationList"
@@ -73,13 +73,13 @@ const model = computed(() => {
       </AFormItem>
     </ACol>
     <ACol :span="12">
-      <AFormItem :label="locales('postId')" name="postId">
+      <AFormItem :label="I18nUser('postId')" name="postId">
         <ATreeSelect
           v-model:value="model.postId"
           show-search
           sclass="w-full"
           :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-          :placeholder="$t('form.select')"
+          :placeholder="I18nSelect()"
           allow-clear
           tree-default-expand-all
           :tree-data="postList"
@@ -100,27 +100,23 @@ const model = computed(() => {
       </AFormItem>
     </ACol>
     <ACol :span="12">
-      <AFormItem :label="locales('city')" name="city">
-        <ACascader
-          v-model:value="model.city"
-          :options="regionData"
-          :placeholder="$t('form.select') + locales('city')"
-        />
+      <AFormItem :label="I18nUser('city')" name="city">
+        <ACascader v-model:value="model.city" :options="regionData" :placeholder="I18nSelect(I18nUser('city'))" />
       </AFormItem>
     </ACol>
     <ACol :span="24">
-      <AFormItem :label="locales('address')" name="address">
+      <AFormItem :label="I18nUser('address')" name="address">
         <ATextarea
           v-model:value="model.address"
           :rows="4"
           :maxlength="200"
           show-count
-          :placeholder="$t('form.enter') + locales('address')"
+          :placeholder="I18nEntry(I18nUser('address'))"
         />
       </AFormItem>
     </ACol>
     <ACol v-if="showTag" :span="24">
-      <AFormItem :label="locales('tags')" name="tags">
+      <AFormItem :label="I18nUser('tags')" name="tags">
         <FigureLabels v-model:value="model.tags" />
       </AFormItem>
     </ACol>

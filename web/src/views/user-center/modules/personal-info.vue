@@ -4,6 +4,7 @@ import { assign, forEach } from 'lodash-es';
 import { ref, watch } from 'vue';
 
 import FigureLabels from '@/components/custom/figure-labels.vue';
+import { I18nUser } from '@/constants/i18n';
 import { $t } from '@/locales';
 import { updateUserTags } from '@/service/api';
 import { useAuthStore } from '@/store/modules/auth';
@@ -93,7 +94,7 @@ watch(userTags, () => {
           <template #label>
             <ASpace align="center">
               <SvgIcon :icon="icon" class="text-base" />
-              {{ $t(`page.systemManage.userManage.${field}`) }}
+              {{ I18nUser(field) }}
             </ASpace>
           </template>
           <ATag :bordered="false">
@@ -101,7 +102,7 @@ watch(userTags, () => {
           </ATag>
         </ADescriptionsItem>
       </ADescriptions>
-      <ADivider orientation="left">{{ $t('page.systemManage.userManage.tags') }}</ADivider>
+      <ADivider orientation="left">{{ I18nUser('tags') }}</ADivider>
       <FigureLabels v-model:value="userTags" />
     </ACard>
     <!-- 发布文章列表 -->

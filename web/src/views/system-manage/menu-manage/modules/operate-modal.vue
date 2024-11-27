@@ -4,7 +4,9 @@ import { assign, pick } from 'lodash-es';
 import { computed, nextTick, reactive, ref, watch } from 'vue';
 
 import { MenuTypeOptions, YesOrNoOptions } from '@/constants';
+import { I18nEntry, I18nMenu, I18nSelect } from '@/constants/i18n';
 import { MENU_TYPE, OPERATION_TYPE } from '@/enum';
+import { I18N_FORM } from '@/enum/i18n';
 import { useAntdForm, useFormRules } from '@/hooks/common/form';
 import { $t } from '@/locales';
 import { createMenu, updateMenu } from '@/service/api';
@@ -21,11 +23,10 @@ type Props = {
   operateType: AntDesign.TableOperateType; // 操作类型
   rowData?: Api.SystemManage.MenuManage | null; // 编辑数据
   dataSource: Api.SystemManage.MenuManage[]; // 父级
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
-const placeholder = (field: string) => $t('form.enter') + props.locales(field);
+const placeholder = (field: string) => I18nEntry(I18nMenu(field));
 
 // 父组件自定义事件
 interface Emits {
@@ -42,7 +43,7 @@ const { formRef, validate, resetFields } = useAntdForm();
 const { defaultRequiredRule } = useFormRules();
 
 // 抽屉标题
-const modalTitle = computed(() => props.locales(`${props.operateType}Menu`));
+const modalTitle = computed(() => I18nMenu(`${props.operateType}Menu`));
 
 const model: Api.SystemManage.SaveMenuManage = reactive(createDefaultModel());
 
@@ -179,17 +180,17 @@ watch(
         <AForm ref="formRef" :model="model" :rules="rules" :label-col="{ lg: 8, xs: 4 }" label-wrap class="pr-20px">
           <ARow>
             <ACol :lg="12" :xs="24">
-              <AFormItem :label="locales('type')" name="type">
+              <AFormItem :label="I18nMenu('type')" name="type">
                 <ARadioGroup v-model:value="model.type" :options="MenuTypeOptions" />
               </AFormItem>
             </ACol>
             <ACol :lg="12" :xs="24">
-              <AFormItem :label="$t('form.parent')" name="parentId" :tooltip="$t('form.parentTip')">
+              <AFormItem :label="$t(I18N_FORM.PARENT)" name="parentId" :tooltip="$t(I18N_FORM.PARENT_TIP)">
                 <ATreeSelect
                   v-model:value="model.parentId"
                   show-search
                   :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }"
-                  :placeholder="$t('form.select')"
+                  :placeholder="I18nSelect()"
                   allow-clear
                   tree-default-expand-all
                   :tree-data="dataSource"
@@ -212,29 +213,29 @@ watch(
               </AFormItem>
             </ACol>
             <ACol :lg="12" :xs="24">
-              <AFormItem :label="locales('title')" name="title">
+              <AFormItem :label="I18nMenu('title')" name="title">
                 <AInput v-model:value="model.title" :placeholder="placeholder('title')" />
               </AFormItem>
             </ACol>
             <template v-if="model.type !== MENU_TYPE.BUTTON">
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('name')" name="name">
+                <AFormItem :label="I18nMenu('name')" name="name">
                   <AInput v-model:value="model.name" :placeholder="placeholder('name')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('path')" name="path">
+                <AFormItem :label="I18nMenu('path')" name="path">
                   <AInput v-model:value="model.path" :placeholder="placeholder('path')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('component')" name="component">
+                <AFormItem :label="I18nMenu('component')" name="component">
                   <AInput v-model:value="model.component" :placeholder="placeholder('component')" />
                 </AFormItem>
               </ACol>
             </template>
             <ACol v-else :lg="12" :xs="24">
-              <AFormItem :label="locales('permission')" name="permission">
+              <AFormItem :label="I18nMenu('permission')" name="permission">
                 <AInput
                   v-model:value="model.permission"
                   :maxlength="50"
@@ -244,33 +245,33 @@ watch(
               </AFormItem>
             </ACol>
             <ACol :lg="12" :xs="24">
-              <AFormItem :label="$t('form.sort')" name="sort" :tooltip="$t('form.sortTip')">
+              <AFormItem :label="$t(I18N_FORM.SORT)" name="sort" :tooltip="$t(I18N_FORM.SORT_TIP)">
                 <AInputNumber
                   v-model:value="model.sort"
                   :min="1"
                   :max="999"
-                  :placeholder="$t('form.enter') + $t('form.sort')"
+                  :placeholder="I18nEntry($t(I18N_FORM.SORT))"
                   class="w-full"
                 />
               </AFormItem>
             </ACol>
             <template v-if="model.type !== MENU_TYPE.BUTTON">
               <ACol :span="24">
-                <ADivider orientation="left">{{ locales('routeMeta') }}</ADivider>
+                <ADivider orientation="left">{{ I18nMenu('routeMeta') }}</ADivider>
               </ACol>
               <!-- 路由元信息 -->
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.title')" :name="['meta', 'title']">
+                <AFormItem :label="I18nMenu('meta.title')" :name="['meta', 'title']">
                   <AInput v-model:value="model.meta.title" :placeholder="placeholder('meta.title')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.i18nKey')" :name="['meta', 'i18nKey']">
+                <AFormItem :label="I18nMenu('meta.i18nKey')" :name="['meta', 'i18nKey']">
                   <AInput v-model:value="model.meta.i18nKey" :placeholder="placeholder('meta.i18nKey')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.icon')" :name="['meta', 'icon']">
+                <AFormItem :label="I18nMenu('meta.icon')" :name="['meta', 'icon']">
                   <AInput v-model:value="model.meta.icon" :placeholder="placeholder('meta.icon')">
                     <template #suffix>
                       <SvgIcon v-if="model.meta.icon" :icon="model.meta.icon" class="text-icon" />
@@ -279,7 +280,7 @@ watch(
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.localIcon')" :name="['meta', 'localIcon']">
+                <AFormItem :label="I18nMenu('meta.localIcon')" :name="['meta', 'localIcon']">
                   <AInput v-model:value="model.meta.localIcon" :placeholder="placeholder('meta.localIcon')">
                     <template #suffix>
                       <SvgIcon v-if="model.meta.localIcon" :local-icon="model.meta.localIcon" class="text-icon" />
@@ -288,12 +289,12 @@ watch(
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.href')" :name="['meta', 'href']">
+                <AFormItem :label="I18nMenu('meta.href')" :name="['meta', 'href']">
                   <AInput v-model:value="model.meta.href as string" :placeholder="placeholder('meta.href')" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.order')" :name="['meta', 'order']">
+                <AFormItem :label="I18nMenu('meta.order')" :name="['meta', 'order']">
                   <AInputNumber
                     v-model:value="model.meta.order as number"
                     :min="0"
@@ -304,27 +305,27 @@ watch(
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.keepAlive')" :name="['meta', 'keepAlive']">
+                <AFormItem :label="I18nMenu('meta.keepAlive')" :name="['meta', 'keepAlive']">
                   <ARadioGroup v-model:value="model.meta.keepAlive" :options="YesOrNoOptions" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.constant')" :name="['meta', 'constant']">
+                <AFormItem :label="I18nMenu('meta.constant')" :name="['meta', 'constant']">
                   <ARadioGroup v-model:value="model.meta.constant" :options="YesOrNoOptions" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="$t('page.systemManage.menuManage.meta.hideInMenu')" :name="['meta', 'hideInMenu']">
+                <AFormItem :label="I18nMenu('meta.hideInMenu')" :name="['meta', 'hideInMenu']">
                   <ARadioGroup v-model:value="model.meta.hideInMenu" :options="YesOrNoOptions" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="$t('page.systemManage.menuManage.meta.multiTab')" :name="['meta', 'multiTab']">
+                <AFormItem :label="I18nMenu('meta.multiTab')" :name="['meta', 'multiTab']">
                   <ARadioGroup v-model:value="model.meta.multiTab" :options="YesOrNoOptions" />
                 </AFormItem>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('meta.fixedIndexInTab')" :name="['meta', 'fixedIndexInTab']">
+                <AFormItem :label="I18nMenu('meta.fixedIndexInTab')" :name="['meta', 'fixedIndexInTab']">
                   <AInputNumber
                     v-model:value="model.meta.fixedIndexInTab as number"
                     :min="0"
@@ -337,10 +338,10 @@ watch(
             </template>
             <template v-if="model.type === MENU_TYPE.MENU">
               <ACol :span="24">
-                <ADivider orientation="left">{{ locales('iframeParams') }}</ADivider>
+                <ADivider orientation="left">{{ I18nMenu('iframeParams') }}</ADivider>
               </ACol>
               <ACol :lg="12" :xs="24">
-                <AFormItem :label="locales('props.url')" :name="['props', 'url']">
+                <AFormItem :label="I18nMenu('props.url')" :name="['props', 'url']">
                   <AInput v-model:value="model.props.url as string" :placeholder="placeholder('props.url')" />
                 </AFormItem>
               </ACol>

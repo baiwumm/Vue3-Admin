@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { ref } from 'vue';
 
 import { MethodOptions } from '@/constants';
+import { I18nLog, I18nSelect } from '@/constants/i18n';
+import { I18N_COMMON } from '@/enum/i18n';
 import { useAntdForm } from '@/hooks/common/form';
 import { $t } from '@/locales';
 
@@ -18,7 +20,6 @@ defineOptions({
 type Props = {
   updateSearchParams: (value: Partial<Api.SystemManage.OperationLogSearchParams>) => void;
   userList: Api.SystemManage.UserManage[];
-  locales: (field: string) => string;
 };
 const props = defineProps<Props>();
 
@@ -58,7 +59,7 @@ async function search() {
 </script>
 
 <template>
-  <ACard :title="$t('common.search')" :bordered="false" class="card-wrapper">
+  <ACard :title="$t(I18N_COMMON.SEARCH)" :bordered="false" class="card-wrapper">
     <AForm
       ref="formRef"
       :model="model"
@@ -69,12 +70,12 @@ async function search() {
     >
       <ARow :gutter="[16, 16]" wrap>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="locales('userId')" name="userId" class="m-0">
+          <AFormItem :label="I18nLog('userId')" name="userId" class="m-0">
             <ASelect
               v-model:value="model.userId"
               allow-clear
               :options="userList"
-              :placeholder="$t('form.select') + locales('userId')"
+              :placeholder="I18nSelect(I18nLog('userId'))"
               :field-names="{ value: 'id', label: 'cnName' }"
             >
               <template #option="{ cnName, avatar }">
@@ -87,11 +88,11 @@ async function search() {
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="locales('method')" name="method" class="m-0">
+          <AFormItem :label="I18nLog('method')" name="method" class="m-0">
             <ASelect
               v-model:value="model.method"
               allow-clear
-              :placeholder="$t('form.select') + locales('method')"
+              :placeholder="I18nSelect(I18nLog('method'))"
               option-label-prop="children"
             >
               <ASelectOption v-for="{ value, key, label } in MethodOptions" :key="value" :value="value">
@@ -103,7 +104,7 @@ async function search() {
           </AFormItem>
         </ACol>
         <ACol :span="24" :md="12" :lg="6">
-          <AFormItem :label="$t('common.createdAt')" class="m-0">
+          <AFormItem :label="$t(I18N_COMMON.CREATEDAT)" class="m-0">
             <ARangePicker v-model:value="createdAt" />
           </AFormItem>
         </ACol>
@@ -114,13 +115,13 @@ async function search() {
                 <template #icon>
                   <icon-ic-round-refresh class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t('common.reset') }}</span>
+                <span class="ml-8px">{{ $t(I18N_COMMON.RESET) }}</span>
               </AButton>
               <AButton type="primary" ghost @click="search">
                 <template #icon>
                   <icon-ic-round-search class="align-sub text-icon" />
                 </template>
-                <span class="ml-8px">{{ $t('common.search') }}</span>
+                <span class="ml-8px">{{ $t(I18N_COMMON.SEARCH) }}</span>
               </AButton>
             </div>
           </AFormItem>

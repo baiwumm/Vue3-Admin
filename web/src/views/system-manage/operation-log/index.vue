@@ -6,6 +6,9 @@ import { onMounted, ref } from 'vue';
 
 import SvgIcon from '@/components/custom/svg-icon.vue';
 import { BroswerIconMap, MethodOptions, OsIconMap } from '@/constants';
+import { I18nLog } from '@/constants/i18n';
+import { OPERATION_LOG } from '@/enum/auth';
+import { I18N_COMMON } from '@/enum/i18n';
 import { useAuth } from '@/hooks/business/auth';
 import { useTable, useTableOperate, useTableScroll } from '@/hooks/common/table';
 import { $t } from '@/locales';
@@ -17,9 +20,6 @@ import HeaderSearch from './modules/header-search.vue';
 const { hasAuth } = useAuth();
 
 const { tableWrapperRef, scrollConfig } = useTableScroll(1000);
-
-// 国际化
-const locales = (field: string) => $t(`page.systemManage.operationLog.${field}`);
 
 /** @description: 获取用户列表 */
 const userList = ref<Api.SystemManage.UserManage[]>([]);
@@ -55,7 +55,7 @@ const {
     {
       key: 'userId',
       dataIndex: 'userId',
-      title: locales('userId'),
+      title: I18nLog('userId'),
       align: 'center',
       fixed: 'left',
       customRender: ({ record }) => (
@@ -68,14 +68,14 @@ const {
     {
       key: 'action',
       dataIndex: 'action',
-      title: locales('action'),
+      title: I18nLog('action'),
       align: 'center',
       ellipsis: true,
     },
     {
       key: 'method',
       dataIndex: 'method',
-      title: locales('method'),
+      title: I18nLog('method'),
       align: 'center',
       customRender: ({ text }) => {
         const color = get(find(MethodOptions, ['value', text]), 'key');
@@ -89,7 +89,7 @@ const {
     {
       key: 'os',
       dataIndex: 'os',
-      title: locales('os'),
+      title: I18nLog('os'),
       width: 160,
       align: 'center',
       customRender: ({ text }) => {
@@ -114,7 +114,7 @@ const {
     {
       key: 'browser',
       dataIndex: 'browser',
-      title: locales('browser'),
+      title: I18nLog('browser'),
       width: 160,
       align: 'center',
       customRender: ({ text }) => {
@@ -139,7 +139,7 @@ const {
     {
       key: 'city',
       dataIndex: 'city',
-      title: locales('city'),
+      title: I18nLog('city'),
       align: 'center',
       width: 160,
       customRender: ({ record }) => {
@@ -157,30 +157,30 @@ const {
     {
       key: 'ip',
       dataIndex: 'ip',
-      title: locales('ip'),
+      title: I18nLog('ip'),
       align: 'center',
       width: 120,
     },
     {
       key: 'createdAt',
       dataIndex: 'createdAt',
-      title: $t('common.createdAt'),
+      title: $t(I18N_COMMON.CREATEDAT),
       align: 'center',
       width: 160,
       customRender: ({ text }) => dayjs(text).format('YYYY-MM-DD HH:mm:ss'),
     },
     {
       key: 'operate',
-      title: $t('common.operate'),
+      title: $t(I18N_COMMON.OPERATE),
       align: 'center',
       width: 130,
       fixed: 'right',
       customRender: ({ record }) => (
         <div class="flex-center gap-8px">
-          {hasAuth('system-manage:operation-log:delete') ? (
-            <Popconfirm title={$t('common.confirmDelete')} onConfirm={() => handleDelete(record.id)}>
+          {hasAuth(OPERATION_LOG.DELETE) ? (
+            <Popconfirm title={$t(I18N_COMMON.CONFIRM_DELETE)} onConfirm={() => handleDelete(record.id)}>
               <Button danger size="small">
-                {$t('common.delete')}
+                {$t(I18N_COMMON.DELETE)}
               </Button>
             </Popconfirm>
           ) : null}
@@ -222,7 +222,6 @@ onMounted(() => {
         v-model:model="searchParams"
         :update-search-params="updateSearchParams"
         :user-list="userList"
-        :locales="locales"
         @reset="resetSearchParams"
         @search="getDataByPage"
       />
@@ -234,7 +233,7 @@ onMounted(() => {
         :disabled-delete="checkedRowKeys.length === 0"
         :loading="loading"
         :add-btn="false"
-        :batch-delete-btn="hasAuth('system-manage:operation-log:batch-delete')"
+        :batch-delete-btn="hasAuth(OPERATION_LOG.BATCH_DELETE)"
         @refresh="getData"
         @delete="handleBatchDelete"
       />

@@ -2,17 +2,13 @@
 import { useTemplateRef } from 'vue';
 import Vcode from 'vue3-puzzle-vcode';
 
+import { I18nCaptcha } from '@/constants/i18n';
+import { I18N_COMMON } from '@/enum/i18n';
 import { getRandomImg } from '@/utils';
 
 defineOptions({
   name: 'PuzzleCode',
 });
-
-// 父组件传递的值
-type Props = {
-  locales: (field: string) => string;
-};
-const props = defineProps<Props>();
 
 // 组件实例
 const puzzleVcode = useTemplateRef<HTMLElement>('puzzleVcode');
@@ -26,7 +22,7 @@ const onRest = () => {
 
 /** @description: 验证通过回调 */
 const onSuccess = () => {
-  window.$message?.success(props.locales('verifySuccess'));
+  window.$message?.success(I18nCaptcha('verifySuccess'));
 };
 </script>
 
@@ -44,7 +40,7 @@ const onSuccess = () => {
         class-name="puzzle-vcode"
         @success="onSuccess"
       />
-      <AButton type="primary" block @click="onRest">{{ $t('common.reset') }}</AButton>
+      <AButton type="primary" block @click="onRest">{{ $t(I18N_COMMON.RESET) }}</AButton>
     </ASpace>
   </ARow>
 </template>

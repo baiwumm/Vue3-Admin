@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue';
 
+import { I18N_COMMON } from '@/enum/i18n';
 import { $t } from '@/locales';
 
 import DragVerify from './drag-verify.vue';
@@ -36,7 +37,7 @@ const onReset = () => {
           <SvgIcon :icon="isPassing ? 'ri:lock-unlock-line' : 'ri:lock-line'" />
         </template>
       </DragVerify>
-      <AButton type="primary" block @click="onReset">{{ $t('common.reset') }}</AButton>
+      <AButton type="primary" block @click="onReset">{{ $t(I18N_COMMON.RESET) }}</AButton>
     </ASpace>
   </ARow>
 </template>
