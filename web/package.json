@@ -9,12 +9,12 @@
     "url": "https://baiwumm.com"
   },
   "license": "MIT",
-  "homepage": "https://github.com/baiwumm/Vue3-Admin",
+  "homepage": "https://github.com/baiwumm/vue3-admin",
   "repository": {
-    "url": "https://github.com/baiwumm/Vue3-Admin.git"
+    "url": "https://github.com/baiwumm/vue3-admin.git"
   },
   "bugs": {
-    "url": "https://github.com/baiwumm/Vue3-Admin/issues"
+    "url": "https://github.com/baiwumm/vue3-admin/issues"
   },
   "keywords": [
     "Vue3 admin ",
