@@ -30,6 +30,7 @@ declare module "@elegant-router/types" {
     "features": "/features";
     "features_captcha": "/features/captcha";
     "features_colorthief": "/features/colorthief";
+    "features_draggable": "/features/draggable";
     "features_eye-dropper": "/features/eye-dropper";
     "features_flow": "/features/flow";
     "features_gantt": "/features/gantt";
@@ -122,6 +123,7 @@ declare module "@elegant-router/types" {
     | "administrative_post-manage"
     | "features_captcha"
     | "features_colorthief"
+    | "features_draggable"
     | "features_eye-dropper"
     | "features_flow"
     | "features_gantt"

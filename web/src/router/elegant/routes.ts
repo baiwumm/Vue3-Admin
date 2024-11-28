@@ -138,6 +138,15 @@ export const generatedRoutes: GeneratedRoute[] = [
         }
       },
       {
+        name: 'features_draggable',
+        path: '/features/draggable',
+        component: 'view.features_draggable',
+        meta: {
+          title: 'features_draggable',
+          i18nKey: 'route.features_draggable'
+        }
+      },
+      {
         name: 'features_eye-dropper',
         path: '/features/eye-dropper',
         component: 'view.features_eye-dropper',
